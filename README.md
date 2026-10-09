@@ -13,9 +13,16 @@ zuerst nur anzeigt. Links öffnen sich erst nach einer Rückfrage.
 - **Links** (`http`/`https`) öffnen sich erst nach einer Rückfrage mit sichtbarer URL.
 - **Kopieren** in die Zwischenablage mit einem Tipp.
 - **Verlauf** der letzten 10 Scans zum erneuten Aufrufen und Kopieren, löschbar.
+- **Binärcodes** werden als Hex-Dump angezeigt. **VDV-eTickets** (z. B.
+  Deutschlandticket) werden zusätzlich dekodiert: Ticketnummer, Produkt,
+  Gültigkeit, Ausstellungszeit, (maskierter) Inhaber, Geburtsdatum,
+  Organisationsnummern, Klasse, Preis und Signaturprüfung. Die Rohdaten
+  bleiben als Hex aufklappbar. Alles lokal auf dem Gerät.
 - **Info-Dialog** mit Entwickler, Version, Build-Datum und Lizenzen.
 - **Taschenlampe**, heller und dunkler Modus.
 - **13 Sprachen**, siehe [Sprachen](#sprachen).
+
+Was sich in welcher Version geändert hat, steht im [Changelog](CHANGELOG.md).
 
 ## Datenschutz
 
@@ -43,17 +50,22 @@ Installationszeitpunkt.
 | `lib/scan_mode.dart` | Scan-Arten und ihre Codeformate |
 | `lib/result_page.dart` | Ergebnisansicht mit Kopieren und Link-Rückfrage |
 | `lib/history.dart` | Verlauf der letzten 10 Scans |
+| `lib/binary_payload.dart` | Erkennung von Binärinhalten, Hex-Darstellung |
+| `lib/vdv/` | VDV-eTicket: BER, ISO 9796-2, Zertifikate, Ticketdaten |
+| `assets/vdv_certs/` | Öffentliche VDV-CA-Schlüssel (CC0), siehe `tool/vdv/README.md` |
 | `lib/app_info.dart` | Info-Dialog |
 | `lib/localization.dart`, `lib/l10n/` | Übersetzungen (generiert) |
 | `test/` | Widget- und Unit-Tests, auch für alle Sprachen |
+| `tool/vdv/` | Update-Skript und Herkunft der VDV-Schlüssel |
 | `tool/` | Skripte für Icon, Übersetzungen, Store-Grafiken, Lizenzköpfe, Release-Schlüssel |
 | `screenshots/` | Quellbilder und fertige Grafiken für App Store und Google Play |
 
 ## Version
 
-Version und Build-Nummer stehen in `pubspec.yaml`, z. B. `version: 1.1.0+5`.
-Für jeden Upload zu TestFlight oder Google Play muss die Build-Nummer hinter
-dem `+` steigen.
+Aktuell: **1.3.0** (Build 7). Version und Build-Nummer stehen in
+`pubspec.yaml`, z. B. `version: 1.3.0+7`. Für jeden Upload zu TestFlight oder
+Google Play muss die Build-Nummer hinter dem `+` steigen. Jede neue Version
+bekommt einen Eintrag in [CHANGELOG.md](CHANGELOG.md).
 
 ## Release
 
@@ -153,3 +165,8 @@ python3 tool/license/add_headers.py --check  # nur prüfen
 
 Die Schrift Source Code Pro steht unter der SIL Open Font License 1.1
 (`assets/fonts/SourceCodePro-OFL.txt`).
+
+Die öffentlichen VDV-Schlüssel in `assets/vdv_certs/` stehen unter CC0-1.0
+(Quelle: KDE KItinerary, ursprünglich VDV-PKI), siehe `tool/vdv/README.md`.
+Der Dekoder in `lib/vdv/` ist eine eigene Umsetzung nach dem dokumentierten
+Format und enthält keinen KItinerary-Code.

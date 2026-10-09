@@ -35,6 +35,14 @@ Du kannst den Verlauf jederzeit in der App löschen. Beim Löschen der App
 werden alle Daten entfernt. Sie können jedoch Teil einer Gerätesicherung sein,
 die du über das Betriebssystem erstellst (z. B. iCloud- oder Android-Backup).
 
+### Elektronische Tickets
+
+Enthält ein Code ein elektronisches Ticket nach VDV-Standard (z. B.
+Deutschlandticket), liest die App die darin enthaltenen Angaben wie Gültigkeit,
+maskierten Namen und Geburtsdatum ausschließlich auf deinem Gerät aus. Dafür
+nutzt sie mitgelieferte öffentliche Schlüssel; es werden keine Daten
+übertragen.
+
 ### Öffnen von Links
 
 Enthält ein Code einen Web-Link, öffnet die App ihn nur nach deiner
@@ -104,6 +112,13 @@ later. The app does not send this data off the device. You can clear the
 history in the app at any time. Deleting the app removes all of its data.
 The data may, however, be included in device backups that you create through
 the operating system (e.g. iCloud or Android backup).
+
+### Electronic tickets
+
+If a code contains an electronic ticket according to the VDV standard (e.g.
+Deutschlandticket), the app reads the included details such as validity, masked
+name and date of birth solely on your device. It uses bundled public keys for
+this; no data is transmitted.
 
 ### Opening links
 
