@@ -17,6 +17,7 @@ import 'package:flutter/services.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'binary_payload.dart';
 import 'localization.dart';
 import 'scan_mode.dart';
 
@@ -72,13 +73,17 @@ class ResultPage extends StatelessWidget {
     required this.raw,
     required this.type,
     this.format = BarcodeFormat.qrCode,
+    this.binary = false,
   });
 
+  /// Inhalt als Text; bei [binary] die Bytes als kompakter Hex-Text.
   final String raw;
   final BarcodeType type;
   final BarcodeFormat format;
+  final bool binary;
 
   Uri? get _webUri {
+    if (binary) return null;
     final uri = Uri.tryParse(raw.trim());
     if (uri == null || uri.host.isEmpty) return null;
     return (uri.scheme == 'http' || uri.scheme == 'https') ? uri : null;
@@ -115,9 +120,14 @@ class ResultPage extends StatelessWidget {
     final uri = _webUri;
     final scheme = Theme.of(context).colorScheme;
     final l = context.l10n;
+    final bytes = binary ? fromHex(raw) : null;
+    final title = bytes == null
+        ? typeLabel(type, l)
+        : (isVdvTicket(bytes) ? l.vdvTicket : l.typeBinary);
+    final copyText = bytes == null ? raw : toSpacedHex(bytes);
 
     return Scaffold(
-      appBar: AppBar(title: Text(typeLabel(type, l))),
+      appBar: AppBar(title: Text(title)),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -128,6 +138,13 @@ class ResultPage extends StatelessWidget {
                 l.formatLine(formatLabel(format, l)),
                 style: Theme.of(context).textTheme.labelLarge,
               ),
+              if (bytes != null) ...[
+                const SizedBox(height: 4),
+                Text(
+                  '${l.typeBinary} · ${l.byteCount('${bytes.length}')}',
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+              ],
               const SizedBox(height: 8),
               if (uri != null) ...[
                 Text(
@@ -144,13 +161,15 @@ class ResultPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: SingleChildScrollView(
-                    child: SelectableText(
-                      raw,
-                      style: const TextStyle(
-                        fontFamily: kContentFont,
-                        fontSize: 20,
-                      ),
-                    ),
+                    child: bytes == null
+                        ? SelectableText(
+                            raw,
+                            style: const TextStyle(
+                              fontFamily: kContentFont,
+                              fontSize: 20,
+                            ),
+                          )
+                        : _HexDump(bytes: bytes),
                   ),
                 ),
               ),
@@ -161,7 +180,7 @@ class ResultPage extends StatelessWidget {
                     child: OutlinedButton.icon(
                       icon: const Icon(Icons.copy),
                       label: Text(l.copy),
-                      onPressed: () => copyWithFeedback(context, raw),
+                      onPressed: () => copyWithFeedback(context, copyText),
                     ),
                   ),
                   if (uri != null) ...[
@@ -182,4 +201,30 @@ class ResultPage extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Hex-Dump, der so viele Bytes pro Zeile zeigt, wie in die Breite passen.
+class _HexDump extends StatelessWidget {
+  const _HexDump({required this.bytes});
+
+  final List<int> bytes;
+
+  static const _fontSize = 16.0;
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      // Source Code Pro: Zeichenbreite etwa 0,6 × Schriftgröße.
+      final chars = constraints.maxWidth / (_fontSize * 0.6);
+      final perLine = [
+        16,
+        8,
+        4,
+      ].firstWhere((n) => 6 + n * 3 - 1 <= chars, orElse: () => 4);
+      return SelectableText(
+        hexDump(bytes, perLine: perLine),
+        style: const TextStyle(fontFamily: kContentFont, fontSize: _fontSize),
+      );
+    },
+  );
 }

@@ -19,6 +19,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_info.dart' show formatDateTime;
+import 'binary_payload.dart';
 import 'localization.dart';
 import 'result_page.dart';
 import 'scan_mode.dart';
@@ -29,9 +30,12 @@ class ScanEntry {
     required this.type,
     required this.time,
     this.format = BarcodeFormat.qrCode,
+    this.binary = false,
   });
 
+  /// Inhalt als Text; bei [binary] die Bytes als kompakter Hex-Text.
   final String raw;
+  final bool binary;
   final BarcodeType type;
   final BarcodeFormat format;
   final DateTime time;
@@ -41,6 +45,7 @@ class ScanEntry {
     'type': type.name,
     'format': format.name,
     'time': time.toIso8601String(),
+    if (binary) 'binary': true,
   };
 
   static ScanEntry? fromJson(Object? json) {
@@ -54,7 +59,13 @@ class ScanEntry {
     final format =
         BarcodeFormat.values.asNameMap()[json['format']] ??
         BarcodeFormat.qrCode;
-    return ScanEntry(raw: raw, type: type, format: format, time: time);
+    return ScanEntry(
+      raw: raw,
+      type: type,
+      format: format,
+      time: time,
+      binary: json['binary'] == true,
+    );
   }
 }
 
@@ -90,6 +101,7 @@ class ScanHistory extends ChangeNotifier {
     String raw,
     BarcodeType type, {
     BarcodeFormat format = BarcodeFormat.qrCode,
+    bool binary = false,
     DateTime? time,
   }) async {
     _entries
@@ -101,6 +113,7 @@ class ScanHistory extends ChangeNotifier {
           type: type,
           format: format,
           time: time ?? DateTime.now(),
+          binary: binary,
         ),
       );
     if (_entries.length > maxEntries) {
@@ -174,22 +187,28 @@ class HistoryPage extends StatelessWidget {
                 separatorBuilder: (_, _) => const Divider(height: 1),
                 itemBuilder: (context, i) {
                   final e = entries[i];
+                  final shown = e.binary ? toSpacedHex(fromHex(e.raw)) : e.raw;
+                  final kind = e.binary
+                      ? (isVdvTicket(fromHex(e.raw))
+                            ? l.vdvTicket
+                            : l.typeBinary)
+                      : typeLabel(e.type, l);
                   return ListTile(
-                    leading: Icon(typeIcon(e.type)),
+                    leading: Icon(e.binary ? Icons.memory : typeIcon(e.type)),
                     title: Text(
-                      e.raw,
+                      shown,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontFamily: kContentFont),
                     ),
                     subtitle: Text(
-                      '${formatLabel(e.format, l)} · ${typeLabel(e.type, l)} · '
+                      '${formatLabel(e.format, l)} · $kind · '
                       '${formatDateTime(e.time, locale)}',
                     ),
                     trailing: IconButton(
                       tooltip: l.copy,
                       icon: const Icon(Icons.copy),
-                      onPressed: () => copyWithFeedback(context, e.raw),
+                      onPressed: () => copyWithFeedback(context, shown),
                     ),
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(
@@ -197,6 +216,7 @@ class HistoryPage extends StatelessWidget {
                           raw: e.raw,
                           type: e.type,
                           format: e.format,
+                          binary: e.binary,
                         ),
                       ),
                     ),

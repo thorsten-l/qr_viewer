@@ -81,6 +81,16 @@ ANDROID_TEXTS = {
     },
 }
 
+# Google Play, Tablet 9:16 (7" und 10"): Quellen in screenshots/source/<sprache>/tablet/
+# Ziel-Datei: (Quelldatei, Überschrift, Unterzeile)
+TABLET_TEXTS = {
+    "de": {
+        "01_ergebnis.png": ("03_ergebnis_url.png", "Erst sehen,\ndann öffnen", "Links öffnen sich nur nach Rückfrage"),
+        "02_scanner_menue.png": ("01_scanner_menue.png", "QR, Barcode,\nData Matrix & mehr", "Scan-Art einfach im Titel wählen"),
+        "03_verlauf.png": ("02_verlauf.png", "Die letzten 10 Scans\nimmer griffbereit", "Aufrufen und kopieren mit einem Tipp"),
+    },
+}
+
 # iPad 13": Quellen in screenshots/source/<sprache>/ipad/
 IPAD_TEXTS = {
     "de": {
@@ -94,6 +104,7 @@ IPAD_TEXTS = {
 # Gestaltung je Gerät: Leinwand, Statusleiste, Bildschirmbreite, Schriftgrößen, Abstände
 IPHONE = dict(w=1290, h=2796, status=STATUS_BAR, sw=1040, title=112, sub=54, ty=150, top=720, radius=64)
 ANDROID = dict(w=1080, h=1920, status=140, sw=680, title=84, sub=40, ty=90, top=420, radius=44)
+TABLET = dict(w=1440, h=2560, status=70, sw=1240, title=110, sub=52, ty=130, top=560, radius=52)
 IPAD = dict(w=2064, h=2752, status=64, sw=1440, title=150, sub=72, ty=140, top=830, radius=48)
 
 
@@ -149,3 +160,10 @@ if __name__ == "__main__":
             src = os.path.join(ROOT, "screenshots", "source", lang, "android", name)
             make(src, title, sub, None, ANDROID).save(os.path.join(out, name), optimize=True)
             print("play phone", lang, name)
+    for lang, files in TABLET_TEXTS.items():
+        out = os.path.join(ROOT, "screenshots", "play_store", "tablet", lang)
+        os.makedirs(out, exist_ok=True)
+        for name, (src_name, title, sub) in files.items():
+            src = os.path.join(ROOT, "screenshots", "source", lang, "tablet", src_name)
+            make(src, title, sub, None, TABLET).save(os.path.join(out, name), optimize=True)
+            print("play tablet", lang, name)

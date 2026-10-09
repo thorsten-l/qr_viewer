@@ -120,6 +120,23 @@
   "@typeText": {
     "description": "Inhaltstyp Text"
   },
+  "typeBinary": "Binary data",
+  "@typeBinary": {
+    "description": "Inhaltstyp Binärdaten"
+  },
+  "byteCount": "{count} bytes",
+  "@byteCount": {
+    "description": "Größe der Binärdaten",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "vdvTicket": "VDV eTicket (signed)",
+  "@vdvTicket": {
+    "description": "Binärcode eines deutschen eTickets (VDV)"
+  },
   "formatMicroQr": "Micro QR code",
   "@formatMicroQr": {
     "description": "Formatname Micro-QR"

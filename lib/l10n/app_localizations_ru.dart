@@ -113,6 +113,17 @@ class AppLocalizationsRu extends AppLocalizations {
   String get typeText => 'Текст';
 
   @override
+  String get typeBinary => 'Двоичные данные';
+
+  @override
+  String byteCount(String count) {
+    return '$count байт';
+  }
+
+  @override
+  String get vdvTicket => 'eTicket VDV (подписан)';
+
+  @override
   String get formatMicroQr => 'Micro QR-код';
 
   @override

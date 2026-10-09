@@ -113,6 +113,17 @@ class AppLocalizationsUk extends AppLocalizations {
   String get typeText => 'Текст';
 
   @override
+  String get typeBinary => 'Двійкові дані';
+
+  @override
+  String byteCount(String count) {
+    return '$count байт';
+  }
+
+  @override
+  String get vdvTicket => 'eTicket VDV (підписаний)';
+
+  @override
   String get formatMicroQr => 'Micro QR-код';
 
   @override

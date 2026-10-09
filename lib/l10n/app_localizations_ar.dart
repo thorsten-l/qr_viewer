@@ -113,6 +113,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get typeText => 'نص';
 
   @override
+  String get typeBinary => 'بيانات ثنائية';
+
+  @override
+  String byteCount(String count) {
+    return '$count بايت';
+  }
+
+  @override
+  String get vdvTicket => 'تذكرة VDV إلكترونية (موقّعة)';
+
+  @override
   String get formatMicroQr => 'رمز Micro QR';
 
   @override

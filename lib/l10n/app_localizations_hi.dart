@@ -113,6 +113,17 @@ class AppLocalizationsHi extends AppLocalizations {
   String get typeText => 'टेक्स्ट';
 
   @override
+  String get typeBinary => 'बाइनरी डेटा';
+
+  @override
+  String byteCount(String count) {
+    return '$count बाइट';
+  }
+
+  @override
+  String get vdvTicket => 'VDV ई-टिकट (हस्ताक्षरित)';
+
+  @override
   String get formatMicroQr => 'Micro QR कोड';
 
   @override

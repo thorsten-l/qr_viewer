@@ -113,6 +113,17 @@ class AppLocalizationsJa extends AppLocalizations {
   String get typeText => 'テキスト';
 
   @override
+  String get typeBinary => 'バイナリデータ';
+
+  @override
+  String byteCount(String count) {
+    return '$count バイト';
+  }
+
+  @override
+  String get vdvTicket => 'VDV eチケット（署名付き）';
+
+  @override
   String get formatMicroQr => 'マイクロQRコード';
 
   @override

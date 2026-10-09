@@ -314,6 +314,24 @@ abstract class AppLocalizations {
   /// **'Text'**
   String get typeText;
 
+  /// Inhaltstyp Binärdaten
+  ///
+  /// In en, this message translates to:
+  /// **'Binary data'**
+  String get typeBinary;
+
+  /// Größe der Binärdaten
+  ///
+  /// In en, this message translates to:
+  /// **'{count} bytes'**
+  String byteCount(String count);
+
+  /// Binärcode eines deutschen eTickets (VDV)
+  ///
+  /// In en, this message translates to:
+  /// **'VDV eTicket (signed)'**
+  String get vdvTicket;
+
   /// Formatname Micro-QR
   ///
   /// In en, this message translates to:

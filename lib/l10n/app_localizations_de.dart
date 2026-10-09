@@ -113,6 +113,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get typeText => 'Text';
 
   @override
+  String get typeBinary => 'Binärdaten';
+
+  @override
+  String byteCount(String count) {
+    return '$count Bytes';
+  }
+
+  @override
+  String get vdvTicket => 'VDV-eTicket (signiert)';
+
+  @override
   String get formatMicroQr => 'Micro-QR-Code';
 
   @override

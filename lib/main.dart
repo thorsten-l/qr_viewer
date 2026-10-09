@@ -20,6 +20,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_info.dart';
+import 'binary_payload.dart';
 import 'history.dart';
 import 'localization.dart';
 import 'result_page.dart';
@@ -119,13 +120,27 @@ class _ScannerPageState extends State<ScannerPage> {
   Future<void> _onDetect(BarcodeCapture capture) async {
     if (_handling) return;
     final barcode = capture.barcodes.firstOrNull;
-    final raw = barcode?.rawValue;
-    if (barcode == null || raw == null || raw.isEmpty) return;
+    if (barcode == null) return;
+    // Binärinhalte (z. B. VDV-eTickets) werden als Hex-Text weitergereicht.
+    final bytes = binaryContent(barcode);
+    final binary = bytes != null;
+    final raw = binary ? toHex(bytes) : barcode.rawValue;
+    if (raw == null || raw.isEmpty) return;
 
     _handling = true;
-    await widget.history.add(raw, barcode.type, format: barcode.format);
+    await widget.history.add(
+      raw,
+      barcode.type,
+      format: barcode.format,
+      binary: binary,
+    );
     await _pauseScannerFor(
-      (_) => ResultPage(raw: raw, type: barcode.type, format: barcode.format),
+      (_) => ResultPage(
+        raw: raw,
+        type: barcode.type,
+        format: barcode.format,
+        binary: binary,
+      ),
     );
     _handling = false;
   }

@@ -113,6 +113,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get typeText => 'Texte';
 
   @override
+  String get typeBinary => 'Données binaires';
+
+  @override
+  String byteCount(String count) {
+    return '$count octets';
+  }
+
+  @override
+  String get vdvTicket => 'eTicket VDV (signé)';
+
+  @override
   String get formatMicroQr => 'Micro QR code';
 
   @override

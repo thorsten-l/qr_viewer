@@ -156,6 +156,20 @@ S = {
  "typeText": ("Inhaltstyp Text", [], dict(
    en="Text", de="Text", es="Texto", fr="Texte", pt="Texto", ru="Текст", zh="文本", hi="टेक्स्ट", ar="نص", ja="テキスト",
    it="Testo", pl="Tekst", uk="Текст")),
+ "typeBinary": ("Inhaltstyp Binärdaten", [], dict(
+   en="Binary data", de="Binärdaten", es="Datos binarios", fr="Données binaires", pt="Dados binários",
+   ru="Двоичные данные", zh="二进制数据", hi="बाइनरी डेटा", ar="بيانات ثنائية", ja="バイナリデータ",
+   it="Dati binari", pl="Dane binarne", uk="Двійкові дані")),
+ "byteCount": ("Größe der Binärdaten", ["count"], dict(
+   en="{count} bytes", de="{count} Bytes", es="{count} bytes", fr="{count} octets", pt="{count} bytes",
+   ru="{count} байт", zh="{count} 字节", hi="{count} बाइट", ar="{count} بايت", ja="{count} バイト",
+   it="{count} byte", pl="{count} bajtów", uk="{count} байт")),
+ "vdvTicket": ("Binärcode eines deutschen eTickets (VDV)", [], dict(
+   en="VDV eTicket (signed)", de="VDV-eTicket (signiert)", es="eTicket VDV (firmado)",
+   fr="eTicket VDV (signé)", pt="eTicket VDV (assinado)", ru="eTicket VDV (подписан)",
+   zh="VDV 电子票（已签名）", hi="VDV ई-टिकट (हस्ताक्षरित)", ar="تذكرة VDV إلكترونية (موقّعة)",
+   ja="VDV eチケット（署名付き）", it="eTicket VDV (firmato)", pl="eBilet VDV (podpisany)",
+   uk="eTicket VDV (підписаний)")),
  "formatMicroQr": ("Formatname Micro-QR", [], dict(
    en="Micro QR code", de="Micro-QR-Code", es="Código Micro QR", fr="Micro QR code", pt="Código Micro QR",
    ru="Micro QR-код", zh="Micro QR 码", hi="Micro QR कोड", ar="رمز Micro QR", ja="マイクロQRコード",

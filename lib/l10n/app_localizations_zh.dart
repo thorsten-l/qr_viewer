@@ -113,6 +113,17 @@ class AppLocalizationsZh extends AppLocalizations {
   String get typeText => '文本';
 
   @override
+  String get typeBinary => '二进制数据';
+
+  @override
+  String byteCount(String count) {
+    return '$count 字节';
+  }
+
+  @override
+  String get vdvTicket => 'VDV 电子票（已签名）';
+
+  @override
   String get formatMicroQr => 'Micro QR 码';
 
   @override
