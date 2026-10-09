@@ -18,6 +18,7 @@ Aufruf (Pillow nötig):
     python tool/screenshots/make_store_banners.py
 Quellen:  screenshots/source/<sprache>/*.png, tool/app_icon/icon_1024.png
 Ergebnis: screenshots/app_store/banner/<sprache>/{kopfzeile,suchergebnisse}.png
+          screenshots/play_store/<sprache>/feature_graphic_1024x500.png, screenshots/play_store/icon_512.png
 Alles Wichtige liegt mittig, weil die Kopfzeile je nach Gerät beschnitten wird.
 """
 import os
@@ -117,7 +118,35 @@ def search(lang, w=3840, h=2560):
     return img
 
 
+def play_feature(lang, w=1024, h=500):
+    """Google Play "Feature Graphic": Icon, Name, Slogan, ein Bildschirm rechts."""
+    title, sub = TEXTS[lang]
+    img = gradient(w, h)
+    d = ImageDraw.Draw(img)
+    ic = icon(150)
+    img.paste(ic, (60, 70), ic)
+    d.text((232, 98), "QR Viewer", font=ImageFont.truetype(FONT, 66, index=DEMI), fill="white")
+    d.text((62, 262), title, font=ImageFont.truetype(FONT, 50, index=BOLD), fill="white")
+    sf = ImageFont.truetype(FONT, 24, index=MEDIUM)
+    d.text((64, 336), sub, font=sf, fill=(200, 236, 232))
+    src = os.path.join(ROOT, "screenshots", "source", lang, "android", "01_ergebnis.png")
+    ph = phone(src, 230) if os.path.exists(src) else None
+    if ph:
+        place(img, ph, w - 150, 60)
+    return img
+
+
+def play_icon(size=512):
+    ic = Image.open(os.path.join(ROOT, "tool", "app_icon", "icon_1024.png")).convert("RGB")
+    return ic.resize((size, size), Image.LANCZOS)
+
+
 if __name__ == "__main__":
+    for lang in TEXTS:
+        out = os.path.join(ROOT, "screenshots", "play_store", lang)
+        os.makedirs(out, exist_ok=True)
+        play_feature(lang).save(os.path.join(out, "feature_graphic_1024x500.png"), optimize=True)
+    play_icon().save(os.path.join(ROOT, "screenshots", "play_store", "icon_512.png"), optimize=True)
     for lang in TEXTS:
         out = os.path.join(ROOT, "screenshots", "app_store", "banner", lang)
         os.makedirs(out, exist_ok=True)

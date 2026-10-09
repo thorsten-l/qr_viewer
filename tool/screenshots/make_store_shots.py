@@ -70,6 +70,17 @@ def centered(d, y, text, font, fill, spacing):
 
 SIZES = {"iphone_6.9": (1290, 2796), "iphone_6.1_1179x2556": (1179, 2556)}
 
+# Google Play, Handy 9:16: Quellen in screenshots/source/<sprache>/android/
+ANDROID_TEXTS = {
+    "de": {
+        "01_ergebnis.png": ("Erst sehen,\ndann öffnen", "Jeder Inhalt wird zuerst nur angezeigt"),
+        "02_link_dialog.png": ("Links nur\nnach Rückfrage", "Du siehst vorher, wohin ein Code führt"),
+        "03_scanner_menue.png": ("QR, Barcode,\nData Matrix & mehr", "Scan-Art einfach im Titel wählen"),
+        "04_barcode.png": ("Auch Barcodes\nund Produktcodes", "EAN, UPC, ISBN, Code 128 und mehr"),
+        "05_verlauf.png": ("Die letzten 10 Scans\nimmer griffbereit", "Aufrufen und kopieren mit einem Tipp"),
+    },
+}
+
 # iPad 13": Quellen in screenshots/source/<sprache>/ipad/
 IPAD_TEXTS = {
     "de": {
@@ -82,6 +93,7 @@ IPAD_TEXTS = {
 
 # Gestaltung je Gerät: Leinwand, Statusleiste, Bildschirmbreite, Schriftgrößen, Abstände
 IPHONE = dict(w=1290, h=2796, status=STATUS_BAR, sw=1040, title=112, sub=54, ty=150, top=720, radius=64)
+ANDROID = dict(w=1080, h=1920, status=140, sw=680, title=84, sub=40, ty=90, top=420, radius=44)
 IPAD = dict(w=2064, h=2752, status=64, sw=1440, title=150, sub=72, ty=140, top=830, radius=48)
 
 
@@ -130,3 +142,10 @@ if __name__ == "__main__":
             src = os.path.join(ROOT, "screenshots", "source", lang, "ipad", name)
             make(src, title, sub, None, IPAD).save(os.path.join(out, name), optimize=True)
             print("ipad_13", lang, name)
+    for lang, files in ANDROID_TEXTS.items():
+        out = os.path.join(ROOT, "screenshots", "play_store", "phone", lang)
+        os.makedirs(out, exist_ok=True)
+        for name, (title, sub) in files.items():
+            src = os.path.join(ROOT, "screenshots", "source", lang, "android", name)
+            make(src, title, sub, None, ANDROID).save(os.path.join(out, name), optimize=True)
+            print("play phone", lang, name)

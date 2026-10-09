@@ -1,12 +1,21 @@
-# qr_viewer
+# QR Viewer
 
-Minimaler QR-Code-Scanner für Android und iOS.
+Scanner für QR-Codes und Barcodes für iPhone, iPad und Android, der Inhalte
+zuerst nur anzeigt. Links öffnen sich erst nach einer Rückfrage.
 
-- Scannt ausschließlich QR-Codes (`mobile_scanner`).
-- Zeigt den Inhalt nur an, öffnet nichts automatisch.
-- Nur `http`/`https`-Links lassen sich öffnen, und erst nach einer Rückfrage mit sichtbarer URL.
-- Inhalt kann in die Zwischenablage kopiert werden.
-- Taschenlampe über die AppBar.
+## Funktionen
+
+- **Scan-Arten** über das Menü im Titel: QR-Code, Barcode (EAN-13, EAN-8,
+  UPC-A, UPC-E, Code 128, Code 39, Code 93, Codabar, ITF-14), Data Matrix,
+  PDF417, Aztec oder alle Codes gleichzeitig. Die gewählte Art bleibt gespeichert.
+- **Nur anzeigen:** Der Inhalt erscheint in Source Code Pro, zusammen mit
+  Format, Inhaltstyp und bei Links dem Host. Nichts wird automatisch geöffnet.
+- **Links** (`http`/`https`) öffnen sich erst nach einer Rückfrage mit sichtbarer URL.
+- **Kopieren** in die Zwischenablage mit einem Tipp.
+- **Verlauf** der letzten 10 Scans zum erneuten Aufrufen und Kopieren, löschbar.
+- **Info-Dialog** mit Entwickler, Version, Build-Datum und Lizenzen.
+- **Taschenlampe**, heller und dunkler Modus.
+- **13 Sprachen**, siehe [Sprachen](#sprachen).
 
 ## Datenschutz
 
@@ -20,39 +29,115 @@ Die App erhebt keine personenbezogenen Daten. Details stehen in der
 flutter pub get
 flutter analyze
 flutter test
-flutter run
+flutter run --dart-define=BUILD_DATE=$(date +%Y-%m-%dT%H:%M)
 ```
 
-## Build-Datum im Info-Dialog
+Ohne `BUILD_DATE` zeigt der Info-Dialog statt des Build-Datums den
+Installationszeitpunkt.
 
-Das Build-Datum wird beim Bauen übergeben:
+### Projektstruktur
+
+| Pfad | Inhalt |
+|---|---|
+| `lib/main.dart` | App, Scanner-Seite und Auswahlmenü |
+| `lib/scan_mode.dart` | Scan-Arten und ihre Codeformate |
+| `lib/result_page.dart` | Ergebnisansicht mit Kopieren und Link-Rückfrage |
+| `lib/history.dart` | Verlauf der letzten 10 Scans |
+| `lib/app_info.dart` | Info-Dialog |
+| `lib/localization.dart`, `lib/l10n/` | Übersetzungen (generiert) |
+| `test/` | Widget- und Unit-Tests, auch für alle Sprachen |
+| `tool/` | Skripte für Icon, Übersetzungen, Store-Grafiken, Lizenzköpfe, Release-Schlüssel |
+| `screenshots/` | Quellbilder und fertige Grafiken für App Store und Google Play |
+
+## Version
+
+Version und Build-Nummer stehen in `pubspec.yaml`, z. B. `version: 1.1.0+5`.
+Für jeden Upload zu TestFlight oder Google Play muss die Build-Nummer hinter
+dem `+` steigen.
+
+## Release
+
+### iOS / TestFlight
+
+Signiert wird automatisch mit dem Team `49MFGU6N6W`. Bauen und direkt zu
+App Store Connect hochladen:
 
 ```sh
-flutter run --dart-define=BUILD_DATE=$(date +%Y-%m-%dT%H:%M)
-flutter build ios --release --dart-define=BUILD_DATE=$(date +%Y-%m-%dT%H:%M)
+flutter build ipa --release \
+  --dart-define=BUILD_DATE=$(date +%Y-%m-%dT%H:%M) \
+  --export-options-plist=ios/export/ExportOptions-TestFlight.plist
 ```
 
-Ohne diese Angabe zeigt der Info-Dialog stattdessen den Installationszeitpunkt.
+Flutter meldet danach einen Fehler, weil es eine lokale `.ipa` sucht, die
+beim direkten Upload nicht entsteht. Ob der Upload geklappt hat, steht im
+Xcode-Protokoll (`UPLOAD SUCCEEDED`) bzw. in App Store Connect.
 
-## Plattform-Hinweise
+### Android
 
-- **iOS:** `NSCameraUsageDescription` ist in `ios/Runner/Info.plist` gesetzt.
-- **Android:** Die Kamera-Berechtigung kommt aus dem Plugin-Manifest von `mobile_scanner`.
-  Die `<queries>` für `http`/`https` in `AndroidManifest.xml` sind für `url_launcher` nötig.
+Release-Builds werden mit dem Upload-Schlüssel aus `android/key.properties`
+signiert (nicht im Repository). Einmalig anlegen:
+
+```sh
+tool/create_release_key.sh
+```
+
+Das Skript fragt ein Passwort ab und legt `~/keystores/qr_viewer-upload.jks`
+sowie `android/key.properties` an. Beides sicher aufbewahren. Fehlt
+`key.properties`, wird mit dem Debug-Schlüssel signiert.
+
+```sh
+BD=$(date +%Y-%m-%dT%H:%M)
+flutter build appbundle --release --dart-define=BUILD_DATE=$BD            # Google Play
+flutter build apk --release --split-per-abi --dart-define=BUILD_DATE=$BD  # direkt installierbar
+```
 
 ## Sprachen
 
-Die App gibt es auf Englisch, Deutsch, Spanisch, Französisch, Portugiesisch,
-Russisch, Chinesisch (vereinfacht), Hindi, Arabisch, Japanisch, Italienisch,
-Polnisch und Ukrainisch. Sie folgt
-der Gerätesprache; andere Sprachen fallen auf Englisch zurück.
+Englisch, Deutsch, Spanisch, Französisch, Portugiesisch, Russisch, Chinesisch
+(vereinfacht), Hindi, Arabisch, Japanisch, Italienisch, Polnisch und
+Ukrainisch. Die App folgt der Gerätesprache; andere Sprachen fallen auf
+Englisch zurück. Arabisch wird von rechts nach links dargestellt.
 
-Alle Texte stehen in `tool/l10n/strings.py`. Nach einer Änderung:
+Alle Texte, auch die iOS-Kamera-Rückfrage, stehen in `tool/l10n/strings.py`.
+Nach einer Änderung:
 
 ```sh
-python3 tool/l10n/strings.py   # erzeugt lib/l10n/*.arb und ios/Runner/*.lproj
+python3 tool/l10n/strings.py   # erzeugt lib/l10n/*.arb und ios/Runner/*.lproj/InfoPlist.strings
 flutter gen-l10n               # erzeugt lib/l10n/app_localizations*.dart
 ```
+
+Eine neue Sprache muss zusätzlich in `ios/Runner/Info.plist`
+(`CFBundleLocalizations`), im Xcode-Projekt und in
+`android/app/src/main/res/xml/locales_config.xml` eingetragen werden.
+
+## Grafiken
+
+Die Skripte brauchen Pillow und qrcode, am besten in einer eigenen Umgebung:
+
+```sh
+python3 -m venv /tmp/qrv-venv && /tmp/qrv-venv/bin/pip install pillow qrcode
+```
+
+| Skript | Erzeugt |
+|---|---|
+| `tool/app_icon/make_icon.py`, `install_icons.py` | App-Icon und Startbildschirm für iOS und Android (siehe `tool/app_icon/README.md`) |
+| `tool/screenshots/make_store_shots.py` | Screenshots für App Store (iPhone, iPad 13") und Google Play (Handy 9:16) |
+| `tool/screenshots/make_store_banners.py` | App-Store-Kopfzeile und -Suchergebnisse, Play-Store-Feature-Graphic und 512er-Icon |
+
+Quellbilder liegen unter `screenshots/source/<sprache>/` (iPhone direkt,
+`ipad/`, `android/`), Ergebnisse unter `screenshots/app_store/` und
+`screenshots/play_store/`.
+
+## Plattform-Hinweise
+
+- **iOS:** Die Codeerkennung nutzt Apples Vision-Framework. Die Kamera-Rückfrage
+  ist in `ios/Runner/*.lproj/InfoPlist.strings` übersetzt.
+  `ITSAppUsesNonExemptEncryption` ist auf `false` gesetzt.
+- **Android:** Die Codeerkennung nutzt Google ML Kit (in die App eingebaut).
+  ML Kit bringt die Berechtigungen `INTERNET` und `ACCESS_NETWORK_STATE` mit und
+  kann Diagnosedaten an Google senden; das ist in der Datenschutzerklärung
+  beschrieben. Die `<queries>` für `http`/`https` in `AndroidManifest.xml`
+  braucht `url_launcher`. Ab Android 13 ist die Sprache pro App wählbar.
 
 ## Lizenz
 
