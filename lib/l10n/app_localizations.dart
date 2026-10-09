@@ -332,6 +332,132 @@ abstract class AppLocalizations {
   /// **'VDV eTicket (signed)'**
   String get vdvTicket;
 
+  /// Überschrift Ticketdaten
+  ///
+  /// In en, this message translates to:
+  /// **'Ticket data'**
+  String get ticketData;
+
+  /// Ticketnummer
+  ///
+  /// In en, this message translates to:
+  /// **'Ticket number'**
+  String get ticketNumber;
+
+  /// Produkt des Tickets
+  ///
+  /// In en, this message translates to:
+  /// **'Product'**
+  String get ticketProduct;
+
+  /// Produktname
+  ///
+  /// In en, this message translates to:
+  /// **'Deutschlandticket'**
+  String get productDeutschlandticket;
+
+  /// Produktname
+  ///
+  /// In en, this message translates to:
+  /// **'Deutschlandticket job ticket'**
+  String get productJobticket;
+
+  /// Produktname
+  ///
+  /// In en, this message translates to:
+  /// **'Deutschlandticket for pupils and students'**
+  String get productStudentTicket;
+
+  /// Gültig ab
+  ///
+  /// In en, this message translates to:
+  /// **'Valid from'**
+  String get validFrom;
+
+  /// Gültig bis
+  ///
+  /// In en, this message translates to:
+  /// **'Valid until'**
+  String get validUntil;
+
+  /// Ausstellungszeit
+  ///
+  /// In en, this message translates to:
+  /// **'Issued'**
+  String get issuedAt;
+
+  /// Inhaber
+  ///
+  /// In en, this message translates to:
+  /// **'Holder'**
+  String get ticketHolder;
+
+  /// Geburtsdatum
+  ///
+  /// In en, this message translates to:
+  /// **'Date of birth'**
+  String get birthDate;
+
+  /// Hinweis maskierter Name
+  ///
+  /// In en, this message translates to:
+  /// **'masked'**
+  String get nameMasked;
+
+  /// Organisationsnummern KVP/PV
+  ///
+  /// In en, this message translates to:
+  /// **'Organisation IDs'**
+  String get organizations;
+
+  /// Wagenklasse
+  ///
+  /// In en, this message translates to:
+  /// **'Class'**
+  String get travelClass;
+
+  /// 1. Klasse
+  ///
+  /// In en, this message translates to:
+  /// **'1st class'**
+  String get firstClass;
+
+  /// 2. Klasse
+  ///
+  /// In en, this message translates to:
+  /// **'2nd class'**
+  String get secondClass;
+
+  /// Preis
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get ticketPrice;
+
+  /// Signatur gültig
+  ///
+  /// In en, this message translates to:
+  /// **'Signature valid'**
+  String get signatureValid;
+
+  /// Signatur ungültig
+  ///
+  /// In en, this message translates to:
+  /// **'Signature invalid'**
+  String get signatureInvalid;
+
+  /// Kein Schlüssel für die CA
+  ///
+  /// In en, this message translates to:
+  /// **'No public key for this issuer (CA {car}). The ticket data cannot be read.'**
+  String unknownIssuer(String car);
+
+  /// Rohdaten
+  ///
+  /// In en, this message translates to:
+  /// **'Raw data (hex)'**
+  String get rawData;
+
   /// Formatname Micro-QR
   ///
   /// In en, this message translates to:

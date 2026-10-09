@@ -124,6 +124,72 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vdvTicket => 'VDV eTicket (signed)';
 
   @override
+  String get ticketData => 'Ticket data';
+
+  @override
+  String get ticketNumber => 'Ticket number';
+
+  @override
+  String get ticketProduct => 'Product';
+
+  @override
+  String get productDeutschlandticket => 'Deutschlandticket';
+
+  @override
+  String get productJobticket => 'Deutschlandticket job ticket';
+
+  @override
+  String get productStudentTicket =>
+      'Deutschlandticket for pupils and students';
+
+  @override
+  String get validFrom => 'Valid from';
+
+  @override
+  String get validUntil => 'Valid until';
+
+  @override
+  String get issuedAt => 'Issued';
+
+  @override
+  String get ticketHolder => 'Holder';
+
+  @override
+  String get birthDate => 'Date of birth';
+
+  @override
+  String get nameMasked => 'masked';
+
+  @override
+  String get organizations => 'Organisation IDs';
+
+  @override
+  String get travelClass => 'Class';
+
+  @override
+  String get firstClass => '1st class';
+
+  @override
+  String get secondClass => '2nd class';
+
+  @override
+  String get ticketPrice => 'Price';
+
+  @override
+  String get signatureValid => 'Signature valid';
+
+  @override
+  String get signatureInvalid => 'Signature invalid';
+
+  @override
+  String unknownIssuer(String car) {
+    return 'No public key for this issuer (CA $car). The ticket data cannot be read.';
+  }
+
+  @override
+  String get rawData => 'Raw data (hex)';
+
+  @override
   String get formatMicroQr => 'Micro QR code';
 
   @override

@@ -14,12 +14,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'app_info.dart' show formatDateTime;
 import 'binary_payload.dart';
 import 'localization.dart';
 import 'scan_mode.dart';
+import 'vdv/vdv_ticket.dart';
 
 /// Schrift für die Anzeige des QR-Inhalts (Source Code Pro, SIL OFL 1.1).
 const kContentFont = 'SourceCodePro';
@@ -154,13 +157,12 @@ class ResultPage extends StatelessWidget {
                 const SizedBox(height: 8),
               ],
               Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: scheme.surfaceContainerHighest,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                child: Material(
+                  color: scheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(12),
+                  clipBehavior: Clip.antiAlias,
                   child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(12),
                     child: bytes == null
                         ? SelectableText(
                             raw,
@@ -168,6 +170,18 @@ class ResultPage extends StatelessWidget {
                               fontFamily: kContentFont,
                               fontSize: 20,
                             ),
+                          )
+                        : isVdvTicket(bytes)
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              _VdvTicketCard(bytes: bytes),
+                              ExpansionTile(
+                                tilePadding: EdgeInsets.zero,
+                                title: Text(l.rawData),
+                                children: [_HexDump(bytes: bytes)],
+                              ),
+                            ],
                           )
                         : _HexDump(bytes: bytes),
                   ),
@@ -224,6 +238,134 @@ class _HexDump extends StatelessWidget {
       return SelectableText(
         hexDump(bytes, perLine: perLine),
         style: const TextStyle(fontFamily: kContentFont, fontSize: _fontSize),
+      );
+    },
+  );
+}
+
+/// Lesbare Ticketdaten einer statischen VDV-Berechtigung.
+class _VdvTicketCard extends StatefulWidget {
+  const _VdvTicketCard({required this.bytes});
+
+  final List<int> bytes;
+
+  @override
+  State<_VdvTicketCard> createState() => _VdvTicketCardState();
+}
+
+class _VdvTicketCardState extends State<_VdvTicketCard> {
+  late final Future<VdvDecodeResult> _result = decodeVdvTicket(
+    Uint8List.fromList(widget.bytes),
+  );
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder<VdvDecodeResult>(
+    future: _result,
+    builder: (context, snap) {
+      if (!snap.hasData) return const LinearProgressIndicator();
+      final l = context.l10n;
+      final t = snap.data!.ticket;
+      if (t == null) {
+        return Text(l.unknownIssuer(snap.data!.caReference ?? '?'));
+      }
+      final theme = Theme.of(context);
+      final locale = Localizations.localeOf(context).toString();
+      String? date(DateTime? d) => d == null ? null : formatDateTime(d, locale);
+      final product = switch (t.product) {
+        VdvProduct.deutschlandticket => l.productDeutschlandticket,
+        VdvProduct.jobticket => l.productJobticket,
+        VdvProduct.studentTicket => l.productStudentTicket,
+        VdvProduct.other => null,
+      };
+      final rows = <(String, String?)>[
+        (l.ticketNumber, '${t.ticketNumber}'),
+        (
+          l.ticketProduct,
+          product == null ? '${t.productId}' : '$product (${t.productId})',
+        ),
+        (l.validFrom, date(t.validFrom)),
+        (l.validUntil, date(t.validUntil)),
+        (l.issuedAt, date(t.issuedAt)),
+        (
+          l.ticketHolder,
+          t.holderName == null
+              ? null
+              : t.holderNameMasked
+              ? '${t.holderName} (${l.nameMasked})'
+              : t.holderName,
+        ),
+        (
+          l.birthDate,
+          t.birthDate == null
+              ? null
+              : DateFormat.yMd(locale).format(t.birthDate!),
+        ),
+        (l.organizations, '${t.issuerId} / ${t.operatorId}'),
+        (
+          l.travelClass,
+          switch (t.serviceClass) {
+            1 => l.firstClass,
+            2 => l.secondClass,
+            _ => null,
+          },
+        ),
+        (
+          l.ticketPrice,
+          t.priceCents == null
+              ? null
+              : NumberFormat.simpleCurrency(
+                  locale: locale,
+                  name: 'EUR',
+                ).format(t.priceCents! / 100),
+        ),
+      ];
+      final label = theme.textTheme.bodyMedium?.copyWith(
+        color: theme.colorScheme.onSurfaceVariant,
+      );
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l.ticketData, style: theme.textTheme.titleMedium),
+          const SizedBox(height: 8),
+          Table(
+            columnWidths: const {0: IntrinsicColumnWidth()},
+            children: [
+              for (final (name, value) in rows)
+                if (value != null)
+                  TableRow(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16, bottom: 6),
+                        child: Text(name, style: label),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 6),
+                        child: SelectableText(
+                          value,
+                          style: theme.textTheme.bodyMedium,
+                        ),
+                      ),
+                    ],
+                  ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              Icon(
+                t.signatureValid
+                    ? Icons.verified_outlined
+                    : Icons.gpp_bad_outlined,
+                size: 18,
+                color: t.signatureValid
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.error,
+              ),
+              const SizedBox(width: 6),
+              Text(t.signatureValid ? l.signatureValid : l.signatureInvalid),
+            ],
+          ),
+        ],
       );
     },
   );

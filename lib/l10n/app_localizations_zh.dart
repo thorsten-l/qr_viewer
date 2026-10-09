@@ -124,6 +124,71 @@ class AppLocalizationsZh extends AppLocalizations {
   String get vdvTicket => 'VDV 电子票（已签名）';
 
   @override
+  String get ticketData => '车票数据';
+
+  @override
+  String get ticketNumber => '票号';
+
+  @override
+  String get ticketProduct => '产品';
+
+  @override
+  String get productDeutschlandticket => 'Deutschlandticket';
+
+  @override
+  String get productJobticket => 'Deutschlandticket 职工票';
+
+  @override
+  String get productStudentTicket => '学生版 Deutschlandticket';
+
+  @override
+  String get validFrom => '生效时间';
+
+  @override
+  String get validUntil => '失效时间';
+
+  @override
+  String get issuedAt => '签发时间';
+
+  @override
+  String get ticketHolder => '持票人';
+
+  @override
+  String get birthDate => '出生日期';
+
+  @override
+  String get nameMasked => '已遮盖';
+
+  @override
+  String get organizations => '机构编号';
+
+  @override
+  String get travelClass => '舱位等级';
+
+  @override
+  String get firstClass => '一等';
+
+  @override
+  String get secondClass => '二等';
+
+  @override
+  String get ticketPrice => '价格';
+
+  @override
+  String get signatureValid => '签名有效';
+
+  @override
+  String get signatureInvalid => '签名无效';
+
+  @override
+  String unknownIssuer(String car) {
+    return '没有该签发方的公钥（CA $car），无法读取车票数据。';
+  }
+
+  @override
+  String get rawData => '原始数据（十六进制）';
+
+  @override
   String get formatMicroQr => 'Micro QR 码';
 
   @override

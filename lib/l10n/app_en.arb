@@ -137,6 +137,95 @@
   "@vdvTicket": {
     "description": "Binärcode eines deutschen eTickets (VDV)"
   },
+  "ticketData": "Ticket data",
+  "@ticketData": {
+    "description": "Überschrift Ticketdaten"
+  },
+  "ticketNumber": "Ticket number",
+  "@ticketNumber": {
+    "description": "Ticketnummer"
+  },
+  "ticketProduct": "Product",
+  "@ticketProduct": {
+    "description": "Produkt des Tickets"
+  },
+  "productDeutschlandticket": "Deutschlandticket",
+  "@productDeutschlandticket": {
+    "description": "Produktname"
+  },
+  "productJobticket": "Deutschlandticket job ticket",
+  "@productJobticket": {
+    "description": "Produktname"
+  },
+  "productStudentTicket": "Deutschlandticket for pupils and students",
+  "@productStudentTicket": {
+    "description": "Produktname"
+  },
+  "validFrom": "Valid from",
+  "@validFrom": {
+    "description": "Gültig ab"
+  },
+  "validUntil": "Valid until",
+  "@validUntil": {
+    "description": "Gültig bis"
+  },
+  "issuedAt": "Issued",
+  "@issuedAt": {
+    "description": "Ausstellungszeit"
+  },
+  "ticketHolder": "Holder",
+  "@ticketHolder": {
+    "description": "Inhaber"
+  },
+  "birthDate": "Date of birth",
+  "@birthDate": {
+    "description": "Geburtsdatum"
+  },
+  "nameMasked": "masked",
+  "@nameMasked": {
+    "description": "Hinweis maskierter Name"
+  },
+  "organizations": "Organisation IDs",
+  "@organizations": {
+    "description": "Organisationsnummern KVP/PV"
+  },
+  "travelClass": "Class",
+  "@travelClass": {
+    "description": "Wagenklasse"
+  },
+  "firstClass": "1st class",
+  "@firstClass": {
+    "description": "1. Klasse"
+  },
+  "secondClass": "2nd class",
+  "@secondClass": {
+    "description": "2. Klasse"
+  },
+  "ticketPrice": "Price",
+  "@ticketPrice": {
+    "description": "Preis"
+  },
+  "signatureValid": "Signature valid",
+  "@signatureValid": {
+    "description": "Signatur gültig"
+  },
+  "signatureInvalid": "Signature invalid",
+  "@signatureInvalid": {
+    "description": "Signatur ungültig"
+  },
+  "unknownIssuer": "No public key for this issuer (CA {car}). The ticket data cannot be read.",
+  "@unknownIssuer": {
+    "description": "Kein Schlüssel für die CA",
+    "placeholders": {
+      "car": {
+        "type": "String"
+      }
+    }
+  },
+  "rawData": "Raw data (hex)",
+  "@rawData": {
+    "description": "Rohdaten"
+  },
   "formatMicroQr": "Micro QR code",
   "@formatMicroQr": {
     "description": "Formatname Micro-QR"

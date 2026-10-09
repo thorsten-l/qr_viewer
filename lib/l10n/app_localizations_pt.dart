@@ -124,6 +124,72 @@ class AppLocalizationsPt extends AppLocalizations {
   String get vdvTicket => 'eTicket VDV (assinado)';
 
   @override
+  String get ticketData => 'Dados do bilhete';
+
+  @override
+  String get ticketNumber => 'Número do bilhete';
+
+  @override
+  String get ticketProduct => 'Produto';
+
+  @override
+  String get productDeutschlandticket => 'Deutschlandticket';
+
+  @override
+  String get productJobticket => 'Deutschlandticket Job';
+
+  @override
+  String get productStudentTicket =>
+      'Deutschlandticket para alunos e estudantes';
+
+  @override
+  String get validFrom => 'Válido de';
+
+  @override
+  String get validUntil => 'Válido até';
+
+  @override
+  String get issuedAt => 'Emitido em';
+
+  @override
+  String get ticketHolder => 'Titular';
+
+  @override
+  String get birthDate => 'Data de nascimento';
+
+  @override
+  String get nameMasked => 'mascarado';
+
+  @override
+  String get organizations => 'IDs das organizações';
+
+  @override
+  String get travelClass => 'Classe';
+
+  @override
+  String get firstClass => '1.ª classe';
+
+  @override
+  String get secondClass => '2.ª classe';
+
+  @override
+  String get ticketPrice => 'Preço';
+
+  @override
+  String get signatureValid => 'Assinatura válida';
+
+  @override
+  String get signatureInvalid => 'Assinatura inválida';
+
+  @override
+  String unknownIssuer(String car) {
+    return 'Não há chave pública para este emissor (CA $car). Os dados do bilhete não podem ser lidos.';
+  }
+
+  @override
+  String get rawData => 'Dados brutos (hex)';
+
+  @override
   String get formatMicroQr => 'Código Micro QR';
 
   @override

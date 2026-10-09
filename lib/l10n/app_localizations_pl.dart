@@ -124,6 +124,72 @@ class AppLocalizationsPl extends AppLocalizations {
   String get vdvTicket => 'eBilet VDV (podpisany)';
 
   @override
+  String get ticketData => 'Dane biletu';
+
+  @override
+  String get ticketNumber => 'Numer biletu';
+
+  @override
+  String get ticketProduct => 'Produkt';
+
+  @override
+  String get productDeutschlandticket => 'Deutschlandticket';
+
+  @override
+  String get productJobticket => 'Deutschlandticket Job';
+
+  @override
+  String get productStudentTicket =>
+      'Deutschlandticket dla uczniów i studentów';
+
+  @override
+  String get validFrom => 'Ważny od';
+
+  @override
+  String get validUntil => 'Ważny do';
+
+  @override
+  String get issuedAt => 'Wystawiony';
+
+  @override
+  String get ticketHolder => 'Posiadacz';
+
+  @override
+  String get birthDate => 'Data urodzenia';
+
+  @override
+  String get nameMasked => 'zamaskowane';
+
+  @override
+  String get organizations => 'Numery organizacji';
+
+  @override
+  String get travelClass => 'Klasa';
+
+  @override
+  String get firstClass => '1. klasa';
+
+  @override
+  String get secondClass => '2. klasa';
+
+  @override
+  String get ticketPrice => 'Cena';
+
+  @override
+  String get signatureValid => 'Podpis prawidłowy';
+
+  @override
+  String get signatureInvalid => 'Podpis nieprawidłowy';
+
+  @override
+  String unknownIssuer(String car) {
+    return 'Brak klucza publicznego dla tego wystawcy (CA $car). Nie można odczytać danych biletu.';
+  }
+
+  @override
+  String get rawData => 'Surowe dane (hex)';
+
+  @override
   String get formatMicroQr => 'Kod Micro QR';
 
   @override

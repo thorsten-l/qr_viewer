@@ -154,6 +154,11 @@ void main() {
     expect(find.text('VDV-eTicket (signiert)'), findsOneWidget);
     expect(find.text('Format: Aztec'), findsOneWidget);
     expect(find.text('Binärdaten · 24 Bytes'), findsOneWidget);
+    // Kurzes Fragment: kein Schlüssel ableitbar, Hex steht im Klappbereich.
+    await tester.runAsync(() => Future<void>.delayed(Duration.zero));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Rohdaten (Hex)'));
+    await tester.pumpAndSettle();
     expect(find.textContaining('0000  9E 81 80 D7'), findsOneWidget);
     expect(find.text('Öffnen …'), findsNothing);
 

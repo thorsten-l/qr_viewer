@@ -124,6 +124,71 @@ class AppLocalizationsHi extends AppLocalizations {
   String get vdvTicket => 'VDV ई-टिकट (हस्ताक्षरित)';
 
   @override
+  String get ticketData => 'टिकट डेटा';
+
+  @override
+  String get ticketNumber => 'टिकट संख्या';
+
+  @override
+  String get ticketProduct => 'उत्पाद';
+
+  @override
+  String get productDeutschlandticket => 'Deutschlandticket';
+
+  @override
+  String get productJobticket => 'Deutschlandticket जॉब टिकट';
+
+  @override
+  String get productStudentTicket => 'छात्रों के लिए Deutschlandticket';
+
+  @override
+  String get validFrom => 'से मान्य';
+
+  @override
+  String get validUntil => 'तक मान्य';
+
+  @override
+  String get issuedAt => 'जारी';
+
+  @override
+  String get ticketHolder => 'धारक';
+
+  @override
+  String get birthDate => 'जन्म तिथि';
+
+  @override
+  String get nameMasked => 'छिपाया गया';
+
+  @override
+  String get organizations => 'संगठन आईडी';
+
+  @override
+  String get travelClass => 'श्रेणी';
+
+  @override
+  String get firstClass => 'प्रथम श्रेणी';
+
+  @override
+  String get secondClass => 'द्वितीय श्रेणी';
+
+  @override
+  String get ticketPrice => 'कीमत';
+
+  @override
+  String get signatureValid => 'हस्ताक्षर मान्य';
+
+  @override
+  String get signatureInvalid => 'हस्ताक्षर अमान्य';
+
+  @override
+  String unknownIssuer(String car) {
+    return 'इस जारीकर्ता के लिए कोई सार्वजनिक कुंजी नहीं (CA $car)। टिकट डेटा पढ़ा नहीं जा सकता।';
+  }
+
+  @override
+  String get rawData => 'कच्चा डेटा (hex)';
+
+  @override
   String get formatMicroQr => 'Micro QR कोड';
 
   @override

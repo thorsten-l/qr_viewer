@@ -124,6 +124,72 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vdvTicket => 'VDV-eTicket (signiert)';
 
   @override
+  String get ticketData => 'Ticketdaten';
+
+  @override
+  String get ticketNumber => 'Ticketnummer';
+
+  @override
+  String get ticketProduct => 'Produkt';
+
+  @override
+  String get productDeutschlandticket => 'Deutschlandticket';
+
+  @override
+  String get productJobticket => 'Deutschlandticket Job';
+
+  @override
+  String get productStudentTicket =>
+      'Deutschlandticket für Schüler und Studierende';
+
+  @override
+  String get validFrom => 'Gültig ab';
+
+  @override
+  String get validUntil => 'Gültig bis';
+
+  @override
+  String get issuedAt => 'Ausgestellt';
+
+  @override
+  String get ticketHolder => 'Inhaber';
+
+  @override
+  String get birthDate => 'Geburtsdatum';
+
+  @override
+  String get nameMasked => 'maskiert';
+
+  @override
+  String get organizations => 'Organisationsnummern';
+
+  @override
+  String get travelClass => 'Klasse';
+
+  @override
+  String get firstClass => '1. Klasse';
+
+  @override
+  String get secondClass => '2. Klasse';
+
+  @override
+  String get ticketPrice => 'Preis';
+
+  @override
+  String get signatureValid => 'Signatur gültig';
+
+  @override
+  String get signatureInvalid => 'Signatur ungültig';
+
+  @override
+  String unknownIssuer(String car) {
+    return 'Kein öffentlicher Schlüssel für diesen Herausgeber (CA $car). Die Ticketdaten können nicht gelesen werden.';
+  }
+
+  @override
+  String get rawData => 'Rohdaten (Hex)';
+
+  @override
   String get formatMicroQr => 'Micro-QR-Code';
 
   @override

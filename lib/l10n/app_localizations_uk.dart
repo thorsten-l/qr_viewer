@@ -124,6 +124,72 @@ class AppLocalizationsUk extends AppLocalizations {
   String get vdvTicket => 'eTicket VDV (підписаний)';
 
   @override
+  String get ticketData => 'Дані квитка';
+
+  @override
+  String get ticketNumber => 'Номер квитка';
+
+  @override
+  String get ticketProduct => 'Продукт';
+
+  @override
+  String get productDeutschlandticket => 'Deutschlandticket';
+
+  @override
+  String get productJobticket => 'Deutschlandticket Job';
+
+  @override
+  String get productStudentTicket =>
+      'Deutschlandticket для школярів і студентів';
+
+  @override
+  String get validFrom => 'Дійсний з';
+
+  @override
+  String get validUntil => 'Дійсний до';
+
+  @override
+  String get issuedAt => 'Видано';
+
+  @override
+  String get ticketHolder => 'Власник';
+
+  @override
+  String get birthDate => 'Дата народження';
+
+  @override
+  String get nameMasked => 'замасковано';
+
+  @override
+  String get organizations => 'Номери організацій';
+
+  @override
+  String get travelClass => 'Клас';
+
+  @override
+  String get firstClass => '1-й клас';
+
+  @override
+  String get secondClass => '2-й клас';
+
+  @override
+  String get ticketPrice => 'Ціна';
+
+  @override
+  String get signatureValid => 'Підпис дійсний';
+
+  @override
+  String get signatureInvalid => 'Підпис недійсний';
+
+  @override
+  String unknownIssuer(String car) {
+    return 'Немає відкритого ключа для цього емітента (CA $car). Дані квитка не читаються.';
+  }
+
+  @override
+  String get rawData => 'Сирі дані (hex)';
+
+  @override
   String get formatMicroQr => 'Micro QR-код';
 
   @override

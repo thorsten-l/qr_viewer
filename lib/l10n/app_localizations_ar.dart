@@ -124,6 +124,71 @@ class AppLocalizationsAr extends AppLocalizations {
   String get vdvTicket => 'تذكرة VDV إلكترونية (موقّعة)';
 
   @override
+  String get ticketData => 'بيانات التذكرة';
+
+  @override
+  String get ticketNumber => 'رقم التذكرة';
+
+  @override
+  String get ticketProduct => 'المنتج';
+
+  @override
+  String get productDeutschlandticket => 'Deutschlandticket';
+
+  @override
+  String get productJobticket => 'Deutschlandticket للعمل';
+
+  @override
+  String get productStudentTicket => 'Deutschlandticket للتلاميذ والطلاب';
+
+  @override
+  String get validFrom => 'صالح من';
+
+  @override
+  String get validUntil => 'صالح حتى';
+
+  @override
+  String get issuedAt => 'تاريخ الإصدار';
+
+  @override
+  String get ticketHolder => 'حامل التذكرة';
+
+  @override
+  String get birthDate => 'تاريخ الميلاد';
+
+  @override
+  String get nameMasked => 'مخفي';
+
+  @override
+  String get organizations => 'أرقام الجهات';
+
+  @override
+  String get travelClass => 'الدرجة';
+
+  @override
+  String get firstClass => 'الدرجة الأولى';
+
+  @override
+  String get secondClass => 'الدرجة الثانية';
+
+  @override
+  String get ticketPrice => 'السعر';
+
+  @override
+  String get signatureValid => 'التوقيع صالح';
+
+  @override
+  String get signatureInvalid => 'التوقيع غير صالح';
+
+  @override
+  String unknownIssuer(String car) {
+    return 'لا يوجد مفتاح عام لهذه الجهة (CA $car). لا يمكن قراءة بيانات التذكرة.';
+  }
+
+  @override
+  String get rawData => 'البيانات الخام (hex)';
+
+  @override
   String get formatMicroQr => 'رمز Micro QR';
 
   @override

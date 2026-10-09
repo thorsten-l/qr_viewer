@@ -124,6 +124,71 @@ class AppLocalizationsJa extends AppLocalizations {
   String get vdvTicket => 'VDV eチケット（署名付き）';
 
   @override
+  String get ticketData => 'チケット情報';
+
+  @override
+  String get ticketNumber => 'チケット番号';
+
+  @override
+  String get ticketProduct => '商品';
+
+  @override
+  String get productDeutschlandticket => 'Deutschlandticket';
+
+  @override
+  String get productJobticket => 'Deutschlandticket ジョブチケット';
+
+  @override
+  String get productStudentTicket => '生徒・学生向け Deutschlandticket';
+
+  @override
+  String get validFrom => '有効開始';
+
+  @override
+  String get validUntil => '有効期限';
+
+  @override
+  String get issuedAt => '発行日時';
+
+  @override
+  String get ticketHolder => '所有者';
+
+  @override
+  String get birthDate => '生年月日';
+
+  @override
+  String get nameMasked => 'マスク済み';
+
+  @override
+  String get organizations => '事業者番号';
+
+  @override
+  String get travelClass => '等級';
+
+  @override
+  String get firstClass => '1等';
+
+  @override
+  String get secondClass => '2等';
+
+  @override
+  String get ticketPrice => '価格';
+
+  @override
+  String get signatureValid => '署名は有効';
+
+  @override
+  String get signatureInvalid => '署名が無効';
+
+  @override
+  String unknownIssuer(String car) {
+    return 'この発行元の公開鍵がありません（CA $car）。チケット情報を読み取れません。';
+  }
+
+  @override
+  String get rawData => '生データ（16進）';
+
+  @override
   String get formatMicroQr => 'マイクロQRコード';
 
   @override

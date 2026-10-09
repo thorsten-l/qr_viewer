@@ -124,6 +124,72 @@ class AppLocalizationsRu extends AppLocalizations {
   String get vdvTicket => 'eTicket VDV (подписан)';
 
   @override
+  String get ticketData => 'Данные билета';
+
+  @override
+  String get ticketNumber => 'Номер билета';
+
+  @override
+  String get ticketProduct => 'Продукт';
+
+  @override
+  String get productDeutschlandticket => 'Deutschlandticket';
+
+  @override
+  String get productJobticket => 'Deutschlandticket Job';
+
+  @override
+  String get productStudentTicket =>
+      'Deutschlandticket для школьников и студентов';
+
+  @override
+  String get validFrom => 'Действует с';
+
+  @override
+  String get validUntil => 'Действует до';
+
+  @override
+  String get issuedAt => 'Выдан';
+
+  @override
+  String get ticketHolder => 'Владелец';
+
+  @override
+  String get birthDate => 'Дата рождения';
+
+  @override
+  String get nameMasked => 'замаскировано';
+
+  @override
+  String get organizations => 'Номера организаций';
+
+  @override
+  String get travelClass => 'Класс';
+
+  @override
+  String get firstClass => '1-й класс';
+
+  @override
+  String get secondClass => '2-й класс';
+
+  @override
+  String get ticketPrice => 'Цена';
+
+  @override
+  String get signatureValid => 'Подпись действительна';
+
+  @override
+  String get signatureInvalid => 'Подпись недействительна';
+
+  @override
+  String unknownIssuer(String car) {
+    return 'Нет открытого ключа для этого эмитента (CA $car). Данные билета не читаются.';
+  }
+
+  @override
+  String get rawData => 'Исходные данные (hex)';
+
+  @override
   String get formatMicroQr => 'Micro QR-код';
 
   @override
