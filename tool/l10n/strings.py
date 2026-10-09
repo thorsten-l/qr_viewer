@@ -1,0 +1,304 @@
+# Copyright 2026 Thorsten Ludewig (t.ludewig@gmail.com)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Quelle aller App-Texte. Erzeugt lib/l10n/app_<sprache>.arb:
+#   python3 tool/l10n/strings.py
+import json, os
+
+LANGS = ["en", "de", "es", "fr", "pt", "ru", "zh", "hi", "ar", "ja", "it", "pl", "uk"]
+
+# iOS erwartet für vereinfachtes Chinesisch den Ordner zh-Hans.lproj
+IOS_LPROJ = {"zh": "zh-Hans"}
+
+# key: (beschreibung, platzhalter, {sprache: text})
+S = {
+ "scanTitleQr": ("Titel im Modus QR-Code", [], dict(
+   en="Scan QR code", de="QR-Code scannen", es="Escanear código QR", fr="Scanner un QR code",
+   pt="Escanear código QR", ru="Сканировать QR-код", zh="扫描二维码", hi="QR कोड स्कैन करें",
+   ar="مسح رمز QR", ja="QRコードをスキャン",
+   it="Scansiona codice QR", pl="Skanuj kod QR", uk="Сканувати QR-код")),
+ "scanTitleBarcode": ("Titel im Modus Barcode", [], dict(
+   en="Scan barcode", de="Barcode scannen", es="Escanear código de barras", fr="Scanner un code-barres",
+   pt="Escanear código de barras", ru="Сканировать штрихкод", zh="扫描条形码", hi="बारकोड स्कैन करें",
+   ar="مسح الباركود", ja="バーコードをスキャン",
+   it="Scansiona codice a barre", pl="Skanuj kod kreskowy", uk="Сканувати штрихкод")),
+ "scanTitleDataMatrix": ("Titel im Modus Data Matrix", [], dict(
+   en="Scan Data Matrix", de="Data Matrix scannen", es="Escanear Data Matrix", fr="Scanner un Data Matrix",
+   pt="Escanear Data Matrix", ru="Сканировать Data Matrix", zh="扫描 Data Matrix", hi="Data Matrix स्कैन करें",
+   ar="مسح Data Matrix", ja="Data Matrixをスキャン",
+   it="Scansiona Data Matrix", pl="Skanuj Data Matrix", uk="Сканувати Data Matrix")),
+ "scanTitlePdf417": ("Titel im Modus PDF417", [], dict(
+   en="Scan PDF417", de="PDF417 scannen", es="Escanear PDF417", fr="Scanner un PDF417",
+   pt="Escanear PDF417", ru="Сканировать PDF417", zh="扫描 PDF417", hi="PDF417 स्कैन करें",
+   ar="مسح PDF417", ja="PDF417をスキャン",
+   it="Scansiona PDF417", pl="Skanuj PDF417", uk="Сканувати PDF417")),
+ "scanTitleAztec": ("Titel im Modus Aztec", [], dict(
+   en="Scan Aztec code", de="Aztec scannen", es="Escanear código Aztec", fr="Scanner un code Aztec",
+   pt="Escanear código Aztec", ru="Сканировать Aztec", zh="扫描 Aztec 码", hi="Aztec कोड स्कैन करें",
+   ar="مسح رمز Aztec", ja="Aztecコードをスキャン",
+   it="Scansiona codice Aztec", pl="Skanuj kod Aztec", uk="Сканувати Aztec")),
+ "scanTitleAll": ("Titel im Modus alle Codes", [], dict(
+   en="Scan all codes", de="Alle Codes scannen", es="Escanear todos los códigos", fr="Scanner tous les codes",
+   pt="Escanear todos os códigos", ru="Сканировать все коды", zh="扫描所有码", hi="सभी कोड स्कैन करें",
+   ar="مسح جميع الرموز", ja="すべてのコードをスキャン",
+   it="Scansiona tutti i codici", pl="Skanuj wszystkie kody", uk="Сканувати всі коди")),
+ "modeQr": ("Menüeintrag und Formatname QR-Code", [], dict(
+   en="QR code", de="QR-Code", es="Código QR", fr="QR code", pt="Código QR", ru="QR-код",
+   zh="二维码", hi="QR कोड", ar="رمز QR", ja="QRコード",
+   it="Codice QR", pl="Kod QR", uk="QR-код")),
+ "modeBarcode": ("Menüeintrag Barcode", [], dict(
+   en="Barcode", de="Barcode", es="Código de barras", fr="Code-barres", pt="Código de barras", ru="Штрихкод",
+   zh="条形码", hi="बारकोड", ar="باركود", ja="バーコード",
+   it="Codice a barre", pl="Kod kreskowy", uk="Штрихкод")),
+ "modeAll": ("Menüeintrag alle Codes", [], dict(
+   en="All codes", de="Alle Codes", es="Todos los códigos", fr="Tous les codes", pt="Todos os códigos",
+   ru="Все коды", zh="所有码", hi="सभी कोड", ar="جميع الرموز", ja="すべてのコード",
+   it="Tutti i codici", pl="Wszystkie kody", uk="Усі коди")),
+ "hintQr": ("Beispiele für QR-Codes", [], dict(
+   en="Links, text, Wi-Fi, contacts", de="Links, Text, WLAN, Kontakte", es="Enlaces, texto, Wi-Fi, contactos",
+   fr="Liens, texte, Wi-Fi, contacts", pt="Links, texto, Wi-Fi, contatos", ru="Ссылки, текст, Wi-Fi, контакты",
+   zh="链接、文本、Wi-Fi、联系人", hi="लिंक, टेक्स्ट, Wi-Fi, संपर्क", ar="روابط، نصوص، Wi-Fi، جهات اتصال",
+   ja="リンク、テキスト、Wi-Fi、連絡先",
+   it="Link, testo, Wi-Fi, contatti", pl="Linki, tekst, Wi-Fi, kontakty", uk="Посилання, текст, Wi-Fi, контакти")),
+ "hintDataMatrix": ("Beispiele für Data Matrix", [], dict(
+   en="Parcel labels, stamps, components", de="Paketaufkleber, Briefmarken, Bauteile",
+   es="Etiquetas de paquetes, sellos, componentes", fr="Étiquettes de colis, timbres, composants",
+   pt="Etiquetas de encomendas, selos, componentes", ru="Посылки, марки, детали",
+   zh="包裹标签、邮票、零部件", hi="पार्सल लेबल, डाक टिकट, पुर्ज़े", ar="ملصقات الطرود، الطوابع، القطع",
+   ja="荷札、切手、部品",
+   it="Etichette dei pacchi, francobolli, componenti", pl="Etykiety paczek, znaczki, części", uk="Етикетки посилок, марки, деталі")),
+ "hintPdf417": ("Beispiele für PDF417", [], dict(
+   en="Boarding passes, ID cards", de="Bordkarten, Ausweise", es="Tarjetas de embarque, documentos de identidad",
+   fr="Cartes d'embarquement, pièces d'identité", pt="Cartões de embarque, documentos de identidade",
+   ru="Посадочные талоны, удостоверения", zh="登机牌、身份证件", hi="बोर्डिंग पास, पहचान पत्र",
+   ar="بطاقات الصعود، بطاقات الهوية", ja="搭乗券、身分証明書",
+   it="Carte d'imbarco, documenti d'identità", pl="Karty pokładowe, dowody osobiste", uk="Посадкові талони, посвідчення")),
+ "hintAztec": ("Beispiele für Aztec", [], dict(
+   en="Train and plane tickets", de="Bahn- und Flugtickets", es="Billetes de tren y avión",
+   fr="Billets de train et d'avion", pt="Passagens de trem e avião", ru="Ж/д и авиабилеты",
+   zh="火车票和机票", hi="ट्रेन और फ़्लाइट टिकट", ar="تذاكر القطار والطيران", ja="鉄道・航空券",
+   it="Biglietti del treno e aerei", pl="Bilety kolejowe i lotnicze", uk="Залізничні та авіаквитки")),
+ "hintAll": ("Beschreibung alle Codes", [], dict(
+   en="All supported formats", de="Alle unterstützten Formate", es="Todos los formatos compatibles",
+   fr="Tous les formats pris en charge", pt="Todos os formatos suportados", ru="Все поддерживаемые форматы",
+   zh="所有支持的格式", hi="सभी समर्थित फ़ॉर्मैट", ar="جميع الصيغ المدعومة", ja="対応するすべての形式",
+   it="Tutti i formati supportati", pl="Wszystkie obsługiwane formaty", uk="Усі підтримувані формати")),
+ "chooseScanType": ("Tooltip des Auswahlmenüs", [], dict(
+   en="Choose scan type", de="Scan-Art wählen", es="Elegir tipo de escaneo", fr="Choisir le type de code",
+   pt="Escolher tipo de leitura", ru="Выбрать тип кода", zh="选择扫描类型", hi="स्कैन प्रकार चुनें",
+   ar="اختر نوع المسح", ja="スキャンの種類を選択",
+   it="Scegli il tipo di codice", pl="Wybierz typ kodu", uk="Вибрати тип коду")),
+ "history": ("Verlauf: Tooltip und Seitentitel", [], dict(
+   en="History", de="Verlauf", es="Historial", fr="Historique", pt="Histórico", ru="История",
+   zh="历史记录", hi="इतिहास", ar="السجل", ja="履歴",
+   it="Cronologia", pl="Historia", uk="Історія")),
+ "info": ("Tooltip Info", [], dict(
+   en="Info", de="Info", es="Información", fr="Infos", pt="Informações", ru="Информация",
+   zh="关于", hi="जानकारी", ar="معلومات", ja="情報",
+   it="Info", pl="Informacje", uk="Інформація")),
+ "torch": ("Tooltip Taschenlampe", [], dict(
+   en="Flashlight", de="Taschenlampe", es="Linterna", fr="Lampe torche", pt="Lanterna", ru="Фонарик",
+   zh="手电筒", hi="टॉर्च", ar="المصباح", ja="ライト",
+   it="Torcia", pl="Latarka", uk="Ліхтарик")),
+ "typeUrl": ("Inhaltstyp URL", [], dict(
+   en="URL", de="URL", es="URL", fr="URL", pt="URL", ru="URL", zh="网址", hi="URL", ar="رابط", ja="URL",
+   it="URL", pl="URL", uk="URL")),
+ "typeWifi": ("Inhaltstyp WLAN", [], dict(
+   en="Wi-Fi credentials", de="WLAN-Zugangsdaten", es="Datos de Wi-Fi", fr="Identifiants Wi-Fi",
+   pt="Dados de Wi-Fi", ru="Данные Wi-Fi", zh="Wi-Fi 信息", hi="Wi-Fi विवरण", ar="بيانات Wi-Fi", ja="Wi-Fi 情報",
+   it="Dati Wi-Fi", pl="Dane Wi-Fi", uk="Дані Wi-Fi")),
+ "typeContact": ("Inhaltstyp Kontakt", [], dict(
+   en="Contact", de="Kontakt", es="Contacto", fr="Contact", pt="Contato", ru="Контакт",
+   zh="联系人", hi="संपर्क", ar="جهة اتصال", ja="連絡先",
+   it="Contatto", pl="Kontakt", uk="Контакт")),
+ "typeEmail": ("Inhaltstyp E-Mail", [], dict(
+   en="Email", de="E-Mail", es="Correo electrónico", fr="E-mail", pt="E-mail", ru="Эл. почта",
+   zh="电子邮件", hi="ईमेल", ar="بريد إلكتروني", ja="メール",
+   it="E-mail", pl="E-mail", uk="Ел. пошта")),
+ "typePhone": ("Inhaltstyp Telefon", [], dict(
+   en="Phone number", de="Telefonnummer", es="Número de teléfono", fr="Numéro de téléphone",
+   pt="Número de telefone", ru="Номер телефона", zh="电话号码", hi="फ़ोन नंबर", ar="رقم الهاتف", ja="電話番号",
+   it="Numero di telefono", pl="Numer telefonu", uk="Номер телефону")),
+ "typeSms": ("Inhaltstyp SMS", [], dict(
+   en="SMS", de="SMS", es="SMS", fr="SMS", pt="SMS", ru="SMS", zh="短信", hi="SMS", ar="رسالة SMS", ja="SMS",
+   it="SMS", pl="SMS", uk="SMS")),
+ "typeGeo": ("Inhaltstyp Ort", [], dict(
+   en="Location", de="Geo-Position", es="Ubicación", fr="Position", pt="Localização", ru="Местоположение",
+   zh="位置", hi="स्थान", ar="الموقع", ja="位置情報",
+   it="Posizione", pl="Lokalizacja", uk="Місцезнаходження")),
+ "typeCalendar": ("Inhaltstyp Termin", [], dict(
+   en="Event", de="Termin", es="Evento", fr="Événement", pt="Evento", ru="Событие",
+   zh="日程", hi="इवेंट", ar="حدث", ja="予定",
+   it="Evento", pl="Wydarzenie", uk="Подія")),
+ "typeIsbn": ("Inhaltstyp ISBN", [], dict(
+   en="ISBN", de="ISBN", es="ISBN", fr="ISBN", pt="ISBN", ru="ISBN", zh="ISBN", hi="ISBN", ar="ISBN", ja="ISBN",
+   it="ISBN", pl="ISBN", uk="ISBN")),
+ "typeProduct": ("Inhaltstyp Produktcode", [], dict(
+   en="Product code", de="Produktcode", es="Código de producto", fr="Code produit", pt="Código do produto",
+   ru="Код товара", zh="商品码", hi="उत्पाद कोड", ar="رمز المنتج", ja="商品コード",
+   it="Codice prodotto", pl="Kod produktu", uk="Код товару")),
+ "typeDriverLicense": ("Inhaltstyp Führerschein", [], dict(
+   en="Driver's license", de="Führerschein", es="Permiso de conducir", fr="Permis de conduire",
+   pt="Carteira de motorista", ru="Водительское удостоверение", zh="驾驶证", hi="ड्राइविंग लाइसेंस",
+   ar="رخصة القيادة", ja="運転免許証",
+   it="Patente di guida", pl="Prawo jazdy", uk="Посвідчення водія")),
+ "typeText": ("Inhaltstyp Text", [], dict(
+   en="Text", de="Text", es="Texto", fr="Texte", pt="Texto", ru="Текст", zh="文本", hi="टेक्स्ट", ar="نص", ja="テキスト",
+   it="Testo", pl="Tekst", uk="Текст")),
+ "formatMicroQr": ("Formatname Micro-QR", [], dict(
+   en="Micro QR code", de="Micro-QR-Code", es="Código Micro QR", fr="Micro QR code", pt="Código Micro QR",
+   ru="Micro QR-код", zh="Micro QR 码", hi="Micro QR कोड", ar="رمز Micro QR", ja="マイクロQRコード",
+   it="Codice Micro QR", pl="Kod Micro QR", uk="Micro QR-код")),
+ "formatUnknown": ("Unbekanntes Format", [], dict(
+   en="Unknown", de="Unbekannt", es="Desconocido", fr="Inconnu", pt="Desconhecido", ru="Неизвестно",
+   zh="未知", hi="अज्ञात", ar="غير معروف", ja="不明",
+   it="Sconosciuto", pl="Nieznany", uk="Невідомо")),
+ "formatLine": ("Formatzeile im Ergebnis", ["format"], dict(
+   en="Format: {format}", de="Format: {format}", es="Formato: {format}", fr="Format : {format}",
+   pt="Formato: {format}", ru="Формат: {format}", zh="格式：{format}", hi="फ़ॉर्मैट: {format}",
+   ar="الصيغة: {format}", ja="形式：{format}",
+   it="Formato: {format}", pl="Format: {format}", uk="Формат: {format}")),
+ "hostLine": ("Hostzeile bei Links", ["host"], dict(
+   en="Host: {host}", de="Host: {host}", es="Host: {host}", fr="Hôte : {host}", pt="Host: {host}",
+   ru="Хост: {host}", zh="主机：{host}", hi="होस्ट: {host}", ar="المضيف: {host}", ja="ホスト：{host}",
+   it="Host: {host}", pl="Host: {host}", uk="Хост: {host}")),
+ "copied": ("Meldung nach dem Kopieren", [], dict(
+   en="Copied to clipboard", de="In die Zwischenablage kopiert", es="Copiado al portapapeles",
+   fr="Copié dans le presse-papiers", pt="Copiado para a área de transferência", ru="Скопировано в буфер обмена",
+   zh="已复制到剪贴板", hi="क्लिपबोर्ड पर कॉपी किया गया", ar="تم النسخ إلى الحافظة", ja="クリップボードにコピーしました",
+   it="Copiato negli appunti", pl="Skopiowano do schowka", uk="Скопійовано в буфер обміну")),
+ "copy": ("Knopf Kopieren", [], dict(
+   en="Copy", de="Kopieren", es="Copiar", fr="Copier", pt="Copiar", ru="Копировать",
+   zh="复制", hi="कॉपी करें", ar="نسخ", ja="コピー",
+   it="Copia", pl="Kopiuj", uk="Копіювати")),
+ "openEllipsis": ("Knopf Link öffnen (mit Rückfrage)", [], dict(
+   en="Open …", de="Öffnen …", es="Abrir …", fr="Ouvrir …", pt="Abrir …", ru="Открыть …",
+   zh="打开…", hi="खोलें …", ar="فتح …", ja="開く…",
+   it="Apri …", pl="Otwórz …", uk="Відкрити …")),
+ "openLinkTitle": ("Titel der Rückfrage vor dem Öffnen", [], dict(
+   en="Open link?", de="Link öffnen?", es="¿Abrir enlace?", fr="Ouvrir le lien ?", pt="Abrir link?",
+   ru="Открыть ссылку?", zh="打开链接？", hi="लिंक खोलें?", ar="فتح الرابط؟", ja="リンクを開きますか？",
+   it="Aprire il link?", pl="Otworzyć link?", uk="Відкрити посилання?")),
+ "open": ("Knopf Öffnen in der Rückfrage", [], dict(
+   en="Open", de="Öffnen", es="Abrir", fr="Ouvrir", pt="Abrir", ru="Открыть",
+   zh="打开", hi="खोलें", ar="فتح", ja="開く",
+   it="Apri", pl="Otwórz", uk="Відкрити")),
+ "cancel": ("Knopf Abbrechen", [], dict(
+   en="Cancel", de="Abbrechen", es="Cancelar", fr="Annuler", pt="Cancelar", ru="Отмена",
+   zh="取消", hi="रद्द करें", ar="إلغاء", ja="キャンセル",
+   it="Annulla", pl="Anuluj", uk="Скасувати")),
+ "historyClear": ("Tooltip Verlauf löschen", [], dict(
+   en="Clear history", de="Verlauf löschen", es="Borrar historial", fr="Effacer l'historique",
+   pt="Limpar histórico", ru="Очистить историю", zh="清除历史记录", hi="इतिहास साफ़ करें",
+   ar="مسح السجل", ja="履歴を消去",
+   it="Cancella cronologia", pl="Wyczyść historię", uk="Очистити історію")),
+ "historyClearTitle": ("Titel der Rückfrage Verlauf löschen", [], dict(
+   en="Clear history?", de="Verlauf löschen?", es="¿Borrar historial?", fr="Effacer l'historique ?",
+   pt="Limpar histórico?", ru="Очистить историю?", zh="清除历史记录？", hi="इतिहास साफ़ करें?",
+   ar="مسح السجل؟", ja="履歴を消去しますか？",
+   it="Cancellare la cronologia?", pl="Wyczyścić historię?", uk="Очистити історію?")),
+ "historyClearBody": ("Text der Rückfrage Verlauf löschen", [], dict(
+   en="All saved contents will be removed.", de="Alle gespeicherten Inhalte werden entfernt.",
+   es="Se eliminarán todos los contenidos guardados.", fr="Tous les contenus enregistrés seront supprimés.",
+   pt="Todos os conteúdos salvos serão removidos.", ru="Все сохранённые данные будут удалены.",
+   zh="所有已保存的内容都将被删除。", hi="सभी सहेजी गई सामग्री हटा दी जाएगी।",
+   ar="ستتم إزالة جميع المحتويات المحفوظة.", ja="保存されたすべての内容が削除されます。",
+   it="Tutti i contenuti salvati verranno rimossi.", pl="Wszystkie zapisane treści zostaną usunięte.", uk="Усі збережені дані буде видалено.")),
+ "delete": ("Knopf Löschen", [], dict(
+   en="Delete", de="Löschen", es="Eliminar", fr="Supprimer", pt="Excluir", ru="Удалить",
+   zh="删除", hi="हटाएँ", ar="حذف", ja="削除",
+   it="Elimina", pl="Usuń", uk="Видалити")),
+ "historyEmpty": ("Leerer Verlauf", [], dict(
+   en="No scanned contents yet.", de="Noch keine gescannten Inhalte.", es="Aún no hay contenidos escaneados.",
+   fr="Aucun contenu scanné pour l'instant.", pt="Nenhum conteúdo escaneado ainda.",
+   ru="Пока нет отсканированных данных.", zh="暂无扫描内容。", hi="अभी तक कोई स्कैन की गई सामग्री नहीं।",
+   ar="لا توجد محتويات ممسوحة بعد.", ja="スキャンした内容はまだありません。",
+   it="Nessun contenuto scansionato.", pl="Brak zeskanowanych treści.", uk="Ще немає відсканованих даних.")),
+ "infoDeveloper": ("Info: Entwickler", [], dict(
+   en="Developer", de="Entwickler", es="Desarrollador", fr="Développeur", pt="Desenvolvedor", ru="Разработчик",
+   zh="开发者", hi="डेवलपर", ar="المطوّر", ja="開発者",
+   it="Sviluppatore", pl="Deweloper", uk="Розробник")),
+ "infoVersion": ("Info: Version", [], dict(
+   en="Version", de="Version", es="Versión", fr="Version", pt="Versão", ru="Версия",
+   zh="版本", hi="संस्करण", ar="الإصدار", ja="バージョン",
+   it="Versione", pl="Wersja", uk="Версія")),
+ "infoVersionValue": ("Info: Versionsangabe", ["version", "build"], dict(
+   en="{version} (Build {build})", de="{version} (Build {build})", es="{version} (compilación {build})",
+   fr="{version} (build {build})", pt="{version} (build {build})", ru="{version} (сборка {build})",
+   zh="{version}（构建 {build}）", hi="{version} (बिल्ड {build})", ar="{version} (البناء {build})",
+   ja="{version}（ビルド {build}）",
+   it="{version} (build {build})", pl="{version} (kompilacja {build})", uk="{version} (збірка {build})")),
+ "infoBuildDate": ("Info: Build-Datum", [], dict(
+   en="Build date", de="Build-Datum", es="Fecha de compilación", fr="Date de compilation",
+   pt="Data da compilação", ru="Дата сборки", zh="构建日期", hi="बिल्ड तिथि", ar="تاريخ البناء", ja="ビルド日",
+   it="Data di compilazione", pl="Data kompilacji", uk="Дата збірки")),
+ "infoInstalled": ("Info: Installationszeitpunkt", [], dict(
+   en="Installed on", de="Installiert am", es="Instalado el", fr="Installé le", pt="Instalado em",
+   ru="Установлено", zh="安装时间", hi="इंस्टॉल किया गया", ar="تاريخ التثبيت", ja="インストール日",
+   it="Installato il", pl="Zainstalowano", uk="Встановлено")),
+ "valueUnknown": ("Unbekannter Wert", [], dict(
+   en="unknown", de="unbekannt", es="desconocido", fr="inconnu", pt="desconhecido", ru="неизвестно",
+   zh="未知", hi="अज्ञात", ar="غير معروف", ja="不明",
+   it="sconosciuto", pl="nieznana", uk="невідомо")),
+ "licenses": ("Knopf Lizenzen", [], dict(
+   en="Licenses", de="Lizenzen", es="Licencias", fr="Licences", pt="Licenças", ru="Лицензии",
+   zh="许可", hi="लाइसेंस", ar="التراخيص", ja="ライセンス",
+   it="Licenze", pl="Licencje", uk="Ліцензії")),
+ "close": ("Knopf Schließen", [], dict(
+   en="Close", de="Schließen", es="Cerrar", fr="Fermer", pt="Fechar", ru="Закрыть",
+   zh="关闭", hi="बंद करें", ar="إغلاق", ja="閉じる",
+   it="Chiudi", pl="Zamknij", uk="Закрити")),
+}
+
+# iOS-Kamera-Rückfrage (InfoPlist.strings)
+CAMERA = dict(
+  en="The camera is used to scan QR codes and barcodes.",
+  de="Die Kamera wird zum Scannen von QR-Codes und Barcodes benötigt.",
+  es="La cámara se usa para escanear códigos QR y de barras.",
+  fr="L'appareil photo est utilisé pour scanner les QR codes et les codes-barres.",
+  pt="A câmera é usada para escanear códigos QR e códigos de barras.",
+  ru="Камера используется для сканирования QR-кодов и штрихкодов.",
+  zh="需要使用相机扫描二维码和条形码。",
+  hi="QR कोड और बारकोड स्कैन करने के लिए कैमरे का उपयोग किया जाता है।",
+  ar="تُستخدم الكاميرا لمسح رموز QR والباركود.",
+  ja="QRコードやバーコードをスキャンするためにカメラを使用します。",
+  it="La fotocamera viene usata per scansionare codici QR e codici a barre.",
+  pl="Aparat służy do skanowania kodów QR i kodów kreskowych.",
+  uk="Камера використовується для сканування QR-кодів і штрихкодів.",
+)
+
+if __name__ == "__main__":
+    root = os.path.join(os.path.dirname(__file__), "..", "..")
+    missing = [(k, l) for k, (_, _, t) in S.items() for l in LANGS if l not in t]
+    assert not missing, f"Fehlende Übersetzungen: {missing}"
+    assert set(CAMERA) == set(LANGS)
+    for lang in LANGS:
+        arb = {"@@locale": lang}
+        for key, (desc, ph, t) in S.items():
+            arb[key] = t[lang]
+            if lang == "en":
+                meta = {"description": desc}
+                if ph:
+                    meta["placeholders"] = {p: {"type": "String"} for p in ph}
+                arb["@" + key] = meta
+        path = os.path.join(root, "lib", "l10n", f"app_{lang}.arb")
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(arb, f, ensure_ascii=False, indent=2)
+            f.write("\n")
+        # InfoPlist.strings für iOS
+        d = os.path.join(root, "ios", "Runner", f"{IOS_LPROJ.get(lang, lang)}.lproj")
+        os.makedirs(d, exist_ok=True)
+        with open(os.path.join(d, "InfoPlist.strings"), "w", encoding="utf-8") as f:
+            f.write(f'"NSCameraUsageDescription" = "{CAMERA[lang]}";\n')
+    print(f"{len(S)} Texte x {len(LANGS)} Sprachen geschrieben")

@@ -1,0 +1,233 @@
+{
+  "@@locale": "en",
+  "scanTitleQr": "Scan QR code",
+  "@scanTitleQr": {
+    "description": "Titel im Modus QR-Code"
+  },
+  "scanTitleBarcode": "Scan barcode",
+  "@scanTitleBarcode": {
+    "description": "Titel im Modus Barcode"
+  },
+  "scanTitleDataMatrix": "Scan Data Matrix",
+  "@scanTitleDataMatrix": {
+    "description": "Titel im Modus Data Matrix"
+  },
+  "scanTitlePdf417": "Scan PDF417",
+  "@scanTitlePdf417": {
+    "description": "Titel im Modus PDF417"
+  },
+  "scanTitleAztec": "Scan Aztec code",
+  "@scanTitleAztec": {
+    "description": "Titel im Modus Aztec"
+  },
+  "scanTitleAll": "Scan all codes",
+  "@scanTitleAll": {
+    "description": "Titel im Modus alle Codes"
+  },
+  "modeQr": "QR code",
+  "@modeQr": {
+    "description": "Menüeintrag und Formatname QR-Code"
+  },
+  "modeBarcode": "Barcode",
+  "@modeBarcode": {
+    "description": "Menüeintrag Barcode"
+  },
+  "modeAll": "All codes",
+  "@modeAll": {
+    "description": "Menüeintrag alle Codes"
+  },
+  "hintQr": "Links, text, Wi-Fi, contacts",
+  "@hintQr": {
+    "description": "Beispiele für QR-Codes"
+  },
+  "hintDataMatrix": "Parcel labels, stamps, components",
+  "@hintDataMatrix": {
+    "description": "Beispiele für Data Matrix"
+  },
+  "hintPdf417": "Boarding passes, ID cards",
+  "@hintPdf417": {
+    "description": "Beispiele für PDF417"
+  },
+  "hintAztec": "Train and plane tickets",
+  "@hintAztec": {
+    "description": "Beispiele für Aztec"
+  },
+  "hintAll": "All supported formats",
+  "@hintAll": {
+    "description": "Beschreibung alle Codes"
+  },
+  "chooseScanType": "Choose scan type",
+  "@chooseScanType": {
+    "description": "Tooltip des Auswahlmenüs"
+  },
+  "history": "History",
+  "@history": {
+    "description": "Verlauf: Tooltip und Seitentitel"
+  },
+  "info": "Info",
+  "@info": {
+    "description": "Tooltip Info"
+  },
+  "torch": "Flashlight",
+  "@torch": {
+    "description": "Tooltip Taschenlampe"
+  },
+  "typeUrl": "URL",
+  "@typeUrl": {
+    "description": "Inhaltstyp URL"
+  },
+  "typeWifi": "Wi-Fi credentials",
+  "@typeWifi": {
+    "description": "Inhaltstyp WLAN"
+  },
+  "typeContact": "Contact",
+  "@typeContact": {
+    "description": "Inhaltstyp Kontakt"
+  },
+  "typeEmail": "Email",
+  "@typeEmail": {
+    "description": "Inhaltstyp E-Mail"
+  },
+  "typePhone": "Phone number",
+  "@typePhone": {
+    "description": "Inhaltstyp Telefon"
+  },
+  "typeSms": "SMS",
+  "@typeSms": {
+    "description": "Inhaltstyp SMS"
+  },
+  "typeGeo": "Location",
+  "@typeGeo": {
+    "description": "Inhaltstyp Ort"
+  },
+  "typeCalendar": "Event",
+  "@typeCalendar": {
+    "description": "Inhaltstyp Termin"
+  },
+  "typeIsbn": "ISBN",
+  "@typeIsbn": {
+    "description": "Inhaltstyp ISBN"
+  },
+  "typeProduct": "Product code",
+  "@typeProduct": {
+    "description": "Inhaltstyp Produktcode"
+  },
+  "typeDriverLicense": "Driver's license",
+  "@typeDriverLicense": {
+    "description": "Inhaltstyp Führerschein"
+  },
+  "typeText": "Text",
+  "@typeText": {
+    "description": "Inhaltstyp Text"
+  },
+  "formatMicroQr": "Micro QR code",
+  "@formatMicroQr": {
+    "description": "Formatname Micro-QR"
+  },
+  "formatUnknown": "Unknown",
+  "@formatUnknown": {
+    "description": "Unbekanntes Format"
+  },
+  "formatLine": "Format: {format}",
+  "@formatLine": {
+    "description": "Formatzeile im Ergebnis",
+    "placeholders": {
+      "format": {
+        "type": "String"
+      }
+    }
+  },
+  "hostLine": "Host: {host}",
+  "@hostLine": {
+    "description": "Hostzeile bei Links",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "copied": "Copied to clipboard",
+  "@copied": {
+    "description": "Meldung nach dem Kopieren"
+  },
+  "copy": "Copy",
+  "@copy": {
+    "description": "Knopf Kopieren"
+  },
+  "openEllipsis": "Open …",
+  "@openEllipsis": {
+    "description": "Knopf Link öffnen (mit Rückfrage)"
+  },
+  "openLinkTitle": "Open link?",
+  "@openLinkTitle": {
+    "description": "Titel der Rückfrage vor dem Öffnen"
+  },
+  "open": "Open",
+  "@open": {
+    "description": "Knopf Öffnen in der Rückfrage"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Knopf Abbrechen"
+  },
+  "historyClear": "Clear history",
+  "@historyClear": {
+    "description": "Tooltip Verlauf löschen"
+  },
+  "historyClearTitle": "Clear history?",
+  "@historyClearTitle": {
+    "description": "Titel der Rückfrage Verlauf löschen"
+  },
+  "historyClearBody": "All saved contents will be removed.",
+  "@historyClearBody": {
+    "description": "Text der Rückfrage Verlauf löschen"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Knopf Löschen"
+  },
+  "historyEmpty": "No scanned contents yet.",
+  "@historyEmpty": {
+    "description": "Leerer Verlauf"
+  },
+  "infoDeveloper": "Developer",
+  "@infoDeveloper": {
+    "description": "Info: Entwickler"
+  },
+  "infoVersion": "Version",
+  "@infoVersion": {
+    "description": "Info: Version"
+  },
+  "infoVersionValue": "{version} (Build {build})",
+  "@infoVersionValue": {
+    "description": "Info: Versionsangabe",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "build": {
+        "type": "String"
+      }
+    }
+  },
+  "infoBuildDate": "Build date",
+  "@infoBuildDate": {
+    "description": "Info: Build-Datum"
+  },
+  "infoInstalled": "Installed on",
+  "@infoInstalled": {
+    "description": "Info: Installationszeitpunkt"
+  },
+  "valueUnknown": "unknown",
+  "@valueUnknown": {
+    "description": "Unbekannter Wert"
+  },
+  "licenses": "Licenses",
+  "@licenses": {
+    "description": "Knopf Lizenzen"
+  },
+  "close": "Close",
+  "@close": {
+    "description": "Knopf Schließen"
+  }
+}
