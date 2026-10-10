@@ -254,6 +254,247 @@
   "@lensTeleName": {
     "description": "Name Teleobjektiv"
   },
+  "typePayment": "Bank transfer",
+  "@typePayment": {
+    "description": "Inhaltsart Überweisung"
+  },
+  "rawContent": "Raw content",
+  "@rawContent": {
+    "description": "Überschrift Rohinhalt"
+  },
+  "valueYes": "Yes",
+  "@valueYes": {
+    "description": "Ja"
+  },
+  "valueOpenNetwork": "None (open network)",
+  "@valueOpenNetwork": {
+    "description": "Offenes WLAN"
+  },
+  "copyField": "Copy {label}",
+  "@copyField": {
+    "description": "Tooltip Feld kopieren",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldName": "Name",
+  "@fieldName": {
+    "description": "Feld Name"
+  },
+  "fieldNickname": "Nickname",
+  "@fieldNickname": {
+    "description": "Feld Spitzname"
+  },
+  "fieldOrganization": "Organization",
+  "@fieldOrganization": {
+    "description": "Feld Firma"
+  },
+  "fieldJobTitle": "Job title",
+  "@fieldJobTitle": {
+    "description": "Feld Position"
+  },
+  "fieldPhone": "Phone",
+  "@fieldPhone": {
+    "description": "Feld Telefon"
+  },
+  "fieldMobile": "Mobile",
+  "@fieldMobile": {
+    "description": "Feld Mobil"
+  },
+  "fieldWorkPhone": "Work phone",
+  "@fieldWorkPhone": {
+    "description": "Feld Telefon geschäftlich"
+  },
+  "fieldHomePhone": "Home phone",
+  "@fieldHomePhone": {
+    "description": "Feld Telefon privat"
+  },
+  "fieldFax": "Fax",
+  "@fieldFax": {
+    "description": "Feld Fax"
+  },
+  "fieldEmail": "Email",
+  "@fieldEmail": {
+    "description": "Feld E-Mail"
+  },
+  "fieldWebsite": "Website",
+  "@fieldWebsite": {
+    "description": "Feld Webseite"
+  },
+  "fieldAddress": "Address",
+  "@fieldAddress": {
+    "description": "Feld Adresse"
+  },
+  "fieldBirthday": "Birthday",
+  "@fieldBirthday": {
+    "description": "Feld Geburtstag"
+  },
+  "fieldNote": "Note",
+  "@fieldNote": {
+    "description": "Feld Notiz"
+  },
+  "fieldTo": "To",
+  "@fieldTo": {
+    "description": "Feld An"
+  },
+  "fieldCc": "Cc",
+  "@fieldCc": {
+    "description": "Feld Kopie"
+  },
+  "fieldBcc": "Bcc",
+  "@fieldBcc": {
+    "description": "Feld Blindkopie"
+  },
+  "fieldSubject": "Subject",
+  "@fieldSubject": {
+    "description": "Feld Betreff"
+  },
+  "fieldMessage": "Message",
+  "@fieldMessage": {
+    "description": "Feld Nachricht"
+  },
+  "fieldNumber": "Number",
+  "@fieldNumber": {
+    "description": "Feld Rufnummer"
+  },
+  "fieldLatitude": "Latitude",
+  "@fieldLatitude": {
+    "description": "Feld Breitengrad"
+  },
+  "fieldLongitude": "Longitude",
+  "@fieldLongitude": {
+    "description": "Feld Längengrad"
+  },
+  "fieldAltitude": "Altitude",
+  "@fieldAltitude": {
+    "description": "Feld Höhe"
+  },
+  "fieldQuery": "Place",
+  "@fieldQuery": {
+    "description": "Feld Suche/Ort"
+  },
+  "fieldTitle": "Title",
+  "@fieldTitle": {
+    "description": "Feld Titel"
+  },
+  "fieldLink": "Link",
+  "@fieldLink": {
+    "description": "Feld Link"
+  },
+  "fieldStart": "Start",
+  "@fieldStart": {
+    "description": "Feld Beginn"
+  },
+  "fieldEnd": "End",
+  "@fieldEnd": {
+    "description": "Feld Ende"
+  },
+  "fieldLocation": "Location",
+  "@fieldLocation": {
+    "description": "Feld Ort Termin"
+  },
+  "fieldDescription": "Description",
+  "@fieldDescription": {
+    "description": "Feld Beschreibung"
+  },
+  "fieldNetwork": "Network name (SSID)",
+  "@fieldNetwork": {
+    "description": "Feld WLAN-Name"
+  },
+  "fieldPassword": "Password",
+  "@fieldPassword": {
+    "description": "Feld Passwort"
+  },
+  "fieldSecurity": "Security",
+  "@fieldSecurity": {
+    "description": "Feld Verschlüsselung"
+  },
+  "fieldHidden": "Hidden network",
+  "@fieldHidden": {
+    "description": "Feld verstecktes Netz"
+  },
+  "fieldEapMethod": "EAP method",
+  "@fieldEapMethod": {
+    "description": "Feld EAP-Methode"
+  },
+  "fieldIdentity": "Identity",
+  "@fieldIdentity": {
+    "description": "Feld Identität"
+  },
+  "fieldRecipient": "Recipient",
+  "@fieldRecipient": {
+    "description": "Feld Empfänger"
+  },
+  "fieldIban": "IBAN",
+  "@fieldIban": {
+    "description": "Feld IBAN"
+  },
+  "fieldBic": "BIC",
+  "@fieldBic": {
+    "description": "Feld BIC"
+  },
+  "fieldAmount": "Amount",
+  "@fieldAmount": {
+    "description": "Feld Betrag"
+  },
+  "fieldPurpose": "Purpose code",
+  "@fieldPurpose": {
+    "description": "Feld Zweck-Code"
+  },
+  "fieldReference": "Reference",
+  "@fieldReference": {
+    "description": "Feld Referenz"
+  },
+  "fieldRemittance": "Payment reference",
+  "@fieldRemittance": {
+    "description": "Feld Verwendungszweck"
+  },
+  "fieldInfo": "Note to payer",
+  "@fieldInfo": {
+    "description": "Feld Hinweis"
+  },
+  "typeOtp": "One-time password (2FA)",
+  "@typeOtp": {
+    "description": "Inhaltsart Einmalpasswort"
+  },
+  "infoSupport": "Support",
+  "@infoSupport": {
+    "description": "Info-Dialog Support"
+  },
+  "fieldIssuer": "Issuer",
+  "@fieldIssuer": {
+    "description": "Feld Anbieter"
+  },
+  "fieldAccount": "Account",
+  "@fieldAccount": {
+    "description": "Feld Konto"
+  },
+  "fieldSecret": "Secret key",
+  "@fieldSecret": {
+    "description": "Feld geheimer Schlüssel"
+  },
+  "fieldOtpType": "Method",
+  "@fieldOtpType": {
+    "description": "Feld OTP-Verfahren"
+  },
+  "fieldAlgorithm": "Algorithm",
+  "@fieldAlgorithm": {
+    "description": "Feld Algorithmus"
+  },
+  "fieldDigits": "Digits",
+  "@fieldDigits": {
+    "description": "Feld Stellen"
+  },
+  "fieldPeriod": "Interval (seconds)",
+  "@fieldPeriod": {
+    "description": "Feld Intervall"
+  },
+  "fieldCounter": "Counter",
+  "@fieldCounter": {
+    "description": "Feld Zähler"
+  },
   "formatMicroQr": "Micro QR code",
   "@formatMicroQr": {
     "description": "Formatname Micro-QR"

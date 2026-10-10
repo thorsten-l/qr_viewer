@@ -211,6 +211,185 @@ class AppLocalizationsRu extends AppLocalizations {
   String get lensTeleName => 'Телеобъектив';
 
   @override
+  String get typePayment => 'Банковский перевод';
+
+  @override
+  String get rawContent => 'Исходное содержимое';
+
+  @override
+  String get valueYes => 'Да';
+
+  @override
+  String get valueOpenNetwork => 'Нет (открытая сеть)';
+
+  @override
+  String copyField(String label) {
+    return 'Копировать: $label';
+  }
+
+  @override
+  String get fieldName => 'Имя';
+
+  @override
+  String get fieldNickname => 'Псевдоним';
+
+  @override
+  String get fieldOrganization => 'Организация';
+
+  @override
+  String get fieldJobTitle => 'Должность';
+
+  @override
+  String get fieldPhone => 'Телефон';
+
+  @override
+  String get fieldMobile => 'Мобильный';
+
+  @override
+  String get fieldWorkPhone => 'Рабочий телефон';
+
+  @override
+  String get fieldHomePhone => 'Домашний телефон';
+
+  @override
+  String get fieldFax => 'Факс';
+
+  @override
+  String get fieldEmail => 'Эл. почта';
+
+  @override
+  String get fieldWebsite => 'Веб-сайт';
+
+  @override
+  String get fieldAddress => 'Адрес';
+
+  @override
+  String get fieldBirthday => 'День рождения';
+
+  @override
+  String get fieldNote => 'Заметка';
+
+  @override
+  String get fieldTo => 'Кому';
+
+  @override
+  String get fieldCc => 'Копия';
+
+  @override
+  String get fieldBcc => 'Скрытая копия';
+
+  @override
+  String get fieldSubject => 'Тема';
+
+  @override
+  String get fieldMessage => 'Сообщение';
+
+  @override
+  String get fieldNumber => 'Номер';
+
+  @override
+  String get fieldLatitude => 'Широта';
+
+  @override
+  String get fieldLongitude => 'Долгота';
+
+  @override
+  String get fieldAltitude => 'Высота';
+
+  @override
+  String get fieldQuery => 'Место';
+
+  @override
+  String get fieldTitle => 'Название';
+
+  @override
+  String get fieldLink => 'Ссылка';
+
+  @override
+  String get fieldStart => 'Начало';
+
+  @override
+  String get fieldEnd => 'Конец';
+
+  @override
+  String get fieldLocation => 'Место';
+
+  @override
+  String get fieldDescription => 'Описание';
+
+  @override
+  String get fieldNetwork => 'Имя сети (SSID)';
+
+  @override
+  String get fieldPassword => 'Пароль';
+
+  @override
+  String get fieldSecurity => 'Защита';
+
+  @override
+  String get fieldHidden => 'Скрытая сеть';
+
+  @override
+  String get fieldEapMethod => 'Метод EAP';
+
+  @override
+  String get fieldIdentity => 'Идентификатор';
+
+  @override
+  String get fieldRecipient => 'Получатель';
+
+  @override
+  String get fieldIban => 'IBAN';
+
+  @override
+  String get fieldBic => 'BIC';
+
+  @override
+  String get fieldAmount => 'Сумма';
+
+  @override
+  String get fieldPurpose => 'Код назначения';
+
+  @override
+  String get fieldReference => 'Референс';
+
+  @override
+  String get fieldRemittance => 'Назначение платежа';
+
+  @override
+  String get fieldInfo => 'Примечание';
+
+  @override
+  String get typeOtp => 'Одноразовый пароль (2FA)';
+
+  @override
+  String get infoSupport => 'Поддержка';
+
+  @override
+  String get fieldIssuer => 'Сервис';
+
+  @override
+  String get fieldAccount => 'Аккаунт';
+
+  @override
+  String get fieldSecret => 'Секретный ключ';
+
+  @override
+  String get fieldOtpType => 'Метод';
+
+  @override
+  String get fieldAlgorithm => 'Алгоритм';
+
+  @override
+  String get fieldDigits => 'Цифр';
+
+  @override
+  String get fieldPeriod => 'Интервал (секунды)';
+
+  @override
+  String get fieldCounter => 'Счётчик';
+
+  @override
   String get formatMicroQr => 'Micro QR-код';
 
   @override

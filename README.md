@@ -11,16 +11,23 @@ zuerst nur anzeigt. Links öffnen sich erst nach einer Rückfrage.
 - **Nur anzeigen:** Der Inhalt erscheint in Source Code Pro, zusammen mit
   Format, Inhaltstyp und bei Links dem Host. Nichts wird automatisch geöffnet.
 - **Links** (`http`/`https`) öffnen sich erst nach einer Rückfrage mit sichtbarer URL.
+- **Inhalte erkannt:** Kontakt (vCard, MECARD, BIZCARD), Termin (iCalendar),
+  WLAN, E-Mail, Telefon, SMS, Ort (`geo:`), Link, Überweisung (GiroCode) und
+  Einmalpasswort (`otpauth://`) erscheinen als Karte mit beschrifteten,
+  einzeln kopierbaren Feldern; der Rohinhalt steht darunter. Alles andere ist
+  Text.
 - **Kopieren** in die Zwischenablage mit einem Tipp.
-- **Verlauf** der letzten 10 Scans zum erneuten Aufrufen und Kopieren, löschbar.
+- **Verlauf** der letzten 25 Scans zum erneuten Aufrufen und Kopieren, löschbar.
 - **Binärcodes** werden als Hex-Dump angezeigt. **VDV-eTickets** (z. B.
   Deutschlandticket) werden zusätzlich dekodiert: Ticketnummer, Produkt,
   Gültigkeit, Ausstellungszeit, (maskierter) Inhaber, Geburtsdatum,
   Organisationsnummern, Klasse, Preis und Signaturprüfung. Die Rohdaten
   bleiben als Hex aufklappbar. Alles lokal auf dem Gerät.
-- **Info-Dialog** mit Entwickler, Version, Build-Datum und Lizenzen.
-- **Zoomstufen** der Rückkamera wie in der Kamera-App (z. B. Auto, 0,5×, 1×,
-  2×, 5×), ermittelt aus den Objektiven des Geräts.
+- **Info-Dialog** mit Entwickler, Version und Build-Datum sowie Knöpfen für
+  Support (GitHub-Issues) und Lizenzen.
+- **Zoomstufen** der Rückkamera wie in der Kamera-App, ermittelt aus den
+  Objektiven des Geräts, z. B. Auto · 0,5× · 1× · 2× · 5× (iPhone 16 Pro Max)
+  oder 0,6× · 1× · 2× (Pixel 9a). Die Auswahl bleibt gespeichert.
 - **Taschenlampe**, heller und dunkler Modus.
 - **13 Sprachen**, siehe [Sprachen](#sprachen).
 
@@ -52,11 +59,12 @@ Installationszeitpunkt.
 | `lib/scan_mode.dart` | Scan-Arten und ihre Codeformate |
 | `lib/camera_lens.dart` | Zoomstufen der Rückkamera und Umschalter (native Abfrage in `AppDelegate.swift` und `MainActivity.kt`) |
 | `lib/result_page.dart` | Ergebnisansicht mit Kopieren und Link-Rückfrage |
-| `lib/history.dart` | Verlauf der letzten 10 Scans |
+| `lib/qr_content.dart` | Parser für QR-Inhaltsformate (vCard, WIFI, EPC, otpauth, …) |
+| `lib/history.dart` | Verlauf der letzten 25 Scans |
 | `lib/binary_payload.dart` | Erkennung von Binärinhalten, Hex-Darstellung |
 | `lib/vdv/` | VDV-eTicket: BER, ISO 9796-2, Zertifikate, Ticketdaten |
 | `assets/vdv_certs/` | Öffentliche VDV-CA-Schlüssel (CC0), siehe `tool/vdv/README.md` |
-| `lib/app_info.dart` | Info-Dialog |
+| `lib/app_info.dart` | Info-Dialog mit Support- und Lizenz-Knopf |
 | `lib/localization.dart`, `lib/l10n/` | Übersetzungen (generiert) |
 | `test/` | Widget- und Unit-Tests, auch für alle Sprachen |
 | `tool/vdv/` | Update-Skript und Herkunft der VDV-Schlüssel |
@@ -65,12 +73,22 @@ Installationszeitpunkt.
 
 ## Version
 
-Aktuell: **1.4.0** (Build 8). Version und Build-Nummer stehen in
-`pubspec.yaml`, z. B. `version: 1.4.0+8`. Für jeden Upload zu TestFlight oder
+Aktuell: **2.0.1** (Build 10). Version und Build-Nummer stehen in
+`pubspec.yaml`, z. B. `version: 2.0.1+10`. Für jeden Upload zu TestFlight oder
 Google Play muss die Build-Nummer hinter dem `+` steigen. Jede neue Version
 bekommt einen Eintrag in [CHANGELOG.md](CHANGELOG.md).
 
 ## Release
+
+Ablauf für eine neue Version:
+
+1. Version in `pubspec.yaml` erhöhen (Build-Nummer immer +1).
+2. Eintrag in [CHANGELOG.md](CHANGELOG.md), README und ggf.
+   [PRIVACY.md](PRIVACY.md) anpassen (Datum „Stand“).
+3. Prüfen: `flutter analyze`, `flutter test`,
+   `python3 tool/license/add_headers.py --check`.
+4. iOS und Android wie unten bauen und hochladen.
+5. Committen und taggen, z. B. `git tag v2.0.1`.
 
 ### iOS / TestFlight
 
@@ -147,12 +165,18 @@ Quellbilder liegen unter `screenshots/source/<sprache>/` (iPhone direkt,
 
 - **iOS:** Die Codeerkennung nutzt Apples Vision-Framework. Die Kamera-Rückfrage
   ist in `ios/Runner/*.lproj/InfoPlist.strings` übersetzt.
-  `ITSAppUsesNonExemptEncryption` ist auf `false` gesetzt.
+  `ITSAppUsesNonExemptEncryption` ist auf `false` gesetzt. Die Zoomstufen
+  fragt `ios/Runner/AppDelegate.swift` über den Kanal
+  `de.l9g.qr_viewer/camera` bei AVFoundation ab.
 - **Android:** Die Codeerkennung nutzt Google ML Kit (in die App eingebaut).
   ML Kit bringt die Berechtigungen `INTERNET` und `ACCESS_NETWORK_STATE` mit und
   kann Diagnosedaten an Google senden; das ist in der Datenschutzerklärung
   beschrieben. Die `<queries>` für `http`/`https` in `AndroidManifest.xml`
   braucht `url_launcher`. Ab Android 13 ist die Sprache pro App wählbar.
+  Die Zoomstufen ermittelt `MainActivity.kt` über Camera2
+  (`CameraCharacteristics`). Eine selbst signierte APK lässt sich nicht über
+  eine Play-Store-Installation installieren (andere Signatur); dafür die App
+  vorher deinstallieren.
 
 ## Lizenz
 

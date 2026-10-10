@@ -210,6 +210,185 @@ class AppLocalizationsZh extends AppLocalizations {
   String get lensTeleName => '长焦镜头';
 
   @override
+  String get typePayment => '银行转账';
+
+  @override
+  String get rawContent => '原始内容';
+
+  @override
+  String get valueYes => '是';
+
+  @override
+  String get valueOpenNetwork => '无（开放网络）';
+
+  @override
+  String copyField(String label) {
+    return '复制$label';
+  }
+
+  @override
+  String get fieldName => '姓名';
+
+  @override
+  String get fieldNickname => '昵称';
+
+  @override
+  String get fieldOrganization => '单位';
+
+  @override
+  String get fieldJobTitle => '职位';
+
+  @override
+  String get fieldPhone => '电话';
+
+  @override
+  String get fieldMobile => '手机';
+
+  @override
+  String get fieldWorkPhone => '工作电话';
+
+  @override
+  String get fieldHomePhone => '住宅电话';
+
+  @override
+  String get fieldFax => '传真';
+
+  @override
+  String get fieldEmail => '电子邮件';
+
+  @override
+  String get fieldWebsite => '网站';
+
+  @override
+  String get fieldAddress => '地址';
+
+  @override
+  String get fieldBirthday => '生日';
+
+  @override
+  String get fieldNote => '备注';
+
+  @override
+  String get fieldTo => '收件人';
+
+  @override
+  String get fieldCc => '抄送';
+
+  @override
+  String get fieldBcc => '密送';
+
+  @override
+  String get fieldSubject => '主题';
+
+  @override
+  String get fieldMessage => '内容';
+
+  @override
+  String get fieldNumber => '号码';
+
+  @override
+  String get fieldLatitude => '纬度';
+
+  @override
+  String get fieldLongitude => '经度';
+
+  @override
+  String get fieldAltitude => '海拔';
+
+  @override
+  String get fieldQuery => '地点';
+
+  @override
+  String get fieldTitle => '标题';
+
+  @override
+  String get fieldLink => '链接';
+
+  @override
+  String get fieldStart => '开始';
+
+  @override
+  String get fieldEnd => '结束';
+
+  @override
+  String get fieldLocation => '地点';
+
+  @override
+  String get fieldDescription => '描述';
+
+  @override
+  String get fieldNetwork => '网络名称 (SSID)';
+
+  @override
+  String get fieldPassword => '密码';
+
+  @override
+  String get fieldSecurity => '加密方式';
+
+  @override
+  String get fieldHidden => '隐藏网络';
+
+  @override
+  String get fieldEapMethod => 'EAP 方法';
+
+  @override
+  String get fieldIdentity => '身份';
+
+  @override
+  String get fieldRecipient => '收款人';
+
+  @override
+  String get fieldIban => 'IBAN';
+
+  @override
+  String get fieldBic => 'BIC';
+
+  @override
+  String get fieldAmount => '金额';
+
+  @override
+  String get fieldPurpose => '用途代码';
+
+  @override
+  String get fieldReference => '参考号';
+
+  @override
+  String get fieldRemittance => '付款附言';
+
+  @override
+  String get fieldInfo => '付款人备注';
+
+  @override
+  String get typeOtp => '一次性密码 (2FA)';
+
+  @override
+  String get infoSupport => '支持';
+
+  @override
+  String get fieldIssuer => '发行方';
+
+  @override
+  String get fieldAccount => '账户';
+
+  @override
+  String get fieldSecret => '密钥';
+
+  @override
+  String get fieldOtpType => '方式';
+
+  @override
+  String get fieldAlgorithm => '算法';
+
+  @override
+  String get fieldDigits => '位数';
+
+  @override
+  String get fieldPeriod => '间隔（秒）';
+
+  @override
+  String get fieldCounter => '计数器';
+
+  @override
   String get formatMicroQr => 'Micro QR 码';
 
   @override

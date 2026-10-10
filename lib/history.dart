@@ -73,7 +73,7 @@ class ScanEntry {
 class ScanHistory extends ChangeNotifier {
   ScanHistory._(this._prefs, this._entries);
 
-  static const maxEntries = 10;
+  static const maxEntries = 25;
   static const _key = 'scan_history_v1';
 
   final SharedPreferences _prefs;
@@ -188,13 +188,16 @@ class HistoryPage extends StatelessWidget {
                 itemBuilder: (context, i) {
                   final e = entries[i];
                   final shown = e.binary ? toSpacedHex(fromHex(e.raw)) : e.raw;
-                  final kind = e.binary
-                      ? (isVdvTicket(fromHex(e.raw))
-                            ? l.vdvTicket
-                            : l.typeBinary)
-                      : typeLabel(e.type, l);
+                  final (kind, icon) = e.binary
+                      ? (
+                          isVdvTicket(fromHex(e.raw))
+                              ? l.vdvTicket
+                              : l.typeBinary,
+                          Icons.memory,
+                        )
+                      : contentKind(e.raw, e.type, l);
                   return ListTile(
-                    leading: Icon(e.binary ? Icons.memory : typeIcon(e.type)),
+                    leading: Icon(icon),
                     title: Text(
                       shown,
                       maxLines: 2,

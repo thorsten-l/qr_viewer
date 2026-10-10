@@ -2,7 +2,7 @@
 
 [Deutsch](#deutsch) · [English](#english)
 
-Stand / Last updated: 9. Oktober 2026 / October 9, 2026
+Stand / Last updated: 10. Oktober 2026 / October 10, 2026
 
 ---
 
@@ -28,12 +28,20 @@ den Einstellungen deines Geräts widerrufen.
 
 ### Verlauf und Einstellungen
 
-Die Inhalte der letzten zehn gescannten Codes sowie die zuletzt gewählte
-Scan-Art werden lokal auf deinem Gerät gespeichert, damit du sie später
-erneut aufrufen kannst. Diese Daten verlassen das Gerät nicht durch die App.
+Die Inhalte der letzten 25 gescannten Codes sowie die zuletzt gewählte
+Scan-Art und Zoomstufe werden lokal auf deinem Gerät gespeichert, damit du
+sie später erneut aufrufen kannst. Diese Daten verlassen das Gerät nicht durch die App.
 Du kannst den Verlauf jederzeit in der App löschen. Beim Löschen der App
 werden alle Daten entfernt. Sie können jedoch Teil einer Gerätesicherung sein,
 die du über das Betriebssystem erstellst (z. B. iCloud- oder Android-Backup).
+
+### Erkennung von Inhalten
+
+Die App erkennt übliche Inhaltsformate wie Kontakte, Termine, WLAN-Zugänge,
+Überweisungsdaten (GiroCode) oder Einmalpasswort-Schlüssel (2FA) und zeigt sie
+aufbereitet an. Das geschieht ausschließlich auf deinem Gerät. Beachte, dass
+solche Codes vertrauliche Angaben enthalten können, etwa WLAN-Passwörter oder
+2FA-Schlüssel; sie stehen wie jeder Inhalt im Verlauf, bis du ihn löschst.
 
 ### Elektronische Tickets
 
@@ -47,7 +55,9 @@ nutzt sie mitgelieferte öffentliche Schlüssel; es werden keine Daten
 
 Enthält ein Code einen Web-Link, öffnet die App ihn nur nach deiner
 ausdrücklichen Bestätigung in deinem Browser. Für die aufgerufene Website gilt
-die Datenschutzerklärung ihres jeweiligen Anbieters.
+die Datenschutzerklärung ihres jeweiligen Anbieters. Der Knopf „Support“ im
+Info-Dialog öffnet die Seite https://github.com/thorsten-l/qr_viewer/issues in
+deinem Browser; dort gilt die Datenschutzerklärung von GitHub.
 
 ### Zwischenablage
 
@@ -106,12 +116,21 @@ revoke camera access at any time in your device settings.
 
 ### History and settings
 
-The contents of the last ten scanned codes and the most recently selected
-scan type are stored locally on your device so that you can open them again
-later. The app does not send this data off the device. You can clear the
+The contents of the last 25 scanned codes and the most recently selected
+scan type and zoom level are stored locally on your device so that you can
+open them again later. The app does not send this data off the device. You can clear the
 history in the app at any time. Deleting the app removes all of its data.
 The data may, however, be included in device backups that you create through
 the operating system (e.g. iCloud or Android backup).
+
+### Content recognition
+
+The app recognizes common content formats such as contacts, events, Wi-Fi
+credentials, bank transfer data (GiroCode) or one-time password keys (2FA) and
+displays them in a readable form. This happens solely on your device. Please
+note that such codes can contain confidential information, for example Wi-Fi
+passwords or 2FA keys; like any content, they remain in the history until you
+clear it.
 
 ### Electronic tickets
 
@@ -124,7 +143,9 @@ this; no data is transmitted.
 
 If a code contains a web link, the app opens it in your browser only after
 you explicitly confirm. The privacy policy of the respective website applies
-to the site you visit.
+to the site you visit. The “Support” button in the info dialog opens
+https://github.com/thorsten-l/qr_viewer/issues in your browser; GitHub's
+privacy policy applies there.
 
 ### Clipboard
 

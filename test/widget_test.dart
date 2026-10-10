@@ -105,6 +105,9 @@ void main() {
     expect(find.text('1.0.0 (Build 1)'), findsOneWidget);
     expect(find.text('Build-Datum'), findsOneWidget);
     expect(find.text('8.10.2026 14:05'), findsOneWidget);
+    expect(find.widgetWithText(OutlinedButton, 'Support'), findsOneWidget);
+    expect(find.widgetWithText(OutlinedButton, 'Lizenzen'), findsOneWidget);
+    expect(find.byIcon(Icons.link), findsOneWidget);
   });
 
   testWidgets('Ohne Build-Datum wird der Installationszeitpunkt gezeigt', (

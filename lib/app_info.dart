@@ -15,6 +15,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'localization.dart';
 
@@ -23,6 +24,9 @@ import 'localization.dart';
 const _buildDateDefine = String.fromEnvironment('BUILD_DATE');
 
 const appAuthor = 'Thorsten Ludewig';
+
+/// Fragen und Fehlerberichte; dieselbe Adresse steht im App Store.
+final supportUri = Uri.parse('https://github.com/thorsten-l/qr_viewer/issues');
 
 /// Datum und Uhrzeit im Format der jeweiligen Sprache.
 String formatDateTime(DateTime d, String locale) =>
@@ -79,29 +83,55 @@ class AppInfoDialog extends StatelessWidget {
         child: Image.asset('assets/app_icon.png', width: 64, height: 64),
       ),
       title: const Text('QR Viewer'),
-      content: Table(
-        defaultColumnWidth: const IntrinsicColumnWidth(),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          row(l.infoDeveloper, appAuthor),
-          row(
-            l.infoVersion,
-            l.infoVersionValue(info.version, info.buildNumber),
+          Table(
+            defaultColumnWidth: const IntrinsicColumnWidth(),
+            children: [
+              row(l.infoDeveloper, appAuthor),
+              row(
+                l.infoVersion,
+                l.infoVersionValue(info.version, info.buildNumber),
+              ),
+              row(
+                dateLabel,
+                date != null ? formatDateTime(date, locale) : l.valueUnknown,
+              ),
+            ],
           ),
-          row(
-            dateLabel,
-            date != null ? formatDateTime(date, locale) : l.valueUnknown,
+          const SizedBox(height: 8),
+          // Support und Lizenzen nebeneinander; unten bleibt nur Schließen.
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton.icon(
+                  icon: const Icon(Icons.link),
+                  label: Text(l.infoSupport),
+                  onPressed: () => launchUrl(
+                    supportUri,
+                    mode: LaunchMode.externalApplication,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: OutlinedButton.icon(
+                  icon: const Icon(Icons.description_outlined),
+                  label: Text(l.licenses),
+                  onPressed: () => showLicensePage(
+                    context: context,
+                    applicationName: 'QR Viewer',
+                    applicationVersion: info.version,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
       actions: [
-        TextButton(
-          onPressed: () => showLicensePage(
-            context: context,
-            applicationName: 'QR Viewer',
-            applicationVersion: info.version,
-          ),
-          child: Text(l.licenses),
-        ),
         FilledButton(
           onPressed: () => Navigator.pop(context),
           child: Text(l.close),

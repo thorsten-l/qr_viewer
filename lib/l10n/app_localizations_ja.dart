@@ -210,6 +210,185 @@ class AppLocalizationsJa extends AppLocalizations {
   String get lensTeleName => '望遠レンズ';
 
   @override
+  String get typePayment => '銀行振込';
+
+  @override
+  String get rawContent => '元の内容';
+
+  @override
+  String get valueYes => 'はい';
+
+  @override
+  String get valueOpenNetwork => 'なし（オープンネットワーク）';
+
+  @override
+  String copyField(String label) {
+    return '$labelをコピー';
+  }
+
+  @override
+  String get fieldName => '名前';
+
+  @override
+  String get fieldNickname => 'ニックネーム';
+
+  @override
+  String get fieldOrganization => '組織';
+
+  @override
+  String get fieldJobTitle => '役職';
+
+  @override
+  String get fieldPhone => '電話';
+
+  @override
+  String get fieldMobile => '携帯電話';
+
+  @override
+  String get fieldWorkPhone => '勤務先電話';
+
+  @override
+  String get fieldHomePhone => '自宅電話';
+
+  @override
+  String get fieldFax => 'FAX';
+
+  @override
+  String get fieldEmail => 'メール';
+
+  @override
+  String get fieldWebsite => 'ウェブサイト';
+
+  @override
+  String get fieldAddress => '住所';
+
+  @override
+  String get fieldBirthday => '誕生日';
+
+  @override
+  String get fieldNote => 'メモ';
+
+  @override
+  String get fieldTo => '宛先';
+
+  @override
+  String get fieldCc => 'CC';
+
+  @override
+  String get fieldBcc => 'BCC';
+
+  @override
+  String get fieldSubject => '件名';
+
+  @override
+  String get fieldMessage => '本文';
+
+  @override
+  String get fieldNumber => '番号';
+
+  @override
+  String get fieldLatitude => '緯度';
+
+  @override
+  String get fieldLongitude => '経度';
+
+  @override
+  String get fieldAltitude => '高度';
+
+  @override
+  String get fieldQuery => '場所';
+
+  @override
+  String get fieldTitle => 'タイトル';
+
+  @override
+  String get fieldLink => 'リンク';
+
+  @override
+  String get fieldStart => '開始';
+
+  @override
+  String get fieldEnd => '終了';
+
+  @override
+  String get fieldLocation => '場所';
+
+  @override
+  String get fieldDescription => '説明';
+
+  @override
+  String get fieldNetwork => 'ネットワーク名（SSID）';
+
+  @override
+  String get fieldPassword => 'パスワード';
+
+  @override
+  String get fieldSecurity => 'セキュリティ';
+
+  @override
+  String get fieldHidden => '非公開ネットワーク';
+
+  @override
+  String get fieldEapMethod => 'EAP方式';
+
+  @override
+  String get fieldIdentity => 'ID';
+
+  @override
+  String get fieldRecipient => '受取人';
+
+  @override
+  String get fieldIban => 'IBAN';
+
+  @override
+  String get fieldBic => 'BIC';
+
+  @override
+  String get fieldAmount => '金額';
+
+  @override
+  String get fieldPurpose => '目的コード';
+
+  @override
+  String get fieldReference => '参照番号';
+
+  @override
+  String get fieldRemittance => '振込メモ';
+
+  @override
+  String get fieldInfo => '支払者へのメモ';
+
+  @override
+  String get typeOtp => 'ワンタイムパスワード（2FA）';
+
+  @override
+  String get infoSupport => 'サポート';
+
+  @override
+  String get fieldIssuer => '発行者';
+
+  @override
+  String get fieldAccount => 'アカウント';
+
+  @override
+  String get fieldSecret => '秘密鍵';
+
+  @override
+  String get fieldOtpType => '方式';
+
+  @override
+  String get fieldAlgorithm => 'アルゴリズム';
+
+  @override
+  String get fieldDigits => '桁数';
+
+  @override
+  String get fieldPeriod => '間隔（秒）';
+
+  @override
+  String get fieldCounter => 'カウンター';
+
+  @override
   String get formatMicroQr => 'マイクロQRコード';
 
   @override

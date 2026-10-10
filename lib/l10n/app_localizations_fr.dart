@@ -211,6 +211,185 @@ class AppLocalizationsFr extends AppLocalizations {
   String get lensTeleName => 'Téléobjectif';
 
   @override
+  String get typePayment => 'Virement';
+
+  @override
+  String get rawContent => 'Contenu brut';
+
+  @override
+  String get valueYes => 'Oui';
+
+  @override
+  String get valueOpenNetwork => 'Aucune (réseau ouvert)';
+
+  @override
+  String copyField(String label) {
+    return 'Copier $label';
+  }
+
+  @override
+  String get fieldName => 'Nom';
+
+  @override
+  String get fieldNickname => 'Surnom';
+
+  @override
+  String get fieldOrganization => 'Organisation';
+
+  @override
+  String get fieldJobTitle => 'Fonction';
+
+  @override
+  String get fieldPhone => 'Téléphone';
+
+  @override
+  String get fieldMobile => 'Mobile';
+
+  @override
+  String get fieldWorkPhone => 'Téléphone (travail)';
+
+  @override
+  String get fieldHomePhone => 'Téléphone (domicile)';
+
+  @override
+  String get fieldFax => 'Fax';
+
+  @override
+  String get fieldEmail => 'E-mail';
+
+  @override
+  String get fieldWebsite => 'Site web';
+
+  @override
+  String get fieldAddress => 'Adresse';
+
+  @override
+  String get fieldBirthday => 'Anniversaire';
+
+  @override
+  String get fieldNote => 'Note';
+
+  @override
+  String get fieldTo => 'À';
+
+  @override
+  String get fieldCc => 'Cc';
+
+  @override
+  String get fieldBcc => 'Cci';
+
+  @override
+  String get fieldSubject => 'Objet';
+
+  @override
+  String get fieldMessage => 'Message';
+
+  @override
+  String get fieldNumber => 'Numéro';
+
+  @override
+  String get fieldLatitude => 'Latitude';
+
+  @override
+  String get fieldLongitude => 'Longitude';
+
+  @override
+  String get fieldAltitude => 'Altitude';
+
+  @override
+  String get fieldQuery => 'Lieu';
+
+  @override
+  String get fieldTitle => 'Titre';
+
+  @override
+  String get fieldLink => 'Lien';
+
+  @override
+  String get fieldStart => 'Début';
+
+  @override
+  String get fieldEnd => 'Fin';
+
+  @override
+  String get fieldLocation => 'Lieu';
+
+  @override
+  String get fieldDescription => 'Description';
+
+  @override
+  String get fieldNetwork => 'Nom du réseau (SSID)';
+
+  @override
+  String get fieldPassword => 'Mot de passe';
+
+  @override
+  String get fieldSecurity => 'Sécurité';
+
+  @override
+  String get fieldHidden => 'Réseau masqué';
+
+  @override
+  String get fieldEapMethod => 'Méthode EAP';
+
+  @override
+  String get fieldIdentity => 'Identité';
+
+  @override
+  String get fieldRecipient => 'Bénéficiaire';
+
+  @override
+  String get fieldIban => 'IBAN';
+
+  @override
+  String get fieldBic => 'BIC';
+
+  @override
+  String get fieldAmount => 'Montant';
+
+  @override
+  String get fieldPurpose => 'Code motif';
+
+  @override
+  String get fieldReference => 'Référence';
+
+  @override
+  String get fieldRemittance => 'Libellé';
+
+  @override
+  String get fieldInfo => 'Note au payeur';
+
+  @override
+  String get typeOtp => 'Mot de passe à usage unique (2FA)';
+
+  @override
+  String get infoSupport => 'Assistance';
+
+  @override
+  String get fieldIssuer => 'Émetteur';
+
+  @override
+  String get fieldAccount => 'Compte';
+
+  @override
+  String get fieldSecret => 'Clé secrète';
+
+  @override
+  String get fieldOtpType => 'Méthode';
+
+  @override
+  String get fieldAlgorithm => 'Algorithme';
+
+  @override
+  String get fieldDigits => 'Chiffres';
+
+  @override
+  String get fieldPeriod => 'Intervalle (secondes)';
+
+  @override
+  String get fieldCounter => 'Compteur';
+
+  @override
   String get formatMicroQr => 'Micro QR code';
 
   @override

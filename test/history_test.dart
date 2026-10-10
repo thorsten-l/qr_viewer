@@ -26,13 +26,13 @@ void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
   group('ScanHistory', () {
-    test('behält nur die letzten 10, neueste zuerst', () async {
+    test('behält nur die letzten 25, neueste zuerst', () async {
       final h = await ScanHistory.load();
-      for (var i = 1; i <= 12; i++) {
+      for (var i = 1; i <= 27; i++) {
         await h.add('inhalt $i', BarcodeType.text);
       }
-      expect(h.entries.length, 10);
-      expect(h.entries.first.raw, 'inhalt 12');
+      expect(h.entries.length, 25);
+      expect(h.entries.first.raw, 'inhalt 27');
       expect(h.entries.last.raw, 'inhalt 3');
     });
 

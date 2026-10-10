@@ -21,6 +21,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'app_info.dart' show formatDateTime;
 import 'binary_payload.dart';
 import 'localization.dart';
+import 'qr_content.dart';
 import 'scan_mode.dart';
 import 'vdv/vdv_ticket.dart';
 
@@ -57,6 +58,124 @@ IconData typeIcon(BarcodeType type) => switch (type) {
   _ => Icons.notes,
 };
 
+String kindLabel(ContentKind kind, AppLocalizations l) => switch (kind) {
+  ContentKind.url => l.typeUrl,
+  ContentKind.email => l.typeEmail,
+  ContentKind.phone => l.typePhone,
+  ContentKind.sms => l.typeSms,
+  ContentKind.geo => l.typeGeo,
+  ContentKind.contact => l.typeContact,
+  ContentKind.event => l.typeCalendar,
+  ContentKind.wifi => l.typeWifi,
+  ContentKind.payment => l.typePayment,
+  ContentKind.otp => l.typeOtp,
+  ContentKind.text => l.typeText,
+};
+
+IconData kindIcon(ContentKind kind) => switch (kind) {
+  ContentKind.url => Icons.link,
+  ContentKind.email => Icons.mail_outline,
+  ContentKind.phone => Icons.phone_outlined,
+  ContentKind.sms => Icons.sms_outlined,
+  ContentKind.geo => Icons.place_outlined,
+  ContentKind.contact => Icons.person_outline,
+  ContentKind.event => Icons.event_outlined,
+  ContentKind.wifi => Icons.wifi,
+  ContentKind.payment => Icons.account_balance_outlined,
+  ContentKind.otp => Icons.key_outlined,
+  ContentKind.text => Icons.notes,
+};
+
+/// Bezeichnung und Symbol eines Inhalts: das erkannte Format, sonst der
+/// Typ, den die Plattform meldet (z. B. Produktcode bei EAN-13).
+(String, IconData) contentKind(
+  String raw,
+  BarcodeType type,
+  AppLocalizations l,
+) {
+  final kind = parseContent(raw).kind;
+  return kind == ContentKind.text
+      ? (typeLabel(type, l), typeIcon(type))
+      : (kindLabel(kind, l), kindIcon(kind));
+}
+
+String fieldLabel(FieldLabel label, AppLocalizations l) => switch (label) {
+  FieldLabel.name => l.fieldName,
+  FieldLabel.nickname => l.fieldNickname,
+  FieldLabel.organization => l.fieldOrganization,
+  FieldLabel.jobTitle => l.fieldJobTitle,
+  FieldLabel.phone => l.fieldPhone,
+  FieldLabel.mobile => l.fieldMobile,
+  FieldLabel.workPhone => l.fieldWorkPhone,
+  FieldLabel.homePhone => l.fieldHomePhone,
+  FieldLabel.fax => l.fieldFax,
+  FieldLabel.email => l.fieldEmail,
+  FieldLabel.website => l.fieldWebsite,
+  FieldLabel.address => l.fieldAddress,
+  FieldLabel.birthday => l.fieldBirthday,
+  FieldLabel.note => l.fieldNote,
+  FieldLabel.to => l.fieldTo,
+  FieldLabel.cc => l.fieldCc,
+  FieldLabel.bcc => l.fieldBcc,
+  FieldLabel.subject => l.fieldSubject,
+  FieldLabel.message => l.fieldMessage,
+  FieldLabel.number => l.fieldNumber,
+  FieldLabel.latitude => l.fieldLatitude,
+  FieldLabel.longitude => l.fieldLongitude,
+  FieldLabel.altitude => l.fieldAltitude,
+  FieldLabel.query => l.fieldQuery,
+  FieldLabel.title => l.fieldTitle,
+  FieldLabel.link => l.fieldLink,
+  FieldLabel.start => l.fieldStart,
+  FieldLabel.end => l.fieldEnd,
+  FieldLabel.location => l.fieldLocation,
+  FieldLabel.description => l.fieldDescription,
+  FieldLabel.network => l.fieldNetwork,
+  FieldLabel.password => l.fieldPassword,
+  FieldLabel.security => l.fieldSecurity,
+  FieldLabel.hidden => l.fieldHidden,
+  FieldLabel.eapMethod => l.fieldEapMethod,
+  FieldLabel.identity => l.fieldIdentity,
+  FieldLabel.recipient => l.fieldRecipient,
+  FieldLabel.iban => l.fieldIban,
+  FieldLabel.bic => l.fieldBic,
+  FieldLabel.amount => l.fieldAmount,
+  FieldLabel.purpose => l.fieldPurpose,
+  FieldLabel.reference => l.fieldReference,
+  FieldLabel.remittance => l.fieldRemittance,
+  FieldLabel.info => l.fieldInfo,
+  FieldLabel.issuer => l.fieldIssuer,
+  FieldLabel.account => l.fieldAccount,
+  FieldLabel.secret => l.fieldSecret,
+  FieldLabel.otpType => l.fieldOtpType,
+  FieldLabel.algorithm => l.fieldAlgorithm,
+  FieldLabel.digits => l.fieldDigits,
+  FieldLabel.period => l.fieldPeriod,
+  FieldLabel.counter => l.fieldCounter,
+};
+
+/// Anzeigewert: Datum und Betrag passend zur Sprache, sonst der Text.
+String fieldValue(ContentField f, AppLocalizations l, String locale) {
+  final time = f.time;
+  if (time != null) {
+    final text = f.dateOnly
+        ? DateFormat.yMd(locale).format(time)
+        : formatDateTime(time, locale);
+    return f.timeZone == null ? text : '$text (${f.timeZone})';
+  }
+  if (f.amount != null) {
+    return NumberFormat.simpleCurrency(
+      locale: locale,
+      name: f.currency,
+    ).format(f.amount);
+  }
+  return switch (f.label) {
+    FieldLabel.hidden => l.valueYes,
+    FieldLabel.security when f.value == 'nopass' => l.valueOpenNetwork,
+    _ => f.value,
+  };
+}
+
 Future<void> copyWithFeedback(BuildContext context, String text) async {
   await Clipboard.setData(ClipboardData(text: text));
   if (context.mounted) {
@@ -84,13 +203,6 @@ class ResultPage extends StatelessWidget {
   final BarcodeType type;
   final BarcodeFormat format;
   final bool binary;
-
-  Uri? get _webUri {
-    if (binary) return null;
-    final uri = Uri.tryParse(raw.trim());
-    if (uri == null || uri.host.isEmpty) return null;
-    return (uri.scheme == 'http' || uri.scheme == 'https') ? uri : null;
-  }
 
   Future<void> _open(BuildContext context, Uri uri) async {
     final ok = await showDialog<bool>(
@@ -120,13 +232,27 @@ class ResultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final uri = _webUri;
     final scheme = Theme.of(context).colorScheme;
     final l = context.l10n;
     final bytes = binary ? fromHex(raw) : null;
-    final title = bytes == null
-        ? typeLabel(type, l)
-        : (isVdvTicket(bytes) ? l.vdvTicket : l.typeBinary);
+    final parsed = bytes == null ? parseContent(raw) : ParsedContent.text;
+    final link = parsed.kind == ContentKind.url
+        ? parsed[FieldLabel.link]
+        : null;
+    final uri = link == null ? null : webUri(link);
+    // Eine bloße URL braucht keine Karte; sie steht schon im Rohinhalt.
+    final showCard =
+        parsed.kind != ContentKind.text &&
+        !(parsed.kind == ContentKind.url && parsed.fields.length == 1);
+    final title = bytes != null
+        ? (isVdvTicket(bytes) ? l.vdvTicket : l.typeBinary)
+        : parsed.kind != ContentKind.text
+        ? kindLabel(parsed.kind, l)
+        : typeLabel(type, l);
+    final rawText = SelectableText(
+      raw,
+      style: const TextStyle(fontFamily: kContentFont, fontSize: 20),
+    );
     final copyText = bytes == null ? raw : toSpacedHex(bytes);
 
     return Scaffold(
@@ -164,13 +290,24 @@ class ResultPage extends StatelessWidget {
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.all(12),
                     child: bytes == null
-                        ? SelectableText(
-                            raw,
-                            style: const TextStyle(
-                              fontFamily: kContentFont,
-                              fontSize: 20,
-                            ),
-                          )
+                        ? showCard
+                              ? Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    ContentCard(content: parsed),
+                                    const Divider(height: 32),
+                                    Text(
+                                      l.rawContent,
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.titleSmall,
+                                    ),
+                                    const SizedBox(height: 8),
+                                    rawText,
+                                  ],
+                                )
+                              : rawText
                         : isVdvTicket(bytes)
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -213,6 +350,71 @@ class ResultPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Erkannte Felder eines Inhalts, jedes einzeln kopierbar.
+class ContentCard extends StatelessWidget {
+  const ContentCard({super.key, required this.content});
+
+  final ParsedContent content;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    final locale = Localizations.localeOf(context).toString();
+    final labelStyle = theme.textTheme.labelMedium?.copyWith(
+      color: theme.colorScheme.onSurfaceVariant,
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Icon(kindIcon(content.kind), color: theme.colorScheme.primary),
+            const SizedBox(width: 8),
+            Text(
+              kindLabel(content.kind, l),
+              style: theme.textTheme.titleMedium,
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        for (final f in content.fields)
+          Builder(
+            builder: (context) {
+              final name = fieldLabel(f.label, l);
+              final value = fieldValue(f, l, locale);
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(name, style: labelStyle),
+                          SelectableText(
+                            value,
+                            style: theme.textTheme.bodyLarge,
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      tooltip: l.copyField(name),
+                      icon: const Icon(Icons.copy, size: 20),
+                      onPressed: () => copyWithFeedback(context, value),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+      ],
     );
   }
 }

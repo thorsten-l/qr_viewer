@@ -210,6 +210,185 @@ class AppLocalizationsHi extends AppLocalizations {
   String get lensTeleName => 'टेलीफ़ोटो';
 
   @override
+  String get typePayment => 'बैंक ट्रांसफ़र';
+
+  @override
+  String get rawContent => 'कच्ची सामग्री';
+
+  @override
+  String get valueYes => 'हाँ';
+
+  @override
+  String get valueOpenNetwork => 'कोई नहीं (खुला नेटवर्क)';
+
+  @override
+  String copyField(String label) {
+    return '$label कॉपी करें';
+  }
+
+  @override
+  String get fieldName => 'नाम';
+
+  @override
+  String get fieldNickname => 'उपनाम';
+
+  @override
+  String get fieldOrganization => 'संगठन';
+
+  @override
+  String get fieldJobTitle => 'पद';
+
+  @override
+  String get fieldPhone => 'फ़ोन';
+
+  @override
+  String get fieldMobile => 'मोबाइल';
+
+  @override
+  String get fieldWorkPhone => 'कार्यालय फ़ोन';
+
+  @override
+  String get fieldHomePhone => 'घर का फ़ोन';
+
+  @override
+  String get fieldFax => 'फ़ैक्स';
+
+  @override
+  String get fieldEmail => 'ईमेल';
+
+  @override
+  String get fieldWebsite => 'वेबसाइट';
+
+  @override
+  String get fieldAddress => 'पता';
+
+  @override
+  String get fieldBirthday => 'जन्मदिन';
+
+  @override
+  String get fieldNote => 'नोट';
+
+  @override
+  String get fieldTo => 'प्रति';
+
+  @override
+  String get fieldCc => 'Cc';
+
+  @override
+  String get fieldBcc => 'Bcc';
+
+  @override
+  String get fieldSubject => 'विषय';
+
+  @override
+  String get fieldMessage => 'संदेश';
+
+  @override
+  String get fieldNumber => 'नंबर';
+
+  @override
+  String get fieldLatitude => 'अक्षांश';
+
+  @override
+  String get fieldLongitude => 'देशांतर';
+
+  @override
+  String get fieldAltitude => 'ऊँचाई';
+
+  @override
+  String get fieldQuery => 'स्थान';
+
+  @override
+  String get fieldTitle => 'शीर्षक';
+
+  @override
+  String get fieldLink => 'लिंक';
+
+  @override
+  String get fieldStart => 'शुरू';
+
+  @override
+  String get fieldEnd => 'समाप्ति';
+
+  @override
+  String get fieldLocation => 'स्थान';
+
+  @override
+  String get fieldDescription => 'विवरण';
+
+  @override
+  String get fieldNetwork => 'नेटवर्क नाम (SSID)';
+
+  @override
+  String get fieldPassword => 'पासवर्ड';
+
+  @override
+  String get fieldSecurity => 'सुरक्षा';
+
+  @override
+  String get fieldHidden => 'छिपा नेटवर्क';
+
+  @override
+  String get fieldEapMethod => 'EAP विधि';
+
+  @override
+  String get fieldIdentity => 'पहचान';
+
+  @override
+  String get fieldRecipient => 'प्राप्तकर्ता';
+
+  @override
+  String get fieldIban => 'IBAN';
+
+  @override
+  String get fieldBic => 'BIC';
+
+  @override
+  String get fieldAmount => 'राशि';
+
+  @override
+  String get fieldPurpose => 'उद्देश्य कोड';
+
+  @override
+  String get fieldReference => 'संदर्भ';
+
+  @override
+  String get fieldRemittance => 'भुगतान विवरण';
+
+  @override
+  String get fieldInfo => 'भुगतानकर्ता हेतु नोट';
+
+  @override
+  String get typeOtp => 'वन-टाइम पासवर्ड (2FA)';
+
+  @override
+  String get infoSupport => 'सहायता';
+
+  @override
+  String get fieldIssuer => 'जारीकर्ता';
+
+  @override
+  String get fieldAccount => 'खाता';
+
+  @override
+  String get fieldSecret => 'गुप्त कुंजी';
+
+  @override
+  String get fieldOtpType => 'विधि';
+
+  @override
+  String get fieldAlgorithm => 'एल्गोरिदम';
+
+  @override
+  String get fieldDigits => 'अंक';
+
+  @override
+  String get fieldPeriod => 'अंतराल (सेकंड)';
+
+  @override
+  String get fieldCounter => 'काउंटर';
+
+  @override
   String get formatMicroQr => 'Micro QR कोड';
 
   @override

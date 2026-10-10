@@ -211,6 +211,185 @@ class AppLocalizationsUk extends AppLocalizations {
   String get lensTeleName => 'Телеоб\'єктив';
 
   @override
+  String get typePayment => 'Банківський переказ';
+
+  @override
+  String get rawContent => 'Сирий вміст';
+
+  @override
+  String get valueYes => 'Так';
+
+  @override
+  String get valueOpenNetwork => 'Немає (відкрита мережа)';
+
+  @override
+  String copyField(String label) {
+    return 'Копіювати: $label';
+  }
+
+  @override
+  String get fieldName => 'Ім\'я';
+
+  @override
+  String get fieldNickname => 'Псевдонім';
+
+  @override
+  String get fieldOrganization => 'Організація';
+
+  @override
+  String get fieldJobTitle => 'Посада';
+
+  @override
+  String get fieldPhone => 'Телефон';
+
+  @override
+  String get fieldMobile => 'Мобільний';
+
+  @override
+  String get fieldWorkPhone => 'Робочий телефон';
+
+  @override
+  String get fieldHomePhone => 'Домашній телефон';
+
+  @override
+  String get fieldFax => 'Факс';
+
+  @override
+  String get fieldEmail => 'Ел. пошта';
+
+  @override
+  String get fieldWebsite => 'Вебсайт';
+
+  @override
+  String get fieldAddress => 'Адреса';
+
+  @override
+  String get fieldBirthday => 'День народження';
+
+  @override
+  String get fieldNote => 'Нотатка';
+
+  @override
+  String get fieldTo => 'Кому';
+
+  @override
+  String get fieldCc => 'Копія';
+
+  @override
+  String get fieldBcc => 'Прихована копія';
+
+  @override
+  String get fieldSubject => 'Тема';
+
+  @override
+  String get fieldMessage => 'Повідомлення';
+
+  @override
+  String get fieldNumber => 'Номер';
+
+  @override
+  String get fieldLatitude => 'Широта';
+
+  @override
+  String get fieldLongitude => 'Довгота';
+
+  @override
+  String get fieldAltitude => 'Висота';
+
+  @override
+  String get fieldQuery => 'Місце';
+
+  @override
+  String get fieldTitle => 'Назва';
+
+  @override
+  String get fieldLink => 'Посилання';
+
+  @override
+  String get fieldStart => 'Початок';
+
+  @override
+  String get fieldEnd => 'Кінець';
+
+  @override
+  String get fieldLocation => 'Місце';
+
+  @override
+  String get fieldDescription => 'Опис';
+
+  @override
+  String get fieldNetwork => 'Назва мережі (SSID)';
+
+  @override
+  String get fieldPassword => 'Пароль';
+
+  @override
+  String get fieldSecurity => 'Захист';
+
+  @override
+  String get fieldHidden => 'Прихована мережа';
+
+  @override
+  String get fieldEapMethod => 'Метод EAP';
+
+  @override
+  String get fieldIdentity => 'Ідентифікатор';
+
+  @override
+  String get fieldRecipient => 'Одержувач';
+
+  @override
+  String get fieldIban => 'IBAN';
+
+  @override
+  String get fieldBic => 'BIC';
+
+  @override
+  String get fieldAmount => 'Сума';
+
+  @override
+  String get fieldPurpose => 'Код призначення';
+
+  @override
+  String get fieldReference => 'Референс';
+
+  @override
+  String get fieldRemittance => 'Призначення платежу';
+
+  @override
+  String get fieldInfo => 'Примітка';
+
+  @override
+  String get typeOtp => 'Одноразовий пароль (2FA)';
+
+  @override
+  String get infoSupport => 'Підтримка';
+
+  @override
+  String get fieldIssuer => 'Сервіс';
+
+  @override
+  String get fieldAccount => 'Обліковий запис';
+
+  @override
+  String get fieldSecret => 'Секретний ключ';
+
+  @override
+  String get fieldOtpType => 'Метод';
+
+  @override
+  String get fieldAlgorithm => 'Алгоритм';
+
+  @override
+  String get fieldDigits => 'Цифр';
+
+  @override
+  String get fieldPeriod => 'Інтервал (секунди)';
+
+  @override
+  String get fieldCounter => 'Лічильник';
+
+  @override
   String get formatMicroQr => 'Micro QR-код';
 
   @override

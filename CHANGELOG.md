@@ -4,17 +4,67 @@ Alle wichtigen Änderungen an QR Viewer. Die Versionen folgen
 [Semantic Versioning](https://semver.org/lang/de/), die Build-Nummer steht
 hinter dem `+`.
 
+## [2.0.1+10] – 2026-10-10
+
+### Neu
+
+- **Einmalpasswort (2FA):** `otpauth://totp/…` und `otpauth://hotp/…`
+  (Key Uri Format) erscheinen als Karte mit Anbieter, Konto, geheimem
+  Schlüssel, Verfahren, Algorithmus, Stellen und Intervall bzw. Zähler.
+  Fehlende Werte zeigen die Standardwerte (SHA1, 6 Stellen, 30 Sekunden).
+- **Info-Dialog:** Knöpfe „Support“ (mit Link-Symbol, öffnet
+  github.com/thorsten-l/qr_viewer/issues) und „Lizenzen“ nebeneinander unter
+  den Angaben; unten bleibt nur „Schließen“.
+- 10 neue Texte in allen 13 Sprachen.
+
+### Geändert
+
+- Datenschutzerklärung: Abschnitt zur Inhaltserkennung (auch WLAN-Passwörter
+  und 2FA-Schlüssel bleiben auf dem Gerät), Support-Link, gespeicherte
+  Zoomstufe.
+
+## [2.0.0+9] – 2026-10-10
+
+### Neu
+
+- **QR-Inhalte werden erkannt und aufbereitet.** Eigener Parser für die
+  üblichen Formate (siehe ZXing „Barcode Contents“):
+  - Kontakt: vCard 2.1/3.0/4.0 (inkl. Quoted-Printable), MECARD, BIZCARD
+  - Termin: iCalendar VEVENT (Zeitzonen, UTC, ganztägig)
+  - WLAN: `WIFI:` (WPA/WEP/offen, verstecktes Netz, EAP)
+  - E-Mail: `mailto:`, MATMSG, `SMTP:`, bloße Adresse
+  - Telefon `tel:`, SMS `sms:`/`SMSTO:`/`mms:`, Ort `geo:`
+  - Link: `http(s)://`, `www.`, MEBKM (Lesezeichen mit Titel)
+  - Überweisung: EPC-QR/GiroCode (Empfänger, IBAN, BIC, Betrag,
+    Verwendungszweck)
+  - alles andere bleibt einfacher Text
+- Die erkannten Felder stehen in einer Karte mit verständlichen Bezeichnungen;
+  jedes Feld lässt sich einzeln kopieren. Datum und Betrag werden passend zur
+  Sprache formatiert. Darunter steht weiterhin der Rohinhalt.
+- Titel der Ergebnisseite und Symbol im Verlauf richten sich nach dem
+  erkannten Format, auch auf iOS (Apple Vision liefert keinen Inhaltstyp).
+- 49 neue Texte in allen 13 Sprachen.
+
+### Geändert
+
+- Der Verlauf merkt sich jetzt die letzten 25 statt 10 Scans.
+
 ## [1.4.0+8] – 2026-10-10
 
 ### Neu
 
-- **Zoomstufen der Rückkamera** wie in der Kamera-App, z. B. „0,5×“, „1×“,
-  „2×“, „5×“ beim iPhone 16 Pro Max. Die App ermittelt die Stufen des Geräts:
-  iOS liefert die Faktoren aus den Umschaltpunkten der Mehrfachkamera und die
-  Sensor-Ausschnitte des 48-MP-Hauptsensors (2×), Android aus den
-  Kleinbild-Brennweiten der Objektive. „Auto“ überlässt die Wahl dem System
-  (auf iPhones inklusive Makro-Umschaltung). Die Auswahl bleibt gespeichert;
-  Geräte mit nur einer Stufe zeigen keinen Umschalter.
+- **Zoomstufen der Rückkamera** wie in der Kamera-App, als runde Umschalter
+  über dem Kamerabild. Die App ermittelt die Stufen des Geräts:
+  - iOS: Faktoren aus den Umschaltpunkten der Mehrfachkamera und die
+    Sensor-Ausschnitte des 48-MP-Hauptsensors, z. B. „Auto · 0,5× · 1× · 2× ·
+    5×“ beim iPhone 16 Pro Max. „Auto“ überlässt die Wahl dem System
+    (inklusive Makro-Umschaltung).
+  - Android: Faktoren aus den Kleinbild-Brennweiten; bei logischen
+    Mehrfachkameras (z. B. Pixel) Ultraweitwinkel und Tele über das
+    Zoomverhältnis, dazu ein digitales 2×, z. B. „0,6× · 1× · 2×“ beim
+    Pixel 9a.
+  - Die Auswahl bleibt gespeichert; Geräte mit nur einer Stufe zeigen keinen
+    Umschalter.
 - 7 neue Texte in allen 13 Sprachen.
 
 ## [1.3.0+7] – 2026-10-09

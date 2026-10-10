@@ -500,6 +500,360 @@ abstract class AppLocalizations {
   /// **'Telephoto'**
   String get lensTeleName;
 
+  /// Inhaltsart Überweisung
+  ///
+  /// In en, this message translates to:
+  /// **'Bank transfer'**
+  String get typePayment;
+
+  /// Überschrift Rohinhalt
+  ///
+  /// In en, this message translates to:
+  /// **'Raw content'**
+  String get rawContent;
+
+  /// Ja
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get valueYes;
+
+  /// Offenes WLAN
+  ///
+  /// In en, this message translates to:
+  /// **'None (open network)'**
+  String get valueOpenNetwork;
+
+  /// Tooltip Feld kopieren
+  ///
+  /// In en, this message translates to:
+  /// **'Copy {label}'**
+  String copyField(String label);
+
+  /// Feld Name
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get fieldName;
+
+  /// Feld Spitzname
+  ///
+  /// In en, this message translates to:
+  /// **'Nickname'**
+  String get fieldNickname;
+
+  /// Feld Firma
+  ///
+  /// In en, this message translates to:
+  /// **'Organization'**
+  String get fieldOrganization;
+
+  /// Feld Position
+  ///
+  /// In en, this message translates to:
+  /// **'Job title'**
+  String get fieldJobTitle;
+
+  /// Feld Telefon
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get fieldPhone;
+
+  /// Feld Mobil
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile'**
+  String get fieldMobile;
+
+  /// Feld Telefon geschäftlich
+  ///
+  /// In en, this message translates to:
+  /// **'Work phone'**
+  String get fieldWorkPhone;
+
+  /// Feld Telefon privat
+  ///
+  /// In en, this message translates to:
+  /// **'Home phone'**
+  String get fieldHomePhone;
+
+  /// Feld Fax
+  ///
+  /// In en, this message translates to:
+  /// **'Fax'**
+  String get fieldFax;
+
+  /// Feld E-Mail
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get fieldEmail;
+
+  /// Feld Webseite
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get fieldWebsite;
+
+  /// Feld Adresse
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get fieldAddress;
+
+  /// Feld Geburtstag
+  ///
+  /// In en, this message translates to:
+  /// **'Birthday'**
+  String get fieldBirthday;
+
+  /// Feld Notiz
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get fieldNote;
+
+  /// Feld An
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get fieldTo;
+
+  /// Feld Kopie
+  ///
+  /// In en, this message translates to:
+  /// **'Cc'**
+  String get fieldCc;
+
+  /// Feld Blindkopie
+  ///
+  /// In en, this message translates to:
+  /// **'Bcc'**
+  String get fieldBcc;
+
+  /// Feld Betreff
+  ///
+  /// In en, this message translates to:
+  /// **'Subject'**
+  String get fieldSubject;
+
+  /// Feld Nachricht
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get fieldMessage;
+
+  /// Feld Rufnummer
+  ///
+  /// In en, this message translates to:
+  /// **'Number'**
+  String get fieldNumber;
+
+  /// Feld Breitengrad
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude'**
+  String get fieldLatitude;
+
+  /// Feld Längengrad
+  ///
+  /// In en, this message translates to:
+  /// **'Longitude'**
+  String get fieldLongitude;
+
+  /// Feld Höhe
+  ///
+  /// In en, this message translates to:
+  /// **'Altitude'**
+  String get fieldAltitude;
+
+  /// Feld Suche/Ort
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get fieldQuery;
+
+  /// Feld Titel
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get fieldTitle;
+
+  /// Feld Link
+  ///
+  /// In en, this message translates to:
+  /// **'Link'**
+  String get fieldLink;
+
+  /// Feld Beginn
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get fieldStart;
+
+  /// Feld Ende
+  ///
+  /// In en, this message translates to:
+  /// **'End'**
+  String get fieldEnd;
+
+  /// Feld Ort Termin
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get fieldLocation;
+
+  /// Feld Beschreibung
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get fieldDescription;
+
+  /// Feld WLAN-Name
+  ///
+  /// In en, this message translates to:
+  /// **'Network name (SSID)'**
+  String get fieldNetwork;
+
+  /// Feld Passwort
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get fieldPassword;
+
+  /// Feld Verschlüsselung
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get fieldSecurity;
+
+  /// Feld verstecktes Netz
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden network'**
+  String get fieldHidden;
+
+  /// Feld EAP-Methode
+  ///
+  /// In en, this message translates to:
+  /// **'EAP method'**
+  String get fieldEapMethod;
+
+  /// Feld Identität
+  ///
+  /// In en, this message translates to:
+  /// **'Identity'**
+  String get fieldIdentity;
+
+  /// Feld Empfänger
+  ///
+  /// In en, this message translates to:
+  /// **'Recipient'**
+  String get fieldRecipient;
+
+  /// Feld IBAN
+  ///
+  /// In en, this message translates to:
+  /// **'IBAN'**
+  String get fieldIban;
+
+  /// Feld BIC
+  ///
+  /// In en, this message translates to:
+  /// **'BIC'**
+  String get fieldBic;
+
+  /// Feld Betrag
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get fieldAmount;
+
+  /// Feld Zweck-Code
+  ///
+  /// In en, this message translates to:
+  /// **'Purpose code'**
+  String get fieldPurpose;
+
+  /// Feld Referenz
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get fieldReference;
+
+  /// Feld Verwendungszweck
+  ///
+  /// In en, this message translates to:
+  /// **'Payment reference'**
+  String get fieldRemittance;
+
+  /// Feld Hinweis
+  ///
+  /// In en, this message translates to:
+  /// **'Note to payer'**
+  String get fieldInfo;
+
+  /// Inhaltsart Einmalpasswort
+  ///
+  /// In en, this message translates to:
+  /// **'One-time password (2FA)'**
+  String get typeOtp;
+
+  /// Info-Dialog Support
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get infoSupport;
+
+  /// Feld Anbieter
+  ///
+  /// In en, this message translates to:
+  /// **'Issuer'**
+  String get fieldIssuer;
+
+  /// Feld Konto
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get fieldAccount;
+
+  /// Feld geheimer Schlüssel
+  ///
+  /// In en, this message translates to:
+  /// **'Secret key'**
+  String get fieldSecret;
+
+  /// Feld OTP-Verfahren
+  ///
+  /// In en, this message translates to:
+  /// **'Method'**
+  String get fieldOtpType;
+
+  /// Feld Algorithmus
+  ///
+  /// In en, this message translates to:
+  /// **'Algorithm'**
+  String get fieldAlgorithm;
+
+  /// Feld Stellen
+  ///
+  /// In en, this message translates to:
+  /// **'Digits'**
+  String get fieldDigits;
+
+  /// Feld Intervall
+  ///
+  /// In en, this message translates to:
+  /// **'Interval (seconds)'**
+  String get fieldPeriod;
+
+  /// Feld Zähler
+  ///
+  /// In en, this message translates to:
+  /// **'Counter'**
+  String get fieldCounter;
+
   /// Formatname Micro-QR
   ///
   /// In en, this message translates to:

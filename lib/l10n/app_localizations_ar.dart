@@ -210,6 +210,185 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lensTeleName => 'عدسة مقرّبة';
 
   @override
+  String get typePayment => 'تحويل مصرفي';
+
+  @override
+  String get rawContent => 'المحتوى الخام';
+
+  @override
+  String get valueYes => 'نعم';
+
+  @override
+  String get valueOpenNetwork => 'بدون (شبكة مفتوحة)';
+
+  @override
+  String copyField(String label) {
+    return 'نسخ $label';
+  }
+
+  @override
+  String get fieldName => 'الاسم';
+
+  @override
+  String get fieldNickname => 'اللقب';
+
+  @override
+  String get fieldOrganization => 'المؤسسة';
+
+  @override
+  String get fieldJobTitle => 'المسمى الوظيفي';
+
+  @override
+  String get fieldPhone => 'الهاتف';
+
+  @override
+  String get fieldMobile => 'الجوال';
+
+  @override
+  String get fieldWorkPhone => 'هاتف العمل';
+
+  @override
+  String get fieldHomePhone => 'هاتف المنزل';
+
+  @override
+  String get fieldFax => 'الفاكس';
+
+  @override
+  String get fieldEmail => 'البريد الإلكتروني';
+
+  @override
+  String get fieldWebsite => 'الموقع الإلكتروني';
+
+  @override
+  String get fieldAddress => 'العنوان';
+
+  @override
+  String get fieldBirthday => 'تاريخ الميلاد';
+
+  @override
+  String get fieldNote => 'ملاحظة';
+
+  @override
+  String get fieldTo => 'إلى';
+
+  @override
+  String get fieldCc => 'نسخة';
+
+  @override
+  String get fieldBcc => 'نسخة مخفية';
+
+  @override
+  String get fieldSubject => 'الموضوع';
+
+  @override
+  String get fieldMessage => 'الرسالة';
+
+  @override
+  String get fieldNumber => 'الرقم';
+
+  @override
+  String get fieldLatitude => 'خط العرض';
+
+  @override
+  String get fieldLongitude => 'خط الطول';
+
+  @override
+  String get fieldAltitude => 'الارتفاع';
+
+  @override
+  String get fieldQuery => 'المكان';
+
+  @override
+  String get fieldTitle => 'العنوان';
+
+  @override
+  String get fieldLink => 'الرابط';
+
+  @override
+  String get fieldStart => 'البداية';
+
+  @override
+  String get fieldEnd => 'النهاية';
+
+  @override
+  String get fieldLocation => 'الموقع';
+
+  @override
+  String get fieldDescription => 'الوصف';
+
+  @override
+  String get fieldNetwork => 'اسم الشبكة (SSID)';
+
+  @override
+  String get fieldPassword => 'كلمة المرور';
+
+  @override
+  String get fieldSecurity => 'الأمان';
+
+  @override
+  String get fieldHidden => 'شبكة مخفية';
+
+  @override
+  String get fieldEapMethod => 'طريقة EAP';
+
+  @override
+  String get fieldIdentity => 'الهوية';
+
+  @override
+  String get fieldRecipient => 'المستفيد';
+
+  @override
+  String get fieldIban => 'IBAN';
+
+  @override
+  String get fieldBic => 'BIC';
+
+  @override
+  String get fieldAmount => 'المبلغ';
+
+  @override
+  String get fieldPurpose => 'رمز الغرض';
+
+  @override
+  String get fieldReference => 'المرجع';
+
+  @override
+  String get fieldRemittance => 'بيان الدفع';
+
+  @override
+  String get fieldInfo => 'ملاحظة للدافع';
+
+  @override
+  String get typeOtp => 'كلمة مرور لمرة واحدة (2FA)';
+
+  @override
+  String get infoSupport => 'الدعم';
+
+  @override
+  String get fieldIssuer => 'الجهة المصدرة';
+
+  @override
+  String get fieldAccount => 'الحساب';
+
+  @override
+  String get fieldSecret => 'المفتاح السري';
+
+  @override
+  String get fieldOtpType => 'الطريقة';
+
+  @override
+  String get fieldAlgorithm => 'الخوارزمية';
+
+  @override
+  String get fieldDigits => 'الأرقام';
+
+  @override
+  String get fieldPeriod => 'الفاصل (ثوانٍ)';
+
+  @override
+  String get fieldCounter => 'العداد';
+
+  @override
   String get formatMicroQr => 'رمز Micro QR';
 
   @override
