@@ -4,6 +4,19 @@ Alle wichtigen Änderungen an QR Viewer. Die Versionen folgen
 [Semantic Versioning](https://semver.org/lang/de/), die Build-Nummer steht
 hinter dem `+`.
 
+## [1.4.0+8] – 2026-10-10
+
+### Neu
+
+- **Zoomstufen der Rückkamera** wie in der Kamera-App, z. B. „0,5×“, „1×“,
+  „2×“, „5×“ beim iPhone 16 Pro Max. Die App ermittelt die Stufen des Geräts:
+  iOS liefert die Faktoren aus den Umschaltpunkten der Mehrfachkamera und die
+  Sensor-Ausschnitte des 48-MP-Hauptsensors (2×), Android aus den
+  Kleinbild-Brennweiten der Objektive. „Auto“ überlässt die Wahl dem System
+  (auf iPhones inklusive Makro-Umschaltung). Die Auswahl bleibt gespeichert;
+  Geräte mit nur einer Stufe zeigen keinen Umschalter.
+- 7 neue Texte in allen 13 Sprachen.
+
 ## [1.3.0+7] – 2026-10-09
 
 ### Neu

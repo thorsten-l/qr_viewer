@@ -189,6 +189,27 @@ class AppLocalizationsJa extends AppLocalizations {
   String get rawData => '生データ（16進）';
 
   @override
+  String get lensChoice => 'レンズを選択';
+
+  @override
+  String get lensAuto => '自動';
+
+  @override
+  String get lensTele => '望遠';
+
+  @override
+  String get lensAutoName => '自動（システムがレンズを選択）';
+
+  @override
+  String get lensUltraWideName => '超広角';
+
+  @override
+  String get lensMainName => 'メインカメラ';
+
+  @override
+  String get lensTeleName => '望遠レンズ';
+
+  @override
   String get formatMicroQr => 'マイクロQRコード';
 
   @override

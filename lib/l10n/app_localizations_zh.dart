@@ -189,6 +189,27 @@ class AppLocalizationsZh extends AppLocalizations {
   String get rawData => '原始数据（十六进制）';
 
   @override
+  String get lensChoice => '选择镜头';
+
+  @override
+  String get lensAuto => '自动';
+
+  @override
+  String get lensTele => '长焦';
+
+  @override
+  String get lensAutoName => '自动（由系统选择镜头）';
+
+  @override
+  String get lensUltraWideName => '超广角';
+
+  @override
+  String get lensMainName => '主摄像头';
+
+  @override
+  String get lensTeleName => '长焦镜头';
+
+  @override
   String get formatMicroQr => 'Micro QR 码';
 
   @override

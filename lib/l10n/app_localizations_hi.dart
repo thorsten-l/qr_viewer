@@ -189,6 +189,27 @@ class AppLocalizationsHi extends AppLocalizations {
   String get rawData => 'कच्चा डेटा (hex)';
 
   @override
+  String get lensChoice => 'लेंस चुनें';
+
+  @override
+  String get lensAuto => 'ऑटो';
+
+  @override
+  String get lensTele => 'टेली';
+
+  @override
+  String get lensAutoName => 'स्वचालित (सिस्टम लेंस चुनता है)';
+
+  @override
+  String get lensUltraWideName => 'अल्ट्रा वाइड';
+
+  @override
+  String get lensMainName => 'मुख्य कैमरा';
+
+  @override
+  String get lensTeleName => 'टेलीफ़ोटो';
+
+  @override
   String get formatMicroQr => 'Micro QR कोड';
 
   @override

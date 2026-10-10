@@ -226,6 +226,34 @@
   "@rawData": {
     "description": "Rohdaten"
   },
+  "lensChoice": "Choose lens",
+  "@lensChoice": {
+    "description": "Tooltip der Objektivauswahl"
+  },
+  "lensAuto": "Auto",
+  "@lensAuto": {
+    "description": "Kurzlabel automatische Objektivwahl"
+  },
+  "lensTele": "Tele",
+  "@lensTele": {
+    "description": "Kurzlabel Teleobjektiv"
+  },
+  "lensAutoName": "Automatic (system chooses the lens)",
+  "@lensAutoName": {
+    "description": "Name automatische Objektivwahl"
+  },
+  "lensUltraWideName": "Ultra wide",
+  "@lensUltraWideName": {
+    "description": "Name Ultraweitwinkel"
+  },
+  "lensMainName": "Main camera",
+  "@lensMainName": {
+    "description": "Name Hauptkamera"
+  },
+  "lensTeleName": "Telephoto",
+  "@lensTeleName": {
+    "description": "Name Teleobjektiv"
+  },
   "formatMicroQr": "Micro QR code",
   "@formatMicroQr": {
     "description": "Formatname Micro-QR"

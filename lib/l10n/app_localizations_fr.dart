@@ -190,6 +190,27 @@ class AppLocalizationsFr extends AppLocalizations {
   String get rawData => 'Données brutes (hex)';
 
   @override
+  String get lensChoice => 'Choisir l\'objectif';
+
+  @override
+  String get lensAuto => 'Auto';
+
+  @override
+  String get lensTele => 'Télé';
+
+  @override
+  String get lensAutoName => 'Automatique (le système choisit l\'objectif)';
+
+  @override
+  String get lensUltraWideName => 'Ultra grand-angle';
+
+  @override
+  String get lensMainName => 'Caméra principale';
+
+  @override
+  String get lensTeleName => 'Téléobjectif';
+
+  @override
   String get formatMicroQr => 'Micro QR code';
 
   @override

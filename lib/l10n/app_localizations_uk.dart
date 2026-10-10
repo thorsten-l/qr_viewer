@@ -190,6 +190,27 @@ class AppLocalizationsUk extends AppLocalizations {
   String get rawData => 'Сирі дані (hex)';
 
   @override
+  String get lensChoice => 'Вибрати об\'єктив';
+
+  @override
+  String get lensAuto => 'Авто';
+
+  @override
+  String get lensTele => 'Теле';
+
+  @override
+  String get lensAutoName => 'Автоматично (система вибирає об\'єктив)';
+
+  @override
+  String get lensUltraWideName => 'Надширококутний';
+
+  @override
+  String get lensMainName => 'Основна камера';
+
+  @override
+  String get lensTeleName => 'Телеоб\'єктив';
+
+  @override
   String get formatMicroQr => 'Micro QR-код';
 
   @override

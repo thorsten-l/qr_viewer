@@ -190,6 +190,27 @@ class AppLocalizationsPl extends AppLocalizations {
   String get rawData => 'Surowe dane (hex)';
 
   @override
+  String get lensChoice => 'Wybierz obiektyw';
+
+  @override
+  String get lensAuto => 'Auto';
+
+  @override
+  String get lensTele => 'Tele';
+
+  @override
+  String get lensAutoName => 'Automatycznie (system wybiera obiektyw)';
+
+  @override
+  String get lensUltraWideName => 'Ultraszerokokątny';
+
+  @override
+  String get lensMainName => 'Aparat główny';
+
+  @override
+  String get lensTeleName => 'Teleobiektyw';
+
+  @override
   String get formatMicroQr => 'Kod Micro QR';
 
   @override

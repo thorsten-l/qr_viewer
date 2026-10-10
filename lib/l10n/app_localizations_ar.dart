@@ -189,6 +189,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get rawData => 'البيانات الخام (hex)';
 
   @override
+  String get lensChoice => 'اختيار العدسة';
+
+  @override
+  String get lensAuto => 'تلقائي';
+
+  @override
+  String get lensTele => 'مقرّب';
+
+  @override
+  String get lensAutoName => 'تلقائي (يختار النظام العدسة)';
+
+  @override
+  String get lensUltraWideName => 'فائق الاتساع';
+
+  @override
+  String get lensMainName => 'الكاميرا الرئيسية';
+
+  @override
+  String get lensTeleName => 'عدسة مقرّبة';
+
+  @override
   String get formatMicroQr => 'رمز Micro QR';
 
   @override

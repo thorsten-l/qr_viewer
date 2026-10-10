@@ -19,6 +19,8 @@ zuerst nur anzeigt. Links öffnen sich erst nach einer Rückfrage.
   Organisationsnummern, Klasse, Preis und Signaturprüfung. Die Rohdaten
   bleiben als Hex aufklappbar. Alles lokal auf dem Gerät.
 - **Info-Dialog** mit Entwickler, Version, Build-Datum und Lizenzen.
+- **Zoomstufen** der Rückkamera wie in der Kamera-App (z. B. Auto, 0,5×, 1×,
+  2×, 5×), ermittelt aus den Objektiven des Geräts.
 - **Taschenlampe**, heller und dunkler Modus.
 - **13 Sprachen**, siehe [Sprachen](#sprachen).
 
@@ -48,6 +50,7 @@ Installationszeitpunkt.
 |---|---|
 | `lib/main.dart` | App, Scanner-Seite und Auswahlmenü |
 | `lib/scan_mode.dart` | Scan-Arten und ihre Codeformate |
+| `lib/camera_lens.dart` | Zoomstufen der Rückkamera und Umschalter (native Abfrage in `AppDelegate.swift` und `MainActivity.kt`) |
 | `lib/result_page.dart` | Ergebnisansicht mit Kopieren und Link-Rückfrage |
 | `lib/history.dart` | Verlauf der letzten 10 Scans |
 | `lib/binary_payload.dart` | Erkennung von Binärinhalten, Hex-Darstellung |
@@ -62,8 +65,8 @@ Installationszeitpunkt.
 
 ## Version
 
-Aktuell: **1.3.0** (Build 7). Version und Build-Nummer stehen in
-`pubspec.yaml`, z. B. `version: 1.3.0+7`. Für jeden Upload zu TestFlight oder
+Aktuell: **1.4.0** (Build 8). Version und Build-Nummer stehen in
+`pubspec.yaml`, z. B. `version: 1.4.0+8`. Für jeden Upload zu TestFlight oder
 Google Play muss die Build-Nummer hinter dem `+` steigen. Jede neue Version
 bekommt einen Eintrag in [CHANGELOG.md](CHANGELOG.md).
 

@@ -21,12 +21,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_info.dart';
 import 'binary_payload.dart';
+import 'camera_lens.dart';
 import 'history.dart';
 import 'localization.dart';
 import 'result_page.dart';
 import 'scan_mode.dart';
 
 const _scanModeKey = 'scan_mode';
+const _zoomKey = 'camera_zoom';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +41,20 @@ Future<void> main() async {
   final history = await ScanHistory.load();
   final prefs = await SharedPreferences.getInstance();
   final mode = ScanMode.fromName(prefs.getString(_scanModeKey));
-  runApp(QrViewerApp(history: history, initialMode: mode));
+  // Auto bedeutet nur auf iOS etwas anderes als 1× (Makro-Umschaltung).
+  final zooms = zoomChoices(
+    await detectZoomSteps(),
+    withAuto: defaultTargetPlatform == TargetPlatform.iOS,
+  );
+  final zoom = zoomStepFromId(prefs.getString(_zoomKey), zooms);
+  runApp(
+    QrViewerApp(
+      history: history,
+      initialMode: mode,
+      zooms: zooms,
+      initialZoom: zoom,
+    ),
+  );
 }
 
 class QrViewerApp extends StatelessWidget {
@@ -47,10 +62,14 @@ class QrViewerApp extends StatelessWidget {
     super.key,
     required this.history,
     this.initialMode = ScanMode.qr,
+    this.zooms = const [],
+    this.initialZoom = ZoomStep.auto,
   });
 
   final ScanHistory history;
   final ScanMode initialMode;
+  final List<ZoomStep> zooms;
+  final ZoomStep initialZoom;
 
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -68,7 +87,12 @@ class QrViewerApp extends StatelessWidget {
       colorSchemeSeed: Colors.teal,
       brightness: Brightness.dark,
     ),
-    home: ScannerPage(history: history, initialMode: initialMode),
+    home: ScannerPage(
+      history: history,
+      initialMode: initialMode,
+      zooms: zooms,
+      initialZoom: initialZoom,
+    ),
   );
 }
 
@@ -81,10 +105,16 @@ class ScannerPage extends StatefulWidget {
     super.key,
     required this.history,
     this.initialMode = ScanMode.qr,
+    this.zooms = const [],
+    this.initialZoom = ZoomStep.auto,
   });
 
   final ScanHistory history;
   final ScanMode initialMode;
+
+  /// Wählbare Zoomstufen der Rückkamera, leer bei nur einer Stufe.
+  final List<ZoomStep> zooms;
+  final ZoomStep initialZoom;
 
   @override
   State<ScannerPage> createState() => _ScannerPageState();
@@ -92,29 +122,42 @@ class ScannerPage extends StatefulWidget {
 
 class _ScannerPageState extends State<ScannerPage> {
   late ScanMode _mode = widget.initialMode;
-  late MobileScannerController _controller = _createController(_mode);
+  late ZoomStep _zoom = widget.initialZoom;
+  late MobileScannerController _controller = _createController();
   bool _handling = false;
 
-  static MobileScannerController _createController(ScanMode mode) =>
-      MobileScannerController(
-        formats: mode.formats,
-        detectionSpeed: DetectionSpeed.noDuplicates,
-      );
+  MobileScannerController _createController() => MobileScannerController(
+    formats: _mode.formats,
+    lensType: _zoom.lens,
+    initialZoom: _zoom.initialZoom(defaultTargetPlatform),
+    detectionSpeed: DetectionSpeed.noDuplicates,
+  );
 
-  /// Die Formate eines Scanners sind fest. Beim Wechsel wird der alte
-  /// gestoppt und freigegeben, bevor der neue die Kamera übernimmt.
-  Future<void> _setMode(ScanMode mode) async {
-    if (mode == _mode) return;
+  /// Formate, Objektiv und Startzoom eines Scanners sind fest. Beim Wechsel wird der
+  /// alte gestoppt und freigegeben, bevor der neue die Kamera übernimmt.
+  Future<void> _replaceController(VoidCallback change) async {
     final old = _controller;
     await old.stop();
     await old.dispose();
     if (!mounted) return;
     setState(() {
-      _mode = mode;
-      _controller = _createController(mode);
+      change();
+      _controller = _createController();
     });
+  }
+
+  Future<void> _setMode(ScanMode mode) async {
+    if (mode == _mode) return;
+    await _replaceController(() => _mode = mode);
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_scanModeKey, mode.name);
+  }
+
+  Future<void> _setZoom(ZoomStep zoom) async {
+    if (zoom == _zoom) return;
+    await _replaceController(() => _zoom = zoom);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_zoomKey, zoom.id);
   }
 
   Future<void> _onDetect(BarcodeCapture capture) async {
@@ -186,10 +229,31 @@ class _ScannerPageState extends State<ScannerPage> {
         ),
       ],
     ),
-    body: MobileScanner(
-      key: ValueKey(_mode),
-      controller: _controller,
-      onDetect: _onDetect,
+    body: Stack(
+      children: [
+        Positioned.fill(
+          child: MobileScanner(
+            key: ObjectKey(_controller),
+            controller: _controller,
+            onDetect: _onDetect,
+          ),
+        ),
+        if (widget.zooms.isNotEmpty)
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 24,
+            child: SafeArea(
+              child: Center(
+                child: ZoomSelector(
+                  choices: widget.zooms,
+                  selected: _zoom,
+                  onSelected: _setZoom,
+                ),
+              ),
+            ),
+          ),
+      ],
     ),
   );
 }

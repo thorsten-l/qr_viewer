@@ -458,6 +458,48 @@ abstract class AppLocalizations {
   /// **'Raw data (hex)'**
   String get rawData;
 
+  /// Tooltip der Objektivauswahl
+  ///
+  /// In en, this message translates to:
+  /// **'Choose lens'**
+  String get lensChoice;
+
+  /// Kurzlabel automatische Objektivwahl
+  ///
+  /// In en, this message translates to:
+  /// **'Auto'**
+  String get lensAuto;
+
+  /// Kurzlabel Teleobjektiv
+  ///
+  /// In en, this message translates to:
+  /// **'Tele'**
+  String get lensTele;
+
+  /// Name automatische Objektivwahl
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic (system chooses the lens)'**
+  String get lensAutoName;
+
+  /// Name Ultraweitwinkel
+  ///
+  /// In en, this message translates to:
+  /// **'Ultra wide'**
+  String get lensUltraWideName;
+
+  /// Name Hauptkamera
+  ///
+  /// In en, this message translates to:
+  /// **'Main camera'**
+  String get lensMainName;
+
+  /// Name Teleobjektiv
+  ///
+  /// In en, this message translates to:
+  /// **'Telephoto'**
+  String get lensTeleName;
+
   /// Formatname Micro-QR
   ///
   /// In en, this message translates to:
