@@ -212,4 +212,42 @@ void main() {
       expect(find.byIcon(Icons.memory), findsOneWidget);
     });
   });
+
+  testWidgets(
+    'Hex-Dump bricht nie um, auf schmalen Geräten waagerecht scrollbar',
+    (tester) async {
+      tester.view.physicalSize = const Size(240, 800);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final bytes = List.generate(40, (i) => 0x41 + i % 26);
+      await tester.pumpWidget(
+        testApp(
+          ResultPage(
+            raw: toHex(bytes),
+            type: BarcodeType.text,
+            format: BarcodeFormat.dataMatrix,
+            binary: true,
+          ),
+        ),
+      );
+      final scroll = find.byWidgetPredicate(
+        (w) =>
+            w is SingleChildScrollView && w.scrollDirection == Axis.horizontal,
+      );
+      expect(scroll, findsOneWidget);
+      // Jede Zeile hat 8 Bytes und die Textspalte daneben.
+      expect(find.text(hexDump(bytes, perLine: 8)), findsOneWidget);
+      final text = find.descendant(
+        of: scroll,
+        matching: find.byType(SelectableText),
+      );
+      final box = tester.getSize(text);
+      expect(box.width, greaterThan(240));
+      // Höhe: genau 5 Zeilen, also kein Umbruch.
+      final style = tester.widget<SelectableText>(text).style!;
+      expect(box.height, lessThan(6 * style.fontSize! * 1.5));
+      await tester.drag(scroll, const Offset(-200, 0));
+      await tester.pump();
+    },
+  );
 }

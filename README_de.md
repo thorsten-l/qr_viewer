@@ -1,5 +1,7 @@
 # QR Viewer
 
+[English](README.md) · **Deutsch**
+
 Scanner für QR-Codes und Barcodes für iPhone, iPad und Android, der Inhalte
 zuerst nur anzeigt. Links und andere Aktionen starten erst nach einer
 Rückfrage.
@@ -43,7 +45,7 @@ Rückfrage.
   dunkler Modus.
 - **13 Sprachen**, siehe [Sprachen](#sprachen).
 
-Was sich in welcher Version geändert hat, steht im [Changelog](CHANGELOG.md).
+Was sich in welcher Version geändert hat, steht im [Changelog](CHANGELOG_de.md).
 
 ## Datenschutz
 
@@ -91,14 +93,16 @@ Installationszeitpunkt.
 Aktuell: **2.1.0** (Build 11). Version und Build-Nummer stehen in
 `pubspec.yaml`, z. B. `version: 2.1.0+11`. Für jeden Upload zu TestFlight oder
 Google Play muss die Build-Nummer hinter dem `+` steigen. Jede neue Version
-bekommt einen Eintrag in [CHANGELOG.md](CHANGELOG.md).
+bekommt einen Eintrag in [CHANGELOG.md](CHANGELOG.md) (englisch) und
+[CHANGELOG_de.md](CHANGELOG_de.md) (deutsch).
 
 ## Release
 
 Ablauf für eine neue Version:
 
 1. Version in `pubspec.yaml` erhöhen (Build-Nummer immer +1).
-2. Eintrag in [CHANGELOG.md](CHANGELOG.md), README und ggf.
+2. Eintrag in [CHANGELOG.md](CHANGELOG.md) und
+   [CHANGELOG_de.md](CHANGELOG_de.md), README.md, README_de.md und ggf.
    [PRIVACY.md](PRIVACY.md) anpassen (Datum „Stand“).
 3. Prüfen: `flutter analyze`, `flutter test`,
    `python3 tool/license/add_headers.py --check`.

@@ -16,7 +16,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' hide TextDirection;
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -576,27 +576,57 @@ class ContentCard extends StatelessWidget {
 }
 
 /// Hex-Dump mit Textspalte, der so viele Bytes pro Zeile zeigt, wie in die
-/// Breite passen. Vor dem Rückfall auf 4 Bytes wird die Schrift kleiner.
+/// Breite passen (16 oder 8, dafür notfalls kleinere Schrift). Zeilen werden
+/// nie umgebrochen, damit der Text immer rechts neben den Hex-Werten steht;
+/// ist es zu schmal, lässt sich der Dump waagerecht scrollen.
 class _HexDump extends StatelessWidget {
   const _HexDump({required this.bytes});
 
   final List<int> bytes;
 
+  static TextStyle _style(double size) =>
+      TextStyle(fontFamily: kContentFont, fontSize: size);
+
+  /// Gemessene Breite einer Zeile mit [perLine] Bytes.
+  static double _lineWidth(BuildContext context, int perLine, double size) {
+    final painter = TextPainter(
+      // Wie SelectableText: Stil des Umfelds (z. B. Zeichenabstand) plus
+      // Schrift und Größe des Dumps.
+      text: TextSpan(
+        text: '0' * hexDumpWidth(perLine),
+        style: DefaultTextStyle.of(context).style.merge(_style(size)),
+      ),
+      textDirection: TextDirection.ltr,
+      textScaler: MediaQuery.textScalerOf(context),
+      maxLines: 1,
+    )..layout();
+    final width = painter.width;
+    painter.dispose();
+    return width;
+  }
+
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constraints) {
-      // Source Code Pro: Zeichenbreite etwa 0,6 × Schriftgröße.
-      bool fits(int perLine, double size) =>
-          hexDumpWidth(perLine) * size * 0.6 <= constraints.maxWidth;
       final (perLine, size) = [
         (16, 16.0),
         (8, 16.0),
         (8, 14.0),
-        (8, 12.0),
-      ].firstWhere((c) => fits(c.$1, c.$2), orElse: () => (4, 14.0));
-      return SelectableText(
-        hexDump(bytes, perLine: perLine),
-        style: TextStyle(fontFamily: kContentFont, fontSize: size),
+      ].firstWhere(
+        (c) => _lineWidth(context, c.$1, c.$2) <= constraints.maxWidth,
+        orElse: () => (8, 12.0),
+      );
+      // Etwas Luft gegen Rundungsfehler, damit nichts umbricht.
+      final width = _lineWidth(context, perLine, size).ceilToDouble() + 4;
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: SizedBox(
+          width: width < constraints.maxWidth ? constraints.maxWidth : width,
+          child: SelectableText(
+            hexDump(bytes, perLine: perLine),
+            style: _style(size),
+          ),
+        ),
       );
     },
   );

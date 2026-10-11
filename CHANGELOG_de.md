@@ -1,5 +1,7 @@
 # Changelog
 
+[English](CHANGELOG.md) · **Deutsch**
+
 Alle wichtigen Änderungen an QR Viewer. Die Versionen folgen
 [Semantic Versioning](https://semver.org/lang/de/), die Build-Nummer steht
 hinter dem `+`.
@@ -32,8 +34,10 @@ Ideen aus [BinaryEye](https://github.com/markusfisch/BinaryEye) übernommen.
   App-Links (`market://`, `itms-apps://`, `fido:/`, …) werden als Link
   erkannt. Lokale und Skript-Schemata (`file:`, `javascript:`, `intent:`, …)
   bleiben ausgeschlossen.
-- **Hex-Dump mit Textspalte** wie bei `xxd`; auf schmalen Bildschirmen wird die
-  Schrift kleiner, bevor weniger Bytes pro Zeile erscheinen.
+- **Hex-Dump mit Textspalte** wie bei `xxd`. Die Textspalte steht immer rechts
+  neben den Hex-Werten: 16 oder 8 Bytes pro Zeile, notfalls in kleinerer
+  Schrift; ist es dann noch zu schmal, lässt sich der Dump waagerecht
+  scrollen.
 - Kurze Vibration beim Erkennen eines Codes.
 - Die Taschenlampe zeigt an, ob sie an ist.
 - 33 neue Texte in allen 13 Sprachen.
