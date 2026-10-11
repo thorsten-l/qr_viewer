@@ -462,4 +462,103 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get close => 'إغلاق';
+
+  @override
+  String get actionEmail => 'كتابة بريد…';
+
+  @override
+  String get actionCall => 'اتصال…';
+
+  @override
+  String get actionSms => 'كتابة رسالة SMS…';
+
+  @override
+  String get actionMap => 'عرض على الخريطة…';
+
+  @override
+  String get actionOtp => 'فتح في تطبيق المصادقة…';
+
+  @override
+  String get actionLookUp => 'البحث على الإنترنت…';
+
+  @override
+  String get actionAddContact => 'إضافة إلى جهات الاتصال…';
+
+  @override
+  String get actionAddEvent => 'إضافة إلى التقويم…';
+
+  @override
+  String get actionTrack => 'تتبع الشحنة…';
+
+  @override
+  String get noAppFound => 'لم يتم العثور على تطبيق لفتح هذا.';
+
+  @override
+  String get share => 'مشاركة';
+
+  @override
+  String get historySearch => 'البحث في السجل';
+
+  @override
+  String get historyNoMatches => 'لا توجد نتائج';
+
+  @override
+  String get historyExport => 'تصدير';
+
+  @override
+  String get exportCsv => 'مشاركة بصيغة CSV';
+
+  @override
+  String get exportJson => 'مشاركة بصيغة JSON';
+
+  @override
+  String get historyEntryDeleted => 'تم حذف الإدخال';
+
+  @override
+  String get undo => 'تراجع';
+
+  @override
+  String get otpNotSaved => 'لا يتم حفظ رموز 2FA في السجل.';
+
+  @override
+  String get typeJson => 'JSON';
+
+  @override
+  String get typePostage => 'طابع بريدي (Deutsche Post)';
+
+  @override
+  String get fieldGtin => 'رقم الصنف (GTIN)';
+
+  @override
+  String get fieldCheckDigit => 'رقم التحقق';
+
+  @override
+  String get fieldGs1Prefix => 'مسجل في (GS1)';
+
+  @override
+  String get fieldIsbn => 'ISBN';
+
+  @override
+  String get fieldIsbn10 => 'ISBN-10';
+
+  @override
+  String get fieldIssn => 'ISSN';
+
+  @override
+  String get fieldTrackingNumber => 'رقم التتبع';
+
+  @override
+  String get valueValid => 'صالح';
+
+  @override
+  String get valueInvalid => 'غير صالح';
+
+  @override
+  String get valueInStore => 'رقم داخلي للمتجر';
+
+  @override
+  String get valueCoupon => 'قسيمة';
+
+  @override
+  String get valueGs1Global => 'GS1 Global Office';
 }

@@ -991,6 +991,204 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Close'**
   String get close;
+
+  /// Knopf E-Mail schreiben (mit Rückfrage)
+  ///
+  /// In en, this message translates to:
+  /// **'Write email…'**
+  String get actionEmail;
+
+  /// Knopf Anrufen (öffnet nur den Wähler)
+  ///
+  /// In en, this message translates to:
+  /// **'Call…'**
+  String get actionCall;
+
+  /// Knopf SMS schreiben
+  ///
+  /// In en, this message translates to:
+  /// **'Write SMS…'**
+  String get actionSms;
+
+  /// Knopf Ort in Karten zeigen
+  ///
+  /// In en, this message translates to:
+  /// **'Show on map…'**
+  String get actionMap;
+
+  /// Knopf Einmalpasswort an Authenticator-App geben
+  ///
+  /// In en, this message translates to:
+  /// **'Open in authenticator…'**
+  String get actionOtp;
+
+  /// Knopf Produkt oder Buch online nachschlagen
+  ///
+  /// In en, this message translates to:
+  /// **'Look up online…'**
+  String get actionLookUp;
+
+  /// Knopf Kontakt übernehmen (Teilen-Menü)
+  ///
+  /// In en, this message translates to:
+  /// **'Add to contacts…'**
+  String get actionAddContact;
+
+  /// Knopf Termin übernehmen (Teilen-Menü)
+  ///
+  /// In en, this message translates to:
+  /// **'Add to calendar…'**
+  String get actionAddEvent;
+
+  /// Knopf Sendung verfolgen
+  ///
+  /// In en, this message translates to:
+  /// **'Track shipment…'**
+  String get actionTrack;
+
+  /// Meldung: keine App für die Aktion
+  ///
+  /// In en, this message translates to:
+  /// **'No app found to open this.'**
+  String get noAppFound;
+
+  /// Tooltip Teilen
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get share;
+
+  /// Tooltip und Hinweis der Verlaufssuche
+  ///
+  /// In en, this message translates to:
+  /// **'Search history'**
+  String get historySearch;
+
+  /// Verlaufssuche ohne Treffer
+  ///
+  /// In en, this message translates to:
+  /// **'No matches'**
+  String get historyNoMatches;
+
+  /// Tooltip Verlauf exportieren
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get historyExport;
+
+  /// Menü Verlauf als CSV teilen
+  ///
+  /// In en, this message translates to:
+  /// **'Share as CSV'**
+  String get exportCsv;
+
+  /// Menü Verlauf als JSON teilen
+  ///
+  /// In en, this message translates to:
+  /// **'Share as JSON'**
+  String get exportJson;
+
+  /// Meldung nach Löschen eines Eintrags
+  ///
+  /// In en, this message translates to:
+  /// **'Entry deleted'**
+  String get historyEntryDeleted;
+
+  /// Knopf Rückgängig
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
+
+  /// Hinweis: 2FA-Codes nicht im Verlauf
+  ///
+  /// In en, this message translates to:
+  /// **'2FA codes are not saved in the history.'**
+  String get otpNotSaved;
+
+  /// Inhaltsart JSON
+  ///
+  /// In en, this message translates to:
+  /// **'JSON'**
+  String get typeJson;
+
+  /// Inhaltsart Briefmarke der Deutschen Post
+  ///
+  /// In en, this message translates to:
+  /// **'Postage stamp (Deutsche Post)'**
+  String get typePostage;
+
+  /// Feld Artikelnummer
+  ///
+  /// In en, this message translates to:
+  /// **'Item number (GTIN)'**
+  String get fieldGtin;
+
+  /// Feld Prüfziffer
+  ///
+  /// In en, this message translates to:
+  /// **'Check digit'**
+  String get fieldCheckDigit;
+
+  /// Feld Land der Nummernvergabe (GS1)
+  ///
+  /// In en, this message translates to:
+  /// **'Registered in (GS1)'**
+  String get fieldGs1Prefix;
+
+  /// Feld ISBN
+  ///
+  /// In en, this message translates to:
+  /// **'ISBN'**
+  String get fieldIsbn;
+
+  /// Feld ISBN-10
+  ///
+  /// In en, this message translates to:
+  /// **'ISBN-10'**
+  String get fieldIsbn10;
+
+  /// Feld ISSN
+  ///
+  /// In en, this message translates to:
+  /// **'ISSN'**
+  String get fieldIssn;
+
+  /// Feld Sendungsnummer
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking number'**
+  String get fieldTrackingNumber;
+
+  /// Wert gültig
+  ///
+  /// In en, this message translates to:
+  /// **'valid'**
+  String get valueValid;
+
+  /// Wert ungültig
+  ///
+  /// In en, this message translates to:
+  /// **'invalid'**
+  String get valueInvalid;
+
+  /// Wert interne Nummer des Handels
+  ///
+  /// In en, this message translates to:
+  /// **'In-store number'**
+  String get valueInStore;
+
+  /// Wert Gutschein
+  ///
+  /// In en, this message translates to:
+  /// **'Coupon'**
+  String get valueCoupon;
+
+  /// Wert GS1 Global Office
+  ///
+  /// In en, this message translates to:
+  /// **'GS1 Global Office'**
+  String get valueGs1Global;
 }
 
 class _AppLocalizationsDelegate

@@ -462,4 +462,103 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get close => '閉じる';
+
+  @override
+  String get actionEmail => 'メールを作成…';
+
+  @override
+  String get actionCall => '電話をかける…';
+
+  @override
+  String get actionSms => 'SMSを作成…';
+
+  @override
+  String get actionMap => '地図で表示…';
+
+  @override
+  String get actionOtp => '認証アプリで開く…';
+
+  @override
+  String get actionLookUp => 'オンラインで調べる…';
+
+  @override
+  String get actionAddContact => '連絡先に追加…';
+
+  @override
+  String get actionAddEvent => 'カレンダーに追加…';
+
+  @override
+  String get actionTrack => '追跡する…';
+
+  @override
+  String get noAppFound => '開けるアプリが見つかりません。';
+
+  @override
+  String get share => '共有';
+
+  @override
+  String get historySearch => '履歴を検索';
+
+  @override
+  String get historyNoMatches => '一致する項目はありません';
+
+  @override
+  String get historyExport => 'エクスポート';
+
+  @override
+  String get exportCsv => 'CSVで共有';
+
+  @override
+  String get exportJson => 'JSONで共有';
+
+  @override
+  String get historyEntryDeleted => '項目を削除しました';
+
+  @override
+  String get undo => '元に戻す';
+
+  @override
+  String get otpNotSaved => '2FAコードは履歴に保存されません。';
+
+  @override
+  String get typeJson => 'JSON';
+
+  @override
+  String get typePostage => '切手（Deutsche Post）';
+
+  @override
+  String get fieldGtin => '商品番号 (GTIN)';
+
+  @override
+  String get fieldCheckDigit => 'チェックディジット';
+
+  @override
+  String get fieldGs1Prefix => '登録国 (GS1)';
+
+  @override
+  String get fieldIsbn => 'ISBN';
+
+  @override
+  String get fieldIsbn10 => 'ISBN-10';
+
+  @override
+  String get fieldIssn => 'ISSN';
+
+  @override
+  String get fieldTrackingNumber => '追跡番号';
+
+  @override
+  String get valueValid => '有効';
+
+  @override
+  String get valueInvalid => '無効';
+
+  @override
+  String get valueInStore => '店内コード';
+
+  @override
+  String get valueCoupon => 'クーポン';
+
+  @override
+  String get valueGs1Global => 'GS1 Global Office';
 }

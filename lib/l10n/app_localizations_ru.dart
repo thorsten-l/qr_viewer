@@ -463,4 +463,103 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get close => 'Закрыть';
+
+  @override
+  String get actionEmail => 'Написать письмо…';
+
+  @override
+  String get actionCall => 'Позвонить…';
+
+  @override
+  String get actionSms => 'Написать SMS…';
+
+  @override
+  String get actionMap => 'Показать на карте…';
+
+  @override
+  String get actionOtp => 'Открыть в аутентификаторе…';
+
+  @override
+  String get actionLookUp => 'Найти в интернете…';
+
+  @override
+  String get actionAddContact => 'В контакты…';
+
+  @override
+  String get actionAddEvent => 'В календарь…';
+
+  @override
+  String get actionTrack => 'Отследить отправление…';
+
+  @override
+  String get noAppFound => 'Не найдено приложение для открытия.';
+
+  @override
+  String get share => 'Поделиться';
+
+  @override
+  String get historySearch => 'Поиск в истории';
+
+  @override
+  String get historyNoMatches => 'Ничего не найдено';
+
+  @override
+  String get historyExport => 'Экспорт';
+
+  @override
+  String get exportCsv => 'Поделиться как CSV';
+
+  @override
+  String get exportJson => 'Поделиться как JSON';
+
+  @override
+  String get historyEntryDeleted => 'Запись удалена';
+
+  @override
+  String get undo => 'Отменить';
+
+  @override
+  String get otpNotSaved => 'Коды 2FA не сохраняются в истории.';
+
+  @override
+  String get typeJson => 'JSON';
+
+  @override
+  String get typePostage => 'Почтовая марка (Deutsche Post)';
+
+  @override
+  String get fieldGtin => 'Номер товара (GTIN)';
+
+  @override
+  String get fieldCheckDigit => 'Контрольная цифра';
+
+  @override
+  String get fieldGs1Prefix => 'Выдан в (GS1)';
+
+  @override
+  String get fieldIsbn => 'ISBN';
+
+  @override
+  String get fieldIsbn10 => 'ISBN-10';
+
+  @override
+  String get fieldIssn => 'ISSN';
+
+  @override
+  String get fieldTrackingNumber => 'Трек-номер';
+
+  @override
+  String get valueValid => 'верна';
+
+  @override
+  String get valueInvalid => 'неверна';
+
+  @override
+  String get valueInStore => 'Внутренний номер магазина';
+
+  @override
+  String get valueCoupon => 'Купон';
+
+  @override
+  String get valueGs1Global => 'GS1 Global Office';
 }

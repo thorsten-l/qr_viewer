@@ -1,7 +1,8 @@
 # QR Viewer
 
 Scanner für QR-Codes und Barcodes für iPhone, iPad und Android, der Inhalte
-zuerst nur anzeigt. Links öffnen sich erst nach einer Rückfrage.
+zuerst nur anzeigt. Links und andere Aktionen starten erst nach einer
+Rückfrage.
 
 ## Funktionen
 
@@ -10,15 +11,25 @@ zuerst nur anzeigt. Links öffnen sich erst nach einer Rückfrage.
   PDF417, Aztec oder alle Codes gleichzeitig. Die gewählte Art bleibt gespeichert.
 - **Nur anzeigen:** Der Inhalt erscheint in Source Code Pro, zusammen mit
   Format, Inhaltstyp und bei Links dem Host. Nichts wird automatisch geöffnet.
-- **Links** (`http`/`https`) öffnen sich erst nach einer Rückfrage mit sichtbarer URL.
+- **Links** öffnen sich erst nach einer Rückfrage mit sichtbarer URL; bekannte
+  Tracking-Parameter (`utm_*`, `fbclid`, …) fallen dabei weg. Auch Adressen
+  ohne Schema (`beispiel.de/pfad`) und App-Links (`market://`, `fido:/`, …)
+  werden erkannt.
 - **Inhalte erkannt:** Kontakt (vCard, MECARD, BIZCARD), Termin (iCalendar),
-  WLAN, E-Mail, Telefon, SMS, Ort (`geo:`), Link, Überweisung (GiroCode) und
-  Einmalpasswort (`otpauth://`) erscheinen als Karte mit beschrifteten,
-  einzeln kopierbaren Feldern; der Rohinhalt steht darunter. Alles andere ist
-  Text.
-- **Kopieren** in die Zwischenablage mit einem Tipp.
-- **Verlauf** der letzten 25 Scans zum erneuten Aufrufen und Kopieren, löschbar.
-- **Binärcodes** werden als Hex-Dump angezeigt. **VDV-eTickets** (z. B.
+  WLAN, E-Mail, Telefon, SMS, Ort (`geo:`), Link, Überweisung (GiroCode),
+  Einmalpasswort (`otpauth://`), JSON, Artikelnummer (EAN/UPC/ITF-14 mit
+  Prüfziffer und GS1-Land, ISBN, ISSN) und Matrixcode der Deutschen Post
+  (Sendungsnummer) erscheinen als Karte mit beschrifteten, einzeln
+  kopierbaren Feldern; der Rohinhalt steht darunter. Alles andere ist Text.
+- **Aktionen** je Inhalt, immer mit Rückfrage: E-Mail schreiben, Anrufen,
+  SMS, Karte, Authenticator, online nachschlagen, Sendung verfolgen. Kontakte
+  und Termine gehen als `.vcf`/`.ics` über das Teilen-Menü an Kontakte bzw.
+  Kalender.
+- **Kopieren und Teilen** mit einem Tipp.
+- **Verlauf** der letzten 25 Scans: erneut aufrufen, kopieren, durchsuchen,
+  einzeln wegwischen (mit Rückgängig), alles löschen, als CSV oder JSON
+  exportieren. 2FA-Schlüssel werden nicht gespeichert.
+- **Binärcodes** werden als Hex-Dump mit Textspalte angezeigt. **VDV-eTickets** (z. B.
   Deutschlandticket) werden zusätzlich dekodiert: Ticketnummer, Produkt,
   Gültigkeit, Ausstellungszeit, (maskierter) Inhaber, Geburtsdatum,
   Organisationsnummern, Klasse, Preis und Signaturprüfung. Die Rohdaten
@@ -28,7 +39,8 @@ zuerst nur anzeigt. Links öffnen sich erst nach einer Rückfrage.
 - **Zoomstufen** der Rückkamera wie in der Kamera-App, ermittelt aus den
   Objektiven des Geräts, z. B. Auto · 0,5× · 1× · 2× · 5× (iPhone 16 Pro Max)
   oder 0,6× · 1× · 2× (Pixel 9a). Die Auswahl bleibt gespeichert.
-- **Taschenlampe**, heller und dunkler Modus.
+- **Taschenlampe** mit Statusanzeige, Vibration beim Erkennen, heller und
+  dunkler Modus.
 - **13 Sprachen**, siehe [Sprachen](#sprachen).
 
 Was sich in welcher Version geändert hat, steht im [Changelog](CHANGELOG.md).
@@ -58,9 +70,12 @@ Installationszeitpunkt.
 | `lib/main.dart` | App, Scanner-Seite und Auswahlmenü |
 | `lib/scan_mode.dart` | Scan-Arten und ihre Codeformate |
 | `lib/camera_lens.dart` | Zoomstufen der Rückkamera und Umschalter (native Abfrage in `AppDelegate.swift` und `MainActivity.kt`) |
-| `lib/result_page.dart` | Ergebnisansicht mit Kopieren und Link-Rückfrage |
-| `lib/qr_content.dart` | Parser für QR-Inhaltsformate (vCard, WIFI, EPC, otpauth, …) |
-| `lib/history.dart` | Verlauf der letzten 25 Scans |
+| `lib/result_page.dart` | Ergebnisansicht mit Kopieren, Teilen, Aktionen und Rückfrage |
+| `lib/qr_content.dart` | Parser für QR-Inhaltsformate (vCard, WIFI, EPC, otpauth, JSON, Links, …) |
+| `lib/content_actions.dart` | Aktionen je Inhalt (mailto, tel, sms, Karte, …), vCard-/iCalendar-Export |
+| `lib/gtin.dart` | Artikelnummern: Prüfziffer, UPC-E, GS1-Präfix, ISBN, ISSN |
+| `lib/deutsche_post.dart` | Matrixcode der Deutschen Post (Sendungsnummer) |
+| `lib/history.dart` | Verlauf der letzten 25 Scans mit Suche und CSV/JSON-Export |
 | `lib/binary_payload.dart` | Erkennung von Binärinhalten, Hex-Darstellung |
 | `lib/vdv/` | VDV-eTicket: BER, ISO 9796-2, Zertifikate, Ticketdaten |
 | `assets/vdv_certs/` | Öffentliche VDV-CA-Schlüssel (CC0), siehe `tool/vdv/README.md` |
@@ -73,8 +88,8 @@ Installationszeitpunkt.
 
 ## Version
 
-Aktuell: **2.0.1** (Build 10). Version und Build-Nummer stehen in
-`pubspec.yaml`, z. B. `version: 2.0.1+10`. Für jeden Upload zu TestFlight oder
+Aktuell: **2.1.0** (Build 11). Version und Build-Nummer stehen in
+`pubspec.yaml`, z. B. `version: 2.1.0+11`. Für jeden Upload zu TestFlight oder
 Google Play muss die Build-Nummer hinter dem `+` steigen. Jede neue Version
 bekommt einen Eintrag in [CHANGELOG.md](CHANGELOG.md).
 
@@ -88,7 +103,7 @@ Ablauf für eine neue Version:
 3. Prüfen: `flutter analyze`, `flutter test`,
    `python3 tool/license/add_headers.py --check`.
 4. iOS und Android wie unten bauen und hochladen.
-5. Committen und taggen, z. B. `git tag v2.0.1`.
+5. Committen und taggen, z. B. `git tag v2.1.0`.
 
 ### iOS / TestFlight
 
@@ -197,3 +212,8 @@ Die öffentlichen VDV-Schlüssel in `assets/vdv_certs/` stehen unter CC0-1.0
 (Quelle: KDE KItinerary, ursprünglich VDV-PKI), siehe `tool/vdv/README.md`.
 Der Dekoder in `lib/vdv/` ist eine eigene Umsetzung nach dem dokumentierten
 Format und enthält keinen KItinerary-Code.
+
+Die Berechnung der Sendungsnummer in `lib/deutsche_post.dart` folgt
+`DeutschePostParser.kt` aus [BinaryEye](https://github.com/markusfisch/BinaryEye)
+(Markus Fisch, MIT-Lizenz, `assets/licenses/BinaryEye-MIT.txt`). Eine
+Übersicht aller Fremdbestandteile steht in [NOTICE](NOTICE).

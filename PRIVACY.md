@@ -2,7 +2,7 @@
 
 [Deutsch](#deutsch) · [English](#english)
 
-Stand / Last updated: 10. Oktober 2026 / October 10, 2026
+Stand / Last updated: 11. Oktober 2026 / October 11, 2026
 
 ---
 
@@ -31,7 +31,9 @@ den Einstellungen deines Geräts widerrufen.
 Die Inhalte der letzten 25 gescannten Codes sowie die zuletzt gewählte
 Scan-Art und Zoomstufe werden lokal auf deinem Gerät gespeichert, damit du
 sie später erneut aufrufen kannst. Diese Daten verlassen das Gerät nicht durch die App.
-Du kannst den Verlauf jederzeit in der App löschen. Beim Löschen der App
+Du kannst einzelne Einträge oder den ganzen Verlauf jederzeit in der App
+löschen. Einmalpasswort-Schlüssel (2FA, `otpauth://`) werden grundsätzlich
+nicht im Verlauf gespeichert. Beim Löschen der App
 werden alle Daten entfernt. Sie können jedoch Teil einer Gerätesicherung sein,
 die du über das Betriebssystem erstellst (z. B. iCloud- oder Android-Backup).
 
@@ -39,9 +41,11 @@ die du über das Betriebssystem erstellst (z. B. iCloud- oder Android-Backup).
 
 Die App erkennt übliche Inhaltsformate wie Kontakte, Termine, WLAN-Zugänge,
 Überweisungsdaten (GiroCode) oder Einmalpasswort-Schlüssel (2FA) und zeigt sie
-aufbereitet an. Das geschieht ausschließlich auf deinem Gerät. Beachte, dass
-solche Codes vertrauliche Angaben enthalten können, etwa WLAN-Passwörter oder
-2FA-Schlüssel; sie stehen wie jeder Inhalt im Verlauf, bis du ihn löschst.
+aufbereitet an, ebenso Artikelnummern (EAN, ISBN) und den Matrixcode der
+Deutschen Post. Das geschieht ausschließlich auf deinem Gerät. Beachte, dass
+solche Codes vertrauliche Angaben enthalten können, etwa WLAN-Passwörter;
+sie stehen wie jeder Inhalt im Verlauf, bis du ihn löschst. 2FA-Schlüssel
+werden nicht gespeichert.
 
 ### Elektronische Tickets
 
@@ -51,18 +55,27 @@ maskierten Namen und Geburtsdatum ausschließlich auf deinem Gerät aus. Dafür
 nutzt sie mitgelieferte öffentliche Schlüssel; es werden keine Daten
 übertragen.
 
-### Öffnen von Links
+### Öffnen von Links und Aktionen
 
-Enthält ein Code einen Web-Link, öffnet die App ihn nur nach deiner
-ausdrücklichen Bestätigung in deinem Browser. Für die aufgerufene Website gilt
+Enthält ein Code einen Link, öffnet die App ihn nur nach deiner
+ausdrücklichen Bestätigung in deinem Browser bzw. der zuständigen App.
+Bekannte Tracking-Parameter (z. B. `utm_source`, `fbclid`) entfernt sie dabei.
+Dasselbe gilt für die Aktionen der Ergebnisseite: E-Mail schreiben, Anrufen,
+SMS, Karte und Authenticator übergeben den Inhalt erst nach Bestätigung an die
+jeweilige App. „Online nachschlagen“ übermittelt die Artikelnummer an
+DuckDuckGo bzw. die ISBN an Open Library, „Sendung verfolgen“ die
+Sendungsnummer an die Deutsche Post. Für die aufgerufene Website oder App gilt
 die Datenschutzerklärung ihres jeweiligen Anbieters. Der Knopf „Support“ im
 Info-Dialog öffnet die Seite https://github.com/thorsten-l/qr_viewer/issues in
 deinem Browser; dort gilt die Datenschutzerklärung von GitHub.
 
-### Zwischenablage
+### Zwischenablage, Teilen und Export
 
 Inhalte werden nur dann in die Zwischenablage kopiert, wenn du auf
-„Kopieren“ tippst.
+„Kopieren“ tippst. Über „Teilen“, „Zu Kontakten“, „Zum Kalender“ und den
+Export des Verlaufs (CSV oder JSON) gibst du Inhalte über das Teilen-Menü des
+Betriebssystems an eine App deiner Wahl weiter; vorher wird nichts
+übertragen.
 
 ### Besonderheit unter Android: Google ML Kit
 
@@ -119,7 +132,9 @@ revoke camera access at any time in your device settings.
 The contents of the last 25 scanned codes and the most recently selected
 scan type and zoom level are stored locally on your device so that you can
 open them again later. The app does not send this data off the device. You can clear the
-history in the app at any time. Deleting the app removes all of its data.
+history or single entries in the app at any time. One-time password keys
+(2FA, `otpauth://`) are never stored in the history. Deleting the app removes
+all of its data.
 The data may, however, be included in device backups that you create through
 the operating system (e.g. iCloud or Android backup).
 
@@ -127,10 +142,11 @@ the operating system (e.g. iCloud or Android backup).
 
 The app recognizes common content formats such as contacts, events, Wi-Fi
 credentials, bank transfer data (GiroCode) or one-time password keys (2FA) and
-displays them in a readable form. This happens solely on your device. Please
-note that such codes can contain confidential information, for example Wi-Fi
-passwords or 2FA keys; like any content, they remain in the history until you
-clear it.
+displays them in a readable form, as well as item numbers (EAN, ISBN) and the
+Deutsche Post matrix code. This happens solely on your device. Please note
+that such codes can contain confidential information, for example Wi-Fi
+passwords; like any content, they remain in the history until you clear it.
+2FA keys are not stored.
 
 ### Electronic tickets
 
@@ -139,17 +155,25 @@ Deutschlandticket), the app reads the included details such as validity, masked
 name and date of birth solely on your device. It uses bundled public keys for
 this; no data is transmitted.
 
-### Opening links
+### Opening links and actions
 
-If a code contains a web link, the app opens it in your browser only after
-you explicitly confirm. The privacy policy of the respective website applies
-to the site you visit. The “Support” button in the info dialog opens
+If a code contains a link, the app opens it in your browser or the
+responsible app only after you explicitly confirm. Known tracking parameters
+(e.g. `utm_source`, `fbclid`) are removed. The same applies to the actions on
+the result page: write email, call, SMS, map and authenticator hand the
+content to the respective app only after you confirm. “Look up online” sends
+the item number to DuckDuckGo or the ISBN to Open Library, “Track shipment”
+sends the tracking number to Deutsche Post. The privacy policy of the
+respective website or app applies. The “Support” button in the info dialog opens
 https://github.com/thorsten-l/qr_viewer/issues in your browser; GitHub's
 privacy policy applies there.
 
-### Clipboard
+### Clipboard, sharing and export
 
-Content is copied to the clipboard only when you tap “Copy”.
+Content is copied to the clipboard only when you tap “Copy”. With “Share”,
+“Add to contacts”, “Add to calendar” and the history export (CSV or JSON) you
+pass content to an app of your choice via the operating system's share
+sheet; nothing is transmitted before that.
 
 ### Android only: Google ML Kit
 

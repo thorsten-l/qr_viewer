@@ -462,4 +462,103 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get close => 'बंद करें';
+
+  @override
+  String get actionEmail => 'ईमेल लिखें…';
+
+  @override
+  String get actionCall => 'कॉल करें…';
+
+  @override
+  String get actionSms => 'SMS लिखें…';
+
+  @override
+  String get actionMap => 'मानचित्र पर दिखाएँ…';
+
+  @override
+  String get actionOtp => 'ऑथेंटिकेटर में खोलें…';
+
+  @override
+  String get actionLookUp => 'ऑनलाइन खोजें…';
+
+  @override
+  String get actionAddContact => 'संपर्कों में जोड़ें…';
+
+  @override
+  String get actionAddEvent => 'कैलेंडर में जोड़ें…';
+
+  @override
+  String get actionTrack => 'शिपमेंट ट्रैक करें…';
+
+  @override
+  String get noAppFound => 'इसे खोलने के लिए कोई ऐप नहीं मिला।';
+
+  @override
+  String get share => 'साझा करें';
+
+  @override
+  String get historySearch => 'इतिहास खोजें';
+
+  @override
+  String get historyNoMatches => 'कोई परिणाम नहीं';
+
+  @override
+  String get historyExport => 'निर्यात करें';
+
+  @override
+  String get exportCsv => 'CSV के रूप में साझा करें';
+
+  @override
+  String get exportJson => 'JSON के रूप में साझा करें';
+
+  @override
+  String get historyEntryDeleted => 'प्रविष्टि हटाई गई';
+
+  @override
+  String get undo => 'पूर्ववत करें';
+
+  @override
+  String get otpNotSaved => '2FA कोड इतिहास में सहेजे नहीं जाते।';
+
+  @override
+  String get typeJson => 'JSON';
+
+  @override
+  String get typePostage => 'डाक टिकट (Deutsche Post)';
+
+  @override
+  String get fieldGtin => 'आइटम नंबर (GTIN)';
+
+  @override
+  String get fieldCheckDigit => 'चेक अंक';
+
+  @override
+  String get fieldGs1Prefix => 'पंजीकृत देश (GS1)';
+
+  @override
+  String get fieldIsbn => 'ISBN';
+
+  @override
+  String get fieldIsbn10 => 'ISBN-10';
+
+  @override
+  String get fieldIssn => 'ISSN';
+
+  @override
+  String get fieldTrackingNumber => 'ट्रैकिंग नंबर';
+
+  @override
+  String get valueValid => 'मान्य';
+
+  @override
+  String get valueInvalid => 'अमान्य';
+
+  @override
+  String get valueInStore => 'स्टोर का आंतरिक नंबर';
+
+  @override
+  String get valueCoupon => 'कूपन';
+
+  @override
+  String get valueGs1Global => 'GS1 Global Office';
 }

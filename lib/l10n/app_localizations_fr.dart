@@ -464,4 +464,104 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get close => 'Fermer';
+
+  @override
+  String get actionEmail => 'Écrire un e-mail…';
+
+  @override
+  String get actionCall => 'Appeler…';
+
+  @override
+  String get actionSms => 'Écrire un SMS…';
+
+  @override
+  String get actionMap => 'Voir sur la carte…';
+
+  @override
+  String get actionOtp => 'Ouvrir dans l\'authentificateur…';
+
+  @override
+  String get actionLookUp => 'Rechercher en ligne…';
+
+  @override
+  String get actionAddContact => 'Ajouter aux contacts…';
+
+  @override
+  String get actionAddEvent => 'Ajouter au calendrier…';
+
+  @override
+  String get actionTrack => 'Suivre l\'envoi…';
+
+  @override
+  String get noAppFound => 'Aucune app trouvée pour l\'ouvrir.';
+
+  @override
+  String get share => 'Partager';
+
+  @override
+  String get historySearch => 'Rechercher dans l\'historique';
+
+  @override
+  String get historyNoMatches => 'Aucun résultat';
+
+  @override
+  String get historyExport => 'Exporter';
+
+  @override
+  String get exportCsv => 'Partager en CSV';
+
+  @override
+  String get exportJson => 'Partager en JSON';
+
+  @override
+  String get historyEntryDeleted => 'Entrée supprimée';
+
+  @override
+  String get undo => 'Annuler';
+
+  @override
+  String get otpNotSaved =>
+      'Les codes 2FA ne sont pas enregistrés dans l\'historique.';
+
+  @override
+  String get typeJson => 'JSON';
+
+  @override
+  String get typePostage => 'Affranchissement (Deutsche Post)';
+
+  @override
+  String get fieldGtin => 'Numéro d\'article (GTIN)';
+
+  @override
+  String get fieldCheckDigit => 'Chiffre de contrôle';
+
+  @override
+  String get fieldGs1Prefix => 'Attribué en (GS1)';
+
+  @override
+  String get fieldIsbn => 'ISBN';
+
+  @override
+  String get fieldIsbn10 => 'ISBN-10';
+
+  @override
+  String get fieldIssn => 'ISSN';
+
+  @override
+  String get fieldTrackingNumber => 'Numéro de suivi';
+
+  @override
+  String get valueValid => 'valide';
+
+  @override
+  String get valueInvalid => 'invalide';
+
+  @override
+  String get valueInStore => 'Numéro interne (magasin)';
+
+  @override
+  String get valueCoupon => 'Bon de réduction';
+
+  @override
+  String get valueGs1Global => 'GS1 Global Office';
 }

@@ -16,11 +16,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_info.dart' show formatDateTime;
 import 'binary_payload.dart';
 import 'localization.dart';
+import 'qr_content.dart';
 import 'result_page.dart';
 import 'scan_mode.dart';
 
@@ -95,8 +97,14 @@ class ScanHistory extends ChangeNotifier {
     return ScanHistory._(prefs, entries.take(maxEntries).toList());
   }
 
+  /// Einmalpasswort-Schlüssel (2FA) landen nicht im Verlauf, wie bei
+  /// BinaryEye: Wer den Code noch einmal braucht, scannt ihn erneut.
+  static bool shouldStore(String raw, {bool binary = false}) =>
+      binary || parseContent(raw).kind != ContentKind.otp;
+
   /// Fügt einen Inhalt oben ein. Ein bereits vorhandener gleicher Inhalt
-  /// wird nach oben verschoben statt doppelt gespeichert.
+  /// wird nach oben verschoben statt doppelt gespeichert. 2FA-Schlüssel
+  /// werden nicht gespeichert, siehe [shouldStore].
   Future<void> add(
     String raw,
     BarcodeType type, {
@@ -104,6 +112,7 @@ class ScanHistory extends ChangeNotifier {
     bool binary = false,
     DateTime? time,
   }) async {
+    if (!shouldStore(raw, binary: binary)) return;
     _entries
       ..removeWhere((e) => e.raw == raw)
       ..insert(
@@ -123,6 +132,27 @@ class ScanHistory extends ChangeNotifier {
     await _save();
   }
 
+  /// Entfernt [entry] und liefert seine Position für [restore], oder -1.
+  Future<int> remove(ScanEntry entry) async {
+    final index = _entries.indexOf(entry);
+    if (index < 0) return -1;
+    _entries.removeAt(index);
+    notifyListeners();
+    await _save();
+    return index;
+  }
+
+  /// Setzt einen mit [remove] gelöschten Eintrag wieder ein.
+  Future<void> restore(int index, ScanEntry entry) async {
+    if (_entries.contains(entry)) return;
+    _entries.insert(index.clamp(0, _entries.length), entry);
+    if (_entries.length > maxEntries) {
+      _entries.removeRange(maxEntries, _entries.length);
+    }
+    notifyListeners();
+    await _save();
+  }
+
   Future<void> clear() async {
     _entries.clear();
     notifyListeners();
@@ -135,10 +165,85 @@ class ScanHistory extends ChangeNotifier {
   );
 }
 
-class HistoryPage extends StatelessWidget {
+/// Verlauf als CSV nach RFC 4180: Zeit, Format, Typ, Binär, Inhalt.
+/// Binärinhalte stehen als Hex mit Leerzeichen darin.
+String historyCsv(List<ScanEntry> entries) {
+  String cell(String v) =>
+      RegExp(r'[",\r\n]').hasMatch(v) ? '"${v.replaceAll('"', '""')}"' : v;
+  final rows = [
+    'time,format,type,binary,content',
+    for (final e in entries)
+      [
+        e.time.toIso8601String(),
+        e.format.name,
+        e.type.name,
+        '${e.binary}',
+        e.binary ? toSpacedHex(fromHex(e.raw)) : e.raw,
+      ].map(cell).join(','),
+  ];
+  return '${rows.join('\r\n')}\r\n';
+}
+
+/// Verlauf als JSON-Liste im Speicherformat.
+String historyJson(List<ScanEntry> entries) => const JsonEncoder.withIndent(
+  '  ',
+).convert(entries.map((e) => e.toJson()).toList());
+
+/// Sichtbarer Inhalt, Formatname und Typ eines Eintrags für die Suche.
+(String, String, IconData) _describe(ScanEntry e, AppLocalizations l) {
+  final shown = e.binary ? toSpacedHex(fromHex(e.raw)) : e.raw;
+  final (kind, icon) = e.binary
+      ? postageStamp(e.raw, e.format, true) != null
+            ? (l.typePostage, kindIcon(ContentKind.postage))
+            : (
+                isVdvTicket(fromHex(e.raw)) ? l.vdvTicket : l.typeBinary,
+                Icons.memory,
+              )
+      : contentKind(e.raw, e.type, l, format: e.format);
+  return (shown, kind, icon);
+}
+
+/// Einträge, deren Inhalt, Format oder Typ [query] enthält.
+List<ScanEntry> filterHistory(
+  List<ScanEntry> entries,
+  String query,
+  AppLocalizations l,
+) {
+  final q = query.trim().toLowerCase();
+  if (q.isEmpty) return entries;
+  return [
+    for (final e in entries)
+      if ([
+        _describe(e, l).$1,
+        _describe(e, l).$2,
+        formatLabel(e.format, l),
+      ].any((t) => t.toLowerCase().contains(q)))
+        e,
+  ];
+}
+
+class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key, required this.history});
 
   final ScanHistory history;
+
+  @override
+  State<HistoryPage> createState() => _HistoryPageState();
+}
+
+enum _Export { csv, json }
+
+class _HistoryPageState extends State<HistoryPage> {
+  final _search = TextEditingController();
+  bool _searching = false;
+
+  ScanHistory get history => widget.history;
+
+  @override
+  void dispose() {
+    _search.dispose();
+    super.dispose();
+  }
 
   Future<void> _confirmClear(BuildContext context) async {
     final ok = await showDialog<bool>(
@@ -161,65 +266,141 @@ class HistoryPage extends StatelessWidget {
     if (ok == true) await history.clear();
   }
 
+  Future<void> _export(BuildContext context, _Export kind) async {
+    final entries = history.entries;
+    final (text, name, mime) = switch (kind) {
+      _Export.csv => (historyCsv(entries), 'qr-viewer-history.csv', 'text/csv'),
+      _Export.json => (
+        historyJson(entries),
+        'qr-viewer-history.json',
+        'application/json',
+      ),
+    };
+    await SharePlus.instance.share(
+      ShareParams(
+        files: [XFile.fromData(utf8.encode(text), mimeType: mime)],
+        fileNameOverrides: [name],
+        sharePositionOrigin: shareOrigin(context),
+      ),
+    );
+  }
+
+  Future<void> _delete(BuildContext context, ScanEntry e) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final l = context.l10n;
+    final index = await history.remove(e);
+    if (index < 0) return;
+    messenger
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(l.historyEntryDeleted),
+          action: SnackBarAction(
+            label: l.undo,
+            onPressed: () => history.restore(index, e),
+          ),
+        ),
+      );
+  }
+
+  void _toggleSearch() => setState(() {
+    _searching = !_searching;
+    if (!_searching) _search.clear();
+  });
+
   @override
   Widget build(BuildContext context) => ListenableBuilder(
-    listenable: history,
+    listenable: Listenable.merge([history, _search]),
     builder: (context, _) {
-      final entries = history.entries;
       final l = context.l10n;
+      final all = history.entries;
+      final entries = filterHistory(all, _search.text, l);
       final locale = Localizations.localeOf(context).toString();
       return Scaffold(
         appBar: AppBar(
-          title: Text(l.history),
+          title: _searching
+              ? TextField(
+                  controller: _search,
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    hintText: l.historySearch,
+                    border: InputBorder.none,
+                  ),
+                )
+              : Text(l.history),
           actions: [
-            if (entries.isNotEmpty)
+            if (all.isNotEmpty || _searching)
+              IconButton(
+                tooltip: l.historySearch,
+                icon: Icon(_searching ? Icons.close : Icons.search),
+                onPressed: _toggleSearch,
+              ),
+            if (all.isNotEmpty && !_searching) ...[
+              PopupMenuButton<_Export>(
+                tooltip: l.historyExport,
+                icon: const Icon(Icons.ios_share),
+                onSelected: (k) => _export(context, k),
+                itemBuilder: (_) => [
+                  PopupMenuItem(value: _Export.csv, child: Text(l.exportCsv)),
+                  PopupMenuItem(value: _Export.json, child: Text(l.exportJson)),
+                ],
+              ),
               IconButton(
                 tooltip: l.historyClear,
                 icon: const Icon(Icons.delete_outline),
                 onPressed: () => _confirmClear(context),
               ),
+            ],
           ],
         ),
-        body: entries.isEmpty
+        body: all.isEmpty
             ? Center(child: Text(l.historyEmpty))
+            : entries.isEmpty
+            ? Center(child: Text(l.historyNoMatches))
             : ListView.separated(
                 itemCount: entries.length,
                 separatorBuilder: (_, _) => const Divider(height: 1),
                 itemBuilder: (context, i) {
                   final e = entries[i];
-                  final shown = e.binary ? toSpacedHex(fromHex(e.raw)) : e.raw;
-                  final (kind, icon) = e.binary
-                      ? (
-                          isVdvTicket(fromHex(e.raw))
-                              ? l.vdvTicket
-                              : l.typeBinary,
-                          Icons.memory,
-                        )
-                      : contentKind(e.raw, e.type, l);
-                  return ListTile(
-                    leading: Icon(icon),
-                    title: Text(
-                      shown,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontFamily: kContentFont),
+                  final (shown, kind, icon) = _describe(e, l);
+                  return Dismissible(
+                    key: ObjectKey(e),
+                    background: Container(
+                      color: Theme.of(context).colorScheme.errorContainer,
+                      alignment: AlignmentDirectional.centerEnd,
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Icon(
+                        Icons.delete_outline,
+                        color: Theme.of(context).colorScheme.onErrorContainer,
+                      ),
                     ),
-                    subtitle: Text(
-                      '${formatLabel(e.format, l)} · $kind · '
-                      '${formatDateTime(e.time, locale)}',
-                    ),
-                    trailing: IconButton(
-                      tooltip: l.copy,
-                      icon: const Icon(Icons.copy),
-                      onPressed: () => copyWithFeedback(context, shown),
-                    ),
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => ResultPage(
-                          raw: e.raw,
-                          type: e.type,
-                          format: e.format,
-                          binary: e.binary,
+                    direction: DismissDirection.endToStart,
+                    onDismissed: (_) => _delete(context, e),
+                    child: ListTile(
+                      leading: Icon(icon),
+                      title: Text(
+                        shown,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontFamily: kContentFont),
+                      ),
+                      subtitle: Text(
+                        '${formatLabel(e.format, l)} · $kind · '
+                        '${formatDateTime(e.time, locale)}',
+                      ),
+                      trailing: IconButton(
+                        tooltip: l.copy,
+                        icon: const Icon(Icons.copy),
+                        onPressed: () => copyWithFeedback(context, shown),
+                      ),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => ResultPage(
+                            raw: e.raw,
+                            type: e.type,
+                            format: e.format,
+                            binary: e.binary,
+                          ),
                         ),
                       ),
                     ),

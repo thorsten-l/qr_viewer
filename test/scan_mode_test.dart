@@ -90,9 +90,12 @@ void main() {
         ),
       ),
     );
-    expect(find.text('Produktcode'), findsOneWidget);
+    // Titel und Kopf der Produktkarte
+    expect(find.text('Produktcode'), findsNWidgets(2));
     expect(find.text('Format: EAN-13'), findsOneWidget);
-    expect(find.text('Öffnen …'), findsNothing);
+    expect(find.text('gültig'), findsOneWidget);
+    expect(find.text('🇩🇪 DE'), findsOneWidget);
+    expect(find.text('Online nachschlagen…'), findsOneWidget);
   });
 
   group('Verlauf mit Format', () {

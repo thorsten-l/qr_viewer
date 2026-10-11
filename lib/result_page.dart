@@ -12,14 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'app_info.dart' show formatDateTime;
 import 'binary_payload.dart';
+import 'content_actions.dart';
+import 'deutsche_post.dart';
+import 'gtin.dart';
 import 'localization.dart';
 import 'qr_content.dart';
 import 'scan_mode.dart';
@@ -69,6 +75,10 @@ String kindLabel(ContentKind kind, AppLocalizations l) => switch (kind) {
   ContentKind.wifi => l.typeWifi,
   ContentKind.payment => l.typePayment,
   ContentKind.otp => l.typeOtp,
+  ContentKind.product => l.typeProduct,
+  ContentKind.book => l.typeIsbn,
+  ContentKind.json => l.typeJson,
+  ContentKind.postage => l.typePostage,
   ContentKind.text => l.typeText,
 };
 
@@ -83,7 +93,59 @@ IconData kindIcon(ContentKind kind) => switch (kind) {
   ContentKind.wifi => Icons.wifi,
   ContentKind.payment => Icons.account_balance_outlined,
   ContentKind.otp => Icons.key_outlined,
+  ContentKind.product => Icons.shopping_bag_outlined,
+  ContentKind.book => Icons.menu_book_outlined,
+  ContentKind.json => Icons.data_object,
+  ContentKind.postage => Icons.local_post_office_outlined,
   ContentKind.text => Icons.notes,
+};
+
+/// Artikel-Strichcodes, deren Ziffern eine GTIN sind.
+bool isProductFormat(BarcodeFormat format) => switch (format) {
+  BarcodeFormat.ean13 ||
+  BarcodeFormat.ean8 ||
+  BarcodeFormat.upcA ||
+  BarcodeFormat.upcE ||
+  BarcodeFormat.itf14 => true,
+  _ => false,
+};
+
+/// Erkannter Inhalt eines Codes, abhängig vom Format.
+ParsedContent parseScan(String raw, BarcodeFormat format) =>
+    parseContent(raw, productCode: isProductFormat(format));
+
+/// Post-Matrixcode aus Binärdaten oder aus Text, den die Plattform als
+/// Windows-1252 dekodiert hat; nur bei Data Matrix.
+PostageStamp? postageStamp(String raw, BarcodeFormat format, bool binary) {
+  if (format != BarcodeFormat.dataMatrix) return null;
+  final bytes = binary ? fromHex(raw) : bytesFromCp1252(raw);
+  return bytes == null ? null : parsePostageStamp(bytes);
+}
+
+String actionLabel(ContentAction a, AppLocalizations l) => switch (a) {
+  ContentAction.open => l.openEllipsis,
+  ContentAction.email => l.actionEmail,
+  ContentAction.call => l.actionCall,
+  ContentAction.sms => l.actionSms,
+  ContentAction.map => l.actionMap,
+  ContentAction.otp => l.actionOtp,
+  ContentAction.lookUp => l.actionLookUp,
+  ContentAction.addContact => l.actionAddContact,
+  ContentAction.addEvent => l.actionAddEvent,
+  ContentAction.track => l.actionTrack,
+};
+
+IconData actionIcon(ContentAction a) => switch (a) {
+  ContentAction.open => Icons.open_in_new,
+  ContentAction.email => Icons.mail_outline,
+  ContentAction.call => Icons.call_outlined,
+  ContentAction.sms => Icons.sms_outlined,
+  ContentAction.map => Icons.map_outlined,
+  ContentAction.otp => Icons.key_outlined,
+  ContentAction.lookUp => Icons.search,
+  ContentAction.addContact => Icons.person_add_alt,
+  ContentAction.addEvent => Icons.event_available_outlined,
+  ContentAction.track => Icons.local_shipping_outlined,
 };
 
 /// Bezeichnung und Symbol eines Inhalts: das erkannte Format, sonst der
@@ -91,9 +153,13 @@ IconData kindIcon(ContentKind kind) => switch (kind) {
 (String, IconData) contentKind(
   String raw,
   BarcodeType type,
-  AppLocalizations l,
-) {
-  final kind = parseContent(raw).kind;
+  AppLocalizations l, {
+  BarcodeFormat format = BarcodeFormat.qrCode,
+}) {
+  if (postageStamp(raw, format, false) != null) {
+    return (l.typePostage, kindIcon(ContentKind.postage));
+  }
+  final kind = parseScan(raw, format).kind;
   return kind == ContentKind.text
       ? (typeLabel(type, l), typeIcon(type))
       : (kindLabel(kind, l), kindIcon(kind));
@@ -152,6 +218,14 @@ String fieldLabel(FieldLabel label, AppLocalizations l) => switch (label) {
   FieldLabel.digits => l.fieldDigits,
   FieldLabel.period => l.fieldPeriod,
   FieldLabel.counter => l.fieldCounter,
+  FieldLabel.gtin => l.fieldGtin,
+  FieldLabel.checkDigit => l.fieldCheckDigit,
+  FieldLabel.gs1Prefix => l.fieldGs1Prefix,
+  FieldLabel.isbn => l.fieldIsbn,
+  FieldLabel.isbn10 => l.fieldIsbn10,
+  FieldLabel.issn => l.fieldIssn,
+  FieldLabel.json => l.typeJson,
+  FieldLabel.trackingNumber => l.fieldTrackingNumber,
 };
 
 /// Anzeigewert: Datum und Betrag passend zur Sprache, sonst der Text.
@@ -172,6 +246,13 @@ String fieldValue(ContentField f, AppLocalizations l, String locale) {
   return switch (f.label) {
     FieldLabel.hidden => l.valueYes,
     FieldLabel.security when f.value == 'nopass' => l.valueOpenNetwork,
+    FieldLabel.checkDigit => f.value == 'valid' ? l.valueValid : l.valueInvalid,
+    FieldLabel.gs1Prefix => switch (Gs1Range.values.asNameMap()[f.value]) {
+      Gs1Range.inStore => l.valueInStore,
+      Gs1Range.coupon => l.valueCoupon,
+      Gs1Range.global => l.valueGs1Global,
+      _ => f.value,
+    },
     _ => f.value,
   };
 }
@@ -204,13 +285,16 @@ class ResultPage extends StatelessWidget {
   final BarcodeFormat format;
   final bool binary;
 
+  /// Fragt nach und übergibt den Link an die zuständige App. Bei Web-Links
+  /// fallen Tracking-Parameter weg.
   Future<void> _open(BuildContext context, Uri uri) async {
+    final target = withoutTracking(uri);
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(ctx.l10n.openLinkTitle),
         content: SelectableText(
-          uri.toString(),
+          target.toString(),
           style: const TextStyle(fontFamily: kContentFont),
         ),
         actions: [
@@ -225,9 +309,32 @@ class ResultPage extends StatelessWidget {
         ],
       ),
     );
-    if (ok == true) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (ok != true) return;
+    var launched = false;
+    try {
+      launched = await launchUrl(target, mode: LaunchMode.externalApplication);
+    } on PlatformException {
+      launched = false;
     }
+    if (!launched && context.mounted) {
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(context.l10n.noAppFound)));
+    }
+  }
+
+  Future<void> _run(BuildContext context, ActionTarget target) async {
+    final uri = target.uri;
+    if (uri != null) return _open(context, uri);
+    await SharePlus.instance.share(
+      ShareParams(
+        files: [
+          XFile.fromData(utf8.encode(target.file!), mimeType: target.mimeType),
+        ],
+        fileNameOverrides: [target.fileName!],
+        sharePositionOrigin: shareOrigin(context),
+      ),
+    );
   }
 
   @override
@@ -235,28 +342,84 @@ class ResultPage extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final l = context.l10n;
     final bytes = binary ? fromHex(raw) : null;
-    final parsed = bytes == null ? parseContent(raw) : ParsedContent.text;
-    final link = parsed.kind == ContentKind.url
-        ? parsed[FieldLabel.link]
+    final stamp = postageStamp(raw, format, binary);
+    final parsed = stamp != null
+        ? ParsedContent(ContentKind.postage, [
+            ContentField(FieldLabel.trackingNumber, stamp.trackingNumber),
+          ])
+        : bytes == null
+        ? parseScan(raw, format)
+        : ParsedContent.text;
+    final action = contentAction(parsed, raw);
+    final uri = action?.uri;
+    final webHost = uri != null && uri.scheme.startsWith('http')
+        ? uri.host
         : null;
-    final uri = link == null ? null : webUri(link);
     // Eine bloße URL braucht keine Karte; sie steht schon im Rohinhalt.
     final showCard =
         parsed.kind != ContentKind.text &&
         !(parsed.kind == ContentKind.url && parsed.fields.length == 1);
-    final title = bytes != null
-        ? (isVdvTicket(bytes) ? l.vdvTicket : l.typeBinary)
-        : parsed.kind != ContentKind.text
+    final title = parsed.kind != ContentKind.text
         ? kindLabel(parsed.kind, l)
+        : bytes != null
+        ? (isVdvTicket(bytes) ? l.vdvTicket : l.typeBinary)
         : typeLabel(type, l);
     final rawText = SelectableText(
       raw,
       style: const TextStyle(fontFamily: kContentFont, fontSize: 20),
     );
     final copyText = bytes == null ? raw : toSpacedHex(bytes);
+    final hexDump = bytes == null ? null : _HexDump(bytes: bytes);
+
+    final Widget body;
+    if (bytes != null && isVdvTicket(bytes)) {
+      body = Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _VdvTicketCard(bytes: bytes),
+          ExpansionTile(
+            tilePadding: EdgeInsets.zero,
+            title: Text(l.rawData),
+            children: [hexDump!],
+          ),
+        ],
+      );
+    } else if (showCard) {
+      body = Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ContentCard(content: parsed),
+          const Divider(height: 32),
+          Text(
+            bytes == null ? l.rawContent : l.rawData,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          const SizedBox(height: 8),
+          hexDump ?? rawText,
+        ],
+      );
+    } else {
+      body = hexDump ?? rawText;
+    }
 
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(
+        title: Text(title),
+        actions: [
+          Builder(
+            builder: (context) => IconButton(
+              tooltip: l.share,
+              icon: const Icon(Icons.share_outlined),
+              onPressed: () => SharePlus.instance.share(
+                ShareParams(
+                  text: copyText,
+                  sharePositionOrigin: shareOrigin(context),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -274,10 +437,17 @@ class ResultPage extends StatelessWidget {
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
               ],
-              const SizedBox(height: 8),
-              if (uri != null) ...[
+              if (parsed.kind == ContentKind.otp) ...[
+                const SizedBox(height: 4),
                 Text(
-                  l.hostLine(uri.host),
+                  l.otpNotSaved,
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+              ],
+              const SizedBox(height: 8),
+              if (webHost != null) ...[
+                Text(
+                  l.hostLine(webHost),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 8),
@@ -289,38 +459,7 @@ class ResultPage extends StatelessWidget {
                   clipBehavior: Clip.antiAlias,
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.all(12),
-                    child: bytes == null
-                        ? showCard
-                              ? Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    ContentCard(content: parsed),
-                                    const Divider(height: 32),
-                                    Text(
-                                      l.rawContent,
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.titleSmall,
-                                    ),
-                                    const SizedBox(height: 8),
-                                    rawText,
-                                  ],
-                                )
-                              : rawText
-                        : isVdvTicket(bytes)
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              _VdvTicketCard(bytes: bytes),
-                              ExpansionTile(
-                                tilePadding: EdgeInsets.zero,
-                                title: Text(l.rawData),
-                                children: [_HexDump(bytes: bytes)],
-                              ),
-                            ],
-                          )
-                        : _HexDump(bytes: bytes),
+                    child: body,
                   ),
                 ),
               ),
@@ -334,13 +473,18 @@ class ResultPage extends StatelessWidget {
                       onPressed: () => copyWithFeedback(context, copyText),
                     ),
                   ),
-                  if (uri != null) ...[
+                  if (action != null) ...[
                     const SizedBox(width: 12),
                     Expanded(
-                      child: FilledButton.icon(
-                        icon: const Icon(Icons.open_in_new),
-                        label: Text(l.openEllipsis),
-                        onPressed: () => _open(context, uri),
+                      child: Builder(
+                        builder: (context) => FilledButton.icon(
+                          icon: Icon(actionIcon(action.action)),
+                          label: Text(
+                            actionLabel(action.action, l),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          onPressed: () => _run(context, action),
+                        ),
                       ),
                     ),
                   ],
@@ -352,6 +496,13 @@ class ResultPage extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Ausgangspunkt des Teilen-Menüs; das iPad braucht ihn für das Popover.
+Rect? shareOrigin(BuildContext context) {
+  final box = context.findRenderObject();
+  if (box is! RenderBox || !box.hasSize) return null;
+  return box.localToGlobal(Offset.zero) & box.size;
 }
 
 /// Erkannte Felder eines Inhalts, jedes einzeln kopierbar.
@@ -399,7 +550,12 @@ class ContentCard extends StatelessWidget {
                           Text(name, style: labelStyle),
                           SelectableText(
                             value,
-                            style: theme.textTheme.bodyLarge,
+                            style: f.label == FieldLabel.json
+                                ? const TextStyle(
+                                    fontFamily: kContentFont,
+                                    fontSize: 14,
+                                  )
+                                : theme.textTheme.bodyLarge,
                           ),
                         ],
                       ),
@@ -419,27 +575,28 @@ class ContentCard extends StatelessWidget {
   }
 }
 
-/// Hex-Dump, der so viele Bytes pro Zeile zeigt, wie in die Breite passen.
+/// Hex-Dump mit Textspalte, der so viele Bytes pro Zeile zeigt, wie in die
+/// Breite passen. Vor dem Rückfall auf 4 Bytes wird die Schrift kleiner.
 class _HexDump extends StatelessWidget {
   const _HexDump({required this.bytes});
 
   final List<int> bytes;
 
-  static const _fontSize = 16.0;
-
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constraints) {
       // Source Code Pro: Zeichenbreite etwa 0,6 × Schriftgröße.
-      final chars = constraints.maxWidth / (_fontSize * 0.6);
-      final perLine = [
-        16,
-        8,
-        4,
-      ].firstWhere((n) => 6 + n * 3 - 1 <= chars, orElse: () => 4);
+      bool fits(int perLine, double size) =>
+          hexDumpWidth(perLine) * size * 0.6 <= constraints.maxWidth;
+      final (perLine, size) = [
+        (16, 16.0),
+        (8, 16.0),
+        (8, 14.0),
+        (8, 12.0),
+      ].firstWhere((c) => fits(c.$1, c.$2), orElse: () => (4, 14.0));
       return SelectableText(
         hexDump(bytes, perLine: perLine),
-        style: const TextStyle(fontFamily: kContentFont, fontSize: _fontSize),
+        style: TextStyle(fontFamily: kContentFont, fontSize: size),
       );
     },
   );

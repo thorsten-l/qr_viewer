@@ -462,4 +462,103 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get close => '关闭';
+
+  @override
+  String get actionEmail => '写邮件…';
+
+  @override
+  String get actionCall => '拨打…';
+
+  @override
+  String get actionSms => '写短信…';
+
+  @override
+  String get actionMap => '在地图中显示…';
+
+  @override
+  String get actionOtp => '在验证器中打开…';
+
+  @override
+  String get actionLookUp => '在线查找…';
+
+  @override
+  String get actionAddContact => '添加到联系人…';
+
+  @override
+  String get actionAddEvent => '添加到日历…';
+
+  @override
+  String get actionTrack => '跟踪邮件…';
+
+  @override
+  String get noAppFound => '未找到可打开的应用。';
+
+  @override
+  String get share => '分享';
+
+  @override
+  String get historySearch => '搜索历史记录';
+
+  @override
+  String get historyNoMatches => '无匹配项';
+
+  @override
+  String get historyExport => '导出';
+
+  @override
+  String get exportCsv => '以 CSV 分享';
+
+  @override
+  String get exportJson => '以 JSON 分享';
+
+  @override
+  String get historyEntryDeleted => '已删除条目';
+
+  @override
+  String get undo => '撤销';
+
+  @override
+  String get otpNotSaved => '2FA 码不会保存在历史记录中。';
+
+  @override
+  String get typeJson => 'JSON';
+
+  @override
+  String get typePostage => '邮票（Deutsche Post）';
+
+  @override
+  String get fieldGtin => '商品编号 (GTIN)';
+
+  @override
+  String get fieldCheckDigit => '校验位';
+
+  @override
+  String get fieldGs1Prefix => '注册地 (GS1)';
+
+  @override
+  String get fieldIsbn => 'ISBN';
+
+  @override
+  String get fieldIsbn10 => 'ISBN-10';
+
+  @override
+  String get fieldIssn => 'ISSN';
+
+  @override
+  String get fieldTrackingNumber => '跟踪号';
+
+  @override
+  String get valueValid => '有效';
+
+  @override
+  String get valueInvalid => '无效';
+
+  @override
+  String get valueInStore => '店内编码';
+
+  @override
+  String get valueCoupon => '优惠券';
+
+  @override
+  String get valueGs1Global => 'GS1 Global Office';
 }

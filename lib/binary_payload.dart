@@ -127,16 +127,33 @@ Uint8List fromHex(String hex) {
   ]);
 }
 
-/// Hex-Dump mit Offset, z. B. "0000  9E 81 80 D7".
-String hexDump(List<int> bytes, {int perLine = 8}) {
+/// Hex-Dump mit Offset und, wenn [text] gesetzt ist, einer Textspalte wie
+/// bei `xxd`: "0000  44 45 41 35 1F  DEA5.". Nicht druckbare Bytes
+/// erscheinen dort als Punkt.
+String hexDump(List<int> bytes, {int perLine = 8, bool text = true}) {
   final lines = <String>[];
+  final width = perLine * 3 - 1;
   for (var i = 0; i < bytes.length; i += perLine) {
     final end = i + perLine < bytes.length ? i + perLine : bytes.length;
+    final chunk = bytes.sublist(i, end);
     final offset = i.toRadixString(16).padLeft(4, '0').toUpperCase();
-    lines.add('$offset  ${toSpacedHex(bytes.sublist(i, end))}');
+    final hex = toSpacedHex(chunk);
+    lines.add(
+      text
+          ? '$offset  ${hex.padRight(width)}  ${printableAscii(chunk)}'
+          : '$offset  $hex',
+    );
   }
   return lines.join('\n');
 }
+
+/// Druckbares ASCII (0x20–0x7E) bleibt, alles andere wird zu ".".
+String printableAscii(List<int> bytes) =>
+    String.fromCharCodes(bytes.map((b) => b >= 0x20 && b <= 0x7E ? b : 0x2E));
+
+/// Zeichen pro Zeile eines [hexDump] mit [perLine] Bytes.
+int hexDumpWidth(int perLine, {bool text = true}) =>
+    6 + perLine * 3 - 1 + (text ? 2 + perLine : 0);
 
 /// VDV-Barcode des deutschen eTickets (VDV-Kernapplikation): beginnt mit
 /// dem Signatur-Tag 9E 81 80.

@@ -123,9 +123,20 @@ void main() {
 
     test('Hex-Dump mit Offset', () {
       expect(
-        hexDump(vdv.sublist(0, 10), perLine: 8),
+        hexDump(vdv.sublist(0, 10), perLine: 8, text: false),
         '0000  9E 81 80 D7 A4 72 22 8D\n0008  5C EC',
       );
+    });
+
+    test('Hex-Dump mit Textspalte, bündig auch in der letzten Zeile', () {
+      expect(
+        hexDump(vdv.sublist(0, 10), perLine: 8),
+        '0000  9E 81 80 D7 A4 72 22 8D  .....r".\n'
+        '0008  5C EC                    \\.',
+      );
+      expect(printableAscii([0x44, 0x45, 0x00, 0x7F, 0x20, 0x7E]), 'DE.. ~');
+      expect(hexDumpWidth(8), 39);
+      expect(hexDumpWidth(8, text: false), 29);
     });
   });
 

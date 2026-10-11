@@ -463,4 +463,103 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get close => 'Close';
+
+  @override
+  String get actionEmail => 'Write email…';
+
+  @override
+  String get actionCall => 'Call…';
+
+  @override
+  String get actionSms => 'Write SMS…';
+
+  @override
+  String get actionMap => 'Show on map…';
+
+  @override
+  String get actionOtp => 'Open in authenticator…';
+
+  @override
+  String get actionLookUp => 'Look up online…';
+
+  @override
+  String get actionAddContact => 'Add to contacts…';
+
+  @override
+  String get actionAddEvent => 'Add to calendar…';
+
+  @override
+  String get actionTrack => 'Track shipment…';
+
+  @override
+  String get noAppFound => 'No app found to open this.';
+
+  @override
+  String get share => 'Share';
+
+  @override
+  String get historySearch => 'Search history';
+
+  @override
+  String get historyNoMatches => 'No matches';
+
+  @override
+  String get historyExport => 'Export';
+
+  @override
+  String get exportCsv => 'Share as CSV';
+
+  @override
+  String get exportJson => 'Share as JSON';
+
+  @override
+  String get historyEntryDeleted => 'Entry deleted';
+
+  @override
+  String get undo => 'Undo';
+
+  @override
+  String get otpNotSaved => '2FA codes are not saved in the history.';
+
+  @override
+  String get typeJson => 'JSON';
+
+  @override
+  String get typePostage => 'Postage stamp (Deutsche Post)';
+
+  @override
+  String get fieldGtin => 'Item number (GTIN)';
+
+  @override
+  String get fieldCheckDigit => 'Check digit';
+
+  @override
+  String get fieldGs1Prefix => 'Registered in (GS1)';
+
+  @override
+  String get fieldIsbn => 'ISBN';
+
+  @override
+  String get fieldIsbn10 => 'ISBN-10';
+
+  @override
+  String get fieldIssn => 'ISSN';
+
+  @override
+  String get fieldTrackingNumber => 'Tracking number';
+
+  @override
+  String get valueValid => 'valid';
+
+  @override
+  String get valueInvalid => 'invalid';
+
+  @override
+  String get valueInStore => 'In-store number';
+
+  @override
+  String get valueCoupon => 'Coupon';
+
+  @override
+  String get valueGs1Global => 'GS1 Global Office';
 }

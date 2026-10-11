@@ -4,6 +4,49 @@ Alle wichtigen Änderungen an QR Viewer. Die Versionen folgen
 [Semantic Versioning](https://semver.org/lang/de/), die Build-Nummer steht
 hinter dem `+`.
 
+## [2.1.0+11] – 2026-10-11
+
+Ideen aus [BinaryEye](https://github.com/markusfisch/BinaryEye) übernommen.
+
+### Neu
+
+- **Aktionen je Inhalt**, jeweils erst nach Rückfrage mit sichtbarem Ziel:
+  E-Mail schreiben, Anrufen (öffnet nur den Wähler), SMS schreiben, in Karten
+  zeigen (Apple Karten bzw. `geo:`), 2FA-Schlüssel an die
+  Authenticator-App geben, Produkt bzw. Buch online nachschlagen
+  (DuckDuckGo bzw. Open Library), Sendung verfolgen.
+- **Kontakt und Termin übernehmen** über das Teilen-Menü als `.vcf` bzw.
+  `.ics`. MECARD und BIZCARD werden dafür in vCard 3.0 umgewandelt, ein
+  einzelnes VEVENT in VCALENDAR verpackt.
+- **Teilen** des Inhalts auf der Ergebnisseite.
+- **Verlauf:** Einträge per Wischen einzeln löschen (mit „Rückgängig“), Suche
+  nach Inhalt, Format und Typ sowie Export als CSV oder JSON über das
+  Teilen-Menü.
+- **Artikelnummern** (EAN-13, EAN-8, UPC-A, UPC-E, ITF-14): Prüfziffer,
+  Land der Nummernvergabe (GS1-Präfix), interne Nummern und Gutscheine.
+  ISBN mit ISBN-10, ISSN bei Zeitschriften.
+- **Matrixcode der Deutschen Post** (Briefmarke, Internetmarke): Sendungsnummer
+  mit Prüfziffer und Link zur Sendungsverfolgung.
+- **JSON** wird eingerückt in Source Code Pro angezeigt.
+- **Links ohne Schema** wie `beispiel.de/pfad`, das Präfix `URL:` sowie andere
+  App-Links (`market://`, `itms-apps://`, `fido:/`, …) werden als Link
+  erkannt. Lokale und Skript-Schemata (`file:`, `javascript:`, `intent:`, …)
+  bleiben ausgeschlossen.
+- **Hex-Dump mit Textspalte** wie bei `xxd`; auf schmalen Bildschirmen wird die
+  Schrift kleiner, bevor weniger Bytes pro Zeile erscheinen.
+- Kurze Vibration beim Erkennen eines Codes.
+- Die Taschenlampe zeigt an, ob sie an ist.
+- 33 neue Texte in allen 13 Sprachen.
+
+### Geändert
+
+- **2FA-Schlüssel (`otpauth://`) werden nicht mehr im Verlauf gespeichert**;
+  die Ergebnisseite weist darauf hin.
+- Beim Öffnen von Web-Links fallen bekannte Tracking-Parameter weg (`utm_*`,
+  `fbclid`, `gclid`, …); die Rückfrage zeigt den bereinigten Link.
+- Datenschutzerklärung: Aktionen, Teilen, Export und 2FA-Ausschluss ergänzt.
+- NOTICE-Datei und Lizenzeintrag für BinaryEye (MIT).
+
 ## [2.0.1+10] – 2026-10-10
 
 ### Neu

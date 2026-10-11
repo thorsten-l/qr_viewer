@@ -14,6 +14,8 @@
 
 import 'dart:convert';
 
+import 'gtin.dart';
+
 /// Erkennt die üblichen Inhaltsformate von QR-Codes, wie sie z. B. in der
 /// ZXing-Liste "Barcode Contents" gesammelt sind:
 ///
@@ -24,9 +26,12 @@ import 'dart:convert';
 /// * Telefon: `tel:` (RFC 3966)
 /// * SMS: `sms:` (RFC 5724), `SMSTO:`, `mms:`
 /// * Ort: `geo:` (RFC 5870)
-/// * Link: `http(s)://`, `www.`, MEBKM
+/// * Link: `http(s)://`, `www.`, `URL:`, `beispiel.de/pfad`, MEBKM und
+///   andere Schemata wie `market://` oder `fido:/`
 /// * Überweisung: EPC-QR/GiroCode (EPC069-12)
 /// * Einmalpasswort (2FA): `otpauth://` (Google Authenticator Key Uri Format)
+/// * JSON-Objekte und -Listen
+/// * Artikelnummern (EAN/UPC/ITF-14) mit ISBN und ISSN, nur bei Strichcodes
 ///
 /// Alles andere ist einfacher Text.
 enum ContentKind {
@@ -41,6 +46,12 @@ enum ContentKind {
   wifi,
   payment,
   otp,
+  product,
+  book,
+  json,
+
+  /// Matrixcode der Deutschen Post; entsteht aus Binärdaten, nicht hier.
+  postage,
 }
 
 /// Bedeutung eines Feldes; der angezeigte Name kommt aus der Übersetzung.
@@ -97,6 +108,14 @@ enum FieldLabel {
   digits,
   period,
   counter,
+  gtin,
+  checkDigit,
+  gs1Prefix,
+  isbn,
+  isbn10,
+  issn,
+  json,
+  trackingNumber,
 }
 
 /// Ein Feld des erkannten Inhalts. Datum und Betrag werden beim Anzeigen
@@ -142,13 +161,17 @@ class ParsedContent {
 }
 
 /// Erkennt das Format von [raw]; unbekannte Inhalte sind [ParsedContent.text].
-ParsedContent parseContent(String raw) {
+/// [productCode] gibt an, dass der Inhalt aus einem Artikel-Strichcode
+/// (EAN, UPC, ITF-14) stammt.
+ParsedContent parseContent(String raw, {bool productCode = false}) {
   final s = raw.trim();
   if (s.isEmpty) return ParsedContent.text;
   final upper = s.toUpperCase();
   ParsedContent? result;
   try {
-    if (upper.startsWith('BEGIN:VCARD')) {
+    if (productCode && RegExp(r'^\d{8}$|^\d{12,14}$').hasMatch(s)) {
+      result = _product(s);
+    } else if (upper.startsWith('BEGIN:VCARD')) {
       result = _vCard(s);
     } else if (upper.startsWith('MECARD:')) {
       result = _meCard(s.substring(7));
@@ -177,7 +200,11 @@ ParsedContent parseContent(String raw) {
       result = _otpAuth(s.substring(10));
     } else if (upper.startsWith('BCD\n') || upper.startsWith('BCD\r')) {
       result = _epc(s);
-    } else if (_isWebUrl(s)) {
+    } else if (upper.startsWith('URL:') && linkUri(s.substring(4)) != null) {
+      result = ParsedContent(ContentKind.url, [
+        ContentField(FieldLabel.link, s.substring(4).trim()),
+      ]);
+    } else if (linkUri(s) != null) {
       result = ParsedContent(ContentKind.url, [
         ContentField(FieldLabel.link, s),
       ]);
@@ -185,6 +212,8 @@ ParsedContent parseContent(String raw) {
       result = ParsedContent(ContentKind.email, [
         ContentField(FieldLabel.to, s),
       ]);
+    } else if (s.startsWith('{') || s.startsWith('[')) {
+      result = _json(s);
     }
   } on Object {
     result = null;
@@ -193,22 +222,88 @@ ParsedContent parseContent(String raw) {
   return result;
 }
 
-/// Link für den Öffnen-Dialog: nur http(s), `www.` wird zu https.
+/// Link für den Öffnen-Dialog: nur http(s). `www.` und Adressen ohne
+/// Schema wie `beispiel.de/pfad` werden zu https.
 Uri? webUri(String link) {
   final s = link.trim();
-  final uri = Uri.tryParse(
-    s.toLowerCase().startsWith('www.') ? 'https://$s' : s,
-  );
+  if (s.contains(RegExp(r'\s'))) return null;
+  final bare = !s.contains('://') && _colloquialUrl.hasMatch(s);
+  final uri = Uri.tryParse(bare ? 'https://$s' : s);
   if (uri == null || uri.host.isEmpty) return null;
   return (uri.scheme == 'http' || uri.scheme == 'https') ? uri : null;
 }
 
-final _email = RegExp(r'^[^\s@:;,]+@[^\s@:;,]+\.[^\s@:;,]+$');
-
-bool _isWebUrl(String s) {
-  if (s.contains(RegExp(r'\s'))) return false;
-  return webUri(s) != null;
+/// Wie [webUri], dazu Links mit anderen Schemata, die eine App öffnen
+/// kann, z. B. `market://`, `itms-apps://` oder `fido:/…`. Schemata, die
+/// lokale Daten oder Code ansprechen, sind ausgeschlossen.
+Uri? linkUri(String link) {
+  final web = webUri(link);
+  if (web != null) return web;
+  final s = link.trim();
+  if (s.contains(RegExp(r'\s'))) return null;
+  final m = RegExp(r'^([a-zA-Z][a-zA-Z0-9+.-]{1,31}):(.*)$').firstMatch(s);
+  if (m == null) return null;
+  final scheme = m[1]!.toLowerCase();
+  if (_blockedSchemes.contains(scheme)) return null;
+  if (!m[2]!.startsWith('//') && !_opaqueSchemes.contains(scheme)) {
+    return null;
+  }
+  return Uri.tryParse(s);
 }
+
+/// Adresse ohne Schema: mindestens drei Zeichen, Punkt, Top-Level-Domain
+/// aus Buchstaben, danach optional Pfad (wie BinaryEye).
+final _colloquialUrl = RegExp(
+  r'^[A-Za-z0-9.-]{3,}\.[A-Za-z]{2,}(?:[/?#:][^\s]*)?$',
+);
+
+/// Diese Schemata öffnen wir nie: lokale Dateien, Skripte, Intents.
+const _blockedSchemes = {
+  'file',
+  'content',
+  'data',
+  'javascript',
+  'vbscript',
+  'intent',
+  'about',
+  'blob',
+  'chrome',
+};
+
+/// Bekannte Schemata ohne `//`; andere `name:wert` sind meist Text.
+const _opaqueSchemes = {'fido', 'magnet', 'bitcoin', 'lightning', 'ethereum'};
+
+/// Tracking-Parameter, die beim Öffnen entfernt werden (wie BinaryEye).
+const _trackingParams = {
+  'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', //
+  'utm_id', 'utm_name', 'utm_referrer', 'utm_brand', 'utm_social',
+  'fbclid', 'gclid', 'dclid', 'gclsrc', 'yclid', 'msclkid',
+  'mc_eid', 'mc_cid', '_ga', '_gl', 'ga_source', 'ga_medium',
+  'igshid', 'igsh', 'hsa_acc', 'hsa_cam', 'hsa_grp', 'hsa_ad', 'hsa_src',
+  'hsa_tgt', 'hsa_kw', 'hsa_mt', 'hsa_net', 'hsa_ver',
+  'spm', 'scm', 'vero_id', 'vero_conv',
+};
+
+/// Entfernt bekannte Tracking-Parameter aus http(s)-Links.
+Uri withoutTracking(Uri uri) {
+  if (uri.scheme != 'http' && uri.scheme != 'https') return uri;
+  if (!uri.hasQuery) return uri;
+  final parts = uri.query.split('&');
+  final kept = parts.where((p) {
+    final name = p.split('=').first.toLowerCase();
+    return !_trackingParams.contains(Uri.decodeQueryComponent(name));
+  }).toList();
+  if (kept.length == parts.length) return uri;
+  final text = uri.toString();
+  final q = text.indexOf('?');
+  final hash = uri.hasFragment ? '#${uri.fragment}' : '';
+  final base = text.substring(0, q);
+  return Uri.parse(
+    kept.isEmpty ? '$base$hash' : '$base?${kept.join('&')}$hash',
+  );
+}
+
+final _email = RegExp(r'^[^\s@:;,]+@[^\s@:;,]+\.[^\s@:;,]+$');
 
 // ---------------------------------------------------------------------------
 // Hilfen
@@ -823,4 +918,54 @@ ParsedContent? _otpAuth(String s) {
         _field(FieldLabel.counter, p['counter']),
     ]),
   );
+}
+
+// ---------------------------------------------------------------------------
+// JSON
+// ---------------------------------------------------------------------------
+
+ParsedContent? _json(String s) {
+  final Object? value;
+  try {
+    value = jsonDecode(s);
+  } on FormatException {
+    return null;
+  }
+  if (value is! Map && value is! List) return null;
+  return ParsedContent(ContentKind.json, [
+    ContentField(
+      FieldLabel.json,
+      const JsonEncoder.withIndent('  ').convert(value),
+    ),
+  ]);
+}
+
+// ---------------------------------------------------------------------------
+// Artikelnummern
+// ---------------------------------------------------------------------------
+
+/// EAN-13, EAN-8, UPC-A, UPC-E, ITF-14. Präfix 978/979 ist ein Buch (ISBN),
+/// 977 eine Zeitschrift (ISSN).
+ParsedContent _product(String digits) {
+  final g13 = gtin13(digits);
+  final upcE = digits.length == 8 ? upcEToUpcA(digits) : null;
+  // EAN-8 und UPC-E sind gleich lang; UPC-E prüft man über die Langform.
+  final valid = gtinValid(digits) || (upcE != null && gtinValid(upcE));
+  final prefix = digits.length == 8 ? null : gs1Prefix(g13 ?? '');
+  final book = prefix?.range == Gs1Range.isbn;
+  return ParsedContent(book ? ContentKind.book : ContentKind.product, [
+    ContentField(book ? FieldLabel.isbn : FieldLabel.gtin, digits),
+    if (book && isbn10(digits) != null)
+      ContentField(FieldLabel.isbn10, isbn10(digits)!),
+    if (prefix?.range == Gs1Range.issn)
+      ContentField(FieldLabel.issn, issn(g13!)!),
+    ContentField(FieldLabel.checkDigit, valid ? 'valid' : 'invalid'),
+    if (prefix != null && !book && prefix.range != Gs1Range.issn)
+      ContentField(
+        FieldLabel.gs1Prefix,
+        prefix.range == Gs1Range.country
+            ? prefix.countryText
+            : prefix.range.name,
+      ),
+  ]);
 }

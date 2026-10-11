@@ -463,4 +463,103 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get close => 'Fechar';
+
+  @override
+  String get actionEmail => 'Escrever e-mail…';
+
+  @override
+  String get actionCall => 'Ligar…';
+
+  @override
+  String get actionSms => 'Escrever SMS…';
+
+  @override
+  String get actionMap => 'Ver no mapa…';
+
+  @override
+  String get actionOtp => 'Abrir no autenticador…';
+
+  @override
+  String get actionLookUp => 'Pesquisar online…';
+
+  @override
+  String get actionAddContact => 'Adicionar aos contatos…';
+
+  @override
+  String get actionAddEvent => 'Adicionar ao calendário…';
+
+  @override
+  String get actionTrack => 'Rastrear envio…';
+
+  @override
+  String get noAppFound => 'Nenhum app encontrado para abrir isto.';
+
+  @override
+  String get share => 'Compartilhar';
+
+  @override
+  String get historySearch => 'Pesquisar no histórico';
+
+  @override
+  String get historyNoMatches => 'Nenhum resultado';
+
+  @override
+  String get historyExport => 'Exportar';
+
+  @override
+  String get exportCsv => 'Compartilhar como CSV';
+
+  @override
+  String get exportJson => 'Compartilhar como JSON';
+
+  @override
+  String get historyEntryDeleted => 'Entrada excluída';
+
+  @override
+  String get undo => 'Desfazer';
+
+  @override
+  String get otpNotSaved => 'Códigos 2FA não são salvos no histórico.';
+
+  @override
+  String get typeJson => 'JSON';
+
+  @override
+  String get typePostage => 'Selo postal (Deutsche Post)';
+
+  @override
+  String get fieldGtin => 'Número do item (GTIN)';
+
+  @override
+  String get fieldCheckDigit => 'Dígito verificador';
+
+  @override
+  String get fieldGs1Prefix => 'Registrado em (GS1)';
+
+  @override
+  String get fieldIsbn => 'ISBN';
+
+  @override
+  String get fieldIsbn10 => 'ISBN-10';
+
+  @override
+  String get fieldIssn => 'ISSN';
+
+  @override
+  String get fieldTrackingNumber => 'Código de rastreio';
+
+  @override
+  String get valueValid => 'válido';
+
+  @override
+  String get valueInvalid => 'inválido';
+
+  @override
+  String get valueInStore => 'Número interno da loja';
+
+  @override
+  String get valueCoupon => 'Cupom';
+
+  @override
+  String get valueGs1Global => 'GS1 Global Office';
 }

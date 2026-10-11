@@ -37,6 +37,10 @@ Future<void> main() async {
       'assets/fonts/SourceCodePro-OFL.txt',
     );
     yield LicenseEntryWithLineBreaks(['Source Code Pro'], text);
+    // Sendungsnummer des Post-Matrixcodes, siehe lib/deutsche_post.dart.
+    yield LicenseEntryWithLineBreaks([
+      'BinaryEye',
+    ], await rootBundle.loadString('assets/licenses/BinaryEye-MIT.txt'));
   });
   final history = await ScanHistory.load();
   final prefs = await SharedPreferences.getInstance();
@@ -171,6 +175,7 @@ class _ScannerPageState extends State<ScannerPage> {
     if (raw == null || raw.isEmpty) return;
 
     _handling = true;
+    HapticFeedback.mediumImpact();
     await widget.history.add(
       raw,
       barcode.type,
@@ -222,10 +227,17 @@ class _ScannerPageState extends State<ScannerPage> {
           icon: const Icon(Icons.info_outline),
           onPressed: () => showAppInfo(context),
         ),
-        IconButton(
-          tooltip: context.l10n.torch,
-          icon: const Icon(Icons.flashlight_on_outlined),
-          onPressed: () => _controller.toggleTorch(),
+        ValueListenableBuilder(
+          valueListenable: _controller,
+          builder: (context, state, _) => IconButton(
+            tooltip: context.l10n.torch,
+            isSelected: state.torchState == TorchState.on,
+            icon: const Icon(Icons.flashlight_off_outlined),
+            selectedIcon: const Icon(Icons.flashlight_on),
+            onPressed: state.torchState == TorchState.unavailable
+                ? null
+                : () => _controller.toggleTorch(),
+          ),
         ),
       ],
     ),

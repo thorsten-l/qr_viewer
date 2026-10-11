@@ -463,4 +463,103 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get close => 'Schließen';
+
+  @override
+  String get actionEmail => 'E-Mail schreiben…';
+
+  @override
+  String get actionCall => 'Anrufen…';
+
+  @override
+  String get actionSms => 'SMS schreiben…';
+
+  @override
+  String get actionMap => 'In Karten zeigen…';
+
+  @override
+  String get actionOtp => 'In Authenticator öffnen…';
+
+  @override
+  String get actionLookUp => 'Online nachschlagen…';
+
+  @override
+  String get actionAddContact => 'Zu Kontakten…';
+
+  @override
+  String get actionAddEvent => 'Zum Kalender…';
+
+  @override
+  String get actionTrack => 'Sendung verfolgen…';
+
+  @override
+  String get noAppFound => 'Keine passende App gefunden.';
+
+  @override
+  String get share => 'Teilen';
+
+  @override
+  String get historySearch => 'Verlauf durchsuchen';
+
+  @override
+  String get historyNoMatches => 'Keine Treffer';
+
+  @override
+  String get historyExport => 'Exportieren';
+
+  @override
+  String get exportCsv => 'Als CSV teilen';
+
+  @override
+  String get exportJson => 'Als JSON teilen';
+
+  @override
+  String get historyEntryDeleted => 'Eintrag gelöscht';
+
+  @override
+  String get undo => 'Rückgängig';
+
+  @override
+  String get otpNotSaved => '2FA-Codes werden nicht im Verlauf gespeichert.';
+
+  @override
+  String get typeJson => 'JSON';
+
+  @override
+  String get typePostage => 'Briefmarke (Deutsche Post)';
+
+  @override
+  String get fieldGtin => 'Artikelnummer (GTIN)';
+
+  @override
+  String get fieldCheckDigit => 'Prüfziffer';
+
+  @override
+  String get fieldGs1Prefix => 'Vergeben in (GS1)';
+
+  @override
+  String get fieldIsbn => 'ISBN';
+
+  @override
+  String get fieldIsbn10 => 'ISBN-10';
+
+  @override
+  String get fieldIssn => 'ISSN';
+
+  @override
+  String get fieldTrackingNumber => 'Sendungsnummer';
+
+  @override
+  String get valueValid => 'gültig';
+
+  @override
+  String get valueInvalid => 'ungültig';
+
+  @override
+  String get valueInStore => 'Interne Nummer (Handel)';
+
+  @override
+  String get valueCoupon => 'Gutschein';
+
+  @override
+  String get valueGs1Global => 'GS1 Global Office';
 }

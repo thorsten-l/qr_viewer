@@ -464,4 +464,103 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get close => 'Cerrar';
+
+  @override
+  String get actionEmail => 'Escribir correo…';
+
+  @override
+  String get actionCall => 'Llamar…';
+
+  @override
+  String get actionSms => 'Escribir SMS…';
+
+  @override
+  String get actionMap => 'Ver en el mapa…';
+
+  @override
+  String get actionOtp => 'Abrir en el autenticador…';
+
+  @override
+  String get actionLookUp => 'Buscar en línea…';
+
+  @override
+  String get actionAddContact => 'Añadir a contactos…';
+
+  @override
+  String get actionAddEvent => 'Añadir al calendario…';
+
+  @override
+  String get actionTrack => 'Seguir envío…';
+
+  @override
+  String get noAppFound => 'No se encontró ninguna app para abrirlo.';
+
+  @override
+  String get share => 'Compartir';
+
+  @override
+  String get historySearch => 'Buscar en el historial';
+
+  @override
+  String get historyNoMatches => 'Sin resultados';
+
+  @override
+  String get historyExport => 'Exportar';
+
+  @override
+  String get exportCsv => 'Compartir como CSV';
+
+  @override
+  String get exportJson => 'Compartir como JSON';
+
+  @override
+  String get historyEntryDeleted => 'Entrada eliminada';
+
+  @override
+  String get undo => 'Deshacer';
+
+  @override
+  String get otpNotSaved => 'Los códigos 2FA no se guardan en el historial.';
+
+  @override
+  String get typeJson => 'JSON';
+
+  @override
+  String get typePostage => 'Franqueo (Deutsche Post)';
+
+  @override
+  String get fieldGtin => 'Número de artículo (GTIN)';
+
+  @override
+  String get fieldCheckDigit => 'Dígito de control';
+
+  @override
+  String get fieldGs1Prefix => 'Registrado en (GS1)';
+
+  @override
+  String get fieldIsbn => 'ISBN';
+
+  @override
+  String get fieldIsbn10 => 'ISBN-10';
+
+  @override
+  String get fieldIssn => 'ISSN';
+
+  @override
+  String get fieldTrackingNumber => 'Número de seguimiento';
+
+  @override
+  String get valueValid => 'válido';
+
+  @override
+  String get valueInvalid => 'no válido';
+
+  @override
+  String get valueInStore => 'Número interno de tienda';
+
+  @override
+  String get valueCoupon => 'Cupón';
+
+  @override
+  String get valueGs1Global => 'GS1 Global Office';
 }

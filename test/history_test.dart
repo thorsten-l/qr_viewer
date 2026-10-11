@@ -64,6 +64,52 @@ void main() {
       expect(h.entries, isEmpty);
     });
 
+    test('2FA-Schlüssel werden nicht gespeichert', () async {
+      final h = await ScanHistory.load();
+      await h.add(
+        'otpauth://totp/ACME:jo?secret=JBSWY3DPEHPK3PXP',
+        BarcodeType.text,
+      );
+      await h.add('otpauth://totp/kaputt', BarcodeType.text);
+      expect(h.entries.map((e) => e.raw), ['otpauth://totp/kaputt']);
+    });
+
+    test('einzeln löschen und wiederherstellen', () async {
+      final h = await ScanHistory.load();
+      for (final t in ['a', 'b', 'c']) {
+        await h.add(t, BarcodeType.text);
+      }
+      final b = h.entries[1];
+      expect(await h.remove(b), 1);
+      expect(h.entries.map((e) => e.raw), ['c', 'a']);
+      expect((await ScanHistory.load()).entries.length, 2);
+      await h.restore(1, b);
+      expect(h.entries.map((e) => e.raw), ['c', 'b', 'a']);
+      expect(await h.remove(b), 1);
+      expect(await h.remove(b), -1);
+    });
+
+    test('CSV nach RFC 4180 und JSON', () async {
+      final h = await ScanHistory.load();
+      final t = DateTime.utc(2026, 10, 11, 9);
+      await h.add('Zeile 1\n"zwei", drei', BarcodeType.text, time: t);
+      await h.add(
+        '9E8180',
+        BarcodeType.text,
+        format: BarcodeFormat.aztec,
+        binary: true,
+        time: t,
+      );
+      expect(
+        historyCsv(h.entries),
+        'time,format,type,binary,content\r\n'
+        '2026-10-11T09:00:00.000Z,aztec,text,true,9E 81 80\r\n'
+        '2026-10-11T09:00:00.000Z,qrCode,text,false,'
+        '"Zeile 1\n""zwei"", drei"\r\n',
+      );
+      expect(historyJson(h.entries), contains('"binary": true'));
+    });
+
     test('löschen leert Verlauf und Speicher', () async {
       final h = await ScanHistory.load();
       await h.add('x', BarcodeType.text);
@@ -124,6 +170,50 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(ResultPage), findsOneWidget);
       expect(find.text('Host: example.org'), findsOneWidget);
+    });
+
+    testWidgets('Wischen löscht einen Eintrag, Rückgängig holt ihn zurück', (
+      tester,
+    ) async {
+      final h = await pumpPage(tester);
+      await tester.drag(find.text('Hallo Welt'), const Offset(-600, 0));
+      await tester.pumpAndSettle();
+      expect(h.entries.map((e) => e.raw), ['https://example.org']);
+      expect(find.text('Eintrag gelöscht'), findsOneWidget);
+      await tester.tap(find.text('Rückgängig'));
+      await tester.pumpAndSettle();
+      expect(h.entries.map((e) => e.raw), [
+        'https://example.org',
+        'Hallo Welt',
+      ]);
+      expect(find.text('Hallo Welt'), findsOneWidget);
+    });
+
+    testWidgets('Suche filtert nach Inhalt und Typ', (tester) async {
+      await pumpPage(tester);
+      await tester.tap(find.byTooltip('Verlauf durchsuchen'));
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byType(TextField), 'hallo');
+      await tester.pump();
+      expect(find.byType(ListTile), findsOneWidget);
+      expect(find.text('Hallo Welt'), findsWidgets);
+      await tester.enterText(find.byType(TextField), 'URL');
+      await tester.pump();
+      expect(find.text('https://example.org'), findsOneWidget);
+      await tester.enterText(find.byType(TextField), 'xyz');
+      await tester.pump();
+      expect(find.text('Keine Treffer'), findsOneWidget);
+      await tester.tap(find.byTooltip('Verlauf durchsuchen'));
+      await tester.pumpAndSettle();
+      expect(find.byType(ListTile), findsNWidgets(2));
+    });
+
+    testWidgets('Export bietet CSV und JSON an', (tester) async {
+      await pumpPage(tester);
+      await tester.tap(find.byTooltip('Exportieren'));
+      await tester.pumpAndSettle();
+      expect(find.text('Als CSV teilen'), findsOneWidget);
+      expect(find.text('Als JSON teilen'), findsOneWidget);
     });
 
     testWidgets('Verlauf löschen fragt nach und leert die Liste', (

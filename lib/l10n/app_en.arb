@@ -604,5 +604,137 @@
   "close": "Close",
   "@close": {
     "description": "Knopf Schließen"
+  },
+  "actionEmail": "Write email…",
+  "@actionEmail": {
+    "description": "Knopf E-Mail schreiben (mit Rückfrage)"
+  },
+  "actionCall": "Call…",
+  "@actionCall": {
+    "description": "Knopf Anrufen (öffnet nur den Wähler)"
+  },
+  "actionSms": "Write SMS…",
+  "@actionSms": {
+    "description": "Knopf SMS schreiben"
+  },
+  "actionMap": "Show on map…",
+  "@actionMap": {
+    "description": "Knopf Ort in Karten zeigen"
+  },
+  "actionOtp": "Open in authenticator…",
+  "@actionOtp": {
+    "description": "Knopf Einmalpasswort an Authenticator-App geben"
+  },
+  "actionLookUp": "Look up online…",
+  "@actionLookUp": {
+    "description": "Knopf Produkt oder Buch online nachschlagen"
+  },
+  "actionAddContact": "Add to contacts…",
+  "@actionAddContact": {
+    "description": "Knopf Kontakt übernehmen (Teilen-Menü)"
+  },
+  "actionAddEvent": "Add to calendar…",
+  "@actionAddEvent": {
+    "description": "Knopf Termin übernehmen (Teilen-Menü)"
+  },
+  "actionTrack": "Track shipment…",
+  "@actionTrack": {
+    "description": "Knopf Sendung verfolgen"
+  },
+  "noAppFound": "No app found to open this.",
+  "@noAppFound": {
+    "description": "Meldung: keine App für die Aktion"
+  },
+  "share": "Share",
+  "@share": {
+    "description": "Tooltip Teilen"
+  },
+  "historySearch": "Search history",
+  "@historySearch": {
+    "description": "Tooltip und Hinweis der Verlaufssuche"
+  },
+  "historyNoMatches": "No matches",
+  "@historyNoMatches": {
+    "description": "Verlaufssuche ohne Treffer"
+  },
+  "historyExport": "Export",
+  "@historyExport": {
+    "description": "Tooltip Verlauf exportieren"
+  },
+  "exportCsv": "Share as CSV",
+  "@exportCsv": {
+    "description": "Menü Verlauf als CSV teilen"
+  },
+  "exportJson": "Share as JSON",
+  "@exportJson": {
+    "description": "Menü Verlauf als JSON teilen"
+  },
+  "historyEntryDeleted": "Entry deleted",
+  "@historyEntryDeleted": {
+    "description": "Meldung nach Löschen eines Eintrags"
+  },
+  "undo": "Undo",
+  "@undo": {
+    "description": "Knopf Rückgängig"
+  },
+  "otpNotSaved": "2FA codes are not saved in the history.",
+  "@otpNotSaved": {
+    "description": "Hinweis: 2FA-Codes nicht im Verlauf"
+  },
+  "typeJson": "JSON",
+  "@typeJson": {
+    "description": "Inhaltsart JSON"
+  },
+  "typePostage": "Postage stamp (Deutsche Post)",
+  "@typePostage": {
+    "description": "Inhaltsart Briefmarke der Deutschen Post"
+  },
+  "fieldGtin": "Item number (GTIN)",
+  "@fieldGtin": {
+    "description": "Feld Artikelnummer"
+  },
+  "fieldCheckDigit": "Check digit",
+  "@fieldCheckDigit": {
+    "description": "Feld Prüfziffer"
+  },
+  "fieldGs1Prefix": "Registered in (GS1)",
+  "@fieldGs1Prefix": {
+    "description": "Feld Land der Nummernvergabe (GS1)"
+  },
+  "fieldIsbn": "ISBN",
+  "@fieldIsbn": {
+    "description": "Feld ISBN"
+  },
+  "fieldIsbn10": "ISBN-10",
+  "@fieldIsbn10": {
+    "description": "Feld ISBN-10"
+  },
+  "fieldIssn": "ISSN",
+  "@fieldIssn": {
+    "description": "Feld ISSN"
+  },
+  "fieldTrackingNumber": "Tracking number",
+  "@fieldTrackingNumber": {
+    "description": "Feld Sendungsnummer"
+  },
+  "valueValid": "valid",
+  "@valueValid": {
+    "description": "Wert gültig"
+  },
+  "valueInvalid": "invalid",
+  "@valueInvalid": {
+    "description": "Wert ungültig"
+  },
+  "valueInStore": "In-store number",
+  "@valueInStore": {
+    "description": "Wert interne Nummer des Handels"
+  },
+  "valueCoupon": "Coupon",
+  "@valueCoupon": {
+    "description": "Wert Gutschein"
+  },
+  "valueGs1Global": "GS1 Global Office",
+  "@valueGs1Global": {
+    "description": "Wert GS1 Global Office"
   }
 }

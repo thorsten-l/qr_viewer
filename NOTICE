@@ -1,0 +1,17 @@
+QR Viewer
+Copyright 2026 Thorsten Ludewig (t.ludewig@gmail.com)
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This product includes third-party material:
+
+* Source Code Pro font – SIL Open Font License 1.1
+  (assets/fonts/SourceCodePro-OFL.txt)
+
+* Public VDV CA keys in assets/vdv_certs/ – CC0-1.0
+  (source: KDE KItinerary, originally VDV PKI; see tool/vdv/README.md)
+
+* lib/deutsche_post.dart – the computation of the Deutsche Post tracking
+  number from the matrix code follows DeutschePostParser.kt of BinaryEye,
+  Copyright (c) Markus Fisch, MIT License
+  (https://github.com/markusfisch/BinaryEye, assets/licenses/BinaryEye-MIT.txt)
