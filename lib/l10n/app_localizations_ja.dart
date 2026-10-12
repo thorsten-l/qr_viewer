@@ -561,4 +561,81 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get valueGs1Global => 'GS1 Global Office';
+
+  @override
+  String get dataInfo => 'このデータについて';
+
+  @override
+  String get infoLocal =>
+      'QR Viewer はこの情報をコードから直接読み取りました。処理はすべてこの端末内で行われ、インターネットには何も送信されません。';
+
+  @override
+  String infoOnline(String action, String host) {
+    return '「$action」をタップすると、ブラウザでウェブサイト $host が開きます。そのサイトには、何を調べているかと、どのサイトでも同じようにあなたのインターネット上のアドレスが伝わります。表示される内容はアプリの外部から来るもので、QR Viewer はその正しさを確認できません。';
+  }
+
+  @override
+  String infoOtherApp(String action) {
+    return '「$action」をタップすると、データは端末上の別のアプリ（メール、電話、マップ、カレンダーなど）に渡されます。その後の扱いはそのアプリ次第です。';
+  }
+
+  @override
+  String get infoKindText => 'ただのテキストです。コードにはこの文字だけが含まれ、それ以外はありません。';
+
+  @override
+  String get infoKindUrl =>
+      'ウェブアドレス（リンク）です。インターネット上のページを開いたり、別のアプリを起動したりします。リンクの行き先は何でもあり得るので、コードの出どころが信頼できる場合にだけ開いてください。';
+
+  @override
+  String get infoKindEmail =>
+      'メールアドレスです。件名や本文があらかじめ入っていることもあります。メールアプリで自分で送信するまで、何も送られません。';
+
+  @override
+  String get infoKindPhone =>
+      '電話番号です。QR Viewer が勝手に発信することはなく、番号が入力された状態で電話アプリが開くだけです。';
+
+  @override
+  String get infoKindSms =>
+      'SMS の本文があらかじめ入った電話番号です。自分で送信しない限り送られません。SMS には料金がかかる場合があります。';
+
+  @override
+  String get infoKindGeo => '緯度と経度の座標で表された地球上の場所です。地図アプリでその位置を確認できます。';
+
+  @override
+  String get infoKindContact => '名前、電話番号、住所など、人の情報が入ったデジタル名刺です。連絡先に保存できます。';
+
+  @override
+  String get infoKindEvent => '日付・時刻、多くの場合は場所も含む予定です。カレンダーに追加できます。';
+
+  @override
+  String get infoKindWifi =>
+      'Wi-Fi ネットワークの接続情報（ネットワーク名と、通常はパスワード）です。このコードを見た人は誰でもそのネットワークを使えます。';
+
+  @override
+  String get infoKindPayment =>
+      'あらかじめ用意された銀行振込（GiroCode）です。受取人、IBAN、金額、振込目的が含まれます。銀行アプリで利用できますが、支払う前にすべての内容を確認してください。';
+
+  @override
+  String get infoKindOtp =>
+      '2 段階認証（2FA）用の秘密鍵です。認証アプリはこれを使って短いログインコードを作ります。他人に知られないようにしてください。QR Viewer は履歴に保存しません。';
+
+  @override
+  String get infoKindProduct =>
+      '商品のバーコードにある商品番号（GTIN/EAN）です。商品を識別するだけで、名前・価格・原材料はコードに含まれません。最初の数字は番号を割り当てた国を示し、製造国とは限りません。';
+
+  @override
+  String get infoKindBook =>
+      '書籍（ISBN）または雑誌（ISSN）の番号です。この版を正確に識別しますが、タイトルや著者はコードに含まれません。';
+
+  @override
+  String get infoKindJson =>
+      'コンピュータープログラム同士がやり取りする JSON 形式の構造化データです。QR Viewer は見やすく字下げして表示するだけです。';
+
+  @override
+  String get infoKindPostage =>
+      'ドイツポスト（Deutsche Post）の切手や Internetmarke に印刷されたコードで、郵便物の追跡番号が入っています。';
+
+  @override
+  String get infoKindVdv =>
+      'バスや電車の電子乗車券（VDV eTicket、例：Deutschlandticket）です。デジタル署名で改ざんから守られており、QR Viewer は交通事業者の公開鍵で署名を確認します。';
 }

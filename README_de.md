@@ -22,7 +22,8 @@ Rückfrage.
   Einmalpasswort (`otpauth://`), JSON, Artikelnummer (EAN/UPC/ITF-14 mit
   Prüfziffer und GS1-Land, ISBN, ISSN) und Matrixcode der Deutschen Post
   (Sendungsnummer) erscheinen als Karte mit beschrifteten, einzeln
-  kopierbaren Feldern; der Rohinhalt steht darunter. Alles andere ist Text.
+  kopierbaren Feldern; der Rohinhalt steht darunter. Ein Info-Knopf erklärt
+  die Daten in einfachen Worten. Alles andere ist Text.
 - **Aktionen** je Inhalt, immer mit Rückfrage: E-Mail schreiben, Anrufen,
   SMS, Karte, Authenticator, online nachschlagen, Sendung verfolgen. Kontakte
   und Termine gehen als `.vcf`/`.ics` über das Teilen-Menü an Kontakte bzw.
@@ -90,8 +91,8 @@ Installationszeitpunkt.
 
 ## Version
 
-Aktuell: **2.1.0** (Build 11). Version und Build-Nummer stehen in
-`pubspec.yaml`, z. B. `version: 2.1.0+11`. Für jeden Upload zu TestFlight oder
+Aktuell: **2.1.1** (Build 12). Version und Build-Nummer stehen in
+`pubspec.yaml`, z. B. `version: 2.1.1+12`. Für jeden Upload zu TestFlight oder
 Google Play muss die Build-Nummer hinter dem `+` steigen. Jede neue Version
 bekommt einen Eintrag in [CHANGELOG.md](CHANGELOG.md) (englisch) und
 [CHANGELOG_de.md](CHANGELOG_de.md) (deutsch).
@@ -107,7 +108,7 @@ Ablauf für eine neue Version:
 3. Prüfen: `flutter analyze`, `flutter test`,
    `python3 tool/license/add_headers.py --check`.
 4. iOS und Android wie unten bauen und hochladen.
-5. Committen und taggen, z. B. `git tag v2.1.0`.
+5. Committen und taggen, z. B. `git tag v2.1.1`.
 
 ### iOS / TestFlight
 

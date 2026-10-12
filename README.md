@@ -21,7 +21,8 @@ content first. Links and other actions start only after a confirmation.
   one-time password (`otpauth://`), JSON, product number (EAN/UPC/ITF-14 with
   check digit and GS1 country, ISBN, ISSN) and Deutsche Post matrix code
   (tracking number) are shown as a card with labeled fields that can be
-  copied individually; the raw content is shown below. Everything else is
+  copied individually; the raw content is shown below. An info button explains
+  the data in plain words. Everything else is
   text.
 - **Actions** per content type, always with a confirmation: write email,
   call, SMS, map, authenticator, look up online, track shipment. Contacts and
@@ -89,8 +90,8 @@ the build date.
 
 ## Version
 
-Current: **2.1.0** (build 11). Version and build number are set in
-`pubspec.yaml`, e.g. `version: 2.1.0+11`. Every upload to TestFlight or
+Current: **2.1.1** (build 12). Version and build number are set in
+`pubspec.yaml`, e.g. `version: 2.1.1+12`. Every upload to TestFlight or
 Google Play needs a higher build number after the `+`. Every new version gets
 an entry in [CHANGELOG.md](CHANGELOG.md) (English) and
 [CHANGELOG_de.md](CHANGELOG_de.md) (German).
@@ -106,7 +107,7 @@ Steps for a new version:
 3. Check: `flutter analyze`, `flutter test`,
    `python3 tool/license/add_headers.py --check`.
 4. Build and upload for iOS and Android as described below.
-5. Commit and tag, e.g. `git tag v2.1.0`.
+5. Commit and tag, e.g. `git tag v2.1.1`.
 
 ### iOS / TestFlight
 

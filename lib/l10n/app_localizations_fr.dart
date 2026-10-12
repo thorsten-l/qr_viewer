@@ -564,4 +564,85 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get valueGs1Global => 'GS1 Global Office';
+
+  @override
+  String get dataInfo => 'À propos de ces données';
+
+  @override
+  String get infoLocal =>
+      'QR Viewer a lu ces informations directement dans le code. Cela se passe uniquement sur votre appareil – rien n\'est envoyé sur Internet.';
+
+  @override
+  String infoOnline(String action, String host) {
+    return 'Si vous touchez « $action », votre navigateur ouvre le site $host. Ce site voit alors ce que vous recherchez et, comme tout site web, votre adresse internet. Ce qu\'il affiche vient de l\'extérieur de l\'app – QR Viewer ne peut pas vérifier que c\'est exact.';
+  }
+
+  @override
+  String infoOtherApp(String action) {
+    return 'Si vous touchez « $action », les données sont transmises à une autre app de votre appareil, par exemple Mail, Téléphone, Plans ou Calendrier. C\'est ensuite cette app qui décide de ce qu\'il en advient.';
+  }
+
+  @override
+  String get infoKindText =>
+      'Texte simple. Le code contient uniquement ces mots ou caractères, rien de plus.';
+
+  @override
+  String get infoKindUrl =>
+      'Une adresse web (lien). Elle mène à une page sur Internet ou ouvre une autre app. Un lien peut mener n\'importe où – ne l\'ouvrez que si vous faites confiance à l\'origine du code.';
+
+  @override
+  String get infoKindEmail =>
+      'Une adresse e-mail, souvent avec un objet et un message préparés. Rien n\'est envoyé tant que vous n\'envoyez pas vous-même l\'e-mail depuis votre app de messagerie.';
+
+  @override
+  String get infoKindPhone =>
+      'Un numéro de téléphone. QR Viewer n\'appelle jamais de lui-même – l\'app Téléphone s\'ouvre simplement avec le numéro saisi.';
+
+  @override
+  String get infoKindSms =>
+      'Un numéro de téléphone avec un SMS préparé. Le message n\'est envoyé que si vous l\'envoyez vous-même – les SMS peuvent être payants.';
+
+  @override
+  String get infoKindGeo =>
+      'Un lieu sur Terre, donné par des coordonnées (latitude et longitude). Une app de cartes peut vous montrer où il se trouve.';
+
+  @override
+  String get infoKindContact =>
+      'Une carte de visite numérique avec les coordonnées d\'une personne, comme le nom, le téléphone et l\'adresse. Vous pouvez l\'enregistrer dans vos contacts.';
+
+  @override
+  String get infoKindEvent =>
+      'Un rendez-vous avec date, heure et souvent un lieu. Vous pouvez l\'ajouter à votre calendrier.';
+
+  @override
+  String get infoKindWifi =>
+      'Les identifiants d\'un réseau Wi-Fi : son nom et généralement le mot de passe. Toute personne qui voit ce code peut utiliser le réseau.';
+
+  @override
+  String get infoKindPayment =>
+      'Un virement bancaire préparé (GiroCode) : bénéficiaire, IBAN, montant et motif. Une app bancaire peut les reprendre – vérifiez chaque information avant de payer.';
+
+  @override
+  String get infoKindOtp =>
+      'Une clé secrète pour la connexion en deux étapes (2FA). Une app d\'authentification s\'en sert pour créer les codes de connexion. Gardez-la secrète – QR Viewer ne l\'enregistre pas dans l\'historique.';
+
+  @override
+  String get infoKindProduct =>
+      'Le numéro d\'article du code-barres d\'un produit (GTIN/EAN). Il identifie seulement le produit – le code ne contient ni nom, ni prix, ni ingrédients. Les premiers chiffres indiquent le pays qui a attribué le numéro, pas forcément le lieu de fabrication.';
+
+  @override
+  String get infoKindBook =>
+      'Le numéro d\'un livre (ISBN) ou d\'un magazine (ISSN). Il identifie exactement cette édition – le titre et l\'auteur ne figurent pas dans le code.';
+
+  @override
+  String get infoKindJson =>
+      'Des données structurées au format JSON, comme en échangent les programmes informatiques. QR Viewer se contente de les afficher joliment indentées.';
+
+  @override
+  String get infoKindPostage =>
+      'Le code d\'un timbre ou d\'une Internetmarke de la Deutsche Post. Il contient un numéro de suivi pour la lettre.';
+
+  @override
+  String get infoKindVdv =>
+      'Un titre de transport électronique pour bus et trains (VDV eTicket, p. ex. Deutschlandticket). Une signature numérique le protège contre les modifications ; QR Viewer la vérifie avec les clés publiques des entreprises de transport.';
 }

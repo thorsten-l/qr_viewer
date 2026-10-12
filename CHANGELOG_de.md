@@ -6,6 +6,18 @@ Alle wichtigen Änderungen an QR Viewer. Die Versionen folgen
 [Semantic Versioning](https://semver.org/lang/de/), die Build-Nummer steht
 hinter dem `+`.
 
+## [2.1.1+12] – 2026-10-12
+
+### Neu
+
+- **Info-Knopf** oben rechts in jeder Datenkarte (auch bei VDV-Tickets). Der
+  Dialog erklärt in einfachen Worten, was für Daten der Code enthält, dass sie
+  nur auf dem Gerät gelesen wurden und was beim Tippen auf die Aktion
+  passiert: Eine Website wie DuckDuckGo, Open Library oder die Deutsche Post
+  sieht dann die Anfrage und die Internetadresse, und ihre Angaben kommen von
+  außerhalb der App; andere Aktionen geben die Daten an eine andere App.
+- 20 neue Texte in allen 13 Sprachen.
+
 ## [2.1.0+11] – 2026-10-11
 
 Ideen aus [BinaryEye](https://github.com/markusfisch/BinaryEye) übernommen.

@@ -736,5 +736,98 @@
   "valueGs1Global": "GS1 Global Office",
   "@valueGs1Global": {
     "description": "Wert GS1 Global Office"
+  },
+  "dataInfo": "About this data",
+  "@dataInfo": {
+    "description": "Tooltip Info-Knopf der Datenkarte"
+  },
+  "infoLocal": "QR Viewer read these details directly from the code. This happens only on your device – nothing is sent to the internet.",
+  "@infoLocal": {
+    "description": "Info-Dialog: Daten wurden nur lokal gelesen"
+  },
+  "infoOnline": "If you tap “{action}”, your browser opens the website {host}. That website then sees what you are looking for and, like any website, your internet address. What it shows comes from outside the app – QR Viewer cannot check whether it is correct.",
+  "@infoOnline": {
+    "description": "Info-Dialog: Aktion öffnet eine Website; action = Knopftext, host = Website",
+    "placeholders": {
+      "action": {
+        "type": "String"
+      },
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "infoOtherApp": "If you tap “{action}”, the data is handed to another app on your device, for example mail, phone, maps or calendar. From then on, that app decides what happens with it.",
+  "@infoOtherApp": {
+    "description": "Info-Dialog: Aktion gibt Daten an eine andere App; action = Knopftext",
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "infoKindText": "Plain text. The code contains just these words or characters – nothing more.",
+  "@infoKindText": {
+    "description": "Info-Dialog: Erklärung Text"
+  },
+  "infoKindUrl": "A web address (link). It leads to a page on the internet or opens another app. A link can lead anywhere – only open it if you trust where the code comes from.",
+  "@infoKindUrl": {
+    "description": "Info-Dialog: Erklärung Link"
+  },
+  "infoKindEmail": "An email address, often with a prepared subject and message. Nothing is sent until you send the email yourself in your mail app.",
+  "@infoKindEmail": {
+    "description": "Info-Dialog: Erklärung E-Mail"
+  },
+  "infoKindPhone": "A phone number. QR Viewer never calls by itself – the phone app only opens with the number filled in.",
+  "@infoKindPhone": {
+    "description": "Info-Dialog: Erklärung Telefon"
+  },
+  "infoKindSms": "A phone number with a prepared text message. The message is only sent if you send it yourself – text messages may cost money.",
+  "@infoKindSms": {
+    "description": "Info-Dialog: Erklärung SMS"
+  },
+  "infoKindGeo": "A place on Earth, given as coordinates (latitude and longitude). A map app can show you where it is.",
+  "@infoKindGeo": {
+    "description": "Info-Dialog: Erklärung Ort"
+  },
+  "infoKindContact": "A digital business card with a person's details, such as name, phone number and address. You can save it to your contacts.",
+  "@infoKindContact": {
+    "description": "Info-Dialog: Erklärung Kontakt"
+  },
+  "infoKindEvent": "An appointment with date, time and often a place. You can add it to your calendar.",
+  "@infoKindEvent": {
+    "description": "Info-Dialog: Erklärung Termin"
+  },
+  "infoKindWifi": "The access details for a Wi-Fi network: its name and usually the password. Anyone who can see this code can use the network.",
+  "@infoKindWifi": {
+    "description": "Info-Dialog: Erklärung WLAN"
+  },
+  "infoKindPayment": "A prepared bank transfer (GiroCode): recipient, IBAN, amount and reference. A banking app can take these over – check every detail before you pay.",
+  "@infoKindPayment": {
+    "description": "Info-Dialog: Erklärung Überweisung"
+  },
+  "infoKindOtp": "A secret key for two-step login (2FA). An authenticator app uses it to create the short login codes. Keep it secret – QR Viewer does not save it in the history.",
+  "@infoKindOtp": {
+    "description": "Info-Dialog: Erklärung Einmalpasswort"
+  },
+  "infoKindProduct": "The article number from a product's barcode (GTIN/EAN). It only identifies the product – the code itself contains no name, price or ingredients. The first digits show which country assigned the number, not necessarily where the product was made.",
+  "@infoKindProduct": {
+    "description": "Info-Dialog: Erklärung Artikelnummer"
+  },
+  "infoKindBook": "The number of a book (ISBN) or magazine (ISSN). It identifies exactly this edition – title and author are not in the code.",
+  "@infoKindBook": {
+    "description": "Info-Dialog: Erklärung ISBN/ISSN"
+  },
+  "infoKindJson": "Structured data in JSON format, as exchanged between computer programs. QR Viewer only shows it neatly indented.",
+  "@infoKindJson": {
+    "description": "Info-Dialog: Erklärung JSON"
+  },
+  "infoKindPostage": "The code on a Deutsche Post stamp or Internetmarke. It contains a tracking number for the letter.",
+  "@infoKindPostage": {
+    "description": "Info-Dialog: Erklärung Briefmarke"
+  },
+  "infoKindVdv": "An electronic ticket for buses and trains (VDV eTicket, e.g. Deutschlandticket). A digital signature protects it against changes; QR Viewer checks it with the publicly known keys of the transport companies.",
+  "@infoKindVdv": {
+    "description": "Info-Dialog: Erklärung VDV-eTicket"
   }
 }

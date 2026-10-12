@@ -148,6 +148,90 @@ IconData actionIcon(ContentAction a) => switch (a) {
   ContentAction.track => Icons.local_shipping_outlined,
 };
 
+/// Erklärt in einfachen Worten, was für Daten [kind] sind.
+String kindInfo(ContentKind kind, AppLocalizations l) => switch (kind) {
+  ContentKind.text => l.infoKindText,
+  ContentKind.url => l.infoKindUrl,
+  ContentKind.email => l.infoKindEmail,
+  ContentKind.phone => l.infoKindPhone,
+  ContentKind.sms => l.infoKindSms,
+  ContentKind.geo => l.infoKindGeo,
+  ContentKind.contact => l.infoKindContact,
+  ContentKind.event => l.infoKindEvent,
+  ContentKind.wifi => l.infoKindWifi,
+  ContentKind.payment => l.infoKindPayment,
+  ContentKind.otp => l.infoKindOtp,
+  ContentKind.product => l.infoKindProduct,
+  ContentKind.book => l.infoKindBook,
+  ContentKind.json => l.infoKindJson,
+  ContentKind.postage => l.infoKindPostage,
+};
+
+/// Was beim Tippen auf die Aktion nach außen geht: Websites (Nachschlagen,
+/// Sendungsverfolgung, Links) bekommen die Anfrage, sonst übernimmt eine
+/// andere App die Daten. Null ohne Aktion.
+String? actionInfo(ActionTarget? target, AppLocalizations l) {
+  if (target == null) return null;
+  final label = actionLabel(target.action, l).replaceAll('…', '').trim();
+  final uri = target.uri;
+  final web =
+      uri != null &&
+      (uri.scheme == 'http' || uri.scheme == 'https') &&
+      target.action != ContentAction.map;
+  return web ? l.infoOnline(label, uri.host) : l.infoOtherApp(label);
+}
+
+/// Info-Knopf oben rechts in einer Datenkarte; öffnet [kindInfo], den
+/// Hinweis zur lokalen Auswertung und ggf. [actionInfo].
+class DataInfoButton extends StatelessWidget {
+  const DataInfoButton({
+    super.key,
+    required this.title,
+    required this.about,
+    this.action,
+  });
+
+  final String title;
+  final String about;
+  final String? action;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    return IconButton(
+      tooltip: l.dataInfo,
+      icon: const Icon(Icons.info_outline),
+      onPressed: () => showDialog<void>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(about),
+                const SizedBox(height: 12),
+                Text(l.infoLocal),
+                if (action != null) ...[
+                  const SizedBox(height: 12),
+                  Text(action!),
+                ],
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(l.close),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /// Bezeichnung und Symbol eines Inhalts: das erkannte Format, sonst der
 /// Typ, den die Plattform meldet (z. B. Produktcode bei EAN-13).
 (String, IconData) contentKind(
@@ -388,7 +472,7 @@ class ResultPage extends StatelessWidget {
       body = Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ContentCard(content: parsed),
+          ContentCard(content: parsed, action: action),
           const Divider(height: 32),
           Text(
             bytes == null ? l.rawContent : l.rawData,
@@ -507,9 +591,12 @@ Rect? shareOrigin(BuildContext context) {
 
 /// Erkannte Felder eines Inhalts, jedes einzeln kopierbar.
 class ContentCard extends StatelessWidget {
-  const ContentCard({super.key, required this.content});
+  const ContentCard({super.key, required this.content, this.action});
 
   final ParsedContent content;
+
+  /// Hauptaktion der Ergebnisseite; der Info-Dialog erklärt, was sie tut.
+  final ActionTarget? action;
 
   @override
   Widget build(BuildContext context) {
@@ -526,9 +613,16 @@ class ContentCard extends StatelessWidget {
           children: [
             Icon(kindIcon(content.kind), color: theme.colorScheme.primary),
             const SizedBox(width: 8),
-            Text(
-              kindLabel(content.kind, l),
-              style: theme.textTheme.titleMedium,
+            Expanded(
+              child: Text(
+                kindLabel(content.kind, l),
+                style: theme.textTheme.titleMedium,
+              ),
+            ),
+            DataInfoButton(
+              title: kindLabel(content.kind, l),
+              about: kindInfo(content.kind, l),
+              action: actionInfo(action, l),
             ),
           ],
         ),
@@ -608,11 +702,7 @@ class _HexDump extends StatelessWidget {
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constraints) {
-      final (perLine, size) = [
-        (16, 16.0),
-        (8, 16.0),
-        (8, 14.0),
-      ].firstWhere(
+      final (perLine, size) = [(16, 16.0), (8, 16.0), (8, 14.0)].firstWhere(
         (c) => _lineWidth(context, c.$1, c.$2) <= constraints.maxWidth,
         orElse: () => (8, 12.0),
       );
@@ -714,7 +804,14 @@ class _VdvTicketCardState extends State<_VdvTicketCard> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l.ticketData, style: theme.textTheme.titleMedium),
+          Row(
+            children: [
+              Expanded(
+                child: Text(l.ticketData, style: theme.textTheme.titleMedium),
+              ),
+              DataInfoButton(title: l.vdvTicket, about: l.infoKindVdv),
+            ],
+          ),
           const SizedBox(height: 8),
           Table(
             columnWidths: const {0: IntrinsicColumnWidth()},

@@ -1189,6 +1189,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'GS1 Global Office'**
   String get valueGs1Global;
+
+  /// Tooltip Info-Knopf der Datenkarte
+  ///
+  /// In en, this message translates to:
+  /// **'About this data'**
+  String get dataInfo;
+
+  /// Info-Dialog: Daten wurden nur lokal gelesen
+  ///
+  /// In en, this message translates to:
+  /// **'QR Viewer read these details directly from the code. This happens only on your device – nothing is sent to the internet.'**
+  String get infoLocal;
+
+  /// Info-Dialog: Aktion öffnet eine Website; action = Knopftext, host = Website
+  ///
+  /// In en, this message translates to:
+  /// **'If you tap “{action}”, your browser opens the website {host}. That website then sees what you are looking for and, like any website, your internet address. What it shows comes from outside the app – QR Viewer cannot check whether it is correct.'**
+  String infoOnline(String action, String host);
+
+  /// Info-Dialog: Aktion gibt Daten an eine andere App; action = Knopftext
+  ///
+  /// In en, this message translates to:
+  /// **'If you tap “{action}”, the data is handed to another app on your device, for example mail, phone, maps or calendar. From then on, that app decides what happens with it.'**
+  String infoOtherApp(String action);
+
+  /// Info-Dialog: Erklärung Text
+  ///
+  /// In en, this message translates to:
+  /// **'Plain text. The code contains just these words or characters – nothing more.'**
+  String get infoKindText;
+
+  /// Info-Dialog: Erklärung Link
+  ///
+  /// In en, this message translates to:
+  /// **'A web address (link). It leads to a page on the internet or opens another app. A link can lead anywhere – only open it if you trust where the code comes from.'**
+  String get infoKindUrl;
+
+  /// Info-Dialog: Erklärung E-Mail
+  ///
+  /// In en, this message translates to:
+  /// **'An email address, often with a prepared subject and message. Nothing is sent until you send the email yourself in your mail app.'**
+  String get infoKindEmail;
+
+  /// Info-Dialog: Erklärung Telefon
+  ///
+  /// In en, this message translates to:
+  /// **'A phone number. QR Viewer never calls by itself – the phone app only opens with the number filled in.'**
+  String get infoKindPhone;
+
+  /// Info-Dialog: Erklärung SMS
+  ///
+  /// In en, this message translates to:
+  /// **'A phone number with a prepared text message. The message is only sent if you send it yourself – text messages may cost money.'**
+  String get infoKindSms;
+
+  /// Info-Dialog: Erklärung Ort
+  ///
+  /// In en, this message translates to:
+  /// **'A place on Earth, given as coordinates (latitude and longitude). A map app can show you where it is.'**
+  String get infoKindGeo;
+
+  /// Info-Dialog: Erklärung Kontakt
+  ///
+  /// In en, this message translates to:
+  /// **'A digital business card with a person\'s details, such as name, phone number and address. You can save it to your contacts.'**
+  String get infoKindContact;
+
+  /// Info-Dialog: Erklärung Termin
+  ///
+  /// In en, this message translates to:
+  /// **'An appointment with date, time and often a place. You can add it to your calendar.'**
+  String get infoKindEvent;
+
+  /// Info-Dialog: Erklärung WLAN
+  ///
+  /// In en, this message translates to:
+  /// **'The access details for a Wi-Fi network: its name and usually the password. Anyone who can see this code can use the network.'**
+  String get infoKindWifi;
+
+  /// Info-Dialog: Erklärung Überweisung
+  ///
+  /// In en, this message translates to:
+  /// **'A prepared bank transfer (GiroCode): recipient, IBAN, amount and reference. A banking app can take these over – check every detail before you pay.'**
+  String get infoKindPayment;
+
+  /// Info-Dialog: Erklärung Einmalpasswort
+  ///
+  /// In en, this message translates to:
+  /// **'A secret key for two-step login (2FA). An authenticator app uses it to create the short login codes. Keep it secret – QR Viewer does not save it in the history.'**
+  String get infoKindOtp;
+
+  /// Info-Dialog: Erklärung Artikelnummer
+  ///
+  /// In en, this message translates to:
+  /// **'The article number from a product\'s barcode (GTIN/EAN). It only identifies the product – the code itself contains no name, price or ingredients. The first digits show which country assigned the number, not necessarily where the product was made.'**
+  String get infoKindProduct;
+
+  /// Info-Dialog: Erklärung ISBN/ISSN
+  ///
+  /// In en, this message translates to:
+  /// **'The number of a book (ISBN) or magazine (ISSN). It identifies exactly this edition – title and author are not in the code.'**
+  String get infoKindBook;
+
+  /// Info-Dialog: Erklärung JSON
+  ///
+  /// In en, this message translates to:
+  /// **'Structured data in JSON format, as exchanged between computer programs. QR Viewer only shows it neatly indented.'**
+  String get infoKindJson;
+
+  /// Info-Dialog: Erklärung Briefmarke
+  ///
+  /// In en, this message translates to:
+  /// **'The code on a Deutsche Post stamp or Internetmarke. It contains a tracking number for the letter.'**
+  String get infoKindPostage;
+
+  /// Info-Dialog: Erklärung VDV-eTicket
+  ///
+  /// In en, this message translates to:
+  /// **'An electronic ticket for buses and trains (VDV eTicket, e.g. Deutschlandticket). A digital signature protects it against changes; QR Viewer checks it with the publicly known keys of the transport companies.'**
+  String get infoKindVdv;
 }
 
 class _AppLocalizationsDelegate

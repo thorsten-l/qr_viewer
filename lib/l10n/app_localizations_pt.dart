@@ -562,4 +562,85 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get valueGs1Global => 'GS1 Global Office';
+
+  @override
+  String get dataInfo => 'Sobre estes dados';
+
+  @override
+  String get infoLocal =>
+      'O QR Viewer leu estes dados diretamente do código. Isso acontece apenas no seu dispositivo – nada é enviado para a internet.';
+
+  @override
+  String infoOnline(String action, String host) {
+    return 'Se você tocar em “$action”, o navegador abre o site $host. Esse site vê o que você procura e, como qualquer site, o seu endereço de internet. O que ele mostra vem de fora do app – o QR Viewer não pode verificar se está correto.';
+  }
+
+  @override
+  String infoOtherApp(String action) {
+    return 'Se você tocar em “$action”, os dados vão para outro app do seu dispositivo, por exemplo e-mail, telefone, mapas ou calendário. A partir daí, esse app decide o que acontece com eles.';
+  }
+
+  @override
+  String get infoKindText =>
+      'Texto simples. O código contém apenas estas palavras ou caracteres, nada mais.';
+
+  @override
+  String get infoKindUrl =>
+      'Um endereço da web (link). Leva a uma página na internet ou abre outro app. Um link pode levar a qualquer lugar – abra-o só se confiar na origem do código.';
+
+  @override
+  String get infoKindEmail =>
+      'Um endereço de e-mail, muitas vezes com assunto e mensagem prontos. Nada é enviado até você mesmo enviar o e-mail no seu app de e-mail.';
+
+  @override
+  String get infoKindPhone =>
+      'Um número de telefone. O QR Viewer nunca liga sozinho – o app de telefone só abre com o número preenchido.';
+
+  @override
+  String get infoKindSms =>
+      'Um número de telefone com um SMS pronto. A mensagem só é enviada se você mesmo enviar – SMS podem ter custo.';
+
+  @override
+  String get infoKindGeo =>
+      'Um lugar na Terra, indicado por coordenadas (latitude e longitude). Um app de mapas pode mostrar onde fica.';
+
+  @override
+  String get infoKindContact =>
+      'Um cartão de visita digital com dados de uma pessoa, como nome, telefone e endereço. Você pode salvá-lo nos seus contatos.';
+
+  @override
+  String get infoKindEvent =>
+      'Um compromisso com data, hora e muitas vezes um local. Você pode adicioná-lo ao seu calendário.';
+
+  @override
+  String get infoKindWifi =>
+      'Os dados de acesso a uma rede Wi-Fi: o nome e normalmente a senha. Quem vir este código pode usar a rede.';
+
+  @override
+  String get infoKindPayment =>
+      'Uma transferência bancária pronta (GiroCode): destinatário, IBAN, valor e referência. Um app de banco pode usar esses dados – confira tudo antes de pagar.';
+
+  @override
+  String get infoKindOtp =>
+      'Uma chave secreta para o login em duas etapas (2FA). Um app autenticador a usa para gerar os códigos curtos de acesso. Mantenha-a em segredo – o QR Viewer não a salva no histórico.';
+
+  @override
+  String get infoKindProduct =>
+      'O número do artigo no código de barras de um produto (GTIN/EAN). Ele apenas identifica o produto – o código não contém nome, preço nem ingredientes. Os primeiros dígitos mostram o país que atribuiu o número, não necessariamente onde o produto foi feito.';
+
+  @override
+  String get infoKindBook =>
+      'O número de um livro (ISBN) ou revista (ISSN). Identifica exatamente esta edição – título e autor não estão no código.';
+
+  @override
+  String get infoKindJson =>
+      'Dados estruturados no formato JSON, como os trocados entre programas de computador. O QR Viewer apenas os mostra bem indentados.';
+
+  @override
+  String get infoKindPostage =>
+      'O código de um selo ou Internetmarke da Deutsche Post. Contém um número de rastreio da carta.';
+
+  @override
+  String get infoKindVdv =>
+      'Um bilhete eletrônico de ônibus e trem (VDV eTicket, p. ex. Deutschlandticket). Uma assinatura digital o protege contra alterações; o QR Viewer a verifica com as chaves públicas das empresas de transporte.';
 }

@@ -19,6 +19,7 @@ import 'package:qr_viewer/binary_payload.dart';
 import 'package:qr_viewer/content_actions.dart';
 import 'package:qr_viewer/deutsche_post.dart';
 import 'package:qr_viewer/gtin.dart';
+import 'package:qr_viewer/localization.dart';
 import 'package:qr_viewer/qr_content.dart';
 import 'package:qr_viewer/result_page.dart';
 
@@ -351,6 +352,69 @@ void main() {
         ),
       );
       expect(text.style?.fontFamily, kContentFont);
+    });
+
+    testWidgets('Info-Dialog erklärt Produkt und Websuche', (tester) async {
+      await tester.pumpWidget(
+        testApp(
+          const ResultPage(
+            raw: '4006381333931',
+            type: BarcodeType.product,
+            format: BarcodeFormat.ean13,
+          ),
+        ),
+      );
+      await tester.tap(find.byTooltip('Was sind das für Daten?'));
+      await tester.pumpAndSettle();
+      expect(
+        find.textContaining('Die Artikelnummer aus dem Barcode'),
+        findsOne,
+      );
+      expect(find.textContaining('nur auf deinem Gerät'), findsOne);
+      expect(
+        find.textContaining(
+          'Tippst du auf „Online nachschlagen“, öffnet dein Browser die '
+          'Website duckduckgo.com.',
+        ),
+        findsOne,
+      );
+      await tester.tap(find.text('Schließen'));
+      await tester.pumpAndSettle();
+      expect(find.byType(AlertDialog), findsNothing);
+    });
+  });
+
+  group('Info-Texte', () {
+    final l = lookupAppLocalizations(const Locale('de'));
+
+    test('jede Inhaltsart hat eine Erklärung', () {
+      for (final kind in ContentKind.values) {
+        expect(kindInfo(kind, l), isNotEmpty);
+      }
+    });
+
+    test('Karte und Anruf gehen an eine andere App', () {
+      final geo = contentAction(
+        parseContent('geo:52.1,10.5'),
+        'geo:52.1,10.5',
+        TargetPlatform.iOS,
+      );
+      expect(
+        actionInfo(geo, l),
+        startsWith('Tippst du auf „In Karten zeigen“'),
+      );
+      expect(actionInfo(geo, l), contains('andere App'));
+      final tel = contentAction(parseContent('tel:123'), 'tel:123');
+      expect(actionInfo(tel, l), contains('andere App'));
+      expect(actionInfo(null, l), isNull);
+    });
+
+    test('Sendungsverfolgung nennt die Website', () {
+      final post = ActionTarget.uri(
+        ContentAction.track,
+        PostageStamp('A0012345678901234B').trackingUri,
+      );
+      expect(actionInfo(post, l), contains('www.deutschepost.de'));
     });
   });
 }

@@ -561,4 +561,85 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get valueGs1Global => 'GS1 Global Office';
+
+  @override
+  String get dataInfo => 'حول هذه البيانات';
+
+  @override
+  String get infoLocal =>
+      'قرأ QR Viewer هذه البيانات مباشرة من الرمز. يحدث ذلك على جهازك فقط، ولا يُرسل أي شيء إلى الإنترنت.';
+
+  @override
+  String infoOnline(String action, String host) {
+    return 'إذا نقرت على «$action»، يفتح متصفحك الموقع $host. سيرى هذا الموقع ما تبحث عنه، ومثل أي موقع، عنوانك على الإنترنت. ما يعرضه يأتي من خارج التطبيق، ولا يستطيع QR Viewer التحقق من صحته.';
+  }
+
+  @override
+  String infoOtherApp(String action) {
+    return 'إذا نقرت على «$action»، تُسلَّم البيانات إلى تطبيق آخر على جهازك، مثل البريد أو الهاتف أو الخرائط أو التقويم. بعد ذلك يقرر هذا التطبيق ما يحدث بها.';
+  }
+
+  @override
+  String get infoKindText =>
+      'نص عادي. يحتوي الرمز على هذه الكلمات أو الأحرف فقط، لا أكثر.';
+
+  @override
+  String get infoKindUrl =>
+      'عنوان ويب (رابط). يؤدي إلى صفحة على الإنترنت أو يفتح تطبيقًا آخر. قد يؤدي الرابط إلى أي مكان، فلا تفتحه إلا إذا كنت تثق بمصدر الرمز.';
+
+  @override
+  String get infoKindEmail =>
+      'عنوان بريد إلكتروني، غالبًا مع موضوع ورسالة جاهزين. لا يُرسل شيء حتى ترسل الرسالة بنفسك من تطبيق البريد.';
+
+  @override
+  String get infoKindPhone =>
+      'رقم هاتف. لا يتصل QR Viewer من تلقاء نفسه أبدًا، بل يفتح تطبيق الهاتف مع إدخال الرقم فقط.';
+
+  @override
+  String get infoKindSms =>
+      'رقم هاتف مع رسالة SMS جاهزة. لا تُرسل الرسالة إلا إذا أرسلتها بنفسك، وقد تكون رسائل SMS مدفوعة.';
+
+  @override
+  String get infoKindGeo =>
+      'مكان على الأرض محدد بإحداثيات (خط العرض وخط الطول). يمكن لتطبيق الخرائط أن يريك موقعه.';
+
+  @override
+  String get infoKindContact =>
+      'بطاقة عمل رقمية تحتوي على بيانات شخص، مثل الاسم ورقم الهاتف والعنوان. يمكنك حفظها في جهات الاتصال.';
+
+  @override
+  String get infoKindEvent =>
+      'موعد بتاريخ ووقت، وغالبًا بمكان. يمكنك إضافته إلى التقويم.';
+
+  @override
+  String get infoKindWifi =>
+      'بيانات الدخول إلى شبكة Wi-Fi: اسمها وعادةً كلمة المرور. يمكن لأي شخص يرى هذا الرمز استخدام الشبكة.';
+
+  @override
+  String get infoKindPayment =>
+      'تحويل مصرفي جاهز (GiroCode): المستفيد ورقم IBAN والمبلغ والغرض. يمكن لتطبيق البنك استخدامها، فتحقق من كل التفاصيل قبل الدفع.';
+
+  @override
+  String get infoKindOtp =>
+      'مفتاح سري لتسجيل الدخول بخطوتين (2FA). يستخدمه تطبيق المصادقة لإنشاء رموز الدخول القصيرة. احتفظ به سرًا، فـ QR Viewer لا يحفظه في السجل.';
+
+  @override
+  String get infoKindProduct =>
+      'رقم الصنف من باركود المنتج (GTIN/EAN). يحدد المنتج فقط، فلا يحتوي الرمز على الاسم أو السعر أو المكونات. تدل الأرقام الأولى على البلد الذي منح الرقم، وليس بالضرورة مكان صنع المنتج.';
+
+  @override
+  String get infoKindBook =>
+      'رقم كتاب (ISBN) أو مجلة (ISSN). يحدد هذه الطبعة بالضبط، ولا يحتوي الرمز على العنوان أو المؤلف.';
+
+  @override
+  String get infoKindJson =>
+      'بيانات منظمة بصيغة JSON، كالتي تتبادلها برامج الحاسوب. يعرضها QR Viewer فقط بتنسيق مرتب.';
+
+  @override
+  String get infoKindPostage =>
+      'الرمز الموجود على طابع أو Internetmarke من Deutsche Post. يحتوي على رقم تتبع للرسالة.';
+
+  @override
+  String get infoKindVdv =>
+      'تذكرة إلكترونية للحافلات والقطارات (VDV eTicket، مثل Deutschlandticket). يحميها توقيع رقمي من التعديل، ويتحقق منه QR Viewer باستخدام المفاتيح العامة لشركات النقل.';
 }

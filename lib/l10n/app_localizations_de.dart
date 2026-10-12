@@ -562,4 +562,85 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get valueGs1Global => 'GS1 Global Office';
+
+  @override
+  String get dataInfo => 'Was sind das für Daten?';
+
+  @override
+  String get infoLocal =>
+      'QR Viewer hat diese Angaben direkt aus dem Code gelesen. Das passiert nur auf deinem Gerät – es wird nichts ins Internet gesendet.';
+
+  @override
+  String infoOnline(String action, String host) {
+    return 'Tippst du auf „$action“, öffnet dein Browser die Website $host. Diese sieht dann, wonach du suchst, und wie jede Website deine Internetadresse. Was sie anzeigt, kommt von außerhalb der App – QR Viewer kann nicht prüfen, ob es stimmt.';
+  }
+
+  @override
+  String infoOtherApp(String action) {
+    return 'Tippst du auf „$action“, gehen die Daten an eine andere App auf deinem Gerät, z. B. Mail, Telefon, Karten oder Kalender. Was dann damit passiert, bestimmt diese App.';
+  }
+
+  @override
+  String get infoKindText =>
+      'Einfacher Text. Der Code enthält nur diese Wörter oder Zeichen – sonst nichts.';
+
+  @override
+  String get infoKindUrl =>
+      'Eine Internetadresse (Link). Sie führt zu einer Seite im Internet oder öffnet eine andere App. Ein Link kann überallhin führen – öffne ihn nur, wenn du der Herkunft des Codes vertraust.';
+
+  @override
+  String get infoKindEmail =>
+      'Eine E-Mail-Adresse, oft mit vorbereitetem Betreff und Text. Gesendet wird erst, wenn du die E-Mail selbst in deiner Mail-App abschickst.';
+
+  @override
+  String get infoKindPhone =>
+      'Eine Telefonnummer. QR Viewer ruft nie selbst an – die Telefon-App öffnet sich nur mit der eingetragenen Nummer.';
+
+  @override
+  String get infoKindSms =>
+      'Eine Telefonnummer mit vorbereiteter SMS. Die Nachricht geht erst raus, wenn du sie selbst abschickst – SMS können Geld kosten.';
+
+  @override
+  String get infoKindGeo =>
+      'Ein Ort auf der Erde, angegeben als Koordinaten (Breiten- und Längengrad). Eine Karten-App kann dir zeigen, wo er liegt.';
+
+  @override
+  String get infoKindContact =>
+      'Eine digitale Visitenkarte mit Angaben zu einer Person, etwa Name, Telefonnummer und Adresse. Du kannst sie in deine Kontakte übernehmen.';
+
+  @override
+  String get infoKindEvent =>
+      'Ein Termin mit Datum, Uhrzeit und oft einem Ort. Du kannst ihn in deinen Kalender übernehmen.';
+
+  @override
+  String get infoKindWifi =>
+      'Die Zugangsdaten für ein WLAN: sein Name und meist das Passwort. Wer diesen Code sieht, kann das Netz nutzen.';
+
+  @override
+  String get infoKindPayment =>
+      'Eine vorbereitete Überweisung (GiroCode): Empfänger, IBAN, Betrag und Verwendungszweck. Eine Banking-App kann sie übernehmen – prüfe vor dem Bezahlen jede Angabe.';
+
+  @override
+  String get infoKindOtp =>
+      'Ein geheimer Schlüssel für die Anmeldung in zwei Schritten (2FA). Eine Authenticator-App erzeugt damit die kurzen Anmeldecodes. Halte ihn geheim – QR Viewer speichert ihn nicht im Verlauf.';
+
+  @override
+  String get infoKindProduct =>
+      'Die Artikelnummer aus dem Barcode eines Produkts (GTIN/EAN). Sie kennzeichnet nur das Produkt – Name, Preis oder Zutaten stehen nicht im Code. Die ersten Ziffern zeigen, in welchem Land die Nummer vergeben wurde, nicht unbedingt, wo das Produkt hergestellt wurde.';
+
+  @override
+  String get infoKindBook =>
+      'Die Nummer eines Buchs (ISBN) oder einer Zeitschrift (ISSN). Sie kennzeichnet genau diese Ausgabe – Titel und Autor stehen nicht im Code.';
+
+  @override
+  String get infoKindJson =>
+      'Strukturierte Daten im Format JSON, wie sie Computerprogramme untereinander austauschen. QR Viewer zeigt sie nur übersichtlich eingerückt an.';
+
+  @override
+  String get infoKindPostage =>
+      'Der Code auf einer Briefmarke oder Internetmarke der Deutschen Post. Er enthält eine Sendungsnummer für den Brief.';
+
+  @override
+  String get infoKindVdv =>
+      'Ein elektronischer Fahrschein für Bus und Bahn (VDV-eTicket, z. B. Deutschlandticket). Eine digitale Signatur schützt ihn vor Änderungen; QR Viewer prüft sie mit den öffentlich bekannten Schlüsseln der Verkehrsunternehmen.';
 }
