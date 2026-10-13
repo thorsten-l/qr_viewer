@@ -643,4 +643,58 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get infoKindVdv =>
       'An electronic ticket for buses and trains (VDV eTicket, e.g. Deutschlandticket). A digital signature protects it against changes; QR Viewer checks it with the publicly known keys of the transport companies.';
+
+  @override
+  String get typeMatter => 'Matter device';
+
+  @override
+  String get fieldVendorId => 'Vendor ID';
+
+  @override
+  String get fieldProductId => 'Product ID';
+
+  @override
+  String get fieldDiscriminator => 'Discriminator';
+
+  @override
+  String get fieldSetupCode => 'Setup code (PIN)';
+
+  @override
+  String get fieldManualCode => 'Manual pairing code';
+
+  @override
+  String get fieldDiscovery => 'Setup via';
+
+  @override
+  String get fieldFlow => 'Setup flow';
+
+  @override
+  String get valueFlowStandard => 'Standard';
+
+  @override
+  String get valueFlowUserAction =>
+      'Activate the device first (e.g. press a button)';
+
+  @override
+  String get valueFlowCustom => 'Manufacturer\'s app required';
+
+  @override
+  String get valueDiscoverySoftAp => 'Wi-Fi access point (SoftAP)';
+
+  @override
+  String get valueDiscoveryOnNetwork => 'Existing network';
+
+  @override
+  String get infoKindMatter =>
+      'The setup data of a smart home device using the Matter standard. Your smart home app (e.g. Apple Home, Google Home) uses it to add the device – scan the code there or type in the manual pairing code. Anyone with this code can pair the device while it is in setup mode.';
+
+  @override
+  String get infoManuals => 'Manuals';
+
+  @override
+  String get typeBookmark => 'Bookmark';
+
+  @override
+  String get infoKindBookmark =>
+      'A bookmark: a link to a website together with a name for it (MEBKM format). Like any link, it can lead anywhere – only open it if you trust where the code comes from.';
 }

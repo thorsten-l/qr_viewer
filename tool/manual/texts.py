@@ -35,7 +35,7 @@ UI = dict(
 
 TITLE = "QR Viewer"
 SUBTITLE = "Codes sicher scannen – einfach erklärt"
-VERSION_LINE = "Anleitung für Version 2.1.1 · Stand: Oktober 2026"
+VERSION_LINE = "Anleitung für Version 2.1.2 · Stand: Oktober 2026"
 
 # Hauptteil: (Überschrift, [Blöcke]). Ein Block ist ein Absatz (str),
 # eine Liste (list), ein Bild ("img", Datei, Breite in cm, Bildunterschrift)
@@ -143,7 +143,7 @@ CHAPTERS = [
         "Beispiel elektronische Fahrkarten. QR Viewer zeigt sie als "
         "Zahlenkolonnen (Hex-Ansicht) an. Fahrkarten nach dem VDV-Standard, "
         "etwa das Deutschlandticket, kann die App sogar entschlüsseln und "
-        "lesbar anzeigen (siehe Anhang A.28).",
+        "lesbar anzeigen (siehe Anhang A.30).",
     ]),
     ("5 Aktionen – immer mit Rückfrage", [
         "Unten auf der Ergebnisseite findest du je nach Inhalt einen "
@@ -220,6 +220,9 @@ CHAPTERS = [
             "**Support** öffnet die Seite für Fragen und Fehlermeldungen im "
             "Browser (github.com/thorsten-l/qr_viewer/issues).",
             "**Lizenzen** zeigt die Lizenzen der verwendeten Bausteine.",
+            "**Anleitungen** öffnet im Browser die Seite, auf der diese "
+            "Anleitung auf Deutsch und Englisch zum Herunterladen liegt "
+            "(github.com/thorsten-l/qr_viewer/tree/main/docs).",
         ],
     ]),
     ("9 Datenschutz – so schützt QR Viewer deine Daten", [
@@ -257,6 +260,10 @@ CHAPTERS = [
             "hin.",
             "**WLAN-Passwörter** stehen wie jeder andere Inhalt im Verlauf, "
             "bis du ihn löschst.",
+            "**Einrichtungscodes von Smart-Home-Geräten** (Matter) zeigt die "
+            "App nur an. Sie richtet kein Gerät ein und schickt nichts an "
+            "Hersteller oder Home-Apps. Auch diese Codes stehen im Verlauf, "
+            "bis du sie löschst.",
             "**Fahrkarten** (z. B. Deutschlandticket) werden nur auf deinem "
             "Gerät entschlüsselt. Den Namen zeigt die App so verkürzt an, wie "
             "er im Ticket steht (z. B. „G…e M…n“). Zum Prüfen der Echtheit "
@@ -347,8 +354,8 @@ APPENDIX_INTRO = [
     "damit tun kannst. Das Bild rechts ist die Ergebnisseite der App.",
     "Alle Namen, Nummern und Adressen in den Beispielen sind erfunden – mit "
     "zwei Ausnahmen: Der Ort ist das echte Rathaus in Wolfenbüttel, und die "
-    "erste Fahrkarte (A.28) ist ein offizielles Muster-Ticket auf den Namen "
-    "Geraldine Mustermann. Die zweite Fahrkarte (A.29) ist ein selbst "
+    "erste Fahrkarte (A.30) ist ein offizielles Muster-Ticket auf den Namen "
+    "Geraldine Mustermann. Die zweite Fahrkarte (A.31) ist ein selbst "
     "gebautes Test-Ticket.",
     ("note", "Zwei Codearten (Micro-QR-Code und GS1 DataBar) kann nur die "
      "Version für iPhone und iPad lesen, weil die Erkennungstechnik von "
@@ -394,6 +401,25 @@ PAGES = {
         care="Prüfe den Host! Betrüger nutzen Adressen, die echten ähneln "
         "(z. B. „wolfenbuettel-parken.info“). Im Zweifel öffne den Link "
         "nicht."),
+    "qr_bookmark": dict(
+        title="QR-Code mit Lesezeichen (MEBKM)",
+        mode="QR-Code oder Alle Codes", devices=ALL,
+        what="Ein **Lesezeichen** ist ein Link mit einem Namen dafür. Das "
+        "Format MEBKM stammt vom japanischen Mobilfunkanbieter NTT Docomo; "
+        "dort konnten Handys den Link direkt als Lesezeichen speichern. "
+        "Viele Scanner-Apps erzeugen es bis heute.",
+        where="Auf Plakaten, Flyern und Visitenkarten, vor allem bei Codes "
+        "aus älteren oder japanischen QR-Code-Generatoren.",
+        example="Das Lesezeichen „Stadt Wolfenbüttel“ mit dem Link "
+        "https://www.wolfenbuettel.de/.",
+        app="Die Datenkarte „Lesezeichen“ zeigt den Namen und den Link, "
+        "darüber steht der Host. Ein Lesezeichen ohne Link zeigt nur den "
+        "Namen; dann gibt es keinen Öffnen-Knopf.",
+        do="„Öffnen …“ öffnet den Link nach Rückfrage im Browser, wie bei "
+        "einem normalen Link. Speichern kannst du ihn dort selbst als "
+        "Lesezeichen.",
+        care="Der Name kann alles behaupten – entscheidend ist der Host. "
+        "Prüfe ihn, bevor du den Link öffnest."),
     "qr_email": dict(
         title="QR-Code mit E-Mail", mode="QR-Code oder Alle Codes",
         devices=ALL,
@@ -548,6 +574,31 @@ PAGES = {
         "lesen kannst. Mit den Daten passiert nichts weiter.",
         do="Kopieren oder teilen.",
         care="Nichts Besonderes – JSON kann nichts auslösen."),
+    "qr_matter": dict(
+        title="QR-Code eines Smart-Home-Geräts (Matter)",
+        mode="QR-Code oder Alle Codes", devices=ALL,
+        what="**Matter** ist ein gemeinsamer Standard für Smart-Home-Geräte "
+        "wie Lampen, Steckdosen, Thermostate oder Sensoren – unterstützt von "
+        "Apple, Google, Amazon, Samsung und vielen Herstellern. Der QR-Code "
+        "beginnt immer mit „MT:“ und enthält alles, was eine Smart-Home-App "
+        "zum Einrichten des Geräts braucht.",
+        where="Auf dem Gerät selbst, auf der Verpackung oder auf einem "
+        "Kärtchen in der Anleitung von Matter-fähigen Smart-Home-Geräten.",
+        example="Der Beispielcode aus der Matter-Spezifikation: ein "
+        "Testgerät (Hersteller-ID 0xFFF1, für Tests reserviert) mit dem "
+        "Einrichtungscode 20202021, erreichbar über Bluetooth LE.",
+        app="Die Datenkarte zeigt den **manuellen Kopplungscode** "
+        "(3497-011-2332), den Einrichtungscode (PIN), Hersteller- und "
+        "Produkt-ID, den Diskriminator, über welche Verbindung sich das "
+        "Gerät einrichten lässt und ob vorher z. B. eine Taste gedrückt "
+        "werden muss.",
+        do="QR Viewer richtet das Gerät nicht selbst ein. Scanne den Code in "
+        "deiner Smart-Home-App (z. B. Apple Home, Google Home) – oder tippe "
+        "dort den manuellen Kopplungscode ein, wenn das Scannen nicht klappt. "
+        "Mit dem Kopier-Symbol neben dem Feld kannst du ihn übernehmen.",
+        care="Wer diesen Code hat, kann das Gerät koppeln, solange es im "
+        "Einrichtungsmodus ist. Zeige ihn nicht herum, und klebe den "
+        "Aufkleber nicht sichtbar nach außen."),
     "microqr": dict(
         title="Micro-QR-Code", mode="Alle Codes", devices=APPLE,
         what="Der **Micro-QR-Code** ist die kleine Schwester des QR-Codes: "
@@ -808,9 +859,9 @@ PAGES = {
 
 # Reihenfolge der Anhangsseiten.
 ORDER = [
-    "qr_text", "qr_url", "qr_email", "qr_phone", "qr_sms", "qr_geo",
+    "qr_text", "qr_url", "qr_bookmark", "qr_email", "qr_phone", "qr_sms", "qr_geo",
     "qr_contact", "qr_event", "qr_wifi", "qr_payment", "qr_otp", "qr_json",
-    "microqr", "ean13", "ean13_isbn", "ean8", "upca", "upce", "itf14",
+    "qr_matter", "microqr", "ean13", "ean13_isbn", "ean8", "upca", "upce", "itf14",
     "code128", "code39", "code93", "codabar", "itf", "databar",
     "datamatrix_post", "pdf417", "aztec_vdv", "aztec_vdv_test",
 ]

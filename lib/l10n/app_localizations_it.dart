@@ -643,4 +643,58 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get infoKindVdv =>
       'Un biglietto elettronico per autobus e treni (VDV eTicket, ad es. Deutschlandticket). Una firma digitale lo protegge da modifiche; QR Viewer la verifica con le chiavi pubbliche delle aziende di trasporto.';
+
+  @override
+  String get typeMatter => 'Dispositivo Matter';
+
+  @override
+  String get fieldVendorId => 'ID produttore';
+
+  @override
+  String get fieldProductId => 'ID prodotto';
+
+  @override
+  String get fieldDiscriminator => 'Discriminatore';
+
+  @override
+  String get fieldSetupCode => 'Codice di configurazione (PIN)';
+
+  @override
+  String get fieldManualCode => 'Codice di associazione manuale';
+
+  @override
+  String get fieldDiscovery => 'Configurazione tramite';
+
+  @override
+  String get fieldFlow => 'Procedura di configurazione';
+
+  @override
+  String get valueFlowStandard => 'Standard';
+
+  @override
+  String get valueFlowUserAction =>
+      'Attiva prima il dispositivo (ad es. premi un pulsante)';
+
+  @override
+  String get valueFlowCustom => 'Serve l\'app del produttore';
+
+  @override
+  String get valueDiscoverySoftAp => 'Punto di accesso Wi-Fi (SoftAP)';
+
+  @override
+  String get valueDiscoveryOnNetwork => 'Rete esistente';
+
+  @override
+  String get infoKindMatter =>
+      'I dati di configurazione di un dispositivo smart home con lo standard Matter. La tua app smart home (ad es. Apple Casa, Google Home) li usa per aggiungere il dispositivo: scansiona il codice lì o inserisci il codice di associazione manuale. Chiunque abbia questo codice può associare il dispositivo finché è in modalità di configurazione.';
+
+  @override
+  String get infoManuals => 'Manuali';
+
+  @override
+  String get typeBookmark => 'Segnalibro';
+
+  @override
+  String get infoKindBookmark =>
+      'Un segnalibro: un link a un sito web insieme a un nome (formato MEBKM). Come ogni link può portare ovunque: aprilo solo se ti fidi della provenienza del codice.';
 }

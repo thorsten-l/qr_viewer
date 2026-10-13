@@ -195,5 +195,22 @@
   "infoKindBook": "Numer książki (ISBN) lub czasopisma (ISSN). Identyfikuje dokładnie to wydanie – tytułu i autora nie ma w kodzie.",
   "infoKindJson": "Dane strukturalne w formacie JSON, jakie wymieniają między sobą programy komputerowe. QR Viewer tylko wyświetla je czytelnie z wcięciami.",
   "infoKindPostage": "Kod na znaczku lub Internetmarke Deutsche Post. Zawiera numer śledzenia listu.",
-  "infoKindVdv": "Elektroniczny bilet na autobus i pociąg (VDV eTicket, np. Deutschlandticket). Podpis cyfrowy chroni go przed zmianami; QR Viewer sprawdza go publicznymi kluczami przewoźników."
+  "infoKindVdv": "Elektroniczny bilet na autobus i pociąg (VDV eTicket, np. Deutschlandticket). Podpis cyfrowy chroni go przed zmianami; QR Viewer sprawdza go publicznymi kluczami przewoźników.",
+  "typeMatter": "Urządzenie Matter",
+  "fieldVendorId": "ID producenta",
+  "fieldProductId": "ID produktu",
+  "fieldDiscriminator": "Dyskryminator",
+  "fieldSetupCode": "Kod konfiguracji (PIN)",
+  "fieldManualCode": "Ręczny kod parowania",
+  "fieldDiscovery": "Konfiguracja przez",
+  "fieldFlow": "Przebieg konfiguracji",
+  "valueFlowStandard": "Standardowy",
+  "valueFlowUserAction": "Najpierw aktywuj urządzenie (np. naciśnij przycisk)",
+  "valueFlowCustom": "Wymagana aplikacja producenta",
+  "valueDiscoverySoftAp": "Punkt dostępu Wi-Fi (SoftAP)",
+  "valueDiscoveryOnNetwork": "Istniejąca sieć",
+  "infoKindMatter": "Dane konfiguracyjne urządzenia inteligentnego domu w standardzie Matter. Aplikacja inteligentnego domu (np. Apple Dom, Google Home) dodaje dzięki nim urządzenie – zeskanuj tam kod lub wpisz ręczny kod parowania. Każdy, kto ma ten kod, może sparować urządzenie, dopóki jest ono w trybie konfiguracji.",
+  "infoManuals": "Instrukcje",
+  "typeBookmark": "Zakładka",
+  "infoKindBookmark": "Zakładka: link do strony internetowej wraz z nazwą (format MEBKM). Jak każdy link może prowadzić wszędzie – otwieraj go tylko, jeśli ufasz źródłu kodu."
 }

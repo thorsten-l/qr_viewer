@@ -17,10 +17,12 @@ content first. Links and other actions start only after a confirmation.
   (`example.com/path`) and app links (`market://`, `fido:/`, …) are
   recognized as well.
 - **Content detection:** contact (vCard, MECARD, BIZCARD), event (iCalendar),
-  Wi-Fi, email, phone, SMS, location (`geo:`), link, bank transfer (GiroCode),
+  Wi-Fi, email, phone, SMS, location (`geo:`), link, bookmark (MEBKM), bank
+  transfer (GiroCode),
   one-time password (`otpauth://`), JSON, product number (EAN/UPC/ITF-14 with
-  check digit and GS1 country, ISBN, ISSN) and Deutsche Post matrix code
-  (tracking number) are shown as a card with labeled fields that can be
+  check digit and GS1 country, ISBN, ISSN), Deutsche Post matrix code
+  (tracking number) and Matter device (`MT:`, with manual pairing code) are
+  shown as a card with labeled fields that can be
   copied individually; the raw content is shown below. An info button explains
   the data in plain words. Everything else is
   text.
@@ -37,7 +39,7 @@ content first. Links and other actions start only after a confirmation.
   numbers, class, price and signature check. The raw data stays available as
   collapsible hex. Everything happens locally on the device.
 - **About dialog** with developer, version and build date, plus buttons for
-  support (GitHub issues) and licenses.
+  support (GitHub issues), licenses and the [user guides](docs/).
 - **Zoom levels** of the rear camera as in the camera app, derived from the
   device's lenses, e.g. Auto · 0.5× · 1× · 2× · 5× (iPhone 16 Pro Max) or
   0.6× · 1× · 2× (Pixel 9a). The selection is remembered.
@@ -101,11 +103,12 @@ the build date.
 | `lib/content_actions.dart` | Actions per content type (mailto, tel, sms, map, …), vCard/iCalendar export |
 | `lib/gtin.dart` | Product numbers: check digit, UPC-E, GS1 prefix, ISBN, ISSN |
 | `lib/deutsche_post.dart` | Deutsche Post matrix code (tracking number) |
+| `lib/matter.dart` | Matter onboarding code (`MT:`, Base38) and manual pairing code |
 | `lib/history.dart` | History of the last 25 scans with search and CSV/JSON export |
 | `lib/binary_payload.dart` | Detection of binary content, hex display |
 | `lib/vdv/` | VDV eTicket: BER, ISO 9796-2, certificates, ticket data |
 | `assets/vdv_certs/` | Public VDV CA keys (CC0), see `tool/vdv/README.md` |
-| `lib/app_info.dart` | About dialog with support and license buttons |
+| `lib/app_info.dart` | About dialog with support, license and manuals buttons |
 | `lib/localization.dart`, `lib/l10n/` | Translations (generated) |
 | `test/` | Widget and unit tests, including all languages |
 | `tool/vdv/` | Update script and origin of the VDV keys |
@@ -116,8 +119,8 @@ the build date.
 
 ## Version
 
-Current: **2.1.1** (build 12). Version and build number are set in
-`pubspec.yaml`, e.g. `version: 2.1.1+12`. Every upload to TestFlight or
+Current: **2.1.2** (build 13). Version and build number are set in
+`pubspec.yaml`, e.g. `version: 2.1.2+13`. Every upload to TestFlight or
 Google Play needs a higher build number after the `+`. Every new version gets
 an entry in [CHANGELOG.md](CHANGELOG.md) (English) and
 [CHANGELOG_de.md](CHANGELOG_de.md) (German).
@@ -133,7 +136,7 @@ Steps for a new version:
 3. Check: `flutter analyze`, `flutter test`,
    `python3 tool/license/add_headers.py --check`.
 4. Build and upload for iOS and Android as described below.
-5. Commit and tag, e.g. `git tag v2.1.1`.
+5. Commit and tag, e.g. `git tag v2.1.2`.
 
 ### iOS / TestFlight
 

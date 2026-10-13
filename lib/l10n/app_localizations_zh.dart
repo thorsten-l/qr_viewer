@@ -631,4 +631,57 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get infoKindVdv =>
       '公交和火车的电子车票（VDV eTicket，例如 Deutschlandticket）。数字签名可防止车票被篡改；QR Viewer 使用交通公司公开的密钥进行验证。';
+
+  @override
+  String get typeMatter => 'Matter 设备';
+
+  @override
+  String get fieldVendorId => '厂商 ID';
+
+  @override
+  String get fieldProductId => '产品 ID';
+
+  @override
+  String get fieldDiscriminator => '鉴别码';
+
+  @override
+  String get fieldSetupCode => '设置码（PIN）';
+
+  @override
+  String get fieldManualCode => '手动配对码';
+
+  @override
+  String get fieldDiscovery => '设置方式';
+
+  @override
+  String get fieldFlow => '设置流程';
+
+  @override
+  String get valueFlowStandard => '标准';
+
+  @override
+  String get valueFlowUserAction => '请先激活设备（例如按下按钮）';
+
+  @override
+  String get valueFlowCustom => '需要厂商的应用';
+
+  @override
+  String get valueDiscoverySoftAp => 'Wi-Fi 热点（SoftAP）';
+
+  @override
+  String get valueDiscoveryOnNetwork => '现有网络';
+
+  @override
+  String get infoKindMatter =>
+      '符合 Matter 标准的智能家居设备的设置数据。智能家居应用（如 Apple 家庭、Google Home）用它来添加设备——请在该应用中扫描此码，或输入手动配对码。设备处于设置模式时，任何拿到此码的人都可以配对该设备。';
+
+  @override
+  String get infoManuals => '使用手册';
+
+  @override
+  String get typeBookmark => '书签';
+
+  @override
+  String get infoKindBookmark =>
+      '书签：带有名称的网页链接（MEBKM 格式）。和任何链接一样，它可能指向任何地方——只有在信任二维码来源时才打开。';
 }

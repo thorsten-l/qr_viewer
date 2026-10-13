@@ -643,4 +643,58 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String get infoKindVdv =>
       'Електронний квиток на автобус і поїзд (VDV eTicket, напр. Deutschlandticket). Цифровий підпис захищає його від змін; QR Viewer перевіряє його відкритими ключами транспортних компаній.';
+
+  @override
+  String get typeMatter => 'Пристрій Matter';
+
+  @override
+  String get fieldVendorId => 'ID виробника';
+
+  @override
+  String get fieldProductId => 'ID продукту';
+
+  @override
+  String get fieldDiscriminator => 'Дискримінатор';
+
+  @override
+  String get fieldSetupCode => 'Код налаштування (PIN)';
+
+  @override
+  String get fieldManualCode => 'Код ручного сполучення';
+
+  @override
+  String get fieldDiscovery => 'Налаштування через';
+
+  @override
+  String get fieldFlow => 'Порядок налаштування';
+
+  @override
+  String get valueFlowStandard => 'Стандартний';
+
+  @override
+  String get valueFlowUserAction =>
+      'Спочатку активуйте пристрій (напр., натисніть кнопку)';
+
+  @override
+  String get valueFlowCustom => 'Потрібен застосунок виробника';
+
+  @override
+  String get valueDiscoverySoftAp => 'Точка доступу Wi-Fi (SoftAP)';
+
+  @override
+  String get valueDiscoveryOnNetwork => 'Наявна мережа';
+
+  @override
+  String get infoKindMatter =>
+      'Дані для налаштування пристрою розумного дому за стандартом Matter. Застосунок розумного дому (наприклад, Apple Дім, Google Home) додає з їх допомогою пристрій — відскануйте код там або введіть код ручного сполучення. Будь-хто з цим кодом може під\'єднати пристрій, поки він у режимі налаштування.';
+
+  @override
+  String get infoManuals => 'Посібники';
+
+  @override
+  String get typeBookmark => 'Закладка';
+
+  @override
+  String get infoKindBookmark =>
+      'Закладка: посилання на вебсайт разом із назвою (формат MEBKM). Як і будь-яке посилання, воно може вести будь-куди — відкривайте його, лише якщо довіряєте джерелу коду.';
 }

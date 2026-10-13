@@ -195,5 +195,22 @@
   "infoKindBook": "图书（ISBN）或期刊（ISSN）的编号。它准确标识这一版本——码中没有书名和作者。",
   "infoKindJson": "JSON 格式的结构化数据，常用于计算机程序之间交换信息。QR Viewer 只是将其整齐缩进显示。",
   "infoKindPostage": "德国邮政邮票或 Internetmarke 上的码，其中包含信件的跟踪号。",
-  "infoKindVdv": "公交和火车的电子车票（VDV eTicket，例如 Deutschlandticket）。数字签名可防止车票被篡改；QR Viewer 使用交通公司公开的密钥进行验证。"
+  "infoKindVdv": "公交和火车的电子车票（VDV eTicket，例如 Deutschlandticket）。数字签名可防止车票被篡改；QR Viewer 使用交通公司公开的密钥进行验证。",
+  "typeMatter": "Matter 设备",
+  "fieldVendorId": "厂商 ID",
+  "fieldProductId": "产品 ID",
+  "fieldDiscriminator": "鉴别码",
+  "fieldSetupCode": "设置码（PIN）",
+  "fieldManualCode": "手动配对码",
+  "fieldDiscovery": "设置方式",
+  "fieldFlow": "设置流程",
+  "valueFlowStandard": "标准",
+  "valueFlowUserAction": "请先激活设备（例如按下按钮）",
+  "valueFlowCustom": "需要厂商的应用",
+  "valueDiscoverySoftAp": "Wi-Fi 热点（SoftAP）",
+  "valueDiscoveryOnNetwork": "现有网络",
+  "infoKindMatter": "符合 Matter 标准的智能家居设备的设置数据。智能家居应用（如 Apple 家庭、Google Home）用它来添加设备——请在该应用中扫描此码，或输入手动配对码。设备处于设置模式时，任何拿到此码的人都可以配对该设备。",
+  "infoManuals": "使用手册",
+  "typeBookmark": "书签",
+  "infoKindBookmark": "书签：带有名称的网页链接（MEBKM 格式）。和任何链接一样，它可能指向任何地方——只有在信任二维码来源时才打开。"
 }

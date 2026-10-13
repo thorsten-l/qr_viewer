@@ -6,6 +6,38 @@ Alle wichtigen Änderungen an QR Viewer. Die Versionen folgen
 [Semantic Versioning](https://semver.org/lang/de/), die Build-Nummer steht
 hinter dem `+`.
 
+## [2.1.2+13] – 2026-10-13
+
+### Neu
+
+- **Matter-Codes** (Smart Home, beginnen mit `MT:`) werden erkannt und als
+  Karte „Matter-Gerät“ angezeigt: manueller Kopplungscode (11 bzw. 21 Ziffern
+  mit Verhoeff-Prüfziffer, zum Eintippen in Apple Home, Google Home usw.),
+  Einrichtungscode (PIN), Hersteller- und Produkt-ID, Diskriminator,
+  Verbindungsarten (Bluetooth LE, WLAN-Zugangspunkt, vorhandenes Netzwerk,
+  Wi-Fi PAF) und Einrichtungsablauf. Ungültige Codes bleiben Text. Der
+  Info-Knopf weist darauf hin, dass jeder mit dem Code das Gerät koppeln kann,
+  solange es im Einrichtungsmodus ist.
+- **Info-Dialog:** Knopf „Anleitungen“ links neben „Schließen“; er öffnet
+  github.com/thorsten-l/qr_viewer/tree/main/docs im Browser.
+- **Lesezeichen (MEBKM)** haben eine eigene Karte „Lesezeichen“ mit Titel und
+  Link statt „URL“. Das Escape-Zeichen `¥` aus der Docomo-Spezifikation wird
+  verstanden, Titel oder Link dürfen fehlen; ohne Link gibt es keinen
+  Öffnen-Knopf.
+- **Anleitung** für Alltagsnutzer als ODT und PDF auf Deutsch und Englisch
+  (`docs/`), mit einer Seite und einem scanbaren Beispielcode je Codeart,
+  Kapitel zum Datenschutz und dem Generator in `tool/manual/`.
+- 17 neue Texte in allen 13 Sprachen.
+
+### Geändert
+
+- **Info-Dialog:** Support, Lizenzen, Anleitungen und Schließen sind vier
+  gleich breite Knöpfe in zwei Reihen; Schließen hat ein Symbol. Lange
+  Beschriftungen werden etwas kleiner statt umzubrechen.
+- Datenschutzerklärung: Einrichtungscodes von Matter-Geräten werden nur auf
+  dem Gerät ausgewertet und stehen wie jeder Inhalt im Verlauf; der Knopf
+  „Anleitungen“ öffnet eine Seite auf GitHub.
+
 ## [2.1.1+12] – 2026-10-12
 
 ### Neu

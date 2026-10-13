@@ -1309,6 +1309,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An electronic ticket for buses and trains (VDV eTicket, e.g. Deutschlandticket). A digital signature protects it against changes; QR Viewer checks it with the publicly known keys of the transport companies.'**
   String get infoKindVdv;
+
+  /// Inhaltsart Matter-Gerät
+  ///
+  /// In en, this message translates to:
+  /// **'Matter device'**
+  String get typeMatter;
+
+  /// Matter: Hersteller-ID
+  ///
+  /// In en, this message translates to:
+  /// **'Vendor ID'**
+  String get fieldVendorId;
+
+  /// Matter: Produkt-ID
+  ///
+  /// In en, this message translates to:
+  /// **'Product ID'**
+  String get fieldProductId;
+
+  /// Matter: Diskriminator
+  ///
+  /// In en, this message translates to:
+  /// **'Discriminator'**
+  String get fieldDiscriminator;
+
+  /// Matter: Einrichtungscode (Passcode)
+  ///
+  /// In en, this message translates to:
+  /// **'Setup code (PIN)'**
+  String get fieldSetupCode;
+
+  /// Matter: manueller Kopplungscode
+  ///
+  /// In en, this message translates to:
+  /// **'Manual pairing code'**
+  String get fieldManualCode;
+
+  /// Matter: Verbindungsarten beim Einrichten
+  ///
+  /// In en, this message translates to:
+  /// **'Setup via'**
+  String get fieldDiscovery;
+
+  /// Matter: Einrichtungsablauf
+  ///
+  /// In en, this message translates to:
+  /// **'Setup flow'**
+  String get fieldFlow;
+
+  /// Matter-Ablauf: Standard
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get valueFlowStandard;
+
+  /// Matter-Ablauf: Gerät erst aktivieren
+  ///
+  /// In en, this message translates to:
+  /// **'Activate the device first (e.g. press a button)'**
+  String get valueFlowUserAction;
+
+  /// Matter-Ablauf: Hersteller-App nötig
+  ///
+  /// In en, this message translates to:
+  /// **'Manufacturer\'s app required'**
+  String get valueFlowCustom;
+
+  /// Matter-Verbindung: WLAN-Zugangspunkt des Geräts
+  ///
+  /// In en, this message translates to:
+  /// **'Wi-Fi access point (SoftAP)'**
+  String get valueDiscoverySoftAp;
+
+  /// Matter-Verbindung: Gerät ist schon im Netzwerk
+  ///
+  /// In en, this message translates to:
+  /// **'Existing network'**
+  String get valueDiscoveryOnNetwork;
+
+  /// Info-Dialog: Erklärung Matter-Gerät
+  ///
+  /// In en, this message translates to:
+  /// **'The setup data of a smart home device using the Matter standard. Your smart home app (e.g. Apple Home, Google Home) uses it to add the device – scan the code there or type in the manual pairing code. Anyone with this code can pair the device while it is in setup mode.'**
+  String get infoKindMatter;
+
+  /// Info-Dialog: Knopf zu den Anleitungen
+  ///
+  /// In en, this message translates to:
+  /// **'Manuals'**
+  String get infoManuals;
+
+  /// Inhaltsart Lesezeichen (MEBKM)
+  ///
+  /// In en, this message translates to:
+  /// **'Bookmark'**
+  String get typeBookmark;
+
+  /// Info-Dialog: Erklärung Lesezeichen
+  ///
+  /// In en, this message translates to:
+  /// **'A bookmark: a link to a website together with a name for it (MEBKM format). Like any link, it can lead anywhere – only open it if you trust where the code comes from.'**
+  String get infoKindBookmark;
 }
 
 class _AppLocalizationsDelegate

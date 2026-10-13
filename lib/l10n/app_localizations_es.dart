@@ -644,4 +644,58 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get infoKindVdv =>
       'Un billete electrónico de autobús y tren (VDV eTicket, p. ej. Deutschlandticket). Una firma digital lo protege contra cambios; QR Viewer la comprueba con las claves públicas de las empresas de transporte.';
+
+  @override
+  String get typeMatter => 'Dispositivo Matter';
+
+  @override
+  String get fieldVendorId => 'ID del fabricante';
+
+  @override
+  String get fieldProductId => 'ID del producto';
+
+  @override
+  String get fieldDiscriminator => 'Discriminador';
+
+  @override
+  String get fieldSetupCode => 'Código de configuración (PIN)';
+
+  @override
+  String get fieldManualCode => 'Código de vinculación manual';
+
+  @override
+  String get fieldDiscovery => 'Configuración por';
+
+  @override
+  String get fieldFlow => 'Proceso de configuración';
+
+  @override
+  String get valueFlowStandard => 'Estándar';
+
+  @override
+  String get valueFlowUserAction =>
+      'Activa primero el dispositivo (p. ej., pulsa un botón)';
+
+  @override
+  String get valueFlowCustom => 'Se necesita la app del fabricante';
+
+  @override
+  String get valueDiscoverySoftAp => 'Punto de acceso Wi-Fi (SoftAP)';
+
+  @override
+  String get valueDiscoveryOnNetwork => 'Red existente';
+
+  @override
+  String get infoKindMatter =>
+      'Los datos de configuración de un dispositivo de hogar inteligente con el estándar Matter. Tu app de hogar inteligente (p. ej. Apple Home, Google Home) los usa para añadir el dispositivo: escanea el código allí o introduce el código de vinculación manual. Quien tenga este código puede vincular el dispositivo mientras esté en modo de configuración.';
+
+  @override
+  String get infoManuals => 'Manuales';
+
+  @override
+  String get typeBookmark => 'Marcador';
+
+  @override
+  String get infoKindBookmark =>
+      'Un marcador: un enlace a una página web junto con un nombre (formato MEBKM). Como cualquier enlace, puede llevar a cualquier sitio: ábrelo solo si confías en el origen del código.';
 }

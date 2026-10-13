@@ -643,4 +643,58 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get infoKindVdv =>
       'Elektroniczny bilet na autobus i pociąg (VDV eTicket, np. Deutschlandticket). Podpis cyfrowy chroni go przed zmianami; QR Viewer sprawdza go publicznymi kluczami przewoźników.';
+
+  @override
+  String get typeMatter => 'Urządzenie Matter';
+
+  @override
+  String get fieldVendorId => 'ID producenta';
+
+  @override
+  String get fieldProductId => 'ID produktu';
+
+  @override
+  String get fieldDiscriminator => 'Dyskryminator';
+
+  @override
+  String get fieldSetupCode => 'Kod konfiguracji (PIN)';
+
+  @override
+  String get fieldManualCode => 'Ręczny kod parowania';
+
+  @override
+  String get fieldDiscovery => 'Konfiguracja przez';
+
+  @override
+  String get fieldFlow => 'Przebieg konfiguracji';
+
+  @override
+  String get valueFlowStandard => 'Standardowy';
+
+  @override
+  String get valueFlowUserAction =>
+      'Najpierw aktywuj urządzenie (np. naciśnij przycisk)';
+
+  @override
+  String get valueFlowCustom => 'Wymagana aplikacja producenta';
+
+  @override
+  String get valueDiscoverySoftAp => 'Punkt dostępu Wi-Fi (SoftAP)';
+
+  @override
+  String get valueDiscoveryOnNetwork => 'Istniejąca sieć';
+
+  @override
+  String get infoKindMatter =>
+      'Dane konfiguracyjne urządzenia inteligentnego domu w standardzie Matter. Aplikacja inteligentnego domu (np. Apple Dom, Google Home) dodaje dzięki nim urządzenie – zeskanuj tam kod lub wpisz ręczny kod parowania. Każdy, kto ma ten kod, może sparować urządzenie, dopóki jest ono w trybie konfiguracji.';
+
+  @override
+  String get infoManuals => 'Instrukcje';
+
+  @override
+  String get typeBookmark => 'Zakładka';
+
+  @override
+  String get infoKindBookmark =>
+      'Zakładka: link do strony internetowej wraz z nazwą (format MEBKM). Jak każdy link może prowadzić wszędzie – otwieraj go tylko, jeśli ufasz źródłu kodu.';
 }

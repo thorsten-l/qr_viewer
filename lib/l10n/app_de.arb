@@ -195,5 +195,22 @@
   "infoKindBook": "Die Nummer eines Buchs (ISBN) oder einer Zeitschrift (ISSN). Sie kennzeichnet genau diese Ausgabe – Titel und Autor stehen nicht im Code.",
   "infoKindJson": "Strukturierte Daten im Format JSON, wie sie Computerprogramme untereinander austauschen. QR Viewer zeigt sie nur übersichtlich eingerückt an.",
   "infoKindPostage": "Der Code auf einer Briefmarke oder Internetmarke der Deutschen Post. Er enthält eine Sendungsnummer für den Brief.",
-  "infoKindVdv": "Ein elektronischer Fahrschein für Bus und Bahn (VDV-eTicket, z. B. Deutschlandticket). Eine digitale Signatur schützt ihn vor Änderungen; QR Viewer prüft sie mit den öffentlich bekannten Schlüsseln der Verkehrsunternehmen."
+  "infoKindVdv": "Ein elektronischer Fahrschein für Bus und Bahn (VDV-eTicket, z. B. Deutschlandticket). Eine digitale Signatur schützt ihn vor Änderungen; QR Viewer prüft sie mit den öffentlich bekannten Schlüsseln der Verkehrsunternehmen.",
+  "typeMatter": "Matter-Gerät",
+  "fieldVendorId": "Hersteller-ID",
+  "fieldProductId": "Produkt-ID",
+  "fieldDiscriminator": "Diskriminator",
+  "fieldSetupCode": "Einrichtungscode (PIN)",
+  "fieldManualCode": "Manueller Kopplungscode",
+  "fieldDiscovery": "Einrichtung über",
+  "fieldFlow": "Einrichtungsablauf",
+  "valueFlowStandard": "Standard",
+  "valueFlowUserAction": "Gerät erst aktivieren (z. B. Taste drücken)",
+  "valueFlowCustom": "App des Herstellers erforderlich",
+  "valueDiscoverySoftAp": "WLAN-Zugangspunkt (SoftAP)",
+  "valueDiscoveryOnNetwork": "Vorhandenes Netzwerk",
+  "infoKindMatter": "Die Einrichtungsdaten eines Smart-Home-Geräts nach dem Matter-Standard. Deine Smart-Home-App (z. B. Apple Home, Google Home) nimmt das Gerät damit auf – scanne den Code dort oder tippe den manuellen Kopplungscode ein. Wer diesen Code hat, kann das Gerät koppeln, solange es im Einrichtungsmodus ist.",
+  "infoManuals": "Anleitungen",
+  "typeBookmark": "Lesezeichen",
+  "infoKindBookmark": "Ein Lesezeichen: ein Link zu einer Internetseite mit einem Namen dafür (Format MEBKM). Wie jeder Link kann er überallhin führen – öffne ihn nur, wenn du der Herkunft des Codes vertraust."
 }

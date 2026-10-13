@@ -195,5 +195,22 @@
   "infoKindBook": "O número de um livro (ISBN) ou revista (ISSN). Identifica exatamente esta edição – título e autor não estão no código.",
   "infoKindJson": "Dados estruturados no formato JSON, como os trocados entre programas de computador. O QR Viewer apenas os mostra bem indentados.",
   "infoKindPostage": "O código de um selo ou Internetmarke da Deutsche Post. Contém um número de rastreio da carta.",
-  "infoKindVdv": "Um bilhete eletrônico de ônibus e trem (VDV eTicket, p. ex. Deutschlandticket). Uma assinatura digital o protege contra alterações; o QR Viewer a verifica com as chaves públicas das empresas de transporte."
+  "infoKindVdv": "Um bilhete eletrônico de ônibus e trem (VDV eTicket, p. ex. Deutschlandticket). Uma assinatura digital o protege contra alterações; o QR Viewer a verifica com as chaves públicas das empresas de transporte.",
+  "typeMatter": "Dispositivo Matter",
+  "fieldVendorId": "ID do fabricante",
+  "fieldProductId": "ID do produto",
+  "fieldDiscriminator": "Discriminador",
+  "fieldSetupCode": "Código de configuração (PIN)",
+  "fieldManualCode": "Código de emparelhamento manual",
+  "fieldDiscovery": "Configuração via",
+  "fieldFlow": "Processo de configuração",
+  "valueFlowStandard": "Padrão",
+  "valueFlowUserAction": "Ative o dispositivo primeiro (p. ex., pressione um botão)",
+  "valueFlowCustom": "É necessário o app do fabricante",
+  "valueDiscoverySoftAp": "Ponto de acesso Wi-Fi (SoftAP)",
+  "valueDiscoveryOnNetwork": "Rede existente",
+  "infoKindMatter": "Os dados de configuração de um dispositivo de casa inteligente no padrão Matter. Seu app de casa inteligente (p. ex. Apple Casa, Google Home) os usa para adicionar o dispositivo – escaneie o código nele ou digite o código de emparelhamento manual. Quem tiver este código pode emparelhar o dispositivo enquanto ele estiver no modo de configuração.",
+  "infoManuals": "Manuais",
+  "typeBookmark": "Favorito",
+  "infoKindBookmark": "Um favorito: um link para um site junto com um nome (formato MEBKM). Como qualquer link, ele pode levar a qualquer lugar – abra-o somente se você confiar na origem do código."
 }

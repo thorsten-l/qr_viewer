@@ -195,5 +195,22 @@
   "infoKindBook": "رقم كتاب (ISBN) أو مجلة (ISSN). يحدد هذه الطبعة بالضبط، ولا يحتوي الرمز على العنوان أو المؤلف.",
   "infoKindJson": "بيانات منظمة بصيغة JSON، كالتي تتبادلها برامج الحاسوب. يعرضها QR Viewer فقط بتنسيق مرتب.",
   "infoKindPostage": "الرمز الموجود على طابع أو Internetmarke من Deutsche Post. يحتوي على رقم تتبع للرسالة.",
-  "infoKindVdv": "تذكرة إلكترونية للحافلات والقطارات (VDV eTicket، مثل Deutschlandticket). يحميها توقيع رقمي من التعديل، ويتحقق منه QR Viewer باستخدام المفاتيح العامة لشركات النقل."
+  "infoKindVdv": "تذكرة إلكترونية للحافلات والقطارات (VDV eTicket، مثل Deutschlandticket). يحميها توقيع رقمي من التعديل، ويتحقق منه QR Viewer باستخدام المفاتيح العامة لشركات النقل.",
+  "typeMatter": "جهاز Matter",
+  "fieldVendorId": "معرّف الشركة المصنّعة",
+  "fieldProductId": "معرّف المنتج",
+  "fieldDiscriminator": "المميِّز",
+  "fieldSetupCode": "رمز الإعداد (PIN)",
+  "fieldManualCode": "رمز الاقتران اليدوي",
+  "fieldDiscovery": "الإعداد عبر",
+  "fieldFlow": "طريقة الإعداد",
+  "valueFlowStandard": "قياسي",
+  "valueFlowUserAction": "فعّل الجهاز أولًا (مثل الضغط على زر)",
+  "valueFlowCustom": "يلزم تطبيق الشركة المصنّعة",
+  "valueDiscoverySoftAp": "نقطة وصول Wi-Fi (SoftAP)",
+  "valueDiscoveryOnNetwork": "الشبكة الحالية",
+  "infoKindMatter": "بيانات إعداد جهاز منزل ذكي وفق معيار Matter. يستخدمها تطبيق المنزل الذكي (مثل Apple Home أو Google Home) لإضافة الجهاز، فامسح الرمز فيه أو أدخل رمز الاقتران اليدوي. يمكن لأي شخص لديه هذا الرمز إقران الجهاز ما دام في وضع الإعداد.",
+  "infoManuals": "الأدلة",
+  "typeBookmark": "إشارة مرجعية",
+  "infoKindBookmark": "إشارة مرجعية: رابط إلى موقع ويب مع اسم له (تنسيق MEBKM). مثل أي رابط، قد يقود إلى أي مكان، فلا تفتحه إلا إذا كنت تثق بمصدر الرمز."
 }

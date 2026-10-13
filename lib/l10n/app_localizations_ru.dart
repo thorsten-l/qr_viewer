@@ -643,4 +643,58 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get infoKindVdv =>
       'Электронный билет на автобус и поезд (VDV eTicket, например Deutschlandticket). Цифровая подпись защищает его от изменений; QR Viewer проверяет её открытыми ключами транспортных компаний.';
+
+  @override
+  String get typeMatter => 'Устройство Matter';
+
+  @override
+  String get fieldVendorId => 'ID производителя';
+
+  @override
+  String get fieldProductId => 'ID продукта';
+
+  @override
+  String get fieldDiscriminator => 'Дискриминатор';
+
+  @override
+  String get fieldSetupCode => 'Код настройки (PIN)';
+
+  @override
+  String get fieldManualCode => 'Код ручного сопряжения';
+
+  @override
+  String get fieldDiscovery => 'Настройка через';
+
+  @override
+  String get fieldFlow => 'Порядок настройки';
+
+  @override
+  String get valueFlowStandard => 'Стандартный';
+
+  @override
+  String get valueFlowUserAction =>
+      'Сначала активируйте устройство (например, нажмите кнопку)';
+
+  @override
+  String get valueFlowCustom => 'Требуется приложение производителя';
+
+  @override
+  String get valueDiscoverySoftAp => 'Точка доступа Wi-Fi (SoftAP)';
+
+  @override
+  String get valueDiscoveryOnNetwork => 'Существующая сеть';
+
+  @override
+  String get infoKindMatter =>
+      'Данные для настройки устройства умного дома по стандарту Matter. Приложение умного дома (например, Apple Дом, Google Home) добавляет с их помощью устройство — отсканируйте код там или введите код ручного сопряжения. Любой, у кого есть этот код, может подключить устройство, пока оно в режиме настройки.';
+
+  @override
+  String get infoManuals => 'Руководства';
+
+  @override
+  String get typeBookmark => 'Закладка';
+
+  @override
+  String get infoKindBookmark =>
+      'Закладка: ссылка на сайт вместе с названием (формат MEBKM). Как и любая ссылка, она может вести куда угодно — открывайте её, только если доверяете источнику кода.';
 }

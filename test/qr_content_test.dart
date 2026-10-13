@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -230,10 +231,38 @@ void main() {
     });
 
     test('MEBKM', () {
+      expect(
+        kind(r'MEBKM:TITLE:Ostfalia;URL:https\://ostfalia.de;;'),
+        ContentKind.bookmark,
+      );
       expect(fields(r'MEBKM:TITLE:Ostfalia;URL:https\://ostfalia.de;;'), [
         'title: Ostfalia',
         'link: https://ostfalia.de',
       ]);
+    });
+
+    test('MEBKM: Beispiel von Docomo mit ¥ als Escape-Zeichen', () {
+      expect(
+        fields('MEBKM:TITLE:NTT DOCOMO;URL:http¥://i.nttdocomo.co.jp/f/;;'),
+        ['title: NTT DOCOMO', 'link: http://i.nttdocomo.co.jp/f/'],
+      );
+    });
+
+    test('MEBKM: maskierte Sonderzeichen im Titel', () {
+      expect(fields(r'MEBKM:TITLE:A\;B\:C;URL:example.com;;'), [
+        'title: A;B:C',
+        'link: example.com',
+      ]);
+    });
+
+    test('MEBKM: nur Titel oder nur Link, leer ist Text', () {
+      expect(fields('MEBKM:TITLE:Merken;;'), ['title: Merken']);
+      expect(kind('MEBKM:TITLE:Merken;;'), ContentKind.bookmark);
+      expect(fields(r'MEBKM:URL:https\://example.org;;'), [
+        'link: https://example.org',
+      ]);
+      expect(kind('MEBKM:TITLE:;URL:;;'), ContentKind.text);
+      expect(kind('mebkm:title:Klein;url:example.org;;'), ContentKind.bookmark);
     });
   });
 
@@ -409,8 +438,22 @@ void main() {
         ),
       ),
     );
+    expect(find.text('Lesezeichen'), findsWidgets);
+    expect(find.byIcon(Icons.bookmark_outline), findsOneWidget);
+    expect(find.text('Ostfalia'), findsOneWidget);
     expect(find.text('Rohinhalt'), findsOneWidget);
     expect(find.text('Host: ostfalia.de'), findsOneWidget);
     expect(find.text('Öffnen …'), findsOneWidget);
+  });
+
+  testWidgets('MEBKM nur mit Titel: Karte ohne Öffnen', (tester) async {
+    await tester.pumpWidget(
+      testApp(
+        const ResultPage(raw: 'MEBKM:TITLE:Merken;;', type: BarcodeType.text),
+      ),
+    );
+    expect(find.text('Lesezeichen'), findsWidgets);
+    expect(find.text('Merken'), findsOneWidget);
+    expect(find.text('Öffnen …'), findsNothing);
   });
 }

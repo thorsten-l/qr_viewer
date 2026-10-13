@@ -334,10 +334,10 @@ void main() {
               info: PackageInfo(
                 appName: 'QR Viewer',
                 packageName: 'de.l9g.qr_viewer',
-                version: '2.1.1',
-                buildNumber: '12',
+                version: '2.1.2',
+                buildNumber: '13',
               ),
-              buildDate: DateTime(2026, 10, 12, 8, 0),
+              buildDate: DateTime(2026, 10, 13, 8, 0),
             ),
           ),
         ),

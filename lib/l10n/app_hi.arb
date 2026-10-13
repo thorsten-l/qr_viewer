@@ -195,5 +195,22 @@
   "infoKindBook": "किसी किताब (ISBN) या पत्रिका (ISSN) का नंबर। यह ठीक इसी संस्करण की पहचान करता है – शीर्षक और लेखक कोड में नहीं होते।",
   "infoKindJson": "JSON फ़ॉर्मेट में संरचित डेटा, जैसा कंप्यूटर प्रोग्राम आपस में भेजते हैं। QR Viewer इसे केवल सुव्यवस्थित ढंग से दिखाता है।",
   "infoKindPostage": "Deutsche Post के डाक टिकट या Internetmarke पर लगा कोड। इसमें पत्र का ट्रैकिंग नंबर होता है।",
-  "infoKindVdv": "बस और ट्रेन का इलेक्ट्रॉनिक टिकट (VDV eTicket, जैसे Deutschlandticket)। डिजिटल हस्ताक्षर इसे बदलाव से बचाता है; QR Viewer परिवहन कंपनियों की सार्वजनिक कुंजियों से इसकी जाँच करता है।"
+  "infoKindVdv": "बस और ट्रेन का इलेक्ट्रॉनिक टिकट (VDV eTicket, जैसे Deutschlandticket)। डिजिटल हस्ताक्षर इसे बदलाव से बचाता है; QR Viewer परिवहन कंपनियों की सार्वजनिक कुंजियों से इसकी जाँच करता है।",
+  "typeMatter": "Matter डिवाइस",
+  "fieldVendorId": "निर्माता ID",
+  "fieldProductId": "उत्पाद ID",
+  "fieldDiscriminator": "डिस्क्रिमिनेटर",
+  "fieldSetupCode": "सेटअप कोड (PIN)",
+  "fieldManualCode": "मैनुअल पेयरिंग कोड",
+  "fieldDiscovery": "सेटअप माध्यम",
+  "fieldFlow": "सेटअप प्रक्रिया",
+  "valueFlowStandard": "मानक",
+  "valueFlowUserAction": "पहले डिवाइस सक्रिय करें (जैसे बटन दबाएँ)",
+  "valueFlowCustom": "निर्माता का ऐप ज़रूरी है",
+  "valueDiscoverySoftAp": "Wi-Fi एक्सेस पॉइंट (SoftAP)",
+  "valueDiscoveryOnNetwork": "मौजूदा नेटवर्क",
+  "infoKindMatter": "Matter मानक वाले स्मार्ट होम डिवाइस का सेटअप डेटा। आपका स्मार्ट होम ऐप (जैसे Apple Home, Google Home) इससे डिवाइस जोड़ता है – कोड वहीं स्कैन करें या मैनुअल पेयरिंग कोड टाइप करें। जब तक डिवाइस सेटअप मोड में है, यह कोड रखने वाला कोई भी उसे जोड़ सकता है।",
+  "infoManuals": "मैनुअल",
+  "typeBookmark": "बुकमार्क",
+  "infoKindBookmark": "बुकमार्क: किसी वेबसाइट का लिंक और उसका नाम (MEBKM फ़ॉर्मैट)। किसी भी लिंक की तरह यह कहीं भी ले जा सकता है – इसे तभी खोलें जब आपको कोड के स्रोत पर भरोसा हो।"
 }

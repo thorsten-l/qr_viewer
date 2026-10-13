@@ -195,5 +195,22 @@
   "infoKindBook": "書籍（ISBN）または雑誌（ISSN）の番号です。この版を正確に識別しますが、タイトルや著者はコードに含まれません。",
   "infoKindJson": "コンピュータープログラム同士がやり取りする JSON 形式の構造化データです。QR Viewer は見やすく字下げして表示するだけです。",
   "infoKindPostage": "ドイツポスト（Deutsche Post）の切手や Internetmarke に印刷されたコードで、郵便物の追跡番号が入っています。",
-  "infoKindVdv": "バスや電車の電子乗車券（VDV eTicket、例：Deutschlandticket）です。デジタル署名で改ざんから守られており、QR Viewer は交通事業者の公開鍵で署名を確認します。"
+  "infoKindVdv": "バスや電車の電子乗車券（VDV eTicket、例：Deutschlandticket）です。デジタル署名で改ざんから守られており、QR Viewer は交通事業者の公開鍵で署名を確認します。",
+  "typeMatter": "Matterデバイス",
+  "fieldVendorId": "ベンダーID",
+  "fieldProductId": "製品ID",
+  "fieldDiscriminator": "ディスクリミネーター",
+  "fieldSetupCode": "セットアップコード（PIN）",
+  "fieldManualCode": "手動ペアリングコード",
+  "fieldDiscovery": "セットアップ方法",
+  "fieldFlow": "セットアップの流れ",
+  "valueFlowStandard": "標準",
+  "valueFlowUserAction": "先に機器を有効にしてください（例：ボタンを押す）",
+  "valueFlowCustom": "メーカーのアプリが必要",
+  "valueDiscoverySoftAp": "Wi-Fi アクセスポイント（SoftAP）",
+  "valueDiscoveryOnNetwork": "既存のネットワーク",
+  "infoKindMatter": "Matter 規格に対応したスマートホーム機器のセットアップデータです。スマートホームアプリ（例：Apple ホーム、Google Home）はこれを使って機器を追加します。そのアプリでコードをスキャンするか、手動ペアリングコードを入力してください。機器がセットアップモードの間は、このコードを知っている人なら誰でもペアリングできます。",
+  "infoManuals": "マニュアル",
+  "typeBookmark": "ブックマーク",
+  "infoKindBookmark": "ブックマーク：名前付きのウェブサイトへのリンクです（MEBKM 形式）。どんなリンクも行き先はさまざまです。コードの出所を信頼できる場合にだけ開いてください。"
 }

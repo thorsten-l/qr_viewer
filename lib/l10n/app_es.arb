@@ -195,5 +195,22 @@
   "infoKindBook": "El número de un libro (ISBN) o una revista (ISSN). Identifica exactamente esta edición: el título y el autor no están en el código.",
   "infoKindJson": "Datos estructurados en formato JSON, como los que intercambian los programas informáticos. QR Viewer solo los muestra bien sangrados.",
   "infoKindPostage": "El código de un sello o Internetmarke de Deutsche Post. Contiene un número de seguimiento para la carta.",
-  "infoKindVdv": "Un billete electrónico de autobús y tren (VDV eTicket, p. ej. Deutschlandticket). Una firma digital lo protege contra cambios; QR Viewer la comprueba con las claves públicas de las empresas de transporte."
+  "infoKindVdv": "Un billete electrónico de autobús y tren (VDV eTicket, p. ej. Deutschlandticket). Una firma digital lo protege contra cambios; QR Viewer la comprueba con las claves públicas de las empresas de transporte.",
+  "typeMatter": "Dispositivo Matter",
+  "fieldVendorId": "ID del fabricante",
+  "fieldProductId": "ID del producto",
+  "fieldDiscriminator": "Discriminador",
+  "fieldSetupCode": "Código de configuración (PIN)",
+  "fieldManualCode": "Código de vinculación manual",
+  "fieldDiscovery": "Configuración por",
+  "fieldFlow": "Proceso de configuración",
+  "valueFlowStandard": "Estándar",
+  "valueFlowUserAction": "Activa primero el dispositivo (p. ej., pulsa un botón)",
+  "valueFlowCustom": "Se necesita la app del fabricante",
+  "valueDiscoverySoftAp": "Punto de acceso Wi-Fi (SoftAP)",
+  "valueDiscoveryOnNetwork": "Red existente",
+  "infoKindMatter": "Los datos de configuración de un dispositivo de hogar inteligente con el estándar Matter. Tu app de hogar inteligente (p. ej. Apple Home, Google Home) los usa para añadir el dispositivo: escanea el código allí o introduce el código de vinculación manual. Quien tenga este código puede vincular el dispositivo mientras esté en modo de configuración.",
+  "infoManuals": "Manuales",
+  "typeBookmark": "Marcador",
+  "infoKindBookmark": "Un marcador: un enlace a una página web junto con un nombre (formato MEBKM). Como cualquier enlace, puede llevar a cualquier sitio: ábrelo solo si confías en el origen del código."
 }

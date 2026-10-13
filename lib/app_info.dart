@@ -28,6 +28,11 @@ const appAuthor = 'Thorsten Ludewig';
 /// Fragen und Fehlerberichte; dieselbe Adresse steht im App Store.
 final supportUri = Uri.parse('https://github.com/thorsten-l/qr_viewer/issues');
 
+/// Anleitungen (PDF/ODT, Deutsch und Englisch) im Repository.
+final manualsUri = Uri.parse(
+  'https://github.com/thorsten-l/qr_viewer/tree/main/docs',
+);
+
 /// Datum und Uhrzeit im Format der jeweiligen Sprache.
 String formatDateTime(DateTime d, String locale) =>
     DateFormat.yMd(locale).add_Hm().format(d.toLocal());
@@ -102,13 +107,14 @@ class AppInfoDialog extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          // Support und Lizenzen nebeneinander; unten bleibt nur Schließen.
+          // Vier gleich breite Knöpfe in zwei Reihen; Schließen unten rechts.
           Row(
             children: [
               Expanded(
                 child: OutlinedButton.icon(
                   icon: const Icon(Icons.link),
-                  label: Text(l.infoSupport),
+                  label: _label(l.infoSupport),
+                  style: _compact,
                   onPressed: () => launchUrl(
                     supportUri,
                     mode: LaunchMode.externalApplication,
@@ -119,7 +125,8 @@ class AppInfoDialog extends StatelessWidget {
               Expanded(
                 child: OutlinedButton.icon(
                   icon: const Icon(Icons.description_outlined),
-                  label: Text(l.licenses),
+                  label: _label(l.licenses),
+                  style: _compact,
                   onPressed: () => showLicensePage(
                     context: context,
                     applicationName: 'QR Viewer',
@@ -129,14 +136,44 @@ class AppInfoDialog extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton.icon(
+                  icon: const Icon(Icons.menu_book_outlined),
+                  label: _label(l.infoManuals),
+                  style: _compact,
+                  onPressed: () => launchUrl(
+                    manualsUri,
+                    mode: LaunchMode.externalApplication,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: FilledButton.icon(
+                  icon: const Icon(Icons.close),
+                  label: _label(l.close),
+                  style: _compact,
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
-      actions: [
-        FilledButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text(l.close),
-        ),
-      ],
     );
   }
 }
+
+/// Knöpfe im Info-Dialog: gleich breit, daher wenig Innenabstand.
+const _compact = ButtonStyle(
+  padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 12)),
+);
+
+/// Beschriftung bleibt einzeilig und wird bei langen Übersetzungen kleiner.
+Widget _label(String text) => FittedBox(
+  fit: BoxFit.scaleDown,
+  child: Text(text, maxLines: 1, softWrap: false),
+);

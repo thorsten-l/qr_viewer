@@ -15,6 +15,7 @@
 import 'dart:convert';
 
 import 'gtin.dart';
+import 'matter.dart';
 
 /// Erkennt die üblichen Inhaltsformate von QR-Codes, wie sie z. B. in der
 /// ZXing-Liste "Barcode Contents" gesammelt sind:
@@ -26,10 +27,12 @@ import 'gtin.dart';
 /// * Telefon: `tel:` (RFC 3966)
 /// * SMS: `sms:` (RFC 5724), `SMSTO:`, `mms:`
 /// * Ort: `geo:` (RFC 5870)
-/// * Link: `http(s)://`, `www.`, `URL:`, `beispiel.de/pfad`, MEBKM und
-///   andere Schemata wie `market://` oder `fido:/`
+/// * Link: `http(s)://`, `www.`, `URL:`, `beispiel.de/pfad` und andere
+///   Schemata wie `market://` oder `fido:/`
+/// * Lesezeichen: MEBKM (NTT Docomo) mit Titel und Link
 /// * Überweisung: EPC-QR/GiroCode (EPC069-12)
 /// * Einmalpasswort (2FA): `otpauth://` (Google Authenticator Key Uri Format)
+/// * Smart-Home-Gerät: `MT:` (Matter-Onboarding-Code)
 /// * JSON-Objekte und -Listen
 /// * Artikelnummern (EAN/UPC/ITF-14) mit ISBN und ISSN, nur bei Strichcodes
 ///
@@ -37,6 +40,7 @@ import 'gtin.dart';
 enum ContentKind {
   text,
   url,
+  bookmark,
   email,
   phone,
   sms,
@@ -49,6 +53,7 @@ enum ContentKind {
   product,
   book,
   json,
+  matter,
 
   /// Matrixcode der Deutschen Post; entsteht aus Binärdaten, nicht hier.
   postage,
@@ -116,6 +121,13 @@ enum FieldLabel {
   issn,
   json,
   trackingNumber,
+  vendorId,
+  productId,
+  discriminator,
+  setupCode,
+  manualCode,
+  discovery,
+  flow,
 }
 
 /// Ein Feld des erkannten Inhalts. Datum und Betrag werden beim Anzeigen
@@ -196,6 +208,8 @@ ParsedContent parseContent(String raw, {bool productCode = false}) {
       result = _geo(s.substring(4));
     } else if (upper.startsWith('MEBKM:')) {
       result = _meBookmark(s.substring(6));
+    } else if (upper.startsWith('MT:')) {
+      result = _matter(s);
     } else if (upper.startsWith('OTPAUTH://')) {
       result = _otpAuth(s.substring(10));
     } else if (upper.startsWith('BCD\n') || upper.startsWith('BCD\r')) {
@@ -715,10 +729,18 @@ ParsedContent _matMsg(String body) {
   );
 }
 
+/// MEBKM: `MEBKM:TITLE:Name;URL:http\://beispiel.de;;`. Beide Felder
+/// dürfen leer sein. Docomo schreibt das Escape-Zeichen als `¥` (in
+/// Shift-JIS derselbe Code wie `\`); als Unicode kommt es mitunter als
+/// echtes `¥` an.
 ParsedContent _meBookmark(String body) {
-  final f = {for (final (k, v) in _docomoFields(body)) k: v};
+  final escaped = body.replaceAllMapped(
+    RegExp(r'¥([:;,\\¥])'),
+    (m) => '\\${m[1]}',
+  );
+  final f = {for (final (k, v) in _docomoFields(escaped)) k: v};
   return ParsedContent(
-    ContentKind.url,
+    ContentKind.bookmark,
     _nonEmpty([
       _field(FieldLabel.title, f['TITLE']),
       _field(FieldLabel.link, f['URL']),
@@ -967,5 +989,31 @@ ParsedContent _product(String digits) {
             ? prefix.countryText
             : prefix.range.name,
       ),
+  ]);
+}
+
+// ---------------------------------------------------------------------------
+// Matter (Smart Home)
+// ---------------------------------------------------------------------------
+
+/// Verbindungsarten und Ablauf stehen als Namen in den Feldern und werden
+/// beim Anzeigen übersetzt.
+ParsedContent? _matter(String s) {
+  final m = parseMatter(s);
+  if (m == null) return null;
+  String id(int v) =>
+      '0x${v.toRadixString(16).toUpperCase().padLeft(4, '0')} ($v)';
+  return ParsedContent(ContentKind.matter, [
+    ContentField(FieldLabel.manualCode, m.manualCode),
+    ContentField(FieldLabel.setupCode, m.passcode.toString().padLeft(8, '0')),
+    ContentField(FieldLabel.vendorId, id(m.vendorId)),
+    ContentField(FieldLabel.productId, id(m.productId)),
+    ContentField(FieldLabel.discriminator, '${m.discriminator}'),
+    if (m.discovery.isNotEmpty)
+      ContentField(
+        FieldLabel.discovery,
+        m.discovery.map((d) => d.name).join(','),
+      ),
+    ContentField(FieldLabel.flow, m.flow.name),
   ]);
 }

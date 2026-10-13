@@ -642,4 +642,57 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get infoKindVdv =>
       'تذكرة إلكترونية للحافلات والقطارات (VDV eTicket، مثل Deutschlandticket). يحميها توقيع رقمي من التعديل، ويتحقق منه QR Viewer باستخدام المفاتيح العامة لشركات النقل.';
+
+  @override
+  String get typeMatter => 'جهاز Matter';
+
+  @override
+  String get fieldVendorId => 'معرّف الشركة المصنّعة';
+
+  @override
+  String get fieldProductId => 'معرّف المنتج';
+
+  @override
+  String get fieldDiscriminator => 'المميِّز';
+
+  @override
+  String get fieldSetupCode => 'رمز الإعداد (PIN)';
+
+  @override
+  String get fieldManualCode => 'رمز الاقتران اليدوي';
+
+  @override
+  String get fieldDiscovery => 'الإعداد عبر';
+
+  @override
+  String get fieldFlow => 'طريقة الإعداد';
+
+  @override
+  String get valueFlowStandard => 'قياسي';
+
+  @override
+  String get valueFlowUserAction => 'فعّل الجهاز أولًا (مثل الضغط على زر)';
+
+  @override
+  String get valueFlowCustom => 'يلزم تطبيق الشركة المصنّعة';
+
+  @override
+  String get valueDiscoverySoftAp => 'نقطة وصول Wi-Fi (SoftAP)';
+
+  @override
+  String get valueDiscoveryOnNetwork => 'الشبكة الحالية';
+
+  @override
+  String get infoKindMatter =>
+      'بيانات إعداد جهاز منزل ذكي وفق معيار Matter. يستخدمها تطبيق المنزل الذكي (مثل Apple Home أو Google Home) لإضافة الجهاز، فامسح الرمز فيه أو أدخل رمز الاقتران اليدوي. يمكن لأي شخص لديه هذا الرمز إقران الجهاز ما دام في وضع الإعداد.';
+
+  @override
+  String get infoManuals => 'الأدلة';
+
+  @override
+  String get typeBookmark => 'إشارة مرجعية';
+
+  @override
+  String get infoKindBookmark =>
+      'إشارة مرجعية: رابط إلى موقع ويب مع اسم له (تنسيق MEBKM). مثل أي رابط، قد يقود إلى أي مكان، فلا تفتحه إلا إذا كنت تثق بمصدر الرمز.';
 }

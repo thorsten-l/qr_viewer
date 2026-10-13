@@ -195,5 +195,22 @@
   "infoKindBook": "Le numéro d'un livre (ISBN) ou d'un magazine (ISSN). Il identifie exactement cette édition – le titre et l'auteur ne figurent pas dans le code.",
   "infoKindJson": "Des données structurées au format JSON, comme en échangent les programmes informatiques. QR Viewer se contente de les afficher joliment indentées.",
   "infoKindPostage": "Le code d'un timbre ou d'une Internetmarke de la Deutsche Post. Il contient un numéro de suivi pour la lettre.",
-  "infoKindVdv": "Un titre de transport électronique pour bus et trains (VDV eTicket, p. ex. Deutschlandticket). Une signature numérique le protège contre les modifications ; QR Viewer la vérifie avec les clés publiques des entreprises de transport."
+  "infoKindVdv": "Un titre de transport électronique pour bus et trains (VDV eTicket, p. ex. Deutschlandticket). Une signature numérique le protège contre les modifications ; QR Viewer la vérifie avec les clés publiques des entreprises de transport.",
+  "typeMatter": "Appareil Matter",
+  "fieldVendorId": "ID du fabricant",
+  "fieldProductId": "ID du produit",
+  "fieldDiscriminator": "Discriminateur",
+  "fieldSetupCode": "Code de configuration (PIN)",
+  "fieldManualCode": "Code d'association manuel",
+  "fieldDiscovery": "Configuration via",
+  "fieldFlow": "Procédure de configuration",
+  "valueFlowStandard": "Standard",
+  "valueFlowUserAction": "Activez d'abord l'appareil (p. ex. appuyez sur un bouton)",
+  "valueFlowCustom": "App du fabricant requise",
+  "valueDiscoverySoftAp": "Point d'accès Wi-Fi (SoftAP)",
+  "valueDiscoveryOnNetwork": "Réseau existant",
+  "infoKindMatter": "Les données de configuration d'un appareil domotique selon le standard Matter. Votre app domotique (p. ex. Apple Maison, Google Home) les utilise pour ajouter l'appareil – scannez le code dans cette app ou saisissez le code d'association manuel. Toute personne disposant de ce code peut associer l'appareil tant qu'il est en mode configuration.",
+  "infoManuals": "Manuels",
+  "typeBookmark": "Favori",
+  "infoKindBookmark": "Un favori : un lien vers un site web avec un nom (format MEBKM). Comme tout lien, il peut mener n'importe où – ne l'ouvrez que si vous faites confiance à la provenance du code."
 }

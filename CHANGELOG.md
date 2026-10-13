@@ -5,6 +5,37 @@
 All notable changes to QR Viewer. Versions follow
 [Semantic Versioning](https://semver.org/), the build number follows the `+`.
 
+## [2.1.2+13] – 2026-10-13
+
+### Added
+
+- **Matter codes** (smart home, starting with `MT:`) are recognized and shown
+  as a “Matter device” card: manual pairing code (11 or 21 digits with
+  Verhoeff check digit, to type into Apple Home, Google Home etc.), setup code
+  (PIN), vendor and product ID, discriminator, discovery methods (Bluetooth
+  LE, Wi-Fi access point, existing network, Wi-Fi PAF) and setup flow. Invalid
+  codes stay text. The info button points out that anyone with the code can
+  pair the device while it is in setup mode.
+- **Info dialog:** “Manuals” button to the left of “Close”; it opens
+  github.com/thorsten-l/qr_viewer/tree/main/docs in the browser.
+- **Bookmarks (MEBKM)** get their own “Bookmark” card with title and link
+  instead of “URL”. The `¥` escape character from the Docomo specification is
+  understood, title or link may be missing; without a link there is no open
+  button.
+- **User guide** for everyday users as ODT and PDF in German and English
+  (`docs/`), with one page and a scannable example code per kind of code, a
+  privacy chapter and the generator in `tool/manual/`.
+- 17 new texts in all 13 languages.
+
+### Changed
+
+- **Info dialog:** Support, Licenses, Manuals and Close are four buttons of
+  equal width in two rows; Close has an icon. Long labels shrink slightly
+  instead of wrapping.
+- Privacy policy: setup codes of Matter devices are only processed on the
+  device and stay in the history like any other content; the “Manuals”
+  button opens a page on GitHub.
+
 ## [2.1.1+12] – 2026-10-12
 
 ### Added

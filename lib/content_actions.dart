@@ -64,7 +64,7 @@ ActionTarget? contentAction(
   platform ??= defaultTargetPlatform;
   Uri? uri;
   switch (content.kind) {
-    case ContentKind.url:
+    case ContentKind.url || ContentKind.bookmark:
       final link = content[FieldLabel.link];
       final u = link == null ? null : linkUri(link);
       if (u != null) return ActionTarget.uri(ContentAction.open, u);
@@ -129,7 +129,8 @@ ActionTarget? contentAction(
     case ContentKind.text ||
         ContentKind.wifi ||
         ContentKind.payment ||
-        ContentKind.json:
+        ContentKind.json ||
+        ContentKind.matter:
       break;
   }
   return null;

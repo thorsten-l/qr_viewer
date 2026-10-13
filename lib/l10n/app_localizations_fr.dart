@@ -645,4 +645,58 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get infoKindVdv =>
       'Un titre de transport électronique pour bus et trains (VDV eTicket, p. ex. Deutschlandticket). Une signature numérique le protège contre les modifications ; QR Viewer la vérifie avec les clés publiques des entreprises de transport.';
+
+  @override
+  String get typeMatter => 'Appareil Matter';
+
+  @override
+  String get fieldVendorId => 'ID du fabricant';
+
+  @override
+  String get fieldProductId => 'ID du produit';
+
+  @override
+  String get fieldDiscriminator => 'Discriminateur';
+
+  @override
+  String get fieldSetupCode => 'Code de configuration (PIN)';
+
+  @override
+  String get fieldManualCode => 'Code d\'association manuel';
+
+  @override
+  String get fieldDiscovery => 'Configuration via';
+
+  @override
+  String get fieldFlow => 'Procédure de configuration';
+
+  @override
+  String get valueFlowStandard => 'Standard';
+
+  @override
+  String get valueFlowUserAction =>
+      'Activez d\'abord l\'appareil (p. ex. appuyez sur un bouton)';
+
+  @override
+  String get valueFlowCustom => 'App du fabricant requise';
+
+  @override
+  String get valueDiscoverySoftAp => 'Point d\'accès Wi-Fi (SoftAP)';
+
+  @override
+  String get valueDiscoveryOnNetwork => 'Réseau existant';
+
+  @override
+  String get infoKindMatter =>
+      'Les données de configuration d\'un appareil domotique selon le standard Matter. Votre app domotique (p. ex. Apple Maison, Google Home) les utilise pour ajouter l\'appareil – scannez le code dans cette app ou saisissez le code d\'association manuel. Toute personne disposant de ce code peut associer l\'appareil tant qu\'il est en mode configuration.';
+
+  @override
+  String get infoManuals => 'Manuels';
+
+  @override
+  String get typeBookmark => 'Favori';
+
+  @override
+  String get infoKindBookmark =>
+      'Un favori : un lien vers un site web avec un nom (format MEBKM). Comme tout lien, il peut mener n\'importe où – ne l\'ouvrez que si vous faites confiance à la provenance du code.';
 }

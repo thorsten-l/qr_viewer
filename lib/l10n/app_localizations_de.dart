@@ -643,4 +643,58 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get infoKindVdv =>
       'Ein elektronischer Fahrschein für Bus und Bahn (VDV-eTicket, z. B. Deutschlandticket). Eine digitale Signatur schützt ihn vor Änderungen; QR Viewer prüft sie mit den öffentlich bekannten Schlüsseln der Verkehrsunternehmen.';
+
+  @override
+  String get typeMatter => 'Matter-Gerät';
+
+  @override
+  String get fieldVendorId => 'Hersteller-ID';
+
+  @override
+  String get fieldProductId => 'Produkt-ID';
+
+  @override
+  String get fieldDiscriminator => 'Diskriminator';
+
+  @override
+  String get fieldSetupCode => 'Einrichtungscode (PIN)';
+
+  @override
+  String get fieldManualCode => 'Manueller Kopplungscode';
+
+  @override
+  String get fieldDiscovery => 'Einrichtung über';
+
+  @override
+  String get fieldFlow => 'Einrichtungsablauf';
+
+  @override
+  String get valueFlowStandard => 'Standard';
+
+  @override
+  String get valueFlowUserAction =>
+      'Gerät erst aktivieren (z. B. Taste drücken)';
+
+  @override
+  String get valueFlowCustom => 'App des Herstellers erforderlich';
+
+  @override
+  String get valueDiscoverySoftAp => 'WLAN-Zugangspunkt (SoftAP)';
+
+  @override
+  String get valueDiscoveryOnNetwork => 'Vorhandenes Netzwerk';
+
+  @override
+  String get infoKindMatter =>
+      'Die Einrichtungsdaten eines Smart-Home-Geräts nach dem Matter-Standard. Deine Smart-Home-App (z. B. Apple Home, Google Home) nimmt das Gerät damit auf – scanne den Code dort oder tippe den manuellen Kopplungscode ein. Wer diesen Code hat, kann das Gerät koppeln, solange es im Einrichtungsmodus ist.';
+
+  @override
+  String get infoManuals => 'Anleitungen';
+
+  @override
+  String get typeBookmark => 'Lesezeichen';
+
+  @override
+  String get infoKindBookmark =>
+      'Ein Lesezeichen: ein Link zu einer Internetseite mit einem Namen dafür (Format MEBKM). Wie jeder Link kann er überallhin führen – öffne ihn nur, wenn du der Herkunft des Codes vertraust.';
 }

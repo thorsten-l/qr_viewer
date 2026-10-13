@@ -18,10 +18,12 @@ Rückfrage.
   ohne Schema (`beispiel.de/pfad`) und App-Links (`market://`, `fido:/`, …)
   werden erkannt.
 - **Inhalte erkannt:** Kontakt (vCard, MECARD, BIZCARD), Termin (iCalendar),
-  WLAN, E-Mail, Telefon, SMS, Ort (`geo:`), Link, Überweisung (GiroCode),
+  WLAN, E-Mail, Telefon, SMS, Ort (`geo:`), Link, Lesezeichen (MEBKM),
+  Überweisung (GiroCode),
   Einmalpasswort (`otpauth://`), JSON, Artikelnummer (EAN/UPC/ITF-14 mit
-  Prüfziffer und GS1-Land, ISBN, ISSN) und Matrixcode der Deutschen Post
-  (Sendungsnummer) erscheinen als Karte mit beschrifteten, einzeln
+  Prüfziffer und GS1-Land, ISBN, ISSN), Matrixcode der Deutschen Post
+  (Sendungsnummer) und Matter-Gerät (`MT:`, mit manuellem Kopplungscode)
+  erscheinen als Karte mit beschrifteten, einzeln
   kopierbaren Feldern; der Rohinhalt steht darunter. Ein Info-Knopf erklärt
   die Daten in einfachen Worten. Alles andere ist Text.
 - **Aktionen** je Inhalt, immer mit Rückfrage: E-Mail schreiben, Anrufen,
@@ -38,7 +40,7 @@ Rückfrage.
   Organisationsnummern, Klasse, Preis und Signaturprüfung. Die Rohdaten
   bleiben als Hex aufklappbar. Alles lokal auf dem Gerät.
 - **Info-Dialog** mit Entwickler, Version und Build-Datum sowie Knöpfen für
-  Support (GitHub-Issues) und Lizenzen.
+  Support (GitHub-Issues), Lizenzen und die [Anleitungen](docs/).
 - **Zoomstufen** der Rückkamera wie in der Kamera-App, ermittelt aus den
   Objektiven des Geräts, z. B. Auto · 0,5× · 1× · 2× · 5× (iPhone 16 Pro Max)
   oder 0,6× · 1× · 2× (Pixel 9a). Die Auswahl bleibt gespeichert.
@@ -102,11 +104,12 @@ Installationszeitpunkt.
 | `lib/content_actions.dart` | Aktionen je Inhalt (mailto, tel, sms, Karte, …), vCard-/iCalendar-Export |
 | `lib/gtin.dart` | Artikelnummern: Prüfziffer, UPC-E, GS1-Präfix, ISBN, ISSN |
 | `lib/deutsche_post.dart` | Matrixcode der Deutschen Post (Sendungsnummer) |
+| `lib/matter.dart` | Matter-Onboarding-Code (`MT:`, Base38) und manueller Kopplungscode |
 | `lib/history.dart` | Verlauf der letzten 25 Scans mit Suche und CSV/JSON-Export |
 | `lib/binary_payload.dart` | Erkennung von Binärinhalten, Hex-Darstellung |
 | `lib/vdv/` | VDV-eTicket: BER, ISO 9796-2, Zertifikate, Ticketdaten |
 | `assets/vdv_certs/` | Öffentliche VDV-CA-Schlüssel (CC0), siehe `tool/vdv/README.md` |
-| `lib/app_info.dart` | Info-Dialog mit Support- und Lizenz-Knopf |
+| `lib/app_info.dart` | Info-Dialog mit Support-, Lizenz- und Anleitungs-Knopf |
 | `lib/localization.dart`, `lib/l10n/` | Übersetzungen (generiert) |
 | `test/` | Widget- und Unit-Tests, auch für alle Sprachen |
 | `tool/vdv/` | Update-Skript und Herkunft der VDV-Schlüssel |
@@ -117,8 +120,8 @@ Installationszeitpunkt.
 
 ## Version
 
-Aktuell: **2.1.1** (Build 12). Version und Build-Nummer stehen in
-`pubspec.yaml`, z. B. `version: 2.1.1+12`. Für jeden Upload zu TestFlight oder
+Aktuell: **2.1.2** (Build 13). Version und Build-Nummer stehen in
+`pubspec.yaml`, z. B. `version: 2.1.2+13`. Für jeden Upload zu TestFlight oder
 Google Play muss die Build-Nummer hinter dem `+` steigen. Jede neue Version
 bekommt einen Eintrag in [CHANGELOG.md](CHANGELOG.md) (englisch) und
 [CHANGELOG_de.md](CHANGELOG_de.md) (deutsch).
@@ -134,7 +137,7 @@ Ablauf für eine neue Version:
 3. Prüfen: `flutter analyze`, `flutter test`,
    `python3 tool/license/add_headers.py --check`.
 4. iOS und Android wie unten bauen und hochladen.
-5. Committen und taggen, z. B. `git tag v2.1.1`.
+5. Committen und taggen, z. B. `git tag v2.1.2`.
 
 ### iOS / TestFlight
 

@@ -2,7 +2,7 @@
 
 [Deutsch](#deutsch) · [English](#english)
 
-Stand / Last updated: 11. Oktober 2026 / October 11, 2026
+Stand / Last updated: 13. Oktober 2026 / October 13, 2026
 
 ---
 
@@ -41,10 +41,12 @@ die du über das Betriebssystem erstellst (z. B. iCloud- oder Android-Backup).
 
 Die App erkennt übliche Inhaltsformate wie Kontakte, Termine, WLAN-Zugänge,
 Überweisungsdaten (GiroCode) oder Einmalpasswort-Schlüssel (2FA) und zeigt sie
-aufbereitet an, ebenso Artikelnummern (EAN, ISBN) und den Matrixcode der
-Deutschen Post. Das geschieht ausschließlich auf deinem Gerät. Beachte, dass
-solche Codes vertrauliche Angaben enthalten können, etwa WLAN-Passwörter;
-sie stehen wie jeder Inhalt im Verlauf, bis du ihn löschst. 2FA-Schlüssel
+aufbereitet an, ebenso Artikelnummern (EAN, ISBN), den Matrixcode der
+Deutschen Post und Einrichtungscodes von Smart-Home-Geräten (Matter). Das
+geschieht ausschließlich auf deinem Gerät. Beachte, dass solche Codes
+vertrauliche Angaben enthalten können, etwa WLAN-Passwörter oder den
+Einrichtungscode eines Matter-Geräts; sie stehen wie jeder Inhalt im Verlauf,
+bis du ihn löschst. 2FA-Schlüssel
 werden nicht gespeichert.
 
 ### Elektronische Tickets
@@ -66,8 +68,10 @@ jeweilige App. „Online nachschlagen“ übermittelt die Artikelnummer an
 DuckDuckGo bzw. die ISBN an Open Library, „Sendung verfolgen“ die
 Sendungsnummer an die Deutsche Post. Für die aufgerufene Website oder App gilt
 die Datenschutzerklärung ihres jeweiligen Anbieters. Der Knopf „Support“ im
-Info-Dialog öffnet die Seite https://github.com/thorsten-l/qr_viewer/issues in
-deinem Browser; dort gilt die Datenschutzerklärung von GitHub.
+Info-Dialog öffnet die Seite https://github.com/thorsten-l/qr_viewer/issues,
+der Knopf „Anleitungen“ die Seite
+https://github.com/thorsten-l/qr_viewer/tree/main/docs in deinem Browser;
+dort gilt die Datenschutzerklärung von GitHub.
 
 ### Zwischenablage, Teilen und Export
 
@@ -142,10 +146,12 @@ the operating system (e.g. iCloud or Android backup).
 
 The app recognizes common content formats such as contacts, events, Wi-Fi
 credentials, bank transfer data (GiroCode) or one-time password keys (2FA) and
-displays them in a readable form, as well as item numbers (EAN, ISBN) and the
-Deutsche Post matrix code. This happens solely on your device. Please note
-that such codes can contain confidential information, for example Wi-Fi
-passwords; like any content, they remain in the history until you clear it.
+displays them in a readable form, as well as item numbers (EAN, ISBN), the
+Deutsche Post matrix code and setup codes of smart home devices (Matter).
+This happens solely on your device. Please note that such codes can contain
+confidential information, for example Wi-Fi passwords or the setup code of a
+Matter device; like any content, they remain in the history until you clear
+it.
 2FA keys are not stored.
 
 ### Electronic tickets
@@ -165,8 +171,9 @@ content to the respective app only after you confirm. “Look up online” sends
 the item number to DuckDuckGo or the ISBN to Open Library, “Track shipment”
 sends the tracking number to Deutsche Post. The privacy policy of the
 respective website or app applies. The “Support” button in the info dialog opens
-https://github.com/thorsten-l/qr_viewer/issues in your browser; GitHub's
-privacy policy applies there.
+https://github.com/thorsten-l/qr_viewer/issues, the “Manuals” button
+https://github.com/thorsten-l/qr_viewer/tree/main/docs in your browser;
+GitHub's privacy policy applies there.
 
 ### Clipboard, sharing and export
 

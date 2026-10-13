@@ -642,4 +642,57 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get infoKindVdv =>
       'बस और ट्रेन का इलेक्ट्रॉनिक टिकट (VDV eTicket, जैसे Deutschlandticket)। डिजिटल हस्ताक्षर इसे बदलाव से बचाता है; QR Viewer परिवहन कंपनियों की सार्वजनिक कुंजियों से इसकी जाँच करता है।';
+
+  @override
+  String get typeMatter => 'Matter डिवाइस';
+
+  @override
+  String get fieldVendorId => 'निर्माता ID';
+
+  @override
+  String get fieldProductId => 'उत्पाद ID';
+
+  @override
+  String get fieldDiscriminator => 'डिस्क्रिमिनेटर';
+
+  @override
+  String get fieldSetupCode => 'सेटअप कोड (PIN)';
+
+  @override
+  String get fieldManualCode => 'मैनुअल पेयरिंग कोड';
+
+  @override
+  String get fieldDiscovery => 'सेटअप माध्यम';
+
+  @override
+  String get fieldFlow => 'सेटअप प्रक्रिया';
+
+  @override
+  String get valueFlowStandard => 'मानक';
+
+  @override
+  String get valueFlowUserAction => 'पहले डिवाइस सक्रिय करें (जैसे बटन दबाएँ)';
+
+  @override
+  String get valueFlowCustom => 'निर्माता का ऐप ज़रूरी है';
+
+  @override
+  String get valueDiscoverySoftAp => 'Wi-Fi एक्सेस पॉइंट (SoftAP)';
+
+  @override
+  String get valueDiscoveryOnNetwork => 'मौजूदा नेटवर्क';
+
+  @override
+  String get infoKindMatter =>
+      'Matter मानक वाले स्मार्ट होम डिवाइस का सेटअप डेटा। आपका स्मार्ट होम ऐप (जैसे Apple Home, Google Home) इससे डिवाइस जोड़ता है – कोड वहीं स्कैन करें या मैनुअल पेयरिंग कोड टाइप करें। जब तक डिवाइस सेटअप मोड में है, यह कोड रखने वाला कोई भी उसे जोड़ सकता है।';
+
+  @override
+  String get infoManuals => 'मैनुअल';
+
+  @override
+  String get typeBookmark => 'बुकमार्क';
+
+  @override
+  String get infoKindBookmark =>
+      'बुकमार्क: किसी वेबसाइट का लिंक और उसका नाम (MEBKM फ़ॉर्मैट)। किसी भी लिंक की तरह यह कहीं भी ले जा सकता है – इसे तभी खोलें जब आपको कोड के स्रोत पर भरोसा हो।';
 }

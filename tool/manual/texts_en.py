@@ -35,7 +35,7 @@ UI = dict(
 
 TITLE = "QR Viewer"
 SUBTITLE = "Scan codes safely – simply explained"
-VERSION_LINE = "Manual for version 2.1.1 · October 2026"
+VERSION_LINE = "Manual for version 2.1.2 · October 2026"
 
 CHAPTERS = [
     ("1 What is QR Viewer?", [
@@ -135,7 +135,7 @@ CHAPTERS = [
         "tickets, for example. QR Viewer shows them as columns of numbers "
         "(hex view). Tickets following the German VDV standard, such as the "
         "Deutschlandticket, can even be decoded and shown in readable form "
-        "(see appendix A.28).",
+        "(see appendix A.30).",
     ]),
     ("5 Actions – always with a confirmation", [
         "At the bottom of the result page you find an action button that "
@@ -209,6 +209,9 @@ CHAPTERS = [
             "**Support** opens the page for questions and bug reports in the "
             "browser (github.com/thorsten-l/qr_viewer/issues).",
             "**Licenses** shows the licences of the components used.",
+            "**Manuals** opens the page in the browser where this manual can "
+            "be downloaded in English and German "
+            "(github.com/thorsten-l/qr_viewer/tree/main/docs).",
         ],
     ]),
     ("9 Privacy – how QR Viewer protects your data", [
@@ -244,6 +247,10 @@ CHAPTERS = [
             "history. The result page points this out.",
             "**Wi-Fi passwords** stay in the history like any other content "
             "until you delete them.",
+            "**Setup codes of smart home devices** (Matter) are only "
+            "displayed. The app does not set up any device and sends nothing "
+            "to manufacturers or home apps. These codes also stay in the "
+            "history until you delete them.",
             "**Tickets** (e.g. Deutschlandticket) are decoded only on your "
             "device. The app shows the name shortened, exactly as it is "
             "stored in the ticket (e.g. “G…e M…n”). To check that a ticket is "
@@ -331,8 +338,8 @@ APPENDIX_INTRO = [
     "The example codes contain German sample data, because QR Viewer was "
     "developed in Germany. All names, numbers and addresses are made up – "
     "with two exceptions: the location is the real town hall in "
-    "Wolfenbüttel, and the first ticket (A.28) is an official sample ticket "
-    "in the name of Geraldine Mustermann. The second ticket (A.29) is a "
+    "Wolfenbüttel, and the first ticket (A.30) is an official sample ticket "
+    "in the name of Geraldine Mustermann. The second ticket (A.31) is a "
     "self-made test ticket.",
     ("note", "Two kinds of code (Micro QR code and GS1 DataBar) can only be "
      "read by the iPhone and iPad version, because Android's recognition "
@@ -379,6 +386,25 @@ PAGES = {
         care="Check the host! Fraudsters use addresses that look like real "
         "ones (e.g. “wolfenbuettel-parking.info”). If in doubt, do not open "
         "the link."),
+    "qr_bookmark": dict(
+        title="QR code with a bookmark (MEBKM)",
+        mode="QR code or All codes", devices=ALL,
+        what="A **bookmark** is a link together with a name for it. The "
+        "MEBKM format comes from the Japanese mobile operator NTT Docomo, "
+        "whose phones could save the link directly as a bookmark. Many "
+        "scanner apps still create it today.",
+        where="On posters, flyers and business cards, especially with codes "
+        "from older or Japanese QR code generators.",
+        example="The bookmark “Stadt Wolfenbüttel” (town of Wolfenbüttel) "
+        "with the link https://www.wolfenbuettel.de/.",
+        app="The “Bookmark” data card shows the name and the link, with the "
+        "host above it. A bookmark without a link only shows the name; then "
+        "there is no open button.",
+        do="“Open …” opens the link in the browser after a confirmation, "
+        "just like a normal link. You can save it as a bookmark there "
+        "yourself.",
+        care="The name can claim anything – what counts is the host. Check "
+        "it before opening the link."),
     "qr_email": dict(
         title="QR code with an email", mode="QR code or All codes",
         devices=ALL,
@@ -530,6 +556,30 @@ PAGES = {
         "else happens with the data.",
         do="Copy or share.",
         care="Nothing special – JSON cannot trigger anything."),
+    "qr_matter": dict(
+        title="QR code of a smart home device (Matter)",
+        mode="QR code or All codes", devices=ALL,
+        what="**Matter** is a common standard for smart home devices such "
+        "as lights, plugs, thermostats or sensors – supported by Apple, "
+        "Google, Amazon, Samsung and many manufacturers. The QR code always "
+        "starts with “MT:” and contains everything a smart home app needs to "
+        "set up the device.",
+        where="On the device itself, on the packaging or on a small card in "
+        "the manual of Matter-enabled smart home devices.",
+        example="The example code from the Matter specification: a test "
+        "device (vendor ID 0xFFF1, reserved for testing) with the setup code "
+        "20202021, reachable via Bluetooth LE.",
+        app="The data card shows the **manual pairing code** "
+        "(3497-011-2332), the setup code (PIN), vendor and product ID, the "
+        "discriminator, which connection can be used to set up the device "
+        "and whether you need to press a button first, for example.",
+        do="QR Viewer does not set up the device itself. Scan the code in "
+        "your smart home app (e.g. Apple Home, Google Home) – or type in the "
+        "manual pairing code there if scanning does not work. The copy icon "
+        "next to the field lets you copy it.",
+        care="Anyone with this code can pair the device while it is in setup "
+        "mode. Do not show it around, and do not stick the label where "
+        "others can see it."),
     "microqr": dict(
         title="Micro QR code", mode="All codes", devices=APPLE,
         what="The **Micro QR code** is the little sister of the QR code: "
@@ -781,9 +831,9 @@ PAGES = {
 }
 
 ORDER = [
-    "qr_text", "qr_url", "qr_email", "qr_phone", "qr_sms", "qr_geo",
+    "qr_text", "qr_url", "qr_bookmark", "qr_email", "qr_phone", "qr_sms", "qr_geo",
     "qr_contact", "qr_event", "qr_wifi", "qr_payment", "qr_otp", "qr_json",
-    "microqr", "ean13", "ean13_isbn", "ean8", "upca", "upce", "itf14",
+    "qr_matter", "microqr", "ean13", "ean13_isbn", "ean8", "upca", "upce", "itf14",
     "code128", "code39", "code93", "codabar", "itf", "databar",
     "datamatrix_post", "pdf417", "aztec_vdv", "aztec_vdv_test",
 ]

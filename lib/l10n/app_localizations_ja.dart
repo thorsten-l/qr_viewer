@@ -638,4 +638,57 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get infoKindVdv =>
       'バスや電車の電子乗車券（VDV eTicket、例：Deutschlandticket）です。デジタル署名で改ざんから守られており、QR Viewer は交通事業者の公開鍵で署名を確認します。';
+
+  @override
+  String get typeMatter => 'Matterデバイス';
+
+  @override
+  String get fieldVendorId => 'ベンダーID';
+
+  @override
+  String get fieldProductId => '製品ID';
+
+  @override
+  String get fieldDiscriminator => 'ディスクリミネーター';
+
+  @override
+  String get fieldSetupCode => 'セットアップコード（PIN）';
+
+  @override
+  String get fieldManualCode => '手動ペアリングコード';
+
+  @override
+  String get fieldDiscovery => 'セットアップ方法';
+
+  @override
+  String get fieldFlow => 'セットアップの流れ';
+
+  @override
+  String get valueFlowStandard => '標準';
+
+  @override
+  String get valueFlowUserAction => '先に機器を有効にしてください（例：ボタンを押す）';
+
+  @override
+  String get valueFlowCustom => 'メーカーのアプリが必要';
+
+  @override
+  String get valueDiscoverySoftAp => 'Wi-Fi アクセスポイント（SoftAP）';
+
+  @override
+  String get valueDiscoveryOnNetwork => '既存のネットワーク';
+
+  @override
+  String get infoKindMatter =>
+      'Matter 規格に対応したスマートホーム機器のセットアップデータです。スマートホームアプリ（例：Apple ホーム、Google Home）はこれを使って機器を追加します。そのアプリでコードをスキャンするか、手動ペアリングコードを入力してください。機器がセットアップモードの間は、このコードを知っている人なら誰でもペアリングできます。';
+
+  @override
+  String get infoManuals => 'マニュアル';
+
+  @override
+  String get typeBookmark => 'ブックマーク';
+
+  @override
+  String get infoKindBookmark =>
+      'ブックマーク：名前付きのウェブサイトへのリンクです（MEBKM 形式）。どんなリンクも行き先はさまざまです。コードの出所を信頼できる場合にだけ開いてください。';
 }

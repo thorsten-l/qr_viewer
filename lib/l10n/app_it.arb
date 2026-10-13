@@ -195,5 +195,22 @@
   "infoKindBook": "Il numero di un libro (ISBN) o di una rivista (ISSN). Identifica esattamente questa edizione: titolo e autore non sono nel codice.",
   "infoKindJson": "Dati strutturati in formato JSON, come quelli scambiati tra programmi. QR Viewer si limita a mostrarli ben indentati.",
   "infoKindPostage": "Il codice su un francobollo o Internetmarke di Deutsche Post. Contiene un numero di tracciamento per la lettera.",
-  "infoKindVdv": "Un biglietto elettronico per autobus e treni (VDV eTicket, ad es. Deutschlandticket). Una firma digitale lo protegge da modifiche; QR Viewer la verifica con le chiavi pubbliche delle aziende di trasporto."
+  "infoKindVdv": "Un biglietto elettronico per autobus e treni (VDV eTicket, ad es. Deutschlandticket). Una firma digitale lo protegge da modifiche; QR Viewer la verifica con le chiavi pubbliche delle aziende di trasporto.",
+  "typeMatter": "Dispositivo Matter",
+  "fieldVendorId": "ID produttore",
+  "fieldProductId": "ID prodotto",
+  "fieldDiscriminator": "Discriminatore",
+  "fieldSetupCode": "Codice di configurazione (PIN)",
+  "fieldManualCode": "Codice di associazione manuale",
+  "fieldDiscovery": "Configurazione tramite",
+  "fieldFlow": "Procedura di configurazione",
+  "valueFlowStandard": "Standard",
+  "valueFlowUserAction": "Attiva prima il dispositivo (ad es. premi un pulsante)",
+  "valueFlowCustom": "Serve l'app del produttore",
+  "valueDiscoverySoftAp": "Punto di accesso Wi-Fi (SoftAP)",
+  "valueDiscoveryOnNetwork": "Rete esistente",
+  "infoKindMatter": "I dati di configurazione di un dispositivo smart home con lo standard Matter. La tua app smart home (ad es. Apple Casa, Google Home) li usa per aggiungere il dispositivo: scansiona il codice lì o inserisci il codice di associazione manuale. Chiunque abbia questo codice può associare il dispositivo finché è in modalità di configurazione.",
+  "infoManuals": "Manuali",
+  "typeBookmark": "Segnalibro",
+  "infoKindBookmark": "Un segnalibro: un link a un sito web insieme a un nome (formato MEBKM). Come ogni link può portare ovunque: aprilo solo se ti fidi della provenienza del codice."
 }

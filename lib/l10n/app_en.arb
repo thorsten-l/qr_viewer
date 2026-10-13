@@ -829,5 +829,73 @@
   "infoKindVdv": "An electronic ticket for buses and trains (VDV eTicket, e.g. Deutschlandticket). A digital signature protects it against changes; QR Viewer checks it with the publicly known keys of the transport companies.",
   "@infoKindVdv": {
     "description": "Info-Dialog: Erklärung VDV-eTicket"
+  },
+  "typeMatter": "Matter device",
+  "@typeMatter": {
+    "description": "Inhaltsart Matter-Gerät"
+  },
+  "fieldVendorId": "Vendor ID",
+  "@fieldVendorId": {
+    "description": "Matter: Hersteller-ID"
+  },
+  "fieldProductId": "Product ID",
+  "@fieldProductId": {
+    "description": "Matter: Produkt-ID"
+  },
+  "fieldDiscriminator": "Discriminator",
+  "@fieldDiscriminator": {
+    "description": "Matter: Diskriminator"
+  },
+  "fieldSetupCode": "Setup code (PIN)",
+  "@fieldSetupCode": {
+    "description": "Matter: Einrichtungscode (Passcode)"
+  },
+  "fieldManualCode": "Manual pairing code",
+  "@fieldManualCode": {
+    "description": "Matter: manueller Kopplungscode"
+  },
+  "fieldDiscovery": "Setup via",
+  "@fieldDiscovery": {
+    "description": "Matter: Verbindungsarten beim Einrichten"
+  },
+  "fieldFlow": "Setup flow",
+  "@fieldFlow": {
+    "description": "Matter: Einrichtungsablauf"
+  },
+  "valueFlowStandard": "Standard",
+  "@valueFlowStandard": {
+    "description": "Matter-Ablauf: Standard"
+  },
+  "valueFlowUserAction": "Activate the device first (e.g. press a button)",
+  "@valueFlowUserAction": {
+    "description": "Matter-Ablauf: Gerät erst aktivieren"
+  },
+  "valueFlowCustom": "Manufacturer's app required",
+  "@valueFlowCustom": {
+    "description": "Matter-Ablauf: Hersteller-App nötig"
+  },
+  "valueDiscoverySoftAp": "Wi-Fi access point (SoftAP)",
+  "@valueDiscoverySoftAp": {
+    "description": "Matter-Verbindung: WLAN-Zugangspunkt des Geräts"
+  },
+  "valueDiscoveryOnNetwork": "Existing network",
+  "@valueDiscoveryOnNetwork": {
+    "description": "Matter-Verbindung: Gerät ist schon im Netzwerk"
+  },
+  "infoKindMatter": "The setup data of a smart home device using the Matter standard. Your smart home app (e.g. Apple Home, Google Home) uses it to add the device – scan the code there or type in the manual pairing code. Anyone with this code can pair the device while it is in setup mode.",
+  "@infoKindMatter": {
+    "description": "Info-Dialog: Erklärung Matter-Gerät"
+  },
+  "infoManuals": "Manuals",
+  "@infoManuals": {
+    "description": "Info-Dialog: Knopf zu den Anleitungen"
+  },
+  "typeBookmark": "Bookmark",
+  "@typeBookmark": {
+    "description": "Inhaltsart Lesezeichen (MEBKM)"
+  },
+  "infoKindBookmark": "A bookmark: a link to a website together with a name for it (MEBKM format). Like any link, it can lead anywhere – only open it if you trust where the code comes from.",
+  "@infoKindBookmark": {
+    "description": "Info-Dialog: Erklärung Lesezeichen"
   }
 }

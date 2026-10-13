@@ -27,6 +27,7 @@ import 'content_actions.dart';
 import 'deutsche_post.dart';
 import 'gtin.dart';
 import 'localization.dart';
+import 'matter.dart';
 import 'qr_content.dart';
 import 'scan_mode.dart';
 import 'vdv/vdv_ticket.dart';
@@ -66,6 +67,7 @@ IconData typeIcon(BarcodeType type) => switch (type) {
 
 String kindLabel(ContentKind kind, AppLocalizations l) => switch (kind) {
   ContentKind.url => l.typeUrl,
+  ContentKind.bookmark => l.typeBookmark,
   ContentKind.email => l.typeEmail,
   ContentKind.phone => l.typePhone,
   ContentKind.sms => l.typeSms,
@@ -78,12 +80,14 @@ String kindLabel(ContentKind kind, AppLocalizations l) => switch (kind) {
   ContentKind.product => l.typeProduct,
   ContentKind.book => l.typeIsbn,
   ContentKind.json => l.typeJson,
+  ContentKind.matter => l.typeMatter,
   ContentKind.postage => l.typePostage,
   ContentKind.text => l.typeText,
 };
 
 IconData kindIcon(ContentKind kind) => switch (kind) {
   ContentKind.url => Icons.link,
+  ContentKind.bookmark => Icons.bookmark_outline,
   ContentKind.email => Icons.mail_outline,
   ContentKind.phone => Icons.phone_outlined,
   ContentKind.sms => Icons.sms_outlined,
@@ -96,6 +100,7 @@ IconData kindIcon(ContentKind kind) => switch (kind) {
   ContentKind.product => Icons.shopping_bag_outlined,
   ContentKind.book => Icons.menu_book_outlined,
   ContentKind.json => Icons.data_object,
+  ContentKind.matter => Icons.home_outlined,
   ContentKind.postage => Icons.local_post_office_outlined,
   ContentKind.text => Icons.notes,
 };
@@ -152,6 +157,7 @@ IconData actionIcon(ContentAction a) => switch (a) {
 String kindInfo(ContentKind kind, AppLocalizations l) => switch (kind) {
   ContentKind.text => l.infoKindText,
   ContentKind.url => l.infoKindUrl,
+  ContentKind.bookmark => l.infoKindBookmark,
   ContentKind.email => l.infoKindEmail,
   ContentKind.phone => l.infoKindPhone,
   ContentKind.sms => l.infoKindSms,
@@ -164,6 +170,7 @@ String kindInfo(ContentKind kind, AppLocalizations l) => switch (kind) {
   ContentKind.product => l.infoKindProduct,
   ContentKind.book => l.infoKindBook,
   ContentKind.json => l.infoKindJson,
+  ContentKind.matter => l.infoKindMatter,
   ContentKind.postage => l.infoKindPostage,
 };
 
@@ -310,6 +317,13 @@ String fieldLabel(FieldLabel label, AppLocalizations l) => switch (label) {
   FieldLabel.issn => l.fieldIssn,
   FieldLabel.json => l.typeJson,
   FieldLabel.trackingNumber => l.fieldTrackingNumber,
+  FieldLabel.vendorId => l.fieldVendorId,
+  FieldLabel.productId => l.fieldProductId,
+  FieldLabel.discriminator => l.fieldDiscriminator,
+  FieldLabel.setupCode => l.fieldSetupCode,
+  FieldLabel.manualCode => l.fieldManualCode,
+  FieldLabel.discovery => l.fieldDiscovery,
+  FieldLabel.flow => l.fieldFlow,
 };
 
 /// Anzeigewert: Datum und Betrag passend zur Sprache, sonst der Text.
@@ -337,6 +351,25 @@ String fieldValue(ContentField f, AppLocalizations l, String locale) {
       Gs1Range.global => l.valueGs1Global,
       _ => f.value,
     },
+    FieldLabel.flow => switch (MatterFlow.values.asNameMap()[f.value]) {
+      MatterFlow.standard => l.valueFlowStandard,
+      MatterFlow.userAction => l.valueFlowUserAction,
+      MatterFlow.custom => l.valueFlowCustom,
+      null => f.value,
+    },
+    FieldLabel.discovery =>
+      f.value
+          .split(',')
+          .map(
+            (name) => switch (MatterDiscovery.values.asNameMap()[name]) {
+              MatterDiscovery.softAp => l.valueDiscoverySoftAp,
+              MatterDiscovery.ble => 'Bluetooth LE',
+              MatterDiscovery.onNetwork => l.valueDiscoveryOnNetwork,
+              MatterDiscovery.wifiPaf => 'Wi-Fi PAF',
+              null => name,
+            },
+          )
+          .join(', '),
     _ => f.value,
   };
 }
