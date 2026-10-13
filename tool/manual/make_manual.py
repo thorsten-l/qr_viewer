@@ -516,6 +516,8 @@ class Manual:
 # --- Inhalt -----------------------------------------------------------------
 
 PROJECT_URL = "https://github.com/thorsten-l/qr_viewer"
+AUTHOR = "Thorsten Ludewig"
+AUTHOR_EMAIL = "t.ludewig@gmail.com"
 
 
 def title_icon():
@@ -558,6 +560,10 @@ def title_page(m):
     m.p("", m.s_center)
     m.p(texts.VERSION_LINE, m.s_subtitle)
     m.p(texts.UI["platforms"], m.s_center)
+    m.p("", m.s_center)
+    m.p("", m.s_center)
+    m.p(f"**{AUTHOR}**", m.s_center)
+    m.p(AUTHOR_EMAIL, m.s_center)
 
 
 def appendix(m, examples):
