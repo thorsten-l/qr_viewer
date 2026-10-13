@@ -47,6 +47,30 @@ content first. Links and other actions start only after a confirmation.
 
 What changed in which version is listed in the [changelog](CHANGELOG.md).
 
+## User guide
+
+A user guide for everyday users explains scanning, the result page, actions,
+the history and privacy in plain words. Its appendix shows every supported
+kind of code on its own page, with a scannable example code and the matching
+result page of the app:
+
+- English: [QR-Viewer-Manual.pdf](docs/QR-Viewer-Manual.pdf)
+  ([ODT](docs/QR-Viewer-Manual.odt))
+- German: [QR-Viewer-Anleitung.pdf](docs/QR-Viewer-Anleitung.pdf)
+  ([ODT](docs/QR-Viewer-Anleitung.odt))
+
+The guides are generated with the scripts in `tool/manual/`:
+
+```sh
+MANUAL_LANG=en flutter test tool/manual/render_screens_test.dart  # app screens
+/tmp/qrv-venv/bin/python tool/manual/make_manual.py en              # ODT + PDF
+```
+
+The Python environment needs `odfpy`, `zxing-cpp`, `pillow`, `numpy`,
+`pypdfium2`, `ppf-datamatrix` and `aztec_code_generator`; LibreOffice is used
+for the page numbers and the PDF. Use `de` instead of `en` for the German
+guide.
+
 ## Privacy
 
 The app does not collect any personal data. Details are in the
@@ -85,8 +109,10 @@ the build date.
 | `lib/localization.dart`, `lib/l10n/` | Translations (generated) |
 | `test/` | Widget and unit tests, including all languages |
 | `tool/vdv/` | Update script and origin of the VDV keys |
+| `tool/manual/` | Generator for the user guides (example codes, app screens, ODT/PDF) |
 | `tool/` | Scripts for icon, translations, store graphics, license headers, release key |
 | `screenshots/` | Source images and final graphics for the App Store and Google Play |
+| `docs/` | User guides: `QR-Viewer-Manual.odt`/`.pdf` (English), `QR-Viewer-Anleitung.odt`/`.pdf` (German) |
 
 ## Version
 

@@ -48,6 +48,30 @@ Rückfrage.
 
 Was sich in welcher Version geändert hat, steht im [Changelog](CHANGELOG_de.md).
 
+## Anleitung
+
+Eine Anleitung für Alltagsnutzer erklärt Scannen, Ergebnisseite, Aktionen,
+Verlauf und Datenschutz in einfachen Worten. Im Anhang steht jede unterstützte
+Codeart auf einer eigenen Seite, mit einem scanbaren Beispielcode und der
+passenden Ergebnisseite der App:
+
+- Deutsch: [QR-Viewer-Anleitung.pdf](docs/QR-Viewer-Anleitung.pdf)
+  ([ODT](docs/QR-Viewer-Anleitung.odt))
+- Englisch: [QR-Viewer-Manual.pdf](docs/QR-Viewer-Manual.pdf)
+  ([ODT](docs/QR-Viewer-Manual.odt))
+
+Die Anleitungen entstehen mit den Skripten in `tool/manual/`:
+
+```sh
+MANUAL_LANG=de flutter test tool/manual/render_screens_test.dart  # App-Ansichten
+/tmp/qrv-venv/bin/python tool/manual/make_manual.py de              # ODT + PDF
+```
+
+Die Python-Umgebung braucht `odfpy`, `zxing-cpp`, `pillow`, `numpy`,
+`pypdfium2`, `ppf-datamatrix` und `aztec_code_generator`; LibreOffice erzeugt
+die Seitenzahlen und das PDF. Für die englische Anleitung `en` statt `de`
+angeben.
+
 ## Datenschutz
 
 Die App erhebt keine personenbezogenen Daten. Details stehen in der
@@ -86,8 +110,10 @@ Installationszeitpunkt.
 | `lib/localization.dart`, `lib/l10n/` | Übersetzungen (generiert) |
 | `test/` | Widget- und Unit-Tests, auch für alle Sprachen |
 | `tool/vdv/` | Update-Skript und Herkunft der VDV-Schlüssel |
+| `tool/manual/` | Generator der Anleitungen (Beispielcodes, App-Ansichten, ODT/PDF) |
 | `tool/` | Skripte für Icon, Übersetzungen, Store-Grafiken, Lizenzköpfe, Release-Schlüssel |
 | `screenshots/` | Quellbilder und fertige Grafiken für App Store und Google Play |
+| `docs/` | Anleitungen: `QR-Viewer-Anleitung.odt`/`.pdf` (Deutsch), `QR-Viewer-Manual.odt`/`.pdf` (Englisch) |
 
 ## Version
 
