@@ -28,6 +28,7 @@ docs/QR-Viewer-Anleitung.pdf.
 
 import codecs
 import importlib
+import importlib.util
 import json
 import re
 import subprocess
@@ -514,14 +515,46 @@ class Manual:
 
 # --- Inhalt -----------------------------------------------------------------
 
+PROJECT_URL = "https://github.com/thorsten-l/qr_viewer"
+
+
+def title_icon():
+    """App-Symbol (QR-Code mit Auge) mit der Projekt-URL als Inhalt.
+
+    Zeichnet mit tool/app_icon/make_icon.py; nur der Inhalt ist anders,
+    daher eine größere QR-Version. Das Auge verdeckt Module, die die
+    Fehlerkorrektur H ausgleicht – geprüft wird in mehreren Größen.
+    """
+    import qrcode
+    spec = importlib.util.spec_from_file_location(
+        "make_icon", ROOT / "tool" / "app_icon" / "make_icon.py")
+    icon = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(icon)
+
+    def matrix(text=None):
+        qr = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_H,
+                           border=0)
+        qr.add_data(PROJECT_URL)
+        qr.make(fit=True)
+        return qr.get_matrix()
+
+    icon.matrix = matrix
+    img = icon.render(1024, 0.08).convert("RGB")
+    for size in (1024, 400, 200):
+        found = zxingcpp.read_barcodes(img.resize((size, size), Image.LANCZOS))
+        if not found or found[0].text != PROJECT_URL:
+            sys.exit(f"Titel-QR-Code in {size} px nicht lesbar")
+    path = BUILD / "title_qr.png"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    img.save(path)
+    return path
+
+
 def title_page(m):
     m.p(texts.TITLE, m.s_title)
     m.p(texts.SUBTITLE, m.s_subtitle)
-    icon = ROOT / "assets" / "app_icon.png"
-    if not icon.exists():
-        icon = next((ROOT / "tool" / "app_icon").glob("*.png"), None)
-    if icon:
-        m.image(icon, 5.0, shot=False)
+    m.image(title_icon(), 5.0, shot=False)
+    m.p(PROJECT_URL, m.s_center)
     m.p("", m.s_center)
     m.p(texts.VERSION_LINE, m.s_subtitle)
     m.p(texts.UI["platforms"], m.s_center)
@@ -579,16 +612,19 @@ def appendix(m, examples):
         m.p(f"**{ui['care']}** " + page["care"], m.s_note)
 
 
-# Kapitel, die auf einer neuen Seite beginnen.
-NEW_PAGE = ("1 ", "9 ")
+# Kapitel, die immer auf einer neuen Seite beginnen (nach dem Inhalt).
+NEW_PAGE = ("1 ",)
 
 
-def build(examples, entries, pages):
+def build(examples, entries, pages, breaks=frozenset()):
+    """breaks: Kapitel, die wegen ihrer Lage im unteren Seitendrittel auf
+    eine neue Seite rücken."""
     m = Manual()
     title_page(m)
     m.toc(entries, pages)
     for heading, blocks in texts.CHAPTERS:
-        m.h(heading, 1, m.s_h1_page if heading.startswith(NEW_PAGE) else None)
+        new_page = heading.startswith(NEW_PAGE) or heading in breaks
+        m.h(heading, 1, m.s_h1_page if new_page else None)
         m.blocks(blocks)
     appendix(m, examples)
     m.save(OUT)
@@ -604,12 +640,13 @@ def to_pdf(odt, outdir):
 
 def heading_pages(pdf_path, entries):
     """Seite jeder Überschrift: die erste Seite (nach dem Inhaltsverzeichnis),
-    deren Text die Überschrift enthält."""
+    deren Text die Überschrift enthält. Dazu die Kapitel (Ebene 1), die im
+    unteren Drittel ihrer Seite beginnen."""
     norm = lambda t: re.sub(r"\s+", " ", t).strip()
     pdf = pypdfium2.PdfDocument(str(pdf_path))
     texts_ = [norm(pdf[i].get_textpage().get_text_range())
               for i in range(len(pdf))]
-    pages, start = {}, 2
+    pages, low, start = {}, set(), 2
     for level, heading in entries:
         h = norm(heading)
         for i in range(start, len(texts_)):
@@ -618,8 +655,20 @@ def heading_pages(pdf_path, entries):
             if (texts_[i].startswith(h) if level == 2 else h in texts_[i]):
                 pages[heading] = i + 1
                 start = i
+                if level == 1 and _in_lower_third(pdf[i], heading):
+                    low.add(heading)
                 break
-    return pages
+    return pages, low
+
+
+def _in_lower_third(page, heading):
+    """True, wenn die Überschrift im unteren Drittel der Seite steht."""
+    found = page.get_textpage().search(heading[:18], match_case=True)
+    hit = found.get_next()
+    if hit is None:
+        return False
+    _, _, _, top = page.get_textpage().get_charbox(hit[0])
+    return top < page.get_height() / 3
 
 
 def main():
@@ -636,19 +685,20 @@ def main():
     crop_to_content(SCREENS / "about.png", SCREENS / "about_crop.png")
 
     entries = build(examples, [], {})
-    pages = {}
+    pages, breaks = {}, set()
     with tempfile.TemporaryDirectory() as tmp:
-        for _ in range(3):
-            new = heading_pages(to_pdf(OUT, tmp), entries)
-            if new == pages:
+        for _ in range(8):
+            new, low = heading_pages(to_pdf(OUT, tmp), entries)
+            if new == pages and low <= breaks:
                 break
-            pages = new
-            build(examples, entries, pages)
+            pages, breaks = new, breaks | low
+            build(examples, entries, pages, frozenset(breaks))
     missing = [h for _, h in entries if h not in pages]
     if missing:
         sys.exit("Seitenzahl nicht gefunden: " + ", ".join(missing))
     to_pdf(OUT, OUT.parent)
-    print(f"{OUT.relative_to(ROOT)} + .pdf, {max(pages.values())} Seiten")
+    print(f"{OUT.relative_to(ROOT)} + .pdf, {max(pages.values())} Seiten, "
+          f"Umbruch vor: {', '.join(sorted(breaks)) or '-'}")
 
 
 if __name__ == "__main__":
