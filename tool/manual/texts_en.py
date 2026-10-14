@@ -609,10 +609,13 @@ PAGES = {
         "or medical products.",
         example="WF-2026",
         app="The content is shown as text. For links, phone numbers etc. the "
-        "same applies as for the normal QR code.",
+        "same applies as for the normal QR code. The format, however, reads "
+        "“Unknown”: the iPhone recognises the code, but the app is not told "
+        "that it is a Micro QR code. This does not affect the content.",
         do="Copy or share.",
-        care="Android cannot read this code because Google's recognition "
-        "does not support it."),
+        care="Choose the scan type “All codes” – with “QR code”, a Micro QR "
+        "code is not recognised. Android cannot read this code at all because "
+        "Google's recognition does not support it."),
     "ean13": dict(
         title="EAN-13 – product number", mode="Barcode or All codes",
         devices=ALL,

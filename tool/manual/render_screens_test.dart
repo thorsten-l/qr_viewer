@@ -150,7 +150,8 @@ void main() {
             ResultPage(
               raw: binary ? _hex(e) : e['raw'] as String,
               type: BarcodeType.text,
-              format: _format(e['format'] as String),
+              // Wie das Gerät das Format meldet, falls abweichend.
+              format: _format((e['shown_format'] ?? e['format']) as String),
               binary: binary,
             ),
           ),

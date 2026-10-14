@@ -629,10 +629,14 @@ PAGES = {
         "oder medizinischen Produkten.",
         example="WF-2026",
         app="Der Inhalt wird als Text angezeigt. Bei Links, Telefonnummern "
-        "usw. gilt dasselbe wie beim normalen QR-Code.",
+        "usw. gilt dasselbe wie beim normalen QR-Code. Als Format steht dort "
+        "allerdings „Unbekannt“: Das iPhone erkennt den Code zwar, die App "
+        "erfährt aber nicht, dass es ein Micro-QR-Code ist. Am Inhalt ändert "
+        "das nichts.",
         do="Kopieren oder teilen.",
-        care="Android kann diesen Code nicht lesen, weil die Erkennung von "
-        "Google ihn nicht unterstützt."),
+        care="Stelle die Scan-Art „Alle Codes“ ein – bei „QR-Code“ wird ein "
+        "Micro-QR-Code nicht erkannt. Android kann diesen Code gar nicht "
+        "lesen, weil die Erkennung von Google ihn nicht unterstützt."),
     "ean13": dict(
         title="EAN-13 – Produktnummer", mode="Barcode oder Alle Codes",
         devices=ALL,

@@ -27,7 +27,7 @@
    "raw": "{\"name\":\"Stadtbücherei\",\"ort\":\"Wolfenbüttel\",\"geoeffnet\":true,\"tage\":[\"Di\",\"Do\",\"Sa\"]}"},
   {"id": "qr_matter", "format": "qrCode", "zxing": "QRCode",
    "raw": "MT:Y.K9042C00KA0648G00"},
-  {"id": "microqr", "format": "microQrCode", "zxing": "MicroQRCode",
+  {"id": "microqr", "format": "microQrCode", "shown_format": "unknown", "zxing": "MicroQRCode",
    "raw": "WF-2026"},
   {"id": "ean13", "format": "ean13", "zxing": "EAN13",
    "raw": "4006381333931"},
