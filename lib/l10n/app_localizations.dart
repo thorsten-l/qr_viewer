@@ -986,6 +986,24 @@ abstract class AppLocalizations {
   /// **'Licenses'**
   String get licenses;
 
+  /// Tooltip Knopf Code grafisch anzeigen
+  ///
+  /// In en, this message translates to:
+  /// **'Show code'**
+  String get showCode;
+
+  /// Hinweis, wenn der Code ersatzweise als QR-Code gezeigt wird
+  ///
+  /// In en, this message translates to:
+  /// **'{format} cannot be drawn here; shown as a QR code.'**
+  String shownAsQr(String format);
+
+  /// Meldung, wenn der Inhalt nicht in einen Code passt
+  ///
+  /// In en, this message translates to:
+  /// **'The content is too large to draw as a code.'**
+  String get codeTooLarge;
+
   /// Knopf Schließen
   ///
   /// In en, this message translates to:

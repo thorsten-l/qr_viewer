@@ -463,6 +463,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get licenses => 'Licencias';
 
   @override
+  String get showCode => 'Mostrar código';
+
+  @override
+  String shownAsQr(String format) {
+    return '$format no se puede dibujar aquí; se muestra como código QR.';
+  }
+
+  @override
+  String get codeTooLarge =>
+      'El contenido es demasiado grande para dibujarlo como código.';
+
+  @override
   String get close => 'Cerrar';
 
   @override

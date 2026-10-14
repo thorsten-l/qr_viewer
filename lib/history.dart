@@ -21,6 +21,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_info.dart' show formatDateTime;
 import 'binary_payload.dart';
+import 'history_crypto.dart';
 import 'localization.dart';
 import 'qr_content.dart';
 import 'result_page.dart';
@@ -71,30 +72,59 @@ class ScanEntry {
   }
 }
 
-/// Die letzten [maxEntries] gescannten Inhalte, dauerhaft gespeichert.
+/// Die letzten [maxEntries] gescannten Inhalte, dauerhaft und mit
+/// AES-256 verschlüsselt gespeichert (siehe history_crypto.dart).
 class ScanHistory extends ChangeNotifier {
-  ScanHistory._(this._prefs, this._entries);
+  ScanHistory._(this._prefs, this._cipher, this._entries);
 
   static const maxEntries = 25;
-  static const _key = 'scan_history_v1';
+
+  /// Verschlüsselter Verlauf ab Version 2.2.0.
+  static const _key = 'scan_history_v2';
+
+  /// Klartext-Verlauf bis Version 2.1.x; wird beim Laden übernommen und
+  /// gelöscht.
+  static const _legacyKey = 'scan_history_v1';
 
   final SharedPreferences _prefs;
+
+  /// Null, wenn der Schlüsselspeicher nicht erreichbar ist: Der Verlauf
+  /// gilt dann nur bis zum Beenden der App.
+  final HistoryCipher? _cipher;
   final List<ScanEntry> _entries;
 
   List<ScanEntry> get entries => List.unmodifiable(_entries);
 
   static Future<ScanHistory> load() async {
     final prefs = await SharedPreferences.getInstance();
+    final key = await loadHistoryKey();
+    final cipher = key == null ? null : HistoryCipher(key);
+    if (cipher == null) return ScanHistory._(prefs, null, []);
+
+    final stored = prefs.getString(_key);
+    final legacy = prefs.getString(_legacyKey);
+    // Ohne passenden Schlüssel (z. B. nach Wiederherstellung auf einem
+    // anderen Gerät) ist der alte Geheimtext wertlos: leer beginnen.
+    final json = stored != null ? cipher.decrypt(stored) : legacy;
     var entries = <ScanEntry>[];
     try {
-      final list = jsonDecode(prefs.getString(_key) ?? '[]');
+      final list = jsonDecode(json ?? '[]');
       if (list is List) {
         entries = list.map(ScanEntry.fromJson).nonNulls.toList();
       }
     } on FormatException {
       // Beschädigte Daten: mit leerem Verlauf weitermachen.
     }
-    return ScanHistory._(prefs, entries.take(maxEntries).toList());
+    final history = ScanHistory._(
+      prefs,
+      cipher,
+      entries.take(maxEntries).toList(),
+    );
+    if (legacy != null) {
+      if (stored == null) await history._save();
+      await prefs.remove(_legacyKey);
+    }
+    return history;
   }
 
   /// Einmalpasswort-Schlüssel (2FA) landen nicht im Verlauf, wie bei
@@ -159,10 +189,14 @@ class ScanHistory extends ChangeNotifier {
     await _save();
   }
 
-  Future<void> _save() => _prefs.setString(
-    _key,
-    jsonEncode(_entries.map((e) => e.toJson()).toList()),
-  );
+  Future<void> _save() async {
+    final cipher = _cipher;
+    if (cipher == null) return;
+    await _prefs.setString(
+      _key,
+      cipher.encrypt(jsonEncode(_entries.map((e) => e.toJson()).toList())),
+    );
+  }
 }
 
 /// Verlauf als CSV nach RFC 4180: Zeit, Format, Typ, Binär, Inhalt.

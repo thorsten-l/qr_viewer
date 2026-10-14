@@ -16,6 +16,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_viewer/binary_payload.dart';
@@ -179,7 +180,10 @@ void main() {
   });
 
   group('Verlauf', () {
-    setUp(() => SharedPreferences.setMockInitialValues({}));
+    setUp(() {
+      SharedPreferences.setMockInitialValues({});
+      FlutterSecureStorage.setMockInitialValues({});
+    });
 
     test('Binäreinträge bleiben nach dem Laden binär', () async {
       final h = await ScanHistory.load();

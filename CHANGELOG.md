@@ -5,6 +5,37 @@
 All notable changes to QR Viewer. Versions follow
 [Semantic Versioning](https://semver.org/), the build number follows the `+`.
 
+## [2.2.0+14] – 2026-10-14
+
+### Security
+
+- **Encrypted history:** The history is stored with AES-256-CBC and
+  HMAC-SHA256 (encrypt-then-MAC, new random IV on every save). The 32-byte
+  key is created randomly per installation. It is kept only in the iOS
+  Keychain (`AfterFirstUnlockThisDeviceOnly`, not synced to iCloud) or the
+  Android Keystore and is never part of a backup. Without the key, a copy of
+  the history is useless.
+- The plain-text history of earlier versions is taken over and encrypted on
+  the first start, then the plain-text copy is deleted. If the key is missing,
+  e.g. after restoring onto another device, the history starts empty.
+- Android: app data is no longer included in Google backups
+  (`allowBackup="false"`).
+
+### Added
+
+- **Show code:** a small QR code button on the far left of the action row
+  shows the scanned code as an image in a dialog, in its original format
+  where possible, otherwise as a QR code.
+- Data protection impact assessment with a security audit (`DPIA.md`,
+  `DPIA_de.md`).
+
+### Changed
+
+- Privacy policy: encrypted history; VDV tickets show the name in plain text
+  or masked, depending on the ticket.
+- New dependencies: `flutter_secure_storage`, `pointycastle`,
+  `barcode_widget`.
+
 ## [2.1.2+13] – 2026-10-13
 
 ### Added

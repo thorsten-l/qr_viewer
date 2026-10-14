@@ -462,6 +462,17 @@ class AppLocalizationsUk extends AppLocalizations {
   String get licenses => 'Ліцензії';
 
   @override
+  String get showCode => 'Показати код';
+
+  @override
+  String shownAsQr(String format) {
+    return '$format не можна намалювати тут; показано як QR-код.';
+  }
+
+  @override
+  String get codeTooLarge => 'Вміст завеликий, щоб намалювати його як код.';
+
+  @override
   String get close => 'Закрити';
 
   @override

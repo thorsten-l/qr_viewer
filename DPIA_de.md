@@ -4,12 +4,12 @@
 
 | | |
 |---|---|
-| App | QR Viewer 2.1.2 (Build 13), iOS/iPadOS und Android |
-| Codestand | `main`, Commit `b25767c` („release 2.1.2“) |
+| App | QR Viewer 2.2.0 (Build 14), iOS/iPadOS und Android |
+| Codestand | `main`, Audit auf Commit `b25767c` („release 2.1.2“); Maßnahmen zu F2 und F6 in 2.2.0 |
 | Verantwortlicher / Verfasser | Thorsten Ludewig, t.ludewig@gmail.com |
 | Datum | 14. Oktober 2026 |
 | Grundlage | Art. 35 DSGVO, § 25 TDDDG |
-| Status | Bewertung abgeschlossen, empfohlene Maßnahmen offen (Abschnitt 8) |
+| Status | Bewertung abgeschlossen; F2 und F6 in 2.2.0 umgesetzt, übrige Maßnahmen offen (Abschnitt 8) |
 
 Dieses Dokument verbindet ein technisches Sicherheitsaudit der App mit einer
 Datenschutz-Folgenabschätzung (DSFA). Es ist keine Rechtsberatung.
@@ -36,10 +36,12 @@ brauchen Aufmerksamkeit:
 1. Unter Android sendet Google ML Kit technische Nutzungsdaten an Google
    (Befund F1). Das steht in der Datenschutzerklärung, nach § 25 TDDDG ist
    aber fraglich, ob das ohne Einwilligung reicht.
-2. Der Scan-Verlauf liegt unverschlüsselt vor und ist Teil der
+2. Bis 2.1.2 lag der Scan-Verlauf unverschlüsselt vor und war Teil der
    Betriebssystem-Sicherungen (Befund F2). Gescannte Codes können
    WLAN-Passwörter, Matter-Einrichtungscodes oder Ticketdaten mit Name und
-   Geburtsdatum enthalten.
+   Geburtsdatum enthalten. **In 2.2.0 umgesetzt:** Der Verlauf ist mit
+   AES-256-CBC + HMAC-SHA256 verschlüsselt, der Schlüssel bleibt auf dem
+   Gerät, die Android-Sicherung ist aus.
 
 Ein hohes Restrisiko bleibt nicht. Eine vorherige Konsultation der
 Aufsichtsbehörde nach Art. 36 DSGVO ist nicht nötig.
@@ -97,7 +99,8 @@ verarbeitet. Ein Code kann solche Daten zufällig enthalten, etwa einen Text
 
 | Daten | Ort | Schutz | Löschung |
 |---|---|---|---|
-| Verlauf (`scan_history_v1`) | SharedPreferences (Android-XML in der App-Sandbox) / NSUserDefaults (iOS) | Sandbox des Betriebssystems, Geräteverschlüsselung; **keine App-Verschlüsselung** | Einzeln, „Verlauf löschen“, Deinstallation; max. 25 Einträge |
+| Verlauf (`scan_history_v2`) | SharedPreferences (Android-XML in der App-Sandbox) / NSUserDefaults (iOS) | Sandbox des Betriebssystems, Geräteverschlüsselung; **AES-256-CBC + HMAC-SHA256** seit 2.2.0 | Einzeln, „Verlauf löschen“, Deinstallation; max. 25 Einträge |
+| Verlaufsschlüssel (32 Byte, zufällig) | iOS-Schlüsselbund (`AfterFirstUnlockThisDeviceOnly`, nicht synchronisiert) / Android Keystore | Wo vorhanden hardwaregestützt; nie in Sicherungen | Deinstallation |
 | 2FA-Schlüssel | **werden nicht gespeichert** | – | – |
 | Scan-Art, Zoom | SharedPreferences / NSUserDefaults | Sandbox | Deinstallation |
 | Kamerabild | Nur im Arbeitsspeicher | – | Sofort |
@@ -115,7 +118,7 @@ verarbeitet. Ein Code kann solche Daten zufällig enthalten, etwa einen Text
 | D6 | „Sendung verfolgen“ | Nutzer:in bestätigt | Deutsche Post (`deutschepost.de`, Sendungsnummer in der URL) |
 | D7 | Kopieren, Teilen, Kontakt, Termin, Verlaufsexport | Nutzer:in tippt | Zwischenablage / im Teilen-Menü gewählte App |
 | D8 | Support, Anleitungen | Nutzer:in tippt | GitHub |
-| D9 | Sicherung | Betriebssystem | iCloud- bzw. Google-Drive-Backup (wenn von dir aktiviert) |
+| D9 | Sicherung | Betriebssystem | iOS: iCloud-/Gerätesicherung, Verlauf nur als Geheimtext. Android: keine seit 2.2.0 (`allowBackup="false"`) |
 
 ### 3.5 Berechtigungen
 
@@ -178,15 +181,15 @@ Schweregrad: **Hoch / Mittel / Gering / Info**.
 | ID | Schwere | Befund | Empfehlung |
 |---|---|---|---|
 | F1 | Mittel | **ML-Kit-Telemetrie unter Android.** `mobile_scanner` bindet `com.google.mlkit:barcode-scanning` ein. Das Release-Manifest enthält deshalb `INTERNET` sowie `TransportBackendDiscovery` mit `CctBackendFactory`. Google erhält Geräte- und Nutzungsdaten, ohne dass du etwas tust. Das steht in `PRIVACY.md`, es gibt aber keine Einwilligung (§ 25 TDDDG). | (a) Rechtlich prüfen lassen. (b) Eine Erkennungsbibliothek ohne Telemetrie suchen (z. B. ZXing-basiert) für einen Android-Build „ohne Netzwerk“. (c) Mindestens: Prüfen, dass die Angaben in „Datensicherheit“ der Play Console dazu passen. |
-| F2 | Mittel | **Verlauf unverschlüsselt und in Sicherungen.** `scan_history_v1` ist Klartext-JSON in SharedPreferences/NSUserDefaults. Android Auto Backup ist aktiv, weil `android:allowBackup` nicht gesetzt ist (Standard `true`). iOS nimmt UserDefaults in iCloud- und Gerätesicherungen auf. Der Verlauf kann WLAN-Passwörter, Matter-PINs, GiroCode-Daten (IBAN, Name) und VDV-Tickets (Name, Geburtsdatum) enthalten. | (a) Den Verlauf von Sicherungen ausnehmen: Android `allowBackup="false"` oder `dataExtractionRules`/`fullBackupContent` ohne `sharedpref`; unter iOS den Verlauf in einer Datei mit `isExcludedFromBackup` speichern. (b) WLAN-Passwörter und Matter-Codes wie 2FA-Schlüssel nicht oder nur maskiert speichern. (c) Optional: Einstellung „Verlauf speichern“ an/aus. |
+| F2 | Mittel → **in 2.2.0 umgesetzt** | **Verlauf unverschlüsselt und in Sicherungen.** `scan_history_v1` ist Klartext-JSON in SharedPreferences/NSUserDefaults. Android Auto Backup ist aktiv, weil `android:allowBackup` nicht gesetzt ist (Standard `true`). iOS nimmt UserDefaults in iCloud- und Gerätesicherungen auf. Der Verlauf kann WLAN-Passwörter, Matter-PINs, GiroCode-Daten (IBAN, Name) und VDV-Tickets (Name, Geburtsdatum) enthalten. | (a) Den Verlauf von Sicherungen ausnehmen: Android `allowBackup="false"` oder `dataExtractionRules`/`fullBackupContent` ohne `sharedpref`; unter iOS den Verlauf in einer Datei mit `isExcludedFromBackup` speichern. (b) WLAN-Passwörter und Matter-Codes wie 2FA-Schlüssel nicht oder nur maskiert speichern. (c) Optional: Einstellung „Verlauf speichern“ an/aus. |
 | F3 | Gering | **Zwischenablage ohne Markierung „sensibel“.** „Kopieren“ legt Passwörter und Geheimnisse im Klartext in die Zwischenablage. Android 13+ zeigt sie in der Vorschau und in den Zwischenablage-Verläufen von Tastaturen. iOS kann sie per Universal Clipboard synchronisieren. | Unter Android für Passwort- und Geheimnis-Felder `ClipDescription.EXTRA_IS_SENSITIVE` setzen (Platform Channel). Unter iOS `UIPasteboard` mit `localOnly` und `expirationDate` nutzen. |
-| F4 | Gering | **App-Umschalter / Bildschirmfotos.** Ergebnisse mit Geheimnissen sind in der Taskvorschau sichtbar. Weder `FLAG_SECURE` noch eine iOS-Abdeckung wird genutzt. | Optional: Die Vorschau verbergen, solange die Ergebnisseite ein Passwort oder Geheimnis zeigt. |
+| F4 | Gering | **App-Umschalter / Bildschirmfotos.** Ergebnisse mit Geheimnissen sind in der Taskvorschau sichtbar. Weder `FLAG_SECURE` noch eine iOS-Abdeckung wird genutzt. Seit 2.2.0 zeigt „Code anzeigen“ den Inhalt als scanbare Grafik; wer in der Nähe ist, kann ihn mit einer Kamera abgreifen (z. B. WLAN-Passwort, 2FA-Schlüssel). Die Anzeige startest du bewusst. | Optional: Die Vorschau verbergen, solange die Ergebnisseite ein Passwort oder Geheimnis zeigt. |
 | F5 | Gering | **Verlaufsexport im Klartext.** CSV und JSON enthalten alle Einträge ohne Schutz. Wo sie danach liegen, hängt von der Ziel-App ab (Cloud, E-Mail). Den Export startest du bewusst. | Im Exportdialog darauf hinweisen, dass sensible Inhalte enthalten sein können (z. B. WLAN-Passwörter). |
-| F6 | Info | **Datenschutzerklärung bei VDV-Tickets ungenau.** `PRIVACY.md` spricht von einem „maskierten Namen“. Der Parser (`decodeTravelerName`) zeigt auch Klartextnamen (`Vorname#Nachname`), wenn das Ticket sie enthält. | Formulierung anpassen: „Name (je nach Ticket im Klartext oder maskiert)“. |
-| F7 | Info | **Kein App-eigenes Privacy Manifest unter iOS.** `ios/Runner/PrivacyInfo.xcprivacy` fehlt. Die Plugins (`shared_preferences_foundation`, `mobile_scanner`, `url_launcher_ios`, `package_info_plus`, `share_plus`) bringen eigene mit. Die Vorgaben des App Store sind damit erfüllt. | Optional: Ein App-Manifest mit `NSPrivacyTracking = false` und ohne erhobene Datentypen ergänzen, der Vollständigkeit halber. |
+| F6 | Info → **in 2.2.0 behoben** | **Datenschutzerklärung bei VDV-Tickets ungenau.** `PRIVACY.md` spricht von einem „maskierten Namen“. Der Parser (`decodeTravelerName`) zeigt auch Klartextnamen (`Vorname#Nachname`), wenn das Ticket sie enthält. | Formulierung anpassen: „Name (je nach Ticket im Klartext oder maskiert)“. |
+| F7 | Info | **Kein App-eigenes Privacy Manifest unter iOS.** `ios/Runner/PrivacyInfo.xcprivacy` fehlt. Die Plugins (`shared_preferences_foundation`, `mobile_scanner`, `url_launcher_ios`, `package_info_plus`, `share_plus`, `flutter_secure_storage`) bringen eigene mit. Die Vorgaben des App Store sind damit erfüllt. | Optional: Ein App-Manifest mit `NSPrivacyTracking = false` und ohne erhobene Datentypen ergänzen, der Vollständigkeit halber. |
 | F8 | Info | **Sperrliste statt Positivliste für URL-Schemata.** `linkUri` sperrt `file`, `content`, `data`, `javascript`, `vbscript`, `intent`, `about`, `blob` und `chrome`. Andere Schemata mit `//` sowie `fido`, `magnet`, `bitcoin`, `lightning` und `ethereum` sind erlaubt, jeweils nach einer Bestätigung mit vollständigem Ziel. | Vertretbar. Bei Bedarf auf eine Positivliste umstellen (http, https, market, itms-apps, …). |
 | F9 | Info | **Auswertung fremder Eingaben.** Der BER-Parser prüft jede Länge und begrenzt das Längenfeld auf 3 Byte. Die VDV-Dekodierung steckt in `try/catch`, ebenso der Binär- und der Deutsche-Post-Parser. RSA (`modPow`) arbeitet nur auf Daten in QR-Größe (wenige KB); ein nennenswertes Risiko für Denial-of-Service gibt es deshalb nicht. Es gibt kein WebView, keinen dynamischen Code und keine Deep Links. Exportiert sind nur die Launcher-Activity und der `ProfileInstallReceiver`, der durch die Berechtigung `DUMP` geschützt ist. | Kein Handlungsbedarf. Die Tests mit Grenzfällen beibehalten. |
-| F10 | Info | **Abhängigkeiten.** Alle direkten Abhängigkeiten sind aktuell, außer `cupertino_icons` (1.0.9 → 2.0.0, nur Symbole). Einige transitive Pakete liegen ein Patch-Release zurück. Ein Abgleich mit Schwachstellen-Datenbanken wurde nicht gemacht. | Regelmäßig `flutter pub upgrade` ausführen. `osv-scanner` in die Release-Checkliste aufnehmen. |
+| F10 | Info | **Abhängigkeiten.** Alle direkten Abhängigkeiten sind aktuell, außer `cupertino_icons` (1.0.9 → 2.0.0, nur Symbole). Einige transitive Pakete liegen ein Patch-Release zurück. Neu in 2.2.0: `flutter_secure_storage` (Schlüsselbund/Keystore), `pointycastle` und `barcode_widget` (reines Dart, ohne Netzwerk und ohne Berechtigungen). Ein Abgleich mit Schwachstellen-Datenbanken wurde nicht gemacht. | Regelmäßig `flutter pub upgrade` ausführen. `osv-scanner` in die Release-Checkliste aufnehmen. |
 
 ### Vorhandene Schutzmaßnahmen (positiv)
 
@@ -215,7 +218,7 @@ Wahrscheinlichkeit (W) und Schwere (S): gering / mittel / hoch.
 | Risiko | Ursache | W | S | Vor Maßnahmen | Nach Maßnahmen (Abschnitt 8) |
 |---|---|---|---|---|---|
 | R1 Google erfährt von der App-Nutzung | ML-Kit-Telemetrie (F1) | hoch (Android) | gering (keine Inhalte, keine Bilder) | **mittel** | gering (mit anderer Bibliothek) / unverändert (nur Offenlegung) |
-| R2 Jemand liest Geheimnisse aus dem Verlauf | Entsperrtes oder verlorenes Gerät, Backup-Konto kompromittiert (F2) | gering | mittel | **gering–mittel** | gering |
+| R2 Jemand liest Geheimnisse aus dem Verlauf | Entsperrtes oder verlorenes Gerät, Backup-Konto kompromittiert (F2) | gering | mittel | **gering–mittel** | gering (seit 2.2.0 verschlüsselt; auf einem entsperrten Gerät zeigt die App den Verlauf weiterhin an) |
 | R3 Geheimnisse gelangen über die Zwischenablage nach außen | Zwischenablage-Verlauf, Tastatur-Apps, Universal Clipboard (F3) | gering | mittel | gering | gering |
 | R4 Phishing / Schadsoftware über Codes | Schädlicher Link im QR-Code | mittel | hoch | **gering** (Bestätigung, vollständiges Ziel sichtbar, gesperrte Schemata) | gering |
 | R5 Nachschlagedienste erfahren Artikel- oder Sendungsnummern | Du tippst „Online nachschlagen“ / „Sendung verfolgen“ | mittel | gering | gering | gering |
@@ -228,11 +231,11 @@ Wahrscheinlichkeit (W) und Schwere (S): gering / mittel / hoch.
 
 | Priorität | Maßnahme | Befund | Status |
 |---|---|---|---|
-| 1 | Den Verlauf von Android- und iOS-Sicherungen ausnehmen | F2 | offen |
+| 1 | Verlauf verschlüsseln (AES-256-CBC + HMAC, Schlüssel in Schlüsselbund/Keystore) und Android-Sicherung abschalten | F2 | **erledigt (2.2.0)** |
 | 2 | WLAN-Passwörter und Matter-Einrichtungscodes nicht im Verlauf speichern (wie 2FA) oder maskieren | F2 | offen |
 | 3 | „Datensicherheit“ in der Play Console mit der ML-Kit-Telemetrie abgleichen und bei Bedarf anpassen; § 25 TDDDG rechtlich prüfen | F1 | offen |
 | 4 | Eine Android-Erkennungsbibliothek ohne Telemetrie prüfen | F1 | offen |
-| 5 | `PRIVACY.md` bei VDV-Namen korrigieren | F6 | offen |
+| 5 | `PRIVACY.md` bei VDV-Namen korrigieren | F6 | **erledigt (2.2.0)** |
 | 6 | Sensible Inhalte in der Zwischenablage markieren | F3 | offen |
 | 7 | Hinweis auf sensible Inhalte beim Verlaufsexport | F5 | offen |
 | 8 | Optional: Taskvorschau verbergen, iOS-App-Privacy-Manifest ergänzen, Positivliste für Schemata | F4, F7, F8 | offen |

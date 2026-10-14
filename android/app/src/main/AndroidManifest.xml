@@ -3,7 +3,8 @@
         android:label="QR Viewer"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:localeConfig="@xml/locales_config">
+        android:localeConfig="@xml/locales_config"
+        android:allowBackup="false">
         <activity
             android:name=".MainActivity"
             android:exported="true"

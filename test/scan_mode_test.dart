@@ -15,6 +15,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_viewer/history.dart';
@@ -100,6 +101,7 @@ void main() {
 
   group('Verlauf mit Format', () {
     test('Format wird gespeichert', () async {
+      FlutterSecureStorage.setMockInitialValues({});
       SharedPreferences.setMockInitialValues({});
       final h = await ScanHistory.load();
       await h.add(
@@ -112,6 +114,7 @@ void main() {
     });
 
     test('Einträge aus Version 1.0 ohne Format gelten als QR-Code', () async {
+      FlutterSecureStorage.setMockInitialValues({});
       SharedPreferences.setMockInitialValues({
         'scan_history_v1': jsonEncode([
           {'raw': 'alt', 'type': 'text', 'time': '2026-10-09T07:00:00.000'},

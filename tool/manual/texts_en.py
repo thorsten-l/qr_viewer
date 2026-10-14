@@ -35,7 +35,7 @@ UI = dict(
 
 TITLE = "QR Viewer"
 SUBTITLE = "Scan codes safely – simply explained"
-VERSION_LINE = "Manual for version 2.1.2 · October 2026"
+VERSION_LINE = "Manual for version 2.2.0 · October 2026"
 
 CHAPTERS = [
     ("1 What is QR Viewer?", [
@@ -169,7 +169,20 @@ CHAPTERS = [
         "app (phone, mail, messages) with the prepared details. You always "
         "send it yourself.",
     ]),
-    ("6 Copying and sharing", [
+    ("6 Showing, copying and sharing the code", [
+        "**Show code:** The small button with the QR code icon on the far "
+        "left of the bottom row shows the scanned code as an image in a "
+        "window. This lets you scan it with another device, for example. "
+        "QR Viewer draws the code in its original format where possible, "
+        "such as an EAN-13 barcode, Data Matrix or Aztec. Formats the app "
+        "cannot draw (Micro QR, MaxiCode, GS1 DataBar) are shown as a QR "
+        "code with the same content, and a note below the image tells you "
+        "so.",
+        ("img", "qr_url_code.png", 5.0,
+         "The scanned link as a QR code to pass on."),
+        ("note", "Anyone who can see your screen can scan a code shown "
+         "there. Only show codes with Wi-Fi passwords or 2FA keys when you "
+         "really mean to."),
         "**Copy:** The “Copy” button puts the whole content on the "
         "clipboard. From there you can paste it into any other app. Single "
         "details are copied with the copy icon next to the field in the data "
@@ -196,7 +209,8 @@ CHAPTERS = [
             "**Export:** The share icon passes the history on as a table "
             "(CSV) or as a file for programs (JSON).",
         ],
-        ("note", "The history stays on your device. But keep in mind: it may "
+        ("note", "The history stays on your device and is stored there "
+         "encrypted. But keep in mind: it may "
          "contain confidential details such as Wi-Fi passwords. Delete such "
          "entries when you no longer need them. QR Viewer never stores secret "
          "keys for two-step sign-in (2FA)."),
@@ -238,9 +252,14 @@ CHAPTERS = [
         "stays on your device. You can delete single entries or the whole "
         "history at any time. If you delete the app, all of its data is gone "
         "as well.",
-        "Please note: if you back up your device (e.g. iCloud backup or "
-        "Android backup), the history may be part of that backup. This is "
-        "handled by your operating system, not by QR Viewer.",
+        "**The history is encrypted** (AES-256). The app creates the key "
+        "randomly when it is installed. It is kept only in your iPhone's "
+        "Keychain or the Android Keystore, is not synced with iCloud and is "
+        "never part of a backup.",
+        "**Backups:** On Android, QR Viewer is excluded from Google backup. "
+        "An iCloud or device backup on iOS may contain the history, but "
+        "only encrypted – without the key it cannot be read. If you restore "
+        "a backup onto a new device, the history therefore starts empty.",
         ("h3", "Particularly sensitive content"),
         [
             "**Keys for two-step sign-in (2FA)** are never stored in the "
@@ -252,8 +271,9 @@ CHAPTERS = [
             "to manufacturers or home apps. These codes also stay in the "
             "history until you delete them.",
             "**Tickets** (e.g. Deutschlandticket) are decoded only on your "
-            "device. The app shows the name shortened, exactly as it is "
-            "stored in the ticket (e.g. “G…e M…n”). To check that a ticket is "
+            "device. The app shows the name exactly as it is stored in the "
+            "ticket – written out or shortened, depending on the ticket "
+            "(e.g. “G…e M…n”). To check that a ticket is "
             "genuine it uses publicly known keys that come with the app – no "
             "internet connection is needed for this.",
             "**Bank transfer details** (GiroCode) are only displayed. QR "

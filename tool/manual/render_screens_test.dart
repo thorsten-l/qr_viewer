@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -170,6 +171,11 @@ void main() {
         }
       }
       if (e['id'] == 'qr_url') {
+        await tester.tap(find.byIcon(Icons.qr_code_2));
+        await tester.pumpAndSettle();
+        await _capture(tester, key, 'qr_url_code');
+        await tester.tap(find.text(_l.close));
+        await tester.pumpAndSettle();
         await tester.tap(find.text(_l.openEllipsis));
         await tester.pumpAndSettle();
         await _capture(tester, key, 'qr_url_confirm');
@@ -204,6 +210,8 @@ void main() {
     // Liegt außerhalb von test/, daher hält der Analyzer es nicht für einen Test.
     // ignore: invalid_use_of_visible_for_testing_member
     SharedPreferences.setMockInitialValues({});
+    // ignore: invalid_use_of_visible_for_testing_member
+    FlutterSecureStorage.setMockInitialValues({});
     final history = (await tester.runAsync(ScanHistory.load))!;
     var time = DateTime(2026, 10, 13, 9, 0);
     for (final id in [
@@ -334,10 +342,10 @@ void main() {
               info: PackageInfo(
                 appName: 'QR Viewer',
                 packageName: 'de.l9g.qr_viewer',
-                version: '2.1.2',
-                buildNumber: '13',
+                version: '2.2.0',
+                buildNumber: '14',
               ),
-              buildDate: DateTime(2026, 10, 13, 8, 0),
+              buildDate: DateTime(2026, 10, 14, 8, 0),
             ),
           ),
         ),

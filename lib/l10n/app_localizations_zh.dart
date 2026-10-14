@@ -461,6 +461,17 @@ class AppLocalizationsZh extends AppLocalizations {
   String get licenses => '许可';
 
   @override
+  String get showCode => '显示码';
+
+  @override
+  String shownAsQr(String format) {
+    return '无法在此绘制 $format，以二维码显示。';
+  }
+
+  @override
+  String get codeTooLarge => '内容过大，无法绘制为码。';
+
+  @override
   String get close => '关闭';
 
   @override

@@ -23,6 +23,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'app_info.dart' show formatDateTime;
 import 'binary_payload.dart';
+import 'code_image.dart';
 import 'content_actions.dart';
 import 'deutsche_post.dart';
 import 'gtin.dart';
@@ -583,6 +584,17 @@ class ResultPage extends StatelessWidget {
               const SizedBox(height: 16),
               Row(
                 children: [
+                  IconButton.outlined(
+                    tooltip: l.showCode,
+                    icon: const Icon(Icons.qr_code_2),
+                    onPressed: () => showCodeImage(
+                      context,
+                      raw: raw,
+                      format: format,
+                      bytes: bytes,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: OutlinedButton.icon(
                       icon: const Icon(Icons.copy),

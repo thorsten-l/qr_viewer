@@ -6,6 +6,38 @@ Alle wichtigen Änderungen an QR Viewer. Die Versionen folgen
 [Semantic Versioning](https://semver.org/lang/de/), die Build-Nummer steht
 hinter dem `+`.
 
+## [2.2.0+14] – 2026-10-14
+
+### Sicherheit
+
+- **Verschlüsselter Verlauf:** Der Verlauf wird mit AES-256-CBC und
+  HMAC-SHA256 gespeichert (Encrypt-then-MAC, bei jedem Speichern ein neuer
+  zufälliger IV). Der 32-Byte-Schlüssel wird je Installation zufällig erzeugt.
+  Er liegt nur im iOS-Schlüsselbund (`AfterFirstUnlockThisDeviceOnly`, nicht
+  mit iCloud synchronisiert) bzw. im Android Keystore und ist nie Teil einer
+  Sicherung. Ohne den Schlüssel ist eine Kopie des Verlaufs wertlos.
+- Der Klartext-Verlauf früherer Versionen wird beim ersten Start übernommen
+  und verschlüsselt, danach wird die Klartext-Kopie gelöscht. Fehlt der
+  Schlüssel, z. B. nach Wiederherstellung auf einem anderen Gerät, beginnt der
+  Verlauf leer.
+- Android: App-Daten sind nicht mehr Teil der Google-Sicherung
+  (`allowBackup="false"`).
+
+### Neu
+
+- **Code anzeigen:** Ein kleiner QR-Code-Knopf ganz links in der Aktionszeile
+  zeigt den gescannten Code als Grafik in einem Dialog, wenn möglich im
+  Originalformat, sonst als QR-Code.
+- Datenschutz-Folgenabschätzung mit Sicherheitsaudit (`DPIA.md`,
+  `DPIA_de.md`).
+
+### Geändert
+
+- Datenschutzerklärung: verschlüsselter Verlauf; bei VDV-Tickets wird der
+  Name je nach Ticket im Klartext oder maskiert angezeigt.
+- Neue Abhängigkeiten: `flutter_secure_storage`, `pointycastle`,
+  `barcode_widget`.
+
 ## [2.1.2+13] – 2026-10-13
 
 ### Neu

@@ -35,7 +35,7 @@ UI = dict(
 
 TITLE = "QR Viewer"
 SUBTITLE = "Codes sicher scannen – einfach erklärt"
-VERSION_LINE = "Anleitung für Version 2.1.2 · Stand: Oktober 2026"
+VERSION_LINE = "Anleitung für Version 2.2.0 · Stand: Oktober 2026"
 
 # Hauptteil: (Überschrift, [Blöcke]). Ein Block ist ein Absatz (str),
 # eine Liste (list), ein Bild ("img", Datei, Breite in cm, Bildunterschrift)
@@ -178,7 +178,20 @@ CHAPTERS = [
         "(Telefon, Mail, Nachrichten) mit den vorbereiteten Angaben. "
         "Abschicken musst du immer selbst.",
     ]),
-    ("6 Kopieren und Teilen", [
+    ("6 Code anzeigen, kopieren und teilen", [
+        "**Code anzeigen:** Der kleine Knopf mit dem QR-Code-Symbol ganz "
+        "links in der unteren Zeile zeigt den gescannten Code als Grafik in "
+        "einem Fenster. So kannst du ihn zum Beispiel mit einem anderen "
+        "Gerät scannen. QR Viewer zeichnet den Code wenn möglich im "
+        "Originalformat, etwa als EAN-13-Strichcode, Data Matrix oder Aztec. "
+        "Formate, die die App nicht zeichnen kann (Micro QR, MaxiCode, GS1 "
+        "DataBar), zeigt sie als QR-Code mit gleichem Inhalt und sagt dir das "
+        "unter der Grafik.",
+        ("img", "qr_url_code.png", 5.0,
+         "Der gescannte Link als QR-Code zum Weitergeben."),
+        ("note", "Ein angezeigter Code lässt sich von jedem scannen, der "
+         "dein Display sieht. Zeige Codes mit WLAN-Passwörtern oder "
+         "2FA-Schlüsseln nur, wenn du das wirklich willst."),
         "**Kopieren:** Der Knopf „Kopieren“ legt den ganzen Inhalt in die "
         "Zwischenablage. Von dort kannst du ihn in jede andere App einfügen. "
         "Einzelne Angaben kopierst du mit dem Kopier-Symbol neben dem Feld in "
@@ -205,7 +218,8 @@ CHAPTERS = [
             "**Exportieren:** Das Teilen-Symbol gibt den Verlauf als Tabelle "
             "(CSV) oder als Datei für Programme (JSON) weiter.",
         ],
-        ("note", "Der Verlauf bleibt auf deinem Gerät. Bedenke aber: Er kann "
+        ("note", "Der Verlauf bleibt auf deinem Gerät und wird dort "
+         "verschlüsselt gespeichert. Bedenke aber: Er kann "
          "vertrauliche Angaben enthalten, etwa WLAN-Passwörter. Lösche solche "
          "Einträge, wenn du sie nicht mehr brauchst. Geheime Schlüssel für "
          "die Anmeldung in zwei Schritten (2FA) speichert QR Viewer "
@@ -250,9 +264,15 @@ CHAPTERS = [
         "Daten bleiben auf deinem Gerät. Du kannst einzelne Einträge oder "
         "den ganzen Verlauf jederzeit löschen. Löschst du die App, sind auch "
         "alle ihre Daten weg.",
-        "Beachte: Wenn du dein Gerät sicherst (z. B. iCloud-Backup oder "
-        "Android-Sicherung), kann der Verlauf Teil dieser Sicherung sein. "
-        "Das regelt dein Betriebssystem, nicht QR Viewer.",
+        "**Der Verlauf ist verschlüsselt** (AES-256). Den Schlüssel erzeugt "
+        "die App bei der Installation zufällig. Er liegt nur im "
+        "Schlüsselbund deines iPhones bzw. im Android Keystore, wird nicht "
+        "mit iCloud abgeglichen und kommt in keine Sicherung.",
+        "**Sicherungen:** Unter Android ist QR Viewer von der "
+        "Google-Sicherung ausgenommen. Eine iCloud- oder Gerätesicherung "
+        "unter iOS kann den Verlauf enthalten, aber nur verschlüsselt – "
+        "ohne den Schlüssel ist er nicht lesbar. Stellst du eine Sicherung "
+        "auf einem neuen Gerät wieder her, beginnt der Verlauf deshalb leer.",
         ("h3", "Besonders schützenswerte Inhalte"),
         [
             "**Schlüssel für die Anmeldung in zwei Schritten (2FA)** werden "
@@ -265,8 +285,9 @@ CHAPTERS = [
             "Hersteller oder Home-Apps. Auch diese Codes stehen im Verlauf, "
             "bis du sie löschst.",
             "**Fahrkarten** (z. B. Deutschlandticket) werden nur auf deinem "
-            "Gerät entschlüsselt. Den Namen zeigt die App so verkürzt an, wie "
-            "er im Ticket steht (z. B. „G…e M…n“). Zum Prüfen der Echtheit "
+            "Gerät entschlüsselt. Den Namen zeigt die App so an, wie er im "
+            "Ticket steht – je nach Ticket ausgeschrieben oder verkürzt "
+            "(z. B. „G…e M…n“). Zum Prüfen der Echtheit "
             "nutzt sie öffentlich bekannte Schlüssel, die in der App "
             "mitgeliefert werden – dafür ist keine Internetverbindung nötig.",
             "**Überweisungsdaten** (GiroCode) werden nur angezeigt. QR Viewer "

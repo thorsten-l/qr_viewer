@@ -2,7 +2,8 @@
 
 [Deutsch](#deutsch) · [English](#english)
 
-Stand / Last updated: 13. Oktober 2026 / October 13, 2026
+Stand / Last updated: 14. Oktober 2026 / October 14, 2026\
+Gilt ab / Applies from: QR Viewer 2.2.0
 
 ---
 
@@ -31,11 +32,17 @@ den Einstellungen deines Geräts widerrufen.
 Die Inhalte der letzten 25 gescannten Codes sowie die zuletzt gewählte
 Scan-Art und Zoomstufe werden lokal auf deinem Gerät gespeichert, damit du
 sie später erneut aufrufen kannst. Diese Daten verlassen das Gerät nicht durch die App.
+Der Verlauf wird verschlüsselt gespeichert (AES-256). Der Schlüssel wird für
+jede Installation zufällig erzeugt und liegt nur im Schlüsselbund (iOS) bzw.
+im Android Keystore deines Geräts; er wird weder mit iCloud synchronisiert
+noch in Sicherungen übernommen.
 Du kannst einzelne Einträge oder den ganzen Verlauf jederzeit in der App
 löschen. Einmalpasswort-Schlüssel (2FA, `otpauth://`) werden grundsätzlich
 nicht im Verlauf gespeichert. Beim Löschen der App
-werden alle Daten entfernt. Sie können jedoch Teil einer Gerätesicherung sein,
-die du über das Betriebssystem erstellst (z. B. iCloud- oder Android-Backup).
+werden alle Daten entfernt. Unter Android nimmt die App nicht an der
+Google-Sicherung teil. Eine iCloud- oder Gerätesicherung unter iOS kann den
+verschlüsselten Verlauf enthalten; ohne den Schlüssel, der auf dem Gerät
+bleibt, ist er nicht lesbar.
 
 ### Erkennung von Inhalten
 
@@ -53,7 +60,7 @@ werden nicht gespeichert.
 
 Enthält ein Code ein elektronisches Ticket nach VDV-Standard (z. B.
 Deutschlandticket), liest die App die darin enthaltenen Angaben wie Gültigkeit,
-maskierten Namen und Geburtsdatum ausschließlich auf deinem Gerät aus. Dafür
+Namen (je nach Ticket im Klartext oder maskiert) und Geburtsdatum ausschließlich auf deinem Gerät aus. Dafür
 nutzt sie mitgelieferte öffentliche Schlüssel; es werden keine Daten
 übertragen.
 
@@ -79,7 +86,8 @@ Inhalte werden nur dann in die Zwischenablage kopiert, wenn du auf
 „Kopieren“ tippst. Über „Teilen“, „Zu Kontakten“, „Zum Kalender“ und den
 Export des Verlaufs (CSV oder JSON) gibst du Inhalte über das Teilen-Menü des
 Betriebssystems an eine App deiner Wahl weiter; vorher wird nichts
-übertragen.
+übertragen. „Code anzeigen“ zeichnet den Inhalt nur auf dem Bildschirm
+deines Geräts als Grafik; dabei wird nichts gespeichert oder übertragen.
 
 ### Besonderheit unter Android: Google ML Kit
 
@@ -135,12 +143,16 @@ revoke camera access at any time in your device settings.
 
 The contents of the last 25 scanned codes and the most recently selected
 scan type and zoom level are stored locally on your device so that you can
-open them again later. The app does not send this data off the device. You can clear the
+open them again later. The app does not send this data off the device.
+The history is stored encrypted (AES-256). The key is created randomly for
+each installation and is kept only in your device's Keychain (iOS) or
+Android Keystore; it is neither synced to iCloud nor included in backups. You can clear the
 history or single entries in the app at any time. One-time password keys
 (2FA, `otpauth://`) are never stored in the history. Deleting the app removes
 all of its data.
-The data may, however, be included in device backups that you create through
-the operating system (e.g. iCloud or Android backup).
+On Android, the app does not take part in Google backups. An iCloud or
+device backup on iOS may contain the encrypted history; without the key,
+which stays on the device, it cannot be read.
 
 ### Content recognition
 
@@ -157,8 +169,8 @@ it.
 ### Electronic tickets
 
 If a code contains an electronic ticket according to the VDV standard (e.g.
-Deutschlandticket), the app reads the included details such as validity, masked
-name and date of birth solely on your device. It uses bundled public keys for
+Deutschlandticket), the app reads the included details such as validity, name
+(plain or masked, depending on the ticket) and date of birth solely on your device. It uses bundled public keys for
 this; no data is transmitted.
 
 ### Opening links and actions
@@ -180,7 +192,9 @@ GitHub's privacy policy applies there.
 Content is copied to the clipboard only when you tap “Copy”. With “Share”,
 “Add to contacts”, “Add to calendar” and the history export (CSV or JSON) you
 pass content to an app of your choice via the operating system's share
-sheet; nothing is transmitted before that.
+sheet; nothing is transmitted before that. “Show code” only draws the
+content as an image on your device's screen; nothing is stored or
+transmitted.
 
 ### Android only: Google ML Kit
 

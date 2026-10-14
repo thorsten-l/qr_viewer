@@ -601,6 +601,23 @@
   "@licenses": {
     "description": "Knopf Lizenzen"
   },
+  "showCode": "Show code",
+  "@showCode": {
+    "description": "Tooltip Knopf Code grafisch anzeigen"
+  },
+  "shownAsQr": "{format} cannot be drawn here; shown as a QR code.",
+  "@shownAsQr": {
+    "description": "Hinweis, wenn der Code ersatzweise als QR-Code gezeigt wird",
+    "placeholders": {
+      "format": {
+        "type": "String"
+      }
+    }
+  },
+  "codeTooLarge": "The content is too large to draw as a code.",
+  "@codeTooLarge": {
+    "description": "Meldung, wenn der Inhalt nicht in einen Code passt"
+  },
   "close": "Close",
   "@close": {
     "description": "Knopf Schließen"

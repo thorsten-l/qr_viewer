@@ -14,6 +14,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_viewer/history.dart';
@@ -23,7 +24,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'test_app.dart';
 
 void main() {
-  setUp(() => SharedPreferences.setMockInitialValues({}));
+  setUp(() {
+    SharedPreferences.setMockInitialValues({});
+    FlutterSecureStorage.setMockInitialValues({});
+  });
 
   group('ScanHistory', () {
     test('behält nur die letzten 25, neueste zuerst', () async {
@@ -59,6 +63,7 @@ void main() {
     });
 
     test('beschädigte Daten ergeben einen leeren Verlauf', () async {
+      FlutterSecureStorage.setMockInitialValues({});
       SharedPreferences.setMockInitialValues({'scan_history_v1': '{kaputt'});
       final h = await ScanHistory.load();
       expect(h.entries, isEmpty);

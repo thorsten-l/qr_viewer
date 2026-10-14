@@ -461,6 +461,17 @@ class AppLocalizationsJa extends AppLocalizations {
   String get licenses => 'ライセンス';
 
   @override
+  String get showCode => 'コードを表示';
+
+  @override
+  String shownAsQr(String format) {
+    return '$format はここでは描画できないため、QRコードで表示しています。';
+  }
+
+  @override
+  String get codeTooLarge => '内容が大きすぎてコードとして描画できません。';
+
+  @override
   String get close => '閉じる';
 
   @override

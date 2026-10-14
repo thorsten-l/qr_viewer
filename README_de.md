@@ -31,9 +31,14 @@ Rückfrage.
   und Termine gehen als `.vcf`/`.ics` über das Teilen-Menü an Kontakte bzw.
   Kalender.
 - **Kopieren und Teilen** mit einem Tipp.
+- **Code anzeigen:** Der QR-Code-Knopf links unten zeigt den gescannten Code
+  als Grafik, wenn möglich im Originalformat (z. B. EAN-13, Data Matrix,
+  Aztec), sonst als QR-Code – etwa zum Weitergeben an ein anderes Gerät.
 - **Verlauf** der letzten 25 Scans: erneut aufrufen, kopieren, durchsuchen,
   einzeln wegwischen (mit Rückgängig), alles löschen, als CSV oder JSON
-  exportieren. 2FA-Schlüssel werden nicht gespeichert.
+  exportieren. 2FA-Schlüssel werden nicht gespeichert. Der Verlauf wird mit
+  AES-256 verschlüsselt; der Schlüssel bleibt im Schlüsselbund bzw. Android
+  Keystore des Geräts.
 - **Binärcodes** werden als Hex-Dump mit Textspalte angezeigt. **VDV-eTickets** (z. B.
   Deutschlandticket) werden zusätzlich dekodiert: Ticketnummer, Produkt,
   Gültigkeit, Ausstellungszeit, (maskierter) Inhaber, Geburtsdatum,
@@ -99,13 +104,15 @@ Installationszeitpunkt.
 | `lib/main.dart` | App, Scanner-Seite und Auswahlmenü |
 | `lib/scan_mode.dart` | Scan-Arten und ihre Codeformate |
 | `lib/camera_lens.dart` | Zoomstufen der Rückkamera und Umschalter (native Abfrage in `AppDelegate.swift` und `MainActivity.kt`) |
-| `lib/result_page.dart` | Ergebnisansicht mit Kopieren, Teilen, Aktionen und Rückfrage |
+| `lib/result_page.dart` | Ergebnisansicht mit Code-Grafik, Kopieren, Teilen, Aktionen und Rückfrage |
+| `lib/code_image.dart` | Dialog „Code anzeigen“: zeichnet den Inhalt im Originalformat oder als QR-Code (`barcode_widget`) |
 | `lib/qr_content.dart` | Parser für QR-Inhaltsformate (vCard, WIFI, EPC, otpauth, JSON, Links, …) |
 | `lib/content_actions.dart` | Aktionen je Inhalt (mailto, tel, sms, Karte, …), vCard-/iCalendar-Export |
 | `lib/gtin.dart` | Artikelnummern: Prüfziffer, UPC-E, GS1-Präfix, ISBN, ISSN |
 | `lib/deutsche_post.dart` | Matrixcode der Deutschen Post (Sendungsnummer) |
 | `lib/matter.dart` | Matter-Onboarding-Code (`MT:`, Base38) und manueller Kopplungscode |
-| `lib/history.dart` | Verlauf der letzten 25 Scans mit Suche und CSV/JSON-Export |
+| `lib/history.dart` | Verlauf der letzten 25 Scans mit Suche und CSV/JSON-Export, verschlüsselt gespeichert |
+| `lib/history_crypto.dart` | AES-256-CBC + HMAC-SHA256 für den Verlauf; Schlüssel je Installation im Schlüsselbund / Android Keystore |
 | `lib/binary_payload.dart` | Erkennung von Binärinhalten, Hex-Darstellung |
 | `lib/vdv/` | VDV-eTicket: BER, ISO 9796-2, Zertifikate, Ticketdaten |
 | `assets/vdv_certs/` | Öffentliche VDV-CA-Schlüssel (CC0), siehe `tool/vdv/README.md` |
@@ -120,8 +127,8 @@ Installationszeitpunkt.
 
 ## Version
 
-Aktuell: **2.1.2** (Build 13). Version und Build-Nummer stehen in
-`pubspec.yaml`, z. B. `version: 2.1.2+13`. Für jeden Upload zu TestFlight oder
+Aktuell: **2.2.0** (Build 14). Version und Build-Nummer stehen in
+`pubspec.yaml`, z. B. `version: 2.2.0+14`. Für jeden Upload zu TestFlight oder
 Google Play muss die Build-Nummer hinter dem `+` steigen. Jede neue Version
 bekommt einen Eintrag in [CHANGELOG.md](CHANGELOG.md) (englisch) und
 [CHANGELOG_de.md](CHANGELOG_de.md) (deutsch).
@@ -137,7 +144,7 @@ Ablauf für eine neue Version:
 3. Prüfen: `flutter analyze`, `flutter test`,
    `python3 tool/license/add_headers.py --check`.
 4. iOS und Android wie unten bauen und hochladen.
-5. Committen und taggen, z. B. `git tag v2.1.2`.
+5. Committen und taggen, z. B. `git tag v2.2.0`.
 
 ### iOS / TestFlight
 

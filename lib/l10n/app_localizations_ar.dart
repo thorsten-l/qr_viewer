@@ -461,6 +461,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get licenses => 'التراخيص';
 
   @override
+  String get showCode => 'عرض الرمز';
+
+  @override
+  String shownAsQr(String format) {
+    return 'لا يمكن رسم $format هنا؛ يُعرض كرمز QR.';
+  }
+
+  @override
+  String get codeTooLarge => 'المحتوى كبير جدًا لرسمه كرمز.';
+
+  @override
   String get close => 'إغلاق';
 
   @override

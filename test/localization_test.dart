@@ -16,6 +16,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -97,7 +98,10 @@ void main() {
     final l = lookupAppLocalizations(locale);
 
     group('Sprache $lang', () {
-      setUp(() => SharedPreferences.setMockInitialValues({}));
+      setUp(() {
+        SharedPreferences.setMockInitialValues({});
+        FlutterSecureStorage.setMockInitialValues({});
+      });
 
       testWidgets('Scanner-Menü', (tester) async {
         tester.view.physicalSize = const Size(1080, 2340);
