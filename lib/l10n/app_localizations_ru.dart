@@ -74,6 +74,35 @@ class AppLocalizationsRu extends AppLocalizations {
   String get info => 'Информация';
 
   @override
+  String get menu => 'Меню';
+
+  @override
+  String get settings => 'Настройки';
+
+  @override
+  String get enableActions => 'Включить действия';
+
+  @override
+  String get enableActionsHint =>
+      'Показывает на странице результата кнопки «Открыть», «Позвонить» или «Найти». Если выключено, приложение только показывает и копирует.';
+
+  @override
+  String get scanFromPhoto => 'Сканировать с фото';
+
+  @override
+  String get scanFromPhotoHint =>
+      'Показывает кнопку фото рядом с фонариком. Вы выбираете снимок из фото, и приложение читает код на нём. Приложение получает только выбранный снимок.';
+
+  @override
+  String get pickPhoto => 'Сканировать фото';
+
+  @override
+  String get analyzingPhoto => 'Анализ фото …';
+
+  @override
+  String get noCodeInPhoto => 'На фото код не найден.';
+
+  @override
   String get torch => 'Фонарик';
 
   @override

@@ -74,6 +74,35 @@ class AppLocalizationsHi extends AppLocalizations {
   String get info => 'जानकारी';
 
   @override
+  String get menu => 'मेनू';
+
+  @override
+  String get settings => 'सेटिंग्स';
+
+  @override
+  String get enableActions => 'क्रियाएँ सक्षम करें';
+
+  @override
+  String get enableActionsHint =>
+      'परिणाम पेज पर खोलें, कॉल करें या खोजें जैसे बटन दिखाता है। बंद होने पर ऐप केवल दिखाता और कॉपी करता है।';
+
+  @override
+  String get scanFromPhoto => 'फ़ोटो से स्कैन करें';
+
+  @override
+  String get scanFromPhotoHint =>
+      'टॉर्च के पास एक फ़ोटो बटन दिखाता है। इससे आप अपनी फ़ोटो से एक तस्वीर चुनते हैं और ऐप उसमें कोड पढ़ता है। ऐप को केवल आपकी चुनी तस्वीर मिलती है।';
+
+  @override
+  String get pickPhoto => 'फ़ोटो स्कैन करें';
+
+  @override
+  String get analyzingPhoto => 'फ़ोटो का विश्लेषण हो रहा है …';
+
+  @override
+  String get noCodeInPhoto => 'फ़ोटो में कोई कोड नहीं मिला।';
+
+  @override
   String get torch => 'टॉर्च';
 
   @override

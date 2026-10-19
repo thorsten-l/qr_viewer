@@ -12,10 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,9 +26,11 @@ import 'app_info.dart';
 import 'binary_payload.dart';
 import 'camera_lens.dart';
 import 'history.dart';
+import 'photo_scan.dart';
 import 'localization.dart';
 import 'result_page.dart';
 import 'scan_mode.dart';
+import 'settings.dart';
 
 const _scanModeKey = 'scan_mode';
 const _zoomKey = 'camera_zoom';
@@ -43,6 +48,7 @@ Future<void> main() async {
     ], await rootBundle.loadString('assets/licenses/BinaryEye-MIT.txt'));
   });
   final history = await ScanHistory.load();
+  final settings = await AppSettings.load();
   final prefs = await SharedPreferences.getInstance();
   final mode = ScanMode.fromName(prefs.getString(_scanModeKey));
   // Auto bedeutet nur auf iOS etwas anderes als 1× (Makro-Umschaltung).
@@ -54,6 +60,7 @@ Future<void> main() async {
   runApp(
     QrViewerApp(
       history: history,
+      settings: settings,
       initialMode: mode,
       zooms: zooms,
       initialZoom: zoom,
@@ -65,12 +72,14 @@ class QrViewerApp extends StatelessWidget {
   const QrViewerApp({
     super.key,
     required this.history,
+    required this.settings,
     this.initialMode = ScanMode.qr,
     this.zooms = const [],
     this.initialZoom = ZoomStep.auto,
   });
 
   final ScanHistory history;
+  final AppSettings settings;
   final ScanMode initialMode;
   final List<ZoomStep> zooms;
   final ZoomStep initialZoom;
@@ -91,6 +100,9 @@ class QrViewerApp extends StatelessWidget {
       colorSchemeSeed: Colors.teal,
       brightness: Brightness.dark,
     ),
+    // Über dem Navigator, damit jede Seite die Einstellungen sieht.
+    builder: (context, child) =>
+        SettingsScope(settings: settings, child: child!),
     home: ScannerPage(
       history: history,
       initialMode: initialMode,
@@ -164,18 +176,86 @@ class _ScannerPageState extends State<ScannerPage> {
     await prefs.setString(_zoomKey, zoom.id);
   }
 
+  /// Inhalt eines Codes als Text und ob er binär ist; null ohne Inhalt.
+  /// Binärinhalte (z. B. VDV-eTickets) werden als Hex-Text weitergereicht.
+  static (String, bool)? _contentOf(Barcode barcode) {
+    final bytes = binaryContent(barcode);
+    final raw = bytes != null ? toHex(bytes) : barcode.rawValue;
+    if (raw == null || raw.isEmpty) return null;
+    return (raw, bytes != null);
+  }
+
   Future<void> _onDetect(BarcodeCapture capture) async {
     if (_handling) return;
     final barcode = capture.barcodes.firstOrNull;
     if (barcode == null) return;
-    // Binärinhalte (z. B. VDV-eTickets) werden als Hex-Text weitergereicht.
-    final bytes = binaryContent(barcode);
-    final binary = bytes != null;
-    final raw = binary ? toHex(bytes) : barcode.rawValue;
-    if (raw == null || raw.isEmpty) return;
+    final content = _contentOf(barcode);
+    if (content == null) return;
 
     _handling = true;
     HapticFeedback.mediumImpact();
+    await _showResult(barcode, content);
+    _handling = false;
+  }
+
+  /// Wählt ein Bild über die Fotoauswahl des Systems (ohne Leserecht auf die
+  /// Mediathek) und liest den ersten Code darin, unabhängig von der Scan-Art.
+  Future<void> _scanPhoto() async {
+    if (_handling) return;
+    _handling = true;
+    final l = context.l10n;
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      final file = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+        requestFullMetadata: false,
+      );
+      if (file == null || !mounted) return;
+      final navigator = Navigator.of(context);
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => PhotoAnalysisDialog(image: FileImage(File(file.path))),
+      );
+      final (found, _) = await (
+        scanPhoto(file.path, _analyze),
+        // Damit der Dialog bei schneller Auswertung nicht nur aufblitzt.
+        Future<void>.delayed(const Duration(milliseconds: 800)),
+      ).wait;
+      navigator.pop();
+      // Die Kopie der Fotoauswahl wird nicht mehr gebraucht.
+      File(file.path).delete().ignore();
+      if (found == null) {
+        messenger
+          ..hideCurrentSnackBar()
+          ..showSnackBar(SnackBar(content: Text(l.noCodeInPhoto)));
+        return;
+      }
+      HapticFeedback.mediumImpact();
+      await _showResult(found.$1, found.$2);
+    } finally {
+      _handling = false;
+    }
+  }
+
+  /// Erster Code mit Inhalt in der Bilddatei; null, wenn keiner da ist.
+  Future<(Barcode, (String, bool))?> _analyze(String path) async {
+    final BarcodeCapture? capture;
+    try {
+      capture = await _controller.analyzeImage(path);
+    } on MobileScannerBarcodeException {
+      return null;
+    }
+    for (final barcode in capture?.barcodes ?? const <Barcode>[]) {
+      final content = _contentOf(barcode);
+      if (content != null) return (barcode, content);
+    }
+    return null;
+  }
+
+  /// Legt den Code im Verlauf ab und zeigt die Ergebnisseite.
+  Future<void> _showResult(Barcode barcode, (String, bool) content) async {
+    final (raw, binary) = content;
     await widget.history.add(
       raw,
       barcode.type,
@@ -190,7 +270,6 @@ class _ScannerPageState extends State<ScannerPage> {
         binary: binary,
       ),
     );
-    _handling = false;
   }
 
   /// Stoppt die Kamera, zeigt die Seite und startet die Kamera danach wieder.
@@ -216,17 +295,12 @@ class _ScannerPageState extends State<ScannerPage> {
       titleSpacing: 4,
       title: ScanModeMenu(selected: _mode, onSelected: _setMode),
       actions: [
-        IconButton(
-          tooltip: context.l10n.history,
-          icon: const Icon(Icons.history),
-          onPressed: () =>
-              _pauseScannerFor((_) => HistoryPage(history: widget.history)),
-        ),
-        IconButton(
-          tooltip: context.l10n.info,
-          icon: const Icon(Icons.info_outline),
-          onPressed: () => showAppInfo(context),
-        ),
+        if (SettingsScope.maybeOf(context)?.scanFromPhoto ?? false)
+          IconButton(
+            tooltip: context.l10n.pickPhoto,
+            icon: const Icon(Icons.photo_outlined),
+            onPressed: _scanPhoto,
+          ),
         ValueListenableBuilder(
           valueListenable: _controller,
           builder: (context, state, _) => IconButton(
@@ -238,6 +312,17 @@ class _ScannerPageState extends State<ScannerPage> {
                 ? null
                 : () => _controller.toggleTorch(),
           ),
+        ),
+        ScannerMenu(
+          onSelected: (item) => switch (item) {
+            ScannerMenuItem.history => _pauseScannerFor(
+              (_) => HistoryPage(history: widget.history),
+            ),
+            ScannerMenuItem.settings => _pauseScannerFor(
+              (_) => const SettingsPage(),
+            ),
+            ScannerMenuItem.info => showAppInfo(context),
+          },
         ),
       ],
     ),
@@ -267,6 +352,79 @@ class _ScannerPageState extends State<ScannerPage> {
           ),
       ],
     ),
+  );
+}
+
+/// Zeigt das gewählte Foto, solange es nach Codes durchsucht wird.
+class PhotoAnalysisDialog extends StatelessWidget {
+  const PhotoAnalysisDialog({super.key, required this.image});
+
+  final ImageProvider image;
+
+  @override
+  Widget build(BuildContext context) => PopScope(
+    canPop: false,
+    child: AlertDialog(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxHeight: 320),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image(image: image, fit: BoxFit.contain),
+            ),
+          ),
+          const SizedBox(height: 16),
+          const LinearProgressIndicator(),
+          const SizedBox(height: 12),
+          Text(context.l10n.analyzingPhoto),
+        ],
+      ),
+    ),
+  );
+}
+
+/// Einträge des Menüs oben rechts auf der Scanner-Seite.
+enum ScannerMenuItem {
+  history(Icons.history),
+  settings(Icons.settings_outlined),
+  info(Icons.info_outline);
+
+  const ScannerMenuItem(this.icon);
+
+  final IconData icon;
+
+  String label(AppLocalizations l) => switch (this) {
+    history => l.history,
+    settings => l.settings,
+    info => l.info,
+  };
+}
+
+/// Menü (☰) ganz rechts in der Kopfzeile der Scanner-Seite.
+class ScannerMenu extends StatelessWidget {
+  const ScannerMenu({super.key, required this.onSelected});
+
+  final ValueChanged<ScannerMenuItem> onSelected;
+
+  @override
+  Widget build(BuildContext context) => PopupMenuButton<ScannerMenuItem>(
+    tooltip: context.l10n.menu,
+    icon: const Icon(Icons.menu),
+    position: PopupMenuPosition.under,
+    onSelected: onSelected,
+    itemBuilder: (context) => [
+      for (final item in ScannerMenuItem.values)
+        PopupMenuItem(
+          value: item,
+          child: ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: Icon(item.icon),
+            title: Text(item.label(context.l10n)),
+          ),
+        ),
+    ],
   );
 }
 

@@ -68,6 +68,42 @@
   "@info": {
     "description": "Tooltip Info"
   },
+  "menu": "Menu",
+  "@menu": {
+    "description": "Tooltip Menü der Scanner-Seite"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Menüeintrag und Seitentitel Einstellungen"
+  },
+  "enableActions": "Enable actions",
+  "@enableActions": {
+    "description": "Einstellung: Aktionen auf der Ergebnisseite einschalten"
+  },
+  "enableActionsHint": "Shows buttons such as Open, Call or Look up on the result page. When off, the app only displays and copies.",
+  "@enableActionsHint": {
+    "description": "Erklärung zur Einstellung Aktionen aktivieren"
+  },
+  "scanFromPhoto": "Scan from photo",
+  "@scanFromPhoto": {
+    "description": "Einstellung: Codes aus einem Foto lesen"
+  },
+  "scanFromPhotoHint": "Shows a photo button next to the flashlight. With it you pick a picture from your photos and the app reads the code in it. The app only gets the picture you choose.",
+  "@scanFromPhotoHint": {
+    "description": "Erklärung zur Einstellung Scannen von Foto"
+  },
+  "pickPhoto": "Scan photo",
+  "@pickPhoto": {
+    "description": "Tooltip Knopf Foto auswählen und scannen"
+  },
+  "analyzingPhoto": "Analyzing photo …",
+  "@analyzingPhoto": {
+    "description": "Dialog: gewähltes Foto wird nach Codes durchsucht"
+  },
+  "noCodeInPhoto": "No code was found in the photo.",
+  "@noCodeInPhoto": {
+    "description": "Meldung: im gewählten Foto kein Code gefunden"
+  },
   "torch": "Flashlight",
   "@torch": {
     "description": "Tooltip Taschenlampe"

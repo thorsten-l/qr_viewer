@@ -46,6 +46,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>The camera is used to scan QR codes and barcodes.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Only for “Scan from photo”: you pick a picture yourself and the app looks for a code in it.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

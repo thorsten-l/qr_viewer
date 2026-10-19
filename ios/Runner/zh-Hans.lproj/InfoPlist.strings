@@ -1,1 +1,2 @@
 "NSCameraUsageDescription" = "需要使用相机扫描二维码和条形码。";
+"NSPhotoLibraryUsageDescription" = "仅用于“从照片扫描”：你自行选择图片，应用在其中查找码。";

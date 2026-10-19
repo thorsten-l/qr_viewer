@@ -176,6 +176,13 @@ def crop_to_content(src, dst, pad=24):
     return dst
 
 
+def crop_top(src, dst, share):
+    """Behält nur den oberen Teil eines Bildschirms, z. B. für ein Menü."""
+    im = Image.open(src)
+    im.crop((0, 0, im.width, round(im.height * share))).save(dst)
+    return dst
+
+
 def image_size(path):
     with Image.open(path) as im:
         return im.size
@@ -689,6 +696,9 @@ def main():
     if missing:
         sys.exit("Fehlende App-Ansichten, erst rendern: " + ", ".join(missing))
     crop_to_content(SCREENS / "about.png", SCREENS / "about_crop.png")
+    crop_top(SCREENS / "scanner_app_menu.png",
+             SCREENS / "scanner_app_menu_crop.png", 0.3)
+    crop_top(SCREENS / "settings.png", SCREENS / "settings_crop.png", 0.37)
 
     entries = build(examples, [], {})
     pages, breaks = {}, set()

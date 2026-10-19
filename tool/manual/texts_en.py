@@ -35,7 +35,7 @@ UI = dict(
 
 TITLE = "QR Viewer"
 SUBTITLE = "Scan codes safely – simply explained"
-VERSION_LINE = "Manual for version 2.2.0 · October 2026"
+VERSION_LINE = "Manual for version 2.3.0 · October 2026"
 
 CHAPTERS = [
     ("1 What is QR Viewer?", [
@@ -104,10 +104,30 @@ CHAPTERS = [
         "Which levels are available depends on your device's cameras.",
         "**Flashlight:** The lamp icon at the top right turns the light on "
         "and off – handy in dark places.",
+        "**Menu:** The icon with three lines (☰) on the far right opens the "
+        "menu with **History**, **Settings** and **Info**.",
+        ("img", "scanner_app_menu_crop.png", 8.0,
+         "The menu at the top right of the scan screen."),
         ("note", "Tips if a code is not recognized: hold the device still "
          "and a little further away so the camera can focus. Avoid "
          "reflections on glossy paper or screens. Check that the right scan "
          "type is selected, or choose “All codes”."),
+        ("h3", "Reading a code from a photo"),
+        "If you have taken a photo or a screenshot of a code, QR Viewer can "
+        "also read it from the picture. To do so, turn on “Scan from photo” "
+        "under ☰ → Settings. A photo icon then appears to the left of the "
+        "flashlight. Tap it and choose a picture from your photos.",
+        ("img", "photo_scan.png", 5.0,
+         "While analysing, QR Viewer shows the chosen photo."),
+        "While QR Viewer analyses the photo, you see it in a window with a "
+        "progress bar. If the app finds a code, the result page opens just "
+        "like after a camera scan. It looks for all kinds of code, whatever "
+        "scan type is selected. If it finds no code, it tells you so.",
+        ("note", "Difficult codes – such as codes engraved on devices or "
+         "codes with a logo in the middle – are sometimes hard to read from "
+         "a photo. QR Viewer therefore tries the photo at several sizes. If "
+         "it still does not work, take a new photo a little closer to the "
+         "code and without reflections."),
     ]),
     ("4 Understanding the result", [
         "After scanning, the result page opens. At the very top it says what "
@@ -138,8 +158,13 @@ CHAPTERS = [
         "(see appendix A.30).",
     ]),
     ("5 Actions – always with a confirmation", [
-        "At the bottom of the result page you find an action button that "
-        "depends on the content, for example:",
+        "**Actions are turned off by default.** QR Viewer then only shows "
+        "the content – you can still copy, share and show the code. If you "
+        "want to open links straight from the app or call a number, turn on "
+        "“Enable actions” under ☰ → Settings (see chapter 8).",
+        "When actions are turned on, you find an action button at the "
+        "bottom of the result page that depends on the content, for "
+        "example:",
         [
             "**Open …** – opens a link in the browser",
             "**Write email…**, **Call…**, **Write SMS…**",
@@ -193,8 +218,8 @@ CHAPTERS = [
         "does not send anything on its own.",
     ]),
     ("7 The history", [
-        "QR Viewer remembers the last 25 scanned codes. Open the history with "
-        "the clock icon at the top of the scan screen.",
+        "QR Viewer remembers the last 25 scanned codes. Open the history on "
+        "the scan screen with ☰ → History.",
         ("img", "history.png", 5.6,
          "The history with search, export and delete at the top right."),
         [
@@ -215,8 +240,24 @@ CHAPTERS = [
          "entries when you no longer need them. QR Viewer never stores secret "
          "keys for two-step sign-in (2FA)."),
     ]),
-    ("8 Info and help", [
-        "The “i” icon on the scan screen opens the info dialog. There you "
+    ("8 Settings", [
+        "Open the settings on the scan screen with ☰ → Settings. Both "
+        "options are turned off by default. QR Viewer remembers what you "
+        "choose.",
+        ("img", "settings_crop.png", 8.0, "The settings."),
+        [
+            "**Enable actions** – shows buttons such as “Open …”, “Call…” or "
+            "“Look up online…” on the result page (see chapter 5). Even when "
+            "turned on, QR Viewer asks before every action.",
+            "**Scan from photo** – shows a photo icon next to the flashlight "
+            "that reads a code from a picture (see chapter 3). QR Viewer "
+            "only gets the one picture you choose and needs no access to "
+            "your other photos. That is why your device does not ask for "
+            "permission.",
+        ],
+    ]),
+    ("9 Info and help", [
+        "Open the info dialog on the scan screen with ☰ → Info. There you "
         "see the version of the app and the date it was built.",
         ("img", "about_crop.png", 6.0, "The info dialog."),
         [
@@ -228,7 +269,7 @@ CHAPTERS = [
             "(github.com/thorsten-l/qr_viewer/tree/main/docs).",
         ],
     ]),
-    ("9 Privacy – how QR Viewer protects your data", [
+    ("10 Privacy – how QR Viewer protects your data", [
         "Privacy is at the heart of QR Viewer. This chapter sums up in plain "
         "words what happens to your data – and what does not. The full "
         "privacy policy is available at "
@@ -246,6 +287,10 @@ CHAPTERS = [
         "analysed on your device. No photos or videos are stored or "
         "transmitted. You can withdraw camera access at any time in your "
         "device settings.",
+        "**Scan from photo:** When you choose a photo, QR Viewer only gets "
+        "that one picture – not your other photos. It is analysed only on "
+        "your device and not stored. As with a camera scan, only the "
+        "content of the code goes into the history.",
         ("h3", "What is stored on your device"),
         "Only the contents of the last 25 scans (the history) and the most "
         "recently chosen scan type and zoom level are stored. This data "
@@ -281,7 +326,8 @@ CHAPTERS = [
             "banks.",
         ],
         ("h3", "When data leaves your device"),
-        "Only when you trigger an action yourself and confirm it:",
+        "Only when you have turned on actions, trigger one yourself and "
+        "confirm it:",
         [
             "**Open a link:** Your browser loads the website. Like every "
             "website, it sees your internet address. QR Viewer removes known "
@@ -327,12 +373,15 @@ CHAPTERS = [
             "and delete them from the history when you no longer need them.",
         ],
     ]),
-    ("10 Frequently asked questions", [
+    ("11 Frequently asked questions", [
         "**The app does not recognize a code.** Choose “All codes”, hold the "
         "device still and a little further away, and make sure there is "
         "enough light (flashlight). A higher zoom level helps with very small "
         "codes. Some rare kinds of code cannot be read by every device (see "
-        "appendix).",
+        "appendix). Alternatively, take a photo of the code and read it with "
+        "“Scan from photo” (see chapter 3).",
+        "**I don't see a button such as “Open …”.** Actions are turned off "
+        "by default. Turn on “Enable actions” under ☰ → Settings.",
         "**I only see a black picture.** Camera access is probably missing. "
         "Allow it in your device settings under “QR Viewer”.",
         "**Nothing happens when I tap an action.** Then there is no suitable "
@@ -361,6 +410,9 @@ APPENDIX_INTRO = [
     "Wolfenbüttel, and the first ticket (A.30) is an official sample ticket "
     "in the name of Geraldine Mustermann. The second ticket (A.31) is a "
     "self-made test ticket.",
+    ("note", "The result pages in the appendix were taken with actions "
+     "turned on (☰ → Settings → “Enable actions”). When they are off, only "
+     "the action button at the bottom right is missing."),
     ("note", "Two kinds of code (Micro QR code and GS1 DataBar) can only be "
      "read by the iPhone and iPad version, because Android's recognition "
      "technology does not support them. This is noted on the respective "

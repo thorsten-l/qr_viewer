@@ -74,6 +74,35 @@ class AppLocalizationsIt extends AppLocalizations {
   String get info => 'Info';
 
   @override
+  String get menu => 'Menu';
+
+  @override
+  String get settings => 'Impostazioni';
+
+  @override
+  String get enableActions => 'Attiva azioni';
+
+  @override
+  String get enableActionsHint =>
+      'Mostra pulsanti come Apri, Chiama o Cerca nella pagina dei risultati. Se disattivato, l\'app si limita a mostrare e copiare.';
+
+  @override
+  String get scanFromPhoto => 'Scansiona da foto';
+
+  @override
+  String get scanFromPhotoHint =>
+      'Mostra un pulsante foto accanto alla torcia. Con esso scegli un\'immagine dalle tue foto e l\'app legge il codice. L\'app riceve solo l\'immagine scelta.';
+
+  @override
+  String get pickPhoto => 'Scansiona foto';
+
+  @override
+  String get analyzingPhoto => 'Analisi della foto …';
+
+  @override
+  String get noCodeInPhoto => 'Nessun codice trovato nella foto.';
+
+  @override
   String get torch => 'Torcia';
 
   @override

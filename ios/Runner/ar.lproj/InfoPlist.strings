@@ -1,1 +1,2 @@
 "NSCameraUsageDescription" = "تُستخدم الكاميرا لمسح رموز QR والباركود.";
+"NSPhotoLibraryUsageDescription" = "فقط لميزة «المسح من صورة»: تختار صورة بنفسك ويبحث التطبيق فيها عن رمز.";

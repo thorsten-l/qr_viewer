@@ -1,1 +1,2 @@
 "NSCameraUsageDescription" = "The camera is used to scan QR codes and barcodes.";
+"NSPhotoLibraryUsageDescription" = "Only for “Scan from photo”: you pick a picture yourself and the app looks for a code in it.";

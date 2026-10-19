@@ -4,12 +4,12 @@
 
 | | |
 |---|---|
-| App | QR Viewer 2.2.0 (Build 14), iOS/iPadOS und Android |
-| Codestand | `main`, Audit auf Commit `b25767c` („release 2.1.2“); Maßnahmen zu F2 und F6 in 2.2.0 |
+| App | QR Viewer 2.3.0 (Build 15), iOS/iPadOS und Android |
+| Codestand | `main`, Audit auf Commit `b25767c` („release 2.1.2“); Maßnahmen zu F2 und F6 in 2.2.0; Einstellungen und „Scannen von Foto“ in 2.3.0 ergänzt |
 | Verantwortlicher / Verfasser | Thorsten Ludewig, t.ludewig@gmail.com |
-| Datum | 14. Oktober 2026 |
+| Datum | 19. Oktober 2026 (erstellt 14. Oktober 2026) |
 | Grundlage | Art. 35 DSGVO, § 25 TDDDG |
-| Status | Bewertung abgeschlossen; F2 und F6 in 2.2.0 umgesetzt, übrige Maßnahmen offen (Abschnitt 8) |
+| Status | Bewertung abgeschlossen; F2 und F6 in 2.2.0 umgesetzt, 2.3.0 nachbewertet, übrige Maßnahmen offen (Abschnitt 8) |
 
 Dieses Dokument verbindet ein technisches Sicherheitsaudit der App mit einer
 Datenschutz-Folgenabschätzung (DSFA). Es ist keine Rechtsberatung.
@@ -42,6 +42,14 @@ brauchen Aufmerksamkeit:
    Geburtsdatum enthalten. **In 2.2.0 umgesetzt:** Der Verlauf ist mit
    AES-256-CBC + HMAC-SHA256 verschlüsselt, der Schlüssel bleibt auf dem
    Gerät, die Android-Sicherung ist aus.
+
+**Neu in 2.3.0:** Die Aktionen der Ergebnisseite (Öffnen, Anrufen,
+Nachschlagen usw.) sind ab Werk ausgeschaltet und lassen sich in den
+Einstellungen einschalten. Ohne sie verlässt kein Inhalt die App, außer du
+kopierst oder teilst ihn. Mit „Scannen von Foto“ (ab Werk aus) liest die App
+Codes aus einem Bild, das du in der Fotoauswahl des Systems wählst. Sie
+bekommt nur dieses Bild, braucht keine Leseberechtigung für die Mediathek
+und speichert es nicht. Das Risiko bleibt gering.
 
 Ein hohes Restrisiko bleibt nicht. Eine vorherige Konsultation der
 Aufsichtsbehörde nach Art. 36 DSGVO ist nicht nötig.
@@ -85,7 +93,8 @@ vor schädlichen Codes („Quishing“).
 |---|---|---|
 | Nutzer:in | Kamerabild (nur live, nicht gespeichert) | Kamera |
 | Nutzer:in | Scan-Verlauf (letzte 25 Inhalte mit Zeit, Format, Typ) | Scans |
-| Nutzer:in | Einstellungen: Scan-Art, Zoomstufe | App |
+| Nutzer:in | Vom Nutzer gewähltes Foto (nur mit „Scannen von Foto“, nicht gespeichert) | Fotoauswahl des Systems |
+| Nutzer:in | Einstellungen: Scan-Art, Zoomstufe, „Aktionen aktivieren“, „Scannen von Foto“ | App |
 | Dritte in Codes | Namen, Telefonnummern, E-Mail- und Postadressen (vCard/MECARD), Termine | Code-Inhalt |
 | Ticketinhaber:in | Name (Klartext oder maskiert), Geburtsdatum, Ticketnummer, Gültigkeit | VDV-Ticket (Deutschlandticket) |
 | Nutzer:in / Dritte | WLAN-Passwörter, 2FA-Geheimnisse, Matter-Einrichtungs-PIN, IBAN/Name (GiroCode) | Code-Inhalt |
@@ -102,8 +111,9 @@ verarbeitet. Ein Code kann solche Daten zufällig enthalten, etwa einen Text
 | Verlauf (`scan_history_v2`) | SharedPreferences (Android-XML in der App-Sandbox) / NSUserDefaults (iOS) | Sandbox des Betriebssystems, Geräteverschlüsselung; **AES-256-CBC + HMAC-SHA256** seit 2.2.0 | Einzeln, „Verlauf löschen“, Deinstallation; max. 25 Einträge |
 | Verlaufsschlüssel (32 Byte, zufällig) | iOS-Schlüsselbund (`AfterFirstUnlockThisDeviceOnly`, nicht synchronisiert) / Android Keystore | Wo vorhanden hardwaregestützt; nie in Sicherungen | Deinstallation |
 | 2FA-Schlüssel | **werden nicht gespeichert** | – | – |
-| Scan-Art, Zoom | SharedPreferences / NSUserDefaults | Sandbox | Deinstallation |
+| Scan-Art, Zoom, Einstellungen | SharedPreferences / NSUserDefaults | Sandbox | Deinstallation |
 | Kamerabild | Nur im Arbeitsspeicher | – | Sofort |
+| Gewähltes Foto | Kopie von `image_picker` im temporären App-Ordner; verkleinerte Fassungen in einem eigenen temporären Ordner | Sandbox | Die App löscht beides direkt nach der Auswertung |
 | Exportdateien (CSV/JSON), vCard/iCalendar | Temporäre Datei von `share_plus` im App-Cache, danach die Ziel-App | Sandbox; in der Ziel-App gelten deren Regeln | Das Betriebssystem leert den Cache |
 
 ### 3.4 Datenflüsse und Empfänger
@@ -111,11 +121,12 @@ verarbeitet. Ein Code kann solche Daten zufällig enthalten, etwa einen Text
 | # | Fluss | Auslöser | Empfänger |
 |---|---|---|---|
 | D1 | Kamerabild → Codeerkennung | Scannen | Auf dem Gerät: Apple Vision (iOS) bzw. ML Kit (Android) |
+| D1a | Gewähltes Foto → Codeerkennung | Nutzer:in wählt ein Foto („Scannen von Foto“) | Auf dem Gerät: Apple Vision (iOS) bzw. ML Kit (Android) |
 | D2 | ML-Kit-Telemetrie | Automatisch, nur Android | Google (Firelog/CCT über `com.google.android.datatransport`) |
-| D3 | Link öffnen | Nutzer:in bestätigt den Dialog | Browser bzw. die App für das Schema, danach die Website |
-| D4 | E-Mail, Anruf, SMS, Karte, Authenticator | Nutzer:in bestätigt | Die passende System-App |
-| D5 | „Online nachschlagen“ | Nutzer:in bestätigt | DuckDuckGo (GTIN) / Open Library (ISBN) |
-| D6 | „Sendung verfolgen“ | Nutzer:in bestätigt | Deutsche Post (`deutschepost.de`, Sendungsnummer in der URL) |
+| D3 | Link öffnen | Nur mit „Aktionen aktivieren“; Nutzer:in bestätigt den Dialog | Browser bzw. die App für das Schema, danach die Website |
+| D4 | E-Mail, Anruf, SMS, Karte, Authenticator | Nur mit „Aktionen aktivieren“; Nutzer:in bestätigt | Die passende System-App |
+| D5 | „Online nachschlagen“ | Nur mit „Aktionen aktivieren“; Nutzer:in bestätigt | DuckDuckGo (GTIN) / Open Library (ISBN) |
+| D6 | „Sendung verfolgen“ | Nur mit „Aktionen aktivieren“; Nutzer:in bestätigt | Deutsche Post (`deutschepost.de`, Sendungsnummer in der URL) |
 | D7 | Kopieren, Teilen, Kontakt, Termin, Verlaufsexport | Nutzer:in tippt | Zwischenablage / im Teilen-Menü gewählte App |
 | D8 | Support, Anleitungen | Nutzer:in tippt | GitHub |
 | D9 | Sicherung | Betriebssystem | iOS: iCloud-/Gerätesicherung, Verlauf nur als Geheimtext. Android: keine seit 2.2.0 (`allowBackup="false"`) |
@@ -125,11 +136,13 @@ verarbeitet. Ein Code kann solche Daten zufällig enthalten, etwa einen Text
 | Plattform | Berechtigung | Herkunft | Zweck |
 |---|---|---|---|
 | iOS | Kamera (`NSCameraUsageDescription`) | App | Scannen |
+| iOS | Fotomediathek (`NSPhotoLibraryUsageDescription`) | `image_picker` | Pflichttext für die Fotoauswahl; die Abfrage erscheint nie, weil PHPicker ohne Bibliothekszugriff auskommt (`requestFullMetadata: false`) |
 | Android | `CAMERA` | mobile_scanner | Scannen |
 | Android | `INTERNET`, `ACCESS_NETWORK_STATE` | ML Kit / datatransport (nicht vom App-Code genutzt) | Telemetrie D2 |
 | Android | `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` | AndroidX | Intern |
+| Android | – (keine) | `image_picker` | Android Photo Picker, auf älteren Geräten über Google Play-Dienste; keine Speicher- oder Medienberechtigung |
 
-Die App fragt **nicht** nach Standort, Kontakten, Kalender, Speicher,
+Die App fragt **nicht** nach Standort, Kontakten, Kalender, Speicher, Fotos,
 Mikrofon oder Bluetooth. Kontakte und Termine gehen als `.vcf` bzw. `.ics`
 über das Teilen-Menü weiter. Dafür braucht es keine Kontakt- oder
 Kalenderberechtigung.
@@ -166,7 +179,7 @@ Kalenderberechtigung.
 | Grundsatz | Bewertung |
 |---|---|
 | Zweckbindung | Daten dienen nur der Anzeige und Aktionen, die du selbst auslöst. |
-| Datenminimierung | Das Kamerabild wird nicht gespeichert. Der Verlauf ist auf 25 Einträge begrenzt. 2FA-Schlüssel werden nicht gespeichert. Tracking-Parameter werden aus Links entfernt. Es gibt keine unnötigen Berechtigungen. **Aber:** WLAN-Passwörter und Matter-PINs landen im Verlauf. |
+| Datenminimierung | Das Kamerabild und gewählte Fotos werden nicht gespeichert. Der Verlauf ist auf 25 Einträge begrenzt. 2FA-Schlüssel werden nicht gespeichert. Tracking-Parameter werden aus Links entfernt. Es gibt keine unnötigen Berechtigungen. **Aber:** WLAN-Passwörter und Matter-PINs landen im Verlauf. |
 | Speicherbegrenzung | Höchstens 25 Einträge; einzeln oder alle löschbar. |
 | Transparenz | Datenschutzerklärung auf Deutsch/Englisch; Info-Knopf in jeder Datenkarte; der Bestätigungsdialog zeigt das vollständige Ziel. |
 | Integrität / Vertraulichkeit | Sandbox des Betriebssystems; kein Netzwerkcode in der App; kein WebView; die Parser prüfen Längen. Siehe F2–F5. |
@@ -189,12 +202,15 @@ Schweregrad: **Hoch / Mittel / Gering / Info**.
 | F7 | Info | **Kein App-eigenes Privacy Manifest unter iOS.** `ios/Runner/PrivacyInfo.xcprivacy` fehlt. Die Plugins (`shared_preferences_foundation`, `mobile_scanner`, `url_launcher_ios`, `package_info_plus`, `share_plus`, `flutter_secure_storage`) bringen eigene mit. Die Vorgaben des App Store sind damit erfüllt. | Optional: Ein App-Manifest mit `NSPrivacyTracking = false` und ohne erhobene Datentypen ergänzen, der Vollständigkeit halber. |
 | F8 | Info | **Sperrliste statt Positivliste für URL-Schemata.** `linkUri` sperrt `file`, `content`, `data`, `javascript`, `vbscript`, `intent`, `about`, `blob` und `chrome`. Andere Schemata mit `//` sowie `fido`, `magnet`, `bitcoin`, `lightning` und `ethereum` sind erlaubt, jeweils nach einer Bestätigung mit vollständigem Ziel. | Vertretbar. Bei Bedarf auf eine Positivliste umstellen (http, https, market, itms-apps, …). |
 | F9 | Info | **Auswertung fremder Eingaben.** Der BER-Parser prüft jede Länge und begrenzt das Längenfeld auf 3 Byte. Die VDV-Dekodierung steckt in `try/catch`, ebenso der Binär- und der Deutsche-Post-Parser. RSA (`modPow`) arbeitet nur auf Daten in QR-Größe (wenige KB); ein nennenswertes Risiko für Denial-of-Service gibt es deshalb nicht. Es gibt kein WebView, keinen dynamischen Code und keine Deep Links. Exportiert sind nur die Launcher-Activity und der `ProfileInstallReceiver`, der durch die Berechtigung `DUMP` geschützt ist. | Kein Handlungsbedarf. Die Tests mit Grenzfällen beibehalten. |
-| F10 | Info | **Abhängigkeiten.** Alle direkten Abhängigkeiten sind aktuell, außer `cupertino_icons` (1.0.9 → 2.0.0, nur Symbole). Einige transitive Pakete liegen ein Patch-Release zurück. Neu in 2.2.0: `flutter_secure_storage` (Schlüsselbund/Keystore), `pointycastle` und `barcode_widget` (reines Dart, ohne Netzwerk und ohne Berechtigungen). Ein Abgleich mit Schwachstellen-Datenbanken wurde nicht gemacht. | Regelmäßig `flutter pub upgrade` ausführen. `osv-scanner` in die Release-Checkliste aufnehmen. |
+| F10 | Info | **Abhängigkeiten.** Alle direkten Abhängigkeiten sind aktuell, außer `cupertino_icons` (1.0.9 → 2.0.0, nur Symbole). Einige transitive Pakete liegen ein Patch-Release zurück. Neu in 2.2.0: `flutter_secure_storage` (Schlüsselbund/Keystore), `pointycastle` und `barcode_widget` (reines Dart, ohne Netzwerk und ohne Berechtigungen). Neu in 2.3.0: `image_picker` (BSD-3-Clause, Flutter-Team) für „Scannen von Foto“ über die Fotoauswahl des Systems, ohne Leserecht auf die Mediathek. Ein Abgleich mit Schwachstellen-Datenbanken wurde nicht gemacht. | Regelmäßig `flutter pub upgrade` ausführen. `osv-scanner` in die Release-Checkliste aufnehmen. |
 
 ### Vorhandene Schutzmaßnahmen (positiv)
 
-- Nichts wird automatisch geöffnet. Jede Aktion zeigt das Ziel und fragt
-  nach.
+- Nichts wird automatisch geöffnet. Aktionen sind ab Werk ausgeschaltet
+  (seit 2.3.0); eingeschaltet zeigt jede Aktion das Ziel und fragt nach.
+- „Scannen von Foto“ ist ab Werk aus und nutzt die Fotoauswahl des Systems:
+  Die App bekommt nur das gewählte Bild, nie die Mediathek, und löscht ihre
+  Kopie nach der Auswertung.
 - Bekannte Tracking-Parameter (`utm_*`, `fbclid`, `gclid`, …) werden vor dem
   Öffnen eines Links entfernt.
 - 2FA-Schlüssel (`otpauth://`) werden nie im Verlauf gespeichert.
@@ -220,7 +236,7 @@ Wahrscheinlichkeit (W) und Schwere (S): gering / mittel / hoch.
 | R1 Google erfährt von der App-Nutzung | ML-Kit-Telemetrie (F1) | hoch (Android) | gering (keine Inhalte, keine Bilder) | **mittel** | gering (mit anderer Bibliothek) / unverändert (nur Offenlegung) |
 | R2 Jemand liest Geheimnisse aus dem Verlauf | Entsperrtes oder verlorenes Gerät, Backup-Konto kompromittiert (F2) | gering | mittel | **gering–mittel** | gering (seit 2.2.0 verschlüsselt; auf einem entsperrten Gerät zeigt die App den Verlauf weiterhin an) |
 | R3 Geheimnisse gelangen über die Zwischenablage nach außen | Zwischenablage-Verlauf, Tastatur-Apps, Universal Clipboard (F3) | gering | mittel | gering | gering |
-| R4 Phishing / Schadsoftware über Codes | Schädlicher Link im QR-Code | mittel | hoch | **gering** (Bestätigung, vollständiges Ziel sichtbar, gesperrte Schemata) | gering |
+| R4 Phishing / Schadsoftware über Codes | Schädlicher Link im QR-Code | mittel | hoch | **gering** (Bestätigung, vollständiges Ziel sichtbar, gesperrte Schemata) | gering (seit 2.3.0 Aktionen ab Werk aus) |
 | R5 Nachschlagedienste erfahren Artikel- oder Sendungsnummern | Du tippst „Online nachschlagen“ / „Sendung verfolgen“ | mittel | gering | gering | gering |
 | R6 Mitlesen / Bildschirmfotos | Taskvorschau (F4) | gering | gering | gering | gering |
 | R7 Der Export landet an einem unsicheren Ort | Export im Klartext (F5) | gering | mittel | gering | gering |

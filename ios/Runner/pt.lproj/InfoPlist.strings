@@ -1,1 +1,2 @@
 "NSCameraUsageDescription" = "A câmera é usada para escanear códigos QR e códigos de barras.";
+"NSPhotoLibraryUsageDescription" = "Somente para “Escanear de foto”: você escolhe uma imagem e o app procura um código nela.";

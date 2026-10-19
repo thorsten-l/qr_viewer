@@ -15,17 +15,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:qr_viewer/localization.dart';
+import 'package:qr_viewer/settings.dart';
 
 /// MaterialApp mit allen Übersetzungen; Standardsprache in Tests: Deutsch.
-Widget testApp(Widget home, {Locale locale = const Locale('de')}) =>
-    MaterialApp(
-      locale: locale,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: kSupportedLocales,
-      home: home,
-    );
+/// Aktionen sind hier eingeschaltet, damit sie sich prüfen lassen.
+Widget testApp(
+  Widget home, {
+  Locale locale = const Locale('de'),
+  AppSettings? settings,
+}) => MaterialApp(
+  locale: locale,
+  localizationsDelegates: const [
+    AppLocalizations.delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ],
+  supportedLocales: kSupportedLocales,
+  builder: (context, child) => SettingsScope(
+    settings: settings ?? AppSettings(actionsEnabled: true),
+    child: child!,
+  ),
+  home: home,
+);

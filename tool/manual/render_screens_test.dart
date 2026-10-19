@@ -41,6 +41,7 @@ import 'package:qr_viewer/localization.dart';
 import 'package:qr_viewer/main.dart';
 import 'package:qr_viewer/scan_mode.dart';
 import 'package:qr_viewer/result_page.dart';
+import 'package:qr_viewer/settings.dart';
 import 'package:qr_viewer/vdv/vdv_ticket.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -88,6 +89,9 @@ Widget _app(Widget home) => MaterialApp(
     colorSchemeSeed: Colors.teal,
     fontFamilyFallback: const ['Emoji'],
   ),
+  // Die Anleitung zeigt die Aktionsknöpfe, also mit eingeschalteten Aktionen.
+  builder: (context, child) =>
+      SettingsScope(settings: AppSettings(actionsEnabled: true), child: child!),
   home: home,
 );
 
@@ -278,57 +282,102 @@ void main() {
       ZoomStep(CameraLensType.normal, factor: 1),
       ZoomStep(CameraLensType.normal, factor: 2, digitalZoom: 2),
     ];
-    await tester.pumpWidget(
-      RepaintBoundary(
-        key: key,
-        child: _app(
-          Scaffold(
-            appBar: AppBar(
-              titleSpacing: 4,
-              title: ScanModeMenu(selected: ScanMode.qr, onSelected: (_) {}),
-              actions: [
-                IconButton(icon: const Icon(Icons.history), onPressed: () {}),
+    // Scan-Bildschirm wie in der App; mit [photo] samt Foto-Knopf.
+    Widget scanner({bool photo = false}) => RepaintBoundary(
+      key: key,
+      child: _app(
+        Scaffold(
+          appBar: AppBar(
+            titleSpacing: 4,
+            title: ScanModeMenu(selected: ScanMode.qr, onSelected: (_) {}),
+            actions: [
+              if (photo)
                 IconButton(
-                  icon: const Icon(Icons.info_outline),
+                  icon: const Icon(Icons.photo_outlined),
                   onPressed: () {},
                 ),
-                IconButton(
-                  icon: const Icon(Icons.flashlight_off_outlined),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-            body: Stack(
-              children: [
-                Positioned.fill(child: camera),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 24,
-                  child: Center(
-                    child: ZoomSelector(
-                      choices: zooms,
-                      selected: zooms[1],
-                      onSelected: (_) {},
-                    ),
+              IconButton(
+                icon: const Icon(Icons.flashlight_off_outlined),
+                onPressed: () {},
+              ),
+              ScannerMenu(onSelected: (_) {}),
+            ],
+          ),
+          body: Stack(
+            children: [
+              Positioned.fill(child: camera),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 24,
+                child: Center(
+                  child: ZoomSelector(
+                    choices: zooms,
+                    selected: zooms[1],
+                    onSelected: (_) {},
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
     );
-    await tester.runAsync(() async {
+    Future<void> loadImages() => tester.runAsync(() async {
       for (final element in find.byType(Image).evaluate()) {
         await precacheImage((element.widget as Image).image, element);
       }
     });
+
+    await tester.pumpWidget(scanner());
+    await loadImages();
     await tester.pumpAndSettle();
     await _capture(tester, key, 'scanner');
     await tester.tap(find.byType(ScanModeMenu));
     await tester.pumpAndSettle();
     await _capture(tester, key, 'scanner_menu');
+    await tester.tapAt(const Offset(200, 600));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(ScannerMenu));
+    await tester.pumpAndSettle();
+    await _capture(tester, key, 'scanner_app_menu');
+
+    // Foto-Scan: Knopf eingeschaltet, Dialog während der Auswertung.
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpWidget(scanner(photo: true));
+    final photo = File('build/manual/codes/qr_url.png');
+    if (!photo.existsSync()) {
+      fail('build/manual/codes fehlt: erst make_manual.py ausführen');
+    }
+    final context = tester.element(find.byType(Scaffold));
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) =>
+          PhotoAnalysisDialog(image: MemoryImage(photo.readAsBytesSync())),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    await loadImages();
+    // Der Fortschrittsbalken läuft endlos, daher kein pumpAndSettle.
+    await tester.pump(const Duration(milliseconds: 300));
+    await _capture(tester, key, 'photo_scan');
+  });
+
+  testWidgets('Bildschirm Einstellungen', (tester) async {
+    _phone(tester);
+    final key = GlobalKey();
+    await tester.pumpWidget(
+      RepaintBoundary(
+        key: key,
+        child: _app(
+          // Ab Werk: alles aus.
+          SettingsScope(settings: AppSettings(), child: const SettingsPage()),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await _capture(tester, key, 'settings');
   });
 
   testWidgets('Bildschirm Info-Dialog', (tester) async {
@@ -343,10 +392,10 @@ void main() {
               info: PackageInfo(
                 appName: 'QR Viewer',
                 packageName: 'de.l9g.qr_viewer',
-                version: '2.2.0',
-                buildNumber: '14',
+                version: '2.3.0',
+                buildNumber: '15',
               ),
-              buildDate: DateTime(2026, 10, 14, 8, 0),
+              buildDate: DateTime(2026, 10, 19, 8, 0),
             ),
           ),
         ),

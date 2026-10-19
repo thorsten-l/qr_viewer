@@ -74,6 +74,35 @@ class AppLocalizationsAr extends AppLocalizations {
   String get info => 'معلومات';
 
   @override
+  String get menu => 'القائمة';
+
+  @override
+  String get settings => 'الإعدادات';
+
+  @override
+  String get enableActions => 'تفعيل الإجراءات';
+
+  @override
+  String get enableActionsHint =>
+      'يعرض أزرارًا مثل فتح أو اتصال أو بحث في صفحة النتيجة. عند الإيقاف يكتفي التطبيق بالعرض والنسخ.';
+
+  @override
+  String get scanFromPhoto => 'المسح من صورة';
+
+  @override
+  String get scanFromPhotoHint =>
+      'يعرض زر صورة بجانب المصباح. تختار به صورة من صورك ويقرأ التطبيق الرمز فيها. لا يحصل التطبيق إلا على الصورة التي تختارها.';
+
+  @override
+  String get pickPhoto => 'مسح صورة';
+
+  @override
+  String get analyzingPhoto => 'جارٍ تحليل الصورة …';
+
+  @override
+  String get noCodeInPhoto => 'لم يُعثر على رمز في الصورة.';
+
+  @override
   String get torch => 'المصباح';
 
   @override

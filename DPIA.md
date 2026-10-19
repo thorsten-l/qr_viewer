@@ -4,12 +4,12 @@
 
 | | |
 |---|---|
-| App | QR Viewer 2.2.0 (build 14), iOS/iPadOS and Android |
-| Code base | `main`, audit on commit `b25767c` ("release 2.1.2"); measures for F2 and F6 in 2.2.0 |
+| App | QR Viewer 2.3.0 (build 15), iOS/iPadOS and Android |
+| Code base | `main`, audit on commit `b25767c` ("release 2.1.2"); measures for F2 and F6 in 2.2.0; settings and "Scan from photo" added in 2.3.0 |
 | Controller / author | Thorsten Ludewig, t.ludewig@gmail.com |
-| Date | 14 October 2026 |
+| Date | 19 October 2026 (created 14 October 2026) |
 | Basis | Art. 35 GDPR, § 25 TDDDG (German Telecommunications Digital Services Data Protection Act) |
-| Status | Assessment complete; F2 and F6 implemented in 2.2.0, other measures open (section 8) |
+| Status | Assessment complete; F2 and F6 implemented in 2.2.0, 2.3.0 reassessed, other measures open (section 8) |
 
 This document combines a technical security audit of the app with a data
 protection impact assessment (DPIA). It is not legal advice.
@@ -41,6 +41,13 @@ attention:
    birth. **Implemented in 2.2.0:** the history is encrypted with
    AES-256-CBC + HMAC-SHA256; the key stays on the device; Android backup is
    off.
+
+**New in 2.3.0:** The actions on the result page (open, call, look up,
+etc.) are turned off by default and can be turned on in the settings.
+Without them, no content leaves the app unless you copy or share it. With
+"Scan from photo" (off by default) the app reads codes from a picture you
+choose in the system photo picker. It only gets that picture, needs no read
+permission for the library and does not store it. The risk stays low.
 
 No high residual risk remains. Prior consultation with a supervisory
 authority under Art. 36 GDPR is not necessary.
@@ -84,7 +91,8 @@ automatically.
 |---|---|---|
 | User | Camera image (live only, not stored) | Camera |
 | User | Scan history (last 25 contents with time, format, type) | Scans |
-| User | Settings: scan mode, zoom level | App |
+| User | Photo chosen by the user (only with "Scan from photo", not stored) | System photo picker |
+| User | Settings: scan mode, zoom level, "Enable actions", "Scan from photo" | App |
 | Third parties in codes | Names, phone numbers, email and postal addresses (vCard/MECARD), appointments | Code content |
 | Ticket holder | Name (plain or masked), date of birth, ticket number, validity | VDV ticket (Deutschlandticket) |
 | User / third parties | Wi-Fi passwords, 2FA secrets, Matter setup PIN, IBAN/name (GiroCode) | Code content |
@@ -101,8 +109,9 @@ app shows it just like any other text.
 | History (`scan_history_v2`) | SharedPreferences (Android XML in the app sandbox) / NSUserDefaults (iOS) | OS sandbox, device encryption; **AES-256-CBC + HMAC-SHA256** since 2.2.0 | Single entry, "Clear history", uninstall; max. 25 entries |
 | History key (32 bytes, random) | iOS Keychain (`AfterFirstUnlockThisDeviceOnly`, not synced) / Android Keystore | Hardware-backed where available; never in backups | Uninstall |
 | 2FA keys | **not stored** | – | – |
-| Scan mode, zoom | SharedPreferences / NSUserDefaults | Sandbox | Uninstall |
+| Scan mode, zoom, settings | SharedPreferences / NSUserDefaults | Sandbox | Uninstall |
 | Camera image | Memory only | – | Immediately |
+| Chosen photo | Copy from `image_picker` in the app's temporary folder; scaled-down versions in a separate temporary folder | Sandbox | The app deletes both right after the analysis |
 | Export files (CSV/JSON), vCard/iCalendar | Temporary file from `share_plus` in the app cache, then the target app | Sandbox; in the target app, its own rules apply | Cache is cleared by the OS |
 
 ### 3.4 Data flows and recipients
@@ -110,11 +119,12 @@ app shows it just like any other text.
 | # | Flow | Trigger | Recipient |
 |---|---|---|---|
 | D1 | Camera image → barcode recognition | Scanning | On the device: Apple Vision (iOS) or ML Kit (Android) |
+| D1a | Chosen photo → barcode recognition | User picks a photo ("Scan from photo") | On the device: Apple Vision (iOS) or ML Kit (Android) |
 | D2 | ML Kit telemetry | Automatic, Android only | Google (Firelog/CCT via `com.google.android.datatransport`) |
-| D3 | Open a link | User confirms the dialog | Browser or app that handles the scheme, then the website |
-| D4 | Email, call, SMS, map, authenticator | User confirms | The matching system app |
-| D5 | "Look up online" | User confirms | DuckDuckGo (GTIN) / Open Library (ISBN) |
-| D6 | "Track shipment" | User confirms | Deutsche Post (`deutschepost.de`, tracking number in the URL) |
+| D3 | Open a link | Only with "Enable actions"; user confirms the dialog | Browser or app that handles the scheme, then the website |
+| D4 | Email, call, SMS, map, authenticator | Only with "Enable actions"; user confirms | The matching system app |
+| D5 | "Look up online" | Only with "Enable actions"; user confirms | DuckDuckGo (GTIN) / Open Library (ISBN) |
+| D6 | "Track shipment" | Only with "Enable actions"; user confirms | Deutsche Post (`deutschepost.de`, tracking number in the URL) |
 | D7 | Copy, share, contact, calendar, history export | User taps | Clipboard / app chosen in the system share sheet |
 | D8 | Support, manuals | User taps | GitHub |
 | D9 | Backup | Operating system | iOS: iCloud/device backup, history only as ciphertext. Android: none since 2.2.0 (`allowBackup="false"`) |
@@ -124,11 +134,13 @@ app shows it just like any other text.
 | Platform | Permission | Origin | Use |
 |---|---|---|---|
 | iOS | Camera (`NSCameraUsageDescription`) | App | Scanning |
+| iOS | Photo library (`NSPhotoLibraryUsageDescription`) | `image_picker` | Required text for the photo picker; the prompt never appears because PHPicker works without library access (`requestFullMetadata: false`) |
 | Android | `CAMERA` | mobile_scanner | Scanning |
 | Android | `INTERNET`, `ACCESS_NETWORK_STATE` | ML Kit / datatransport (not used by app code) | Telemetry D2 |
 | Android | `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` | AndroidX | Internal |
+| Android | – (none) | `image_picker` | Android Photo Picker, on older devices via Google Play services; no storage or media permission |
 
-The app does **not** request location, contacts, calendar, storage,
+The app does **not** request location, contacts, calendar, storage, photos,
 microphone or Bluetooth. Contacts and appointments are passed on as `.vcf` or
 `.ics` through the share sheet, so no contacts or calendar permission is needed.
 
@@ -162,7 +174,7 @@ microphone or Bluetooth. Contacts and appointments are passed on as `.vcf` or
 | Principle | Assessment |
 |---|---|
 | Purpose limitation | Data is used only to display it and for actions the user starts. |
-| Data minimisation | Camera image is not stored. History is limited to 25 entries. 2FA keys are not stored. Tracking parameters are removed from links. There are no unnecessary permissions. **But:** Wi-Fi passwords and Matter PINs end up in the history. |
+| Data minimisation | Camera images and chosen photos are not stored. History is limited to 25 entries. 2FA keys are not stored. Tracking parameters are removed from links. There are no unnecessary permissions. **But:** Wi-Fi passwords and Matter PINs end up in the history. |
 | Storage limitation | Only 25 entries; entries can be deleted one by one or all at once. |
 | Transparency | Privacy policy in German/English; info button on every data card; a confirmation dialog shows the full target. |
 | Integrity / confidentiality | OS sandbox; no network code in the app; no WebView; parsers check lengths. See F2–F5. |
@@ -185,12 +197,16 @@ Severity: **High / Medium / Low / Info**.
 | F7 | Info | **No app-level privacy manifest on iOS.** `ios/Runner/PrivacyInfo.xcprivacy` is missing. The plugins (`shared_preferences_foundation`, `mobile_scanner`, `url_launcher_ios`, `package_info_plus`, `share_plus`, `flutter_secure_storage`) ship their own, so App Store requirements are met. | Optional: add an app manifest with `NSPrivacyTracking = false` and no collected data types, for completeness. |
 | F8 | Info | **Blocklist instead of allowlist for URL schemes.** `linkUri` blocks `file`, `content`, `data`, `javascript`, `vbscript`, `intent`, `about`, `blob` and `chrome`. Other schemes with `//` and `fido`, `magnet`, `bitcoin`, `lightning`, `ethereum` are allowed, after a confirmation that shows the full target. | Acceptable. If needed, switch to an allowlist (http, https, market, itms-apps, …). |
 | F9 | Info | **Parsing untrusted input.** The BER parser checks every length and limits the length field to 3 bytes. VDV decoding is wrapped in `try/catch`, and so are the binary and Deutsche Post parsers. RSA (`modPow`) works only on data that fits in a QR code (a few KB), so there is no significant risk of a denial-of-service attack. There is no WebView, no dynamic code and no deep links. The only exported components are the launcher activity and the `ProfileInstallReceiver`, which is protected by the `DUMP` permission. | No action needed. Keep the fuzz/edge-case tests. |
-| F10 | Info | **Dependencies.** All direct dependencies are up to date except `cupertino_icons` (1.0.9 → 2.0.0, icons only). Some transitive packages lag by patch versions. New in 2.2.0: `flutter_secure_storage` (Keychain/Keystore), `pointycastle` and `barcode_widget` (pure Dart, no network, no permissions). No check against vulnerability databases was done. | Run `flutter pub upgrade` regularly. Add `osv-scanner` to the release checklist. |
+| F10 | Info | **Dependencies.** All direct dependencies are up to date except `cupertino_icons` (1.0.9 → 2.0.0, icons only). Some transitive packages lag by patch versions. New in 2.2.0: `flutter_secure_storage` (Keychain/Keystore), `pointycastle` and `barcode_widget` (pure Dart, no network, no permissions). New in 2.3.0: `image_picker` (BSD-3-Clause, Flutter team) for "Scan from photo" via the system photo picker, without read access to the library. No check against vulnerability databases was done. | Run `flutter pub upgrade` regularly. Add `osv-scanner` to the release checklist. |
 
 ### Existing protective measures (positive)
 
-- Nothing is opened automatically. Every action shows the target and asks for
+- Nothing is opened automatically. Actions are turned off by default (since
+  2.3.0); when turned on, every action shows the target and asks for
   confirmation.
+- "Scan from photo" is off by default and uses the system photo picker: the
+  app only gets the chosen picture, never the library, and deletes its copy
+  after the analysis.
 - Known tracking parameters (`utm_*`, `fbclid`, `gclid`, …) are removed
   before a link is opened.
 - 2FA keys (`otpauth://`) are never stored in the history.
@@ -215,7 +231,7 @@ Likelihood (L) and severity (S): low / medium / high.
 | R1 Google learns about app use | ML Kit telemetry (F1) | high (Android) | low (no content, no images) | **medium** | low (with an alternative library) / unchanged (disclosure only) |
 | R2 Someone reads secrets from the history | Unlocked or lost device, backup account compromised (F2) | low | medium | **low–medium** | low (encrypted since 2.2.0; on an unlocked device the app still shows the history) |
 | R3 Secrets leak via the clipboard | Clipboard history, keyboard apps, Universal Clipboard (F3) | low | medium | low | low |
-| R4 Phishing / malware via codes | Harmful link in a QR code | medium | high | **low** (confirmation, full target shown, scheme blocklist) | low |
+| R4 Phishing / malware via codes | Harmful link in a QR code | medium | high | **low** (confirmation, full target shown, scheme blocklist) | low (actions off by default since 2.3.0) |
 | R5 Lookup services learn product or tracking numbers | User taps "Look up online" / "Track shipment" | medium | low | low | low |
 | R6 Shoulder surfing / screenshots | Task preview (F4) | low | low | low | low |
 | R7 Export ends up in an insecure place | Plain-text export (F5) | low | medium | low | low |

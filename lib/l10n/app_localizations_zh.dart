@@ -74,6 +74,34 @@ class AppLocalizationsZh extends AppLocalizations {
   String get info => '关于';
 
   @override
+  String get menu => '菜单';
+
+  @override
+  String get settings => '设置';
+
+  @override
+  String get enableActions => '启用操作';
+
+  @override
+  String get enableActionsHint => '在结果页显示“打开”“拨打”“查询”等按钮。关闭时，应用只显示和复制。';
+
+  @override
+  String get scanFromPhoto => '从照片扫描';
+
+  @override
+  String get scanFromPhotoHint =>
+      '在手电筒旁显示照片按钮。你可从照片中选择一张图片，应用会读取其中的码。应用只会获得你选择的图片。';
+
+  @override
+  String get pickPhoto => '扫描照片';
+
+  @override
+  String get analyzingPhoto => '正在分析照片…';
+
+  @override
+  String get noCodeInPhoto => '照片中未找到码。';
+
+  @override
   String get torch => '手电筒';
 
   @override

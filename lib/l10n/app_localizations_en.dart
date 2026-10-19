@@ -74,6 +74,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get info => 'Info';
 
   @override
+  String get menu => 'Menu';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get enableActions => 'Enable actions';
+
+  @override
+  String get enableActionsHint =>
+      'Shows buttons such as Open, Call or Look up on the result page. When off, the app only displays and copies.';
+
+  @override
+  String get scanFromPhoto => 'Scan from photo';
+
+  @override
+  String get scanFromPhotoHint =>
+      'Shows a photo button next to the flashlight. With it you pick a picture from your photos and the app reads the code in it. The app only gets the picture you choose.';
+
+  @override
+  String get pickPhoto => 'Scan photo';
+
+  @override
+  String get analyzingPhoto => 'Analyzing photo …';
+
+  @override
+  String get noCodeInPhoto => 'No code was found in the photo.';
+
+  @override
   String get torch => 'Flashlight';
 
   @override

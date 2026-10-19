@@ -236,6 +236,60 @@ abstract class AppLocalizations {
   /// **'Info'**
   String get info;
 
+  /// Tooltip Menü der Scanner-Seite
+  ///
+  /// In en, this message translates to:
+  /// **'Menu'**
+  String get menu;
+
+  /// Menüeintrag und Seitentitel Einstellungen
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// Einstellung: Aktionen auf der Ergebnisseite einschalten
+  ///
+  /// In en, this message translates to:
+  /// **'Enable actions'**
+  String get enableActions;
+
+  /// Erklärung zur Einstellung Aktionen aktivieren
+  ///
+  /// In en, this message translates to:
+  /// **'Shows buttons such as Open, Call or Look up on the result page. When off, the app only displays and copies.'**
+  String get enableActionsHint;
+
+  /// Einstellung: Codes aus einem Foto lesen
+  ///
+  /// In en, this message translates to:
+  /// **'Scan from photo'**
+  String get scanFromPhoto;
+
+  /// Erklärung zur Einstellung Scannen von Foto
+  ///
+  /// In en, this message translates to:
+  /// **'Shows a photo button next to the flashlight. With it you pick a picture from your photos and the app reads the code in it. The app only gets the picture you choose.'**
+  String get scanFromPhotoHint;
+
+  /// Tooltip Knopf Foto auswählen und scannen
+  ///
+  /// In en, this message translates to:
+  /// **'Scan photo'**
+  String get pickPhoto;
+
+  /// Dialog: gewähltes Foto wird nach Codes durchsucht
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing photo …'**
+  String get analyzingPhoto;
+
+  /// Meldung: im gewählten Foto kein Code gefunden
+  ///
+  /// In en, this message translates to:
+  /// **'No code was found in the photo.'**
+  String get noCodeInPhoto;
+
   /// Tooltip Taschenlampe
   ///
   /// In en, this message translates to:

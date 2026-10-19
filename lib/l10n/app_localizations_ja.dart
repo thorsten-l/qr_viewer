@@ -74,6 +74,35 @@ class AppLocalizationsJa extends AppLocalizations {
   String get info => '情報';
 
   @override
+  String get menu => 'メニュー';
+
+  @override
+  String get settings => '設定';
+
+  @override
+  String get enableActions => 'アクションを有効にする';
+
+  @override
+  String get enableActionsHint =>
+      '結果ページに「開く」「電話」「検索」などのボタンを表示します。オフの場合は表示とコピーのみです。';
+
+  @override
+  String get scanFromPhoto => '写真からスキャン';
+
+  @override
+  String get scanFromPhotoHint =>
+      'ライトの横に写真ボタンを表示します。写真から画像を選ぶと、その中のコードを読み取ります。アプリが受け取るのは選んだ画像だけです。';
+
+  @override
+  String get pickPhoto => '写真をスキャン';
+
+  @override
+  String get analyzingPhoto => '写真を解析中…';
+
+  @override
+  String get noCodeInPhoto => '写真にコードが見つかりませんでした。';
+
+  @override
   String get torch => 'ライト';
 
   @override

@@ -107,6 +107,75 @@ S = {
    en="Info", de="Info", es="Información", fr="Infos", pt="Informações", ru="Информация",
    zh="关于", hi="जानकारी", ar="معلومات", ja="情報",
    it="Info", pl="Informacje", uk="Інформація")),
+ "menu": ("Tooltip Menü der Scanner-Seite", [], dict(
+   en="Menu", de="Menü", es="Menú", fr="Menu", pt="Menu", ru="Меню",
+   zh="菜单", hi="मेनू", ar="القائمة", ja="メニュー",
+   it="Menu", pl="Menu", uk="Меню")),
+ "settings": ("Menüeintrag und Seitentitel Einstellungen", [], dict(
+   en="Settings", de="Einstellungen", es="Ajustes", fr="Réglages", pt="Configurações", ru="Настройки",
+   zh="设置", hi="सेटिंग्स", ar="الإعدادات", ja="設定",
+   it="Impostazioni", pl="Ustawienia", uk="Налаштування")),
+ "enableActions": ("Einstellung: Aktionen auf der Ergebnisseite einschalten", [], dict(
+   en="Enable actions", de="Aktionen aktivieren", es="Activar acciones", fr="Activer les actions",
+   pt="Ativar ações", ru="Включить действия", zh="启用操作", hi="क्रियाएँ सक्षम करें",
+   ar="تفعيل الإجراءات", ja="アクションを有効にする",
+   it="Attiva azioni", pl="Włącz akcje", uk="Увімкнути дії")),
+ "enableActionsHint": ("Erklärung zur Einstellung Aktionen aktivieren", [], dict(
+   en="Shows buttons such as Open, Call or Look up on the result page. When off, the app only displays and copies.",
+   de="Zeigt auf der Ergebnisseite Knöpfe wie Öffnen, Anrufen oder Nachschlagen. Ist das aus, zeigt die App nur an und kopiert.",
+   es="Muestra botones como Abrir, Llamar o Buscar en la página de resultados. Si está desactivado, la app solo muestra y copia.",
+   fr="Affiche des boutons comme Ouvrir, Appeler ou Rechercher sur la page de résultat. Désactivé, l'app se contente d'afficher et de copier.",
+   pt="Mostra botões como Abrir, Ligar ou Pesquisar na página de resultado. Desativado, o app apenas mostra e copia.",
+   ru="Показывает на странице результата кнопки «Открыть», «Позвонить» или «Найти». Если выключено, приложение только показывает и копирует.",
+   zh="在结果页显示“打开”“拨打”“查询”等按钮。关闭时，应用只显示和复制。",
+   hi="परिणाम पेज पर खोलें, कॉल करें या खोजें जैसे बटन दिखाता है। बंद होने पर ऐप केवल दिखाता और कॉपी करता है।",
+   ar="يعرض أزرارًا مثل فتح أو اتصال أو بحث في صفحة النتيجة. عند الإيقاف يكتفي التطبيق بالعرض والنسخ.",
+   ja="結果ページに「開く」「電話」「検索」などのボタンを表示します。オフの場合は表示とコピーのみです。",
+   it="Mostra pulsanti come Apri, Chiama o Cerca nella pagina dei risultati. Se disattivato, l'app si limita a mostrare e copiare.",
+   pl="Pokazuje na stronie wyniku przyciski takie jak Otwórz, Zadzwoń lub Wyszukaj. Po wyłączeniu aplikacja tylko wyświetla i kopiuje.",
+   uk="Показує на сторінці результату кнопки «Відкрити», «Подзвонити» чи «Знайти». Якщо вимкнено, застосунок лише показує й копіює.")),
+ "scanFromPhoto": ("Einstellung: Codes aus einem Foto lesen", [], dict(
+   en="Scan from photo", de="Scannen von Foto", es="Escanear desde foto", fr="Scanner depuis une photo",
+   pt="Escanear de foto", ru="Сканировать с фото", zh="从照片扫描", hi="फ़ोटो से स्कैन करें",
+   ar="المسح من صورة", ja="写真からスキャン",
+   it="Scansiona da foto", pl="Skanuj ze zdjęcia", uk="Сканувати з фото")),
+ "scanFromPhotoHint": ("Erklärung zur Einstellung Scannen von Foto", [], dict(
+   en="Shows a photo button next to the flashlight. With it you pick a picture from your photos and the app reads the code in it. The app only gets the picture you choose.",
+   de="Zeigt neben der Taschenlampe einen Foto-Knopf. Damit wählst du ein Bild aus deinen Fotos, und die App liest den Code darin. Die App bekommt nur das Bild, das du auswählst.",
+   es="Muestra un botón de foto junto a la linterna. Con él eliges una imagen de tus fotos y la app lee el código. La app solo recibe la imagen que eliges.",
+   fr="Affiche un bouton photo à côté de la lampe torche. Tu choisis une image dans tes photos et l'app lit le code qu'elle contient. L'app ne reçoit que l'image choisie.",
+   pt="Mostra um botão de foto ao lado da lanterna. Com ele você escolhe uma imagem das suas fotos e o app lê o código. O app só recebe a imagem escolhida.",
+   ru="Показывает кнопку фото рядом с фонариком. Вы выбираете снимок из фото, и приложение читает код на нём. Приложение получает только выбранный снимок.",
+   zh="在手电筒旁显示照片按钮。你可从照片中选择一张图片，应用会读取其中的码。应用只会获得你选择的图片。",
+   hi="टॉर्च के पास एक फ़ोटो बटन दिखाता है। इससे आप अपनी फ़ोटो से एक तस्वीर चुनते हैं और ऐप उसमें कोड पढ़ता है। ऐप को केवल आपकी चुनी तस्वीर मिलती है।",
+   ar="يعرض زر صورة بجانب المصباح. تختار به صورة من صورك ويقرأ التطبيق الرمز فيها. لا يحصل التطبيق إلا على الصورة التي تختارها.",
+   ja="ライトの横に写真ボタンを表示します。写真から画像を選ぶと、その中のコードを読み取ります。アプリが受け取るのは選んだ画像だけです。",
+   it="Mostra un pulsante foto accanto alla torcia. Con esso scegli un'immagine dalle tue foto e l'app legge il codice. L'app riceve solo l'immagine scelta.",
+   pl="Pokazuje przycisk zdjęcia obok latarki. Wybierasz nim obraz ze zdjęć, a aplikacja odczytuje z niego kod. Aplikacja dostaje tylko wybrany obraz.",
+   uk="Показує кнопку фото поруч із ліхтариком. Нею ви вибираєте знімок із фото, і застосунок читає код на ньому. Застосунок отримує лише вибраний знімок.")),
+ "pickPhoto": ("Tooltip Knopf Foto auswählen und scannen", [], dict(
+   en="Scan photo", de="Foto scannen", es="Escanear foto", fr="Scanner une photo", pt="Escanear foto",
+   ru="Сканировать фото", zh="扫描照片", hi="फ़ोटो स्कैन करें", ar="مسح صورة", ja="写真をスキャン",
+   it="Scansiona foto", pl="Skanuj zdjęcie", uk="Сканувати фото")),
+ "analyzingPhoto": ("Dialog: gewähltes Foto wird nach Codes durchsucht", [], dict(
+   en="Analyzing photo …", de="Foto wird ausgewertet …", es="Analizando la foto …", fr="Analyse de la photo …",
+   pt="Analisando a foto …", ru="Анализ фото …", zh="正在分析照片…", hi="फ़ोटो का विश्लेषण हो रहा है …",
+   ar="جارٍ تحليل الصورة …", ja="写真を解析中…",
+   it="Analisi della foto …", pl="Analizowanie zdjęcia …", uk="Аналіз фото …")),
+ "noCodeInPhoto": ("Meldung: im gewählten Foto kein Code gefunden", [], dict(
+   en="No code was found in the photo.",
+   de="Im Foto wurde kein Code gefunden.",
+   es="No se encontró ningún código en la foto.",
+   fr="Aucun code trouvé sur la photo.",
+   pt="Nenhum código foi encontrado na foto.",
+   ru="На фото код не найден.",
+   zh="照片中未找到码。",
+   hi="फ़ोटो में कोई कोड नहीं मिला।",
+   ar="لم يُعثر على رمز في الصورة.",
+   ja="写真にコードが見つかりませんでした。",
+   it="Nessun codice trovato nella foto.",
+   pl="Na zdjęciu nie znaleziono kodu.",
+   uk="На фото код не знайдено.")),
  "torch": ("Tooltip Taschenlampe", [], dict(
    en="Flashlight", de="Taschenlampe", es="Linterna", fr="Lampe torche", pt="Lanterna", ru="Фонарик",
    zh="手电筒", hi="टॉर्च", ar="المصباح", ja="ライト",
@@ -481,11 +550,29 @@ CAMERA = dict(
   uk="Камера використовується для сканування QR-кодів і штрихкодів.",
 )
 
+# NSPhotoLibraryUsageDescription; Pflicht für die Fotoauswahl, iOS fragt
+# aber nicht nach, weil die App nur das gewählte Bild bekommt.
+PHOTOS_READ = dict(
+  en="Only for “Scan from photo”: you pick a picture yourself and the app looks for a code in it.",
+  de="Nur für „Scannen von Foto“: Du wählst selbst ein Bild aus, und die App sucht darin nach einem Code.",
+  es="Solo para «Escanear desde foto»: tú eliges una imagen y la app busca un código en ella.",
+  fr="Uniquement pour « Scanner depuis une photo » : tu choisis toi-même une image et l'app y cherche un code.",
+  pt="Somente para “Escanear de foto”: você escolhe uma imagem e o app procura um código nela.",
+  ru="Только для «Сканировать с фото»: вы сами выбираете снимок, и приложение ищет на нём код.",
+  zh="仅用于“从照片扫描”：你自行选择图片，应用在其中查找码。",
+  hi="केवल “फ़ोटो से स्कैन करें” के लिए: आप स्वयं एक तस्वीर चुनते हैं और ऐप उसमें कोड खोजता है।",
+  ar="فقط لميزة «المسح من صورة»: تختار صورة بنفسك ويبحث التطبيق فيها عن رمز.",
+  ja="「写真からスキャン」専用：あなたが選んだ画像の中からコードを探します。",
+  it="Solo per «Scansiona da foto»: scegli tu un'immagine e l'app vi cerca un codice.",
+  pl="Tylko dla „Skanuj ze zdjęcia”: sam wybierasz obraz, a aplikacja szuka w nim kodu.",
+  uk="Лише для «Сканувати з фото»: ви самі вибираєте знімок, і застосунок шукає на ньому код.",
+)
+
 if __name__ == "__main__":
     root = os.path.join(os.path.dirname(__file__), "..", "..")
     missing = [(k, l) for k, (_, _, t) in S.items() for l in LANGS if l not in t]
     assert not missing, f"Fehlende Übersetzungen: {missing}"
-    assert set(CAMERA) == set(LANGS)
+    assert set(CAMERA) == set(LANGS) == set(PHOTOS_READ)
     for lang in LANGS:
         arb = {"@@locale": lang}
         for key, (desc, ph, t) in S.items():
@@ -504,4 +591,5 @@ if __name__ == "__main__":
         os.makedirs(d, exist_ok=True)
         with open(os.path.join(d, "InfoPlist.strings"), "w", encoding="utf-8") as f:
             f.write(f'"NSCameraUsageDescription" = "{CAMERA[lang]}";\n')
+            f.write(f'"NSPhotoLibraryUsageDescription" = "{PHOTOS_READ[lang]}";\n')
     print(f"{len(S)} Texte x {len(LANGS)} Sprachen geschrieben")

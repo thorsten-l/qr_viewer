@@ -35,7 +35,7 @@ UI = dict(
 
 TITLE = "QR Viewer"
 SUBTITLE = "Codes sicher scannen – einfach erklärt"
-VERSION_LINE = "Anleitung für Version 2.2.0 · Stand: Oktober 2026"
+VERSION_LINE = "Anleitung für Version 2.3.0 · Stand: Oktober 2026"
 
 # Hauptteil: (Überschrift, [Blöcke]). Ein Block ist ein Absatz (str),
 # eine Liste (list), ein Bild ("img", Datei, Breite in cm, Bildunterschrift)
@@ -111,10 +111,32 @@ CHAPTERS = [
         "Welche Stufen es gibt, hängt von den Kameras deines Geräts ab.",
         "**Taschenlampe:** Das Lampensymbol oben rechts schaltet das Licht "
         "ein und aus – praktisch in dunkler Umgebung.",
+        "**Menü:** Das Symbol mit den drei Strichen (☰) ganz rechts öffnet "
+        "das Menü mit **Verlauf**, **Einstellungen** und **Info**.",
+        ("img", "scanner_app_menu_crop.png", 8.0,
+         "Das Menü oben rechts auf dem Scan-Bildschirm."),
         ("note", "Tipps, wenn ein Code nicht erkannt wird: Halte das Gerät "
          "ruhig und etwas weiter weg, damit die Kamera scharf stellen kann. "
          "Vermeide Spiegelungen auf glänzendem Papier oder Displays. Prüfe, "
          "ob die richtige Scan-Art gewählt ist, oder nimm „Alle Codes“."),
+        ("h3", "Code aus einem Foto lesen"),
+        "Hast du einen Code fotografiert oder als Bildschirmfoto gespeichert, "
+        "kann QR Viewer ihn auch aus dem Bild lesen. Schalte dazu unter "
+        "☰ → Einstellungen „Scannen von Foto“ ein. Dann erscheint links neben "
+        "der Taschenlampe ein Foto-Symbol. Tippe darauf und wähle ein Bild "
+        "aus deinen Fotos.",
+        ("img", "photo_scan.png", 5.0,
+         "Während der Auswertung zeigt QR Viewer das gewählte Foto."),
+        "Während QR Viewer das Foto auswertet, siehst du es in einem Fenster "
+        "mit Fortschrittsbalken. Findet die App einen Code, öffnet sich die "
+        "Ergebnisseite wie nach einem Kamera-Scan. Sie sucht dabei nach "
+        "allen Codearten, egal welche Scan-Art gewählt ist. Findet sie "
+        "keinen Code, sagt sie dir das.",
+        ("note", "Schwierige Codes – etwa eingravierte Codes auf Geräten "
+         "oder Codes mit einem Logo in der Mitte – sind auf einem Foto "
+         "manchmal schwer zu lesen. QR Viewer probiert deshalb das Foto in "
+         "mehreren Größen aus. Klappt es trotzdem nicht, mach ein neues Foto "
+         "etwas näher am Code und ohne Spiegelung."),
     ]),
     ("4 Das Ergebnis verstehen", [
         "Nach dem Scannen öffnet sich die Ergebnisseite. Ganz oben steht, "
@@ -146,8 +168,13 @@ CHAPTERS = [
         "lesbar anzeigen (siehe Anhang A.30).",
     ]),
     ("5 Aktionen – immer mit Rückfrage", [
-        "Unten auf der Ergebnisseite findest du je nach Inhalt einen "
-        "Aktionsknopf, zum Beispiel:",
+        "**Aktionen sind ab Werk ausgeschaltet.** Dann zeigt QR Viewer "
+        "Inhalte nur an – kopieren, teilen und den Code anzeigen kannst du "
+        "trotzdem. Möchtest du Links direkt aus der App öffnen oder eine "
+        "Nummer anrufen, schalte unter ☰ → Einstellungen „Aktionen "
+        "aktivieren“ ein (siehe Kapitel 8).",
+        "Sind die Aktionen eingeschaltet, findest du unten auf der "
+        "Ergebnisseite je nach Inhalt einen Aktionsknopf, zum Beispiel:",
         [
             "**Öffnen …** – öffnet einen Link im Browser",
             "**E-Mail schreiben …**, **Anrufen …**, **SMS schreiben …**",
@@ -204,7 +231,7 @@ CHAPTERS = [
     ]),
     ("7 Der Verlauf", [
         "QR Viewer merkt sich die letzten 25 gescannten Codes. Den Verlauf "
-        "öffnest du über das Uhr-Symbol oben auf dem Scan-Bildschirm.",
+        "öffnest du auf dem Scan-Bildschirm über ☰ → Verlauf.",
         ("img", "history.png", 5.6,
          "Der Verlauf mit Suche, Export und Löschen oben rechts."),
         [
@@ -225,8 +252,25 @@ CHAPTERS = [
          "die Anmeldung in zwei Schritten (2FA) speichert QR Viewer "
          "grundsätzlich nicht."),
     ]),
-    ("8 Info und Hilfe", [
-        "Das „i“-Symbol auf dem Scan-Bildschirm öffnet den Info-Dialog. Dort "
+    ("8 Einstellungen", [
+        "Die Einstellungen öffnest du auf dem Scan-Bildschirm über "
+        "☰ → Einstellungen. Beide Punkte sind ab Werk ausgeschaltet. QR "
+        "Viewer merkt sich, was du einstellst.",
+        ("img", "settings_crop.png", 8.0, "Die Einstellungen."),
+        [
+            "**Aktionen aktivieren** – zeigt auf der Ergebnisseite Knöpfe "
+            "wie „Öffnen …“, „Anrufen …“ oder „Online nachschlagen …“ (siehe "
+            "Kapitel 5). Auch eingeschaltet fragt QR Viewer vor jeder Aktion "
+            "nach.",
+            "**Scannen von Foto** – zeigt neben der Taschenlampe ein "
+            "Foto-Symbol, mit dem du einen Code aus einem Bild liest (siehe "
+            "Kapitel 3). QR Viewer bekommt dabei nur das eine Bild, das du "
+            "auswählst, und braucht keinen Zugriff auf deine übrigen Fotos. "
+            "Deshalb fragt dein Gerät auch nicht nach einer Erlaubnis.",
+        ],
+    ]),
+    ("9 Info und Hilfe", [
+        "Über ☰ → Info auf dem Scan-Bildschirm öffnest du den Info-Dialog. Dort "
         "siehst du die Version der App und das Datum, an dem sie erstellt "
         "wurde.",
         ("img", "about_crop.png", 6.0, "Der Info-Dialog."),
@@ -239,7 +283,7 @@ CHAPTERS = [
             "(github.com/thorsten-l/qr_viewer/tree/main/docs).",
         ],
     ]),
-    ("9 Datenschutz – so schützt QR Viewer deine Daten", [
+    ("10 Datenschutz – so schützt QR Viewer deine Daten", [
         "Datenschutz ist der Kern von QR Viewer. Hier steht verständlich "
         "zusammengefasst, was mit deinen Daten passiert – und was nicht. Die "
         "vollständige Datenschutzerklärung findest du unter "
@@ -258,6 +302,10 @@ CHAPTERS = [
         "nur auf deinem Gerät ausgewertet. Es werden keine Fotos oder Videos "
         "gespeichert oder übertragen. Du kannst den Kamerazugriff jederzeit "
         "in den Einstellungen deines Geräts wieder entziehen.",
+        "**Scannen von Foto:** Wählst du ein Foto aus, bekommt QR Viewer nur "
+        "dieses eine Bild – nicht deine übrigen Fotos. Es wird nur auf "
+        "deinem Gerät ausgewertet und nicht gespeichert. Im Verlauf landet "
+        "wie beim Kamera-Scan nur der Inhalt des Codes.",
         ("h3", "Was auf deinem Gerät gespeichert wird"),
         "Gespeichert werden nur die Inhalte der letzten 25 Scans (der "
         "Verlauf) sowie die zuletzt gewählte Scan-Art und Zoomstufe. Diese "
@@ -294,7 +342,8 @@ CHAPTERS = [
             "überweist kein Geld und gibt die Daten nicht an Banken weiter.",
         ],
         ("h3", "Wann Daten dein Gerät verlassen"),
-        "Nur wenn du selbst eine Aktion auslöst und die Rückfrage bestätigst:",
+        "Nur wenn du die Aktionen eingeschaltet hast, selbst eine Aktion "
+        "auslöst und die Rückfrage bestätigst:",
         [
             "**Link öffnen:** Dein Browser ruft die Internetseite auf. Diese "
             "Seite sieht – wie jede Internetseite – deine Internetadresse. "
@@ -343,12 +392,16 @@ CHAPTERS = [
             "brauchst.",
         ],
     ]),
-    ("10 Häufige Fragen", [
+    ("11 Häufige Fragen", [
         "**Die App erkennt einen Code nicht.** Wähle „Alle Codes“, halte "
         "das Gerät ruhig und etwas weiter weg und sorge für gutes Licht "
         "(Taschenlampe). Bei sehr kleinen Codes hilft eine höhere "
         "Zoomstufe. Manche seltenen Codearten kann nicht jedes Gerät lesen "
-        "(siehe Anhang).",
+        "(siehe Anhang). Alternativ kannst du den Code fotografieren und mit "
+        "„Scannen von Foto“ aus dem Bild lesen (siehe Kapitel 3).",
+        "**Ich sehe keinen Knopf wie „Öffnen …“.** Die Aktionen sind ab Werk "
+        "ausgeschaltet. Schalte sie unter ☰ → Einstellungen „Aktionen "
+        "aktivieren“ ein.",
         "**Ich sehe nur ein schwarzes Bild.** Wahrscheinlich fehlt der "
         "Kamerazugriff. Erlaube ihn in den Einstellungen deines Geräts unter "
         "„QR Viewer“.",
@@ -378,6 +431,9 @@ APPENDIX_INTRO = [
     "erste Fahrkarte (A.30) ist ein offizielles Muster-Ticket auf den Namen "
     "Geraldine Mustermann. Die zweite Fahrkarte (A.31) ist ein selbst "
     "gebautes Test-Ticket.",
+    ("note", "Die Ergebnisseiten im Anhang sind mit eingeschalteten "
+     "Aktionen aufgenommen (☰ → Einstellungen → „Aktionen aktivieren“). "
+     "Sind sie aus, fehlt nur der Aktionsknopf unten rechts."),
     ("note", "Zwei Codearten (Micro-QR-Code und GS1 DataBar) kann nur die "
      "Version für iPhone und iPad lesen, weil die Erkennungstechnik von "
      "Android sie nicht unterstützt. Das steht auf der jeweiligen Seite."),

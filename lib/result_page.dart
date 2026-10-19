@@ -31,6 +31,7 @@ import 'localization.dart';
 import 'matter.dart';
 import 'qr_content.dart';
 import 'scan_mode.dart';
+import 'settings.dart';
 import 'vdv/vdv_ticket.dart';
 
 /// Schrift für die Anzeige des QR-Inhalts (Source Code Pro, SIL OFL 1.1).
@@ -468,8 +469,10 @@ class ResultPage extends StatelessWidget {
         : bytes == null
         ? parseScan(raw, format)
         : ParsedContent.text;
-    final action = contentAction(parsed, raw);
-    final uri = action?.uri;
+    final target = contentAction(parsed, raw);
+    // Ohne freigeschaltete Aktionen zeigt die Seite nur an.
+    final action = SettingsScope.actionsEnabled(context) ? target : null;
+    final uri = target?.uri;
     final webHost = uri != null && uri.scheme.startsWith('http')
         ? uri.host
         : null;

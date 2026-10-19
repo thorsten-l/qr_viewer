@@ -2,8 +2,8 @@
 
 [Deutsch](#deutsch) · [English](#english)
 
-Stand / Last updated: 14. Oktober 2026 / October 14, 2026\
-Gilt ab / Applies from: QR Viewer 2.2.0
+Stand / Last updated: 19. Oktober 2026 / October 19, 2026\
+Gilt ab / Applies from: QR Viewer 2.3.0
 
 ---
 
@@ -27,10 +27,17 @@ wird ausschließlich auf deinem Gerät ausgewertet. Es werden keine Fotos oder
 Videos gespeichert oder übertragen. Den Kamerazugriff kannst du jederzeit in
 den Einstellungen deines Geräts widerrufen.
 
+Schaltest du „Scannen von Foto“ ein (ab Werk aus), kannst du über die
+Fotoauswahl deines Systems ein Bild wählen, in dem die App nach einem Code
+sucht. Die App bekommt nur dieses eine Bild, nicht deine übrige Mediathek,
+und braucht dafür keine Leseberechtigung. Das Bild wird nur auf dem Gerät
+ausgewertet; die temporäre Kopie löscht die App gleich danach. Im Verlauf
+landet wie beim Kamera-Scan nur der Inhalt des Codes.
+
 ### Verlauf und Einstellungen
 
 Die Inhalte der letzten 25 gescannten Codes sowie die zuletzt gewählte
-Scan-Art und Zoomstufe werden lokal auf deinem Gerät gespeichert, damit du
+Scan-Art und Zoomstufe und deine Einstellungen werden lokal auf deinem Gerät gespeichert, damit du
 sie später erneut aufrufen kannst. Diese Daten verlassen das Gerät nicht durch die App.
 Der Verlauf wird verschlüsselt gespeichert (AES-256). Der Schlüssel wird für
 jede Installation zufällig erzeugt und liegt nur im Schlüsselbund (iOS) bzw.
@@ -66,6 +73,8 @@ nutzt sie mitgelieferte öffentliche Schlüssel; es werden keine Daten
 
 ### Öffnen von Links und Aktionen
 
+Die Aktionen sind ab Werk ausgeschaltet; die App zeigt Inhalte dann nur an.
+Du schaltest sie unter ☰ → Einstellungen „Aktionen aktivieren“ ein.
 Enthält ein Code einen Link, öffnet die App ihn nur nach deiner
 ausdrücklichen Bestätigung in deinem Browser bzw. der zuständigen App.
 Bekannte Tracking-Parameter (z. B. `utm_source`, `fbclid`) entfernt sie dabei.
@@ -139,10 +148,17 @@ The app needs camera access to scan codes. The camera image is processed
 solely on your device. No photos or videos are stored or transmitted. You can
 revoke camera access at any time in your device settings.
 
+If you turn on “Scan from photo” (off by default), you can pick a picture
+with your system's photo picker and the app looks for a code in it. The app
+only gets that one picture, not the rest of your library, and needs no read
+permission for this. The picture is processed only on the device; the app
+deletes its temporary copy right afterwards. As with a camera scan, only the
+code's content goes into the history.
+
 ### History and settings
 
-The contents of the last 25 scanned codes and the most recently selected
-scan type and zoom level are stored locally on your device so that you can
+The contents of the last 25 scanned codes, the most recently selected
+scan type and zoom level, and your settings are stored locally on your device so that you can
 open them again later. The app does not send this data off the device.
 The history is stored encrypted (AES-256). The key is created randomly for
 each installation and is kept only in your device's Keychain (iOS) or
@@ -175,6 +191,8 @@ this; no data is transmitted.
 
 ### Opening links and actions
 
+Actions are turned off by default; the app then only displays content. You
+turn them on under ☰ → Settings → “Enable actions”.
 If a code contains a link, the app opens it in your browser or the
 responsible app only after you explicitly confirm. Known tracking parameters
 (e.g. `utm_source`, `fbclid`) are removed. The same applies to the actions on

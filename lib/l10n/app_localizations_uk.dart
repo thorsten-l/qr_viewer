@@ -74,6 +74,35 @@ class AppLocalizationsUk extends AppLocalizations {
   String get info => 'Інформація';
 
   @override
+  String get menu => 'Меню';
+
+  @override
+  String get settings => 'Налаштування';
+
+  @override
+  String get enableActions => 'Увімкнути дії';
+
+  @override
+  String get enableActionsHint =>
+      'Показує на сторінці результату кнопки «Відкрити», «Подзвонити» чи «Знайти». Якщо вимкнено, застосунок лише показує й копіює.';
+
+  @override
+  String get scanFromPhoto => 'Сканувати з фото';
+
+  @override
+  String get scanFromPhotoHint =>
+      'Показує кнопку фото поруч із ліхтариком. Нею ви вибираєте знімок із фото, і застосунок читає код на ньому. Застосунок отримує лише вибраний знімок.';
+
+  @override
+  String get pickPhoto => 'Сканувати фото';
+
+  @override
+  String get analyzingPhoto => 'Аналіз фото …';
+
+  @override
+  String get noCodeInPhoto => 'На фото код не знайдено.';
+
+  @override
   String get torch => 'Ліхтарик';
 
   @override

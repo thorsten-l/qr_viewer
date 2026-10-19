@@ -74,6 +74,35 @@ class AppLocalizationsDe extends AppLocalizations {
   String get info => 'Info';
 
   @override
+  String get menu => 'Menü';
+
+  @override
+  String get settings => 'Einstellungen';
+
+  @override
+  String get enableActions => 'Aktionen aktivieren';
+
+  @override
+  String get enableActionsHint =>
+      'Zeigt auf der Ergebnisseite Knöpfe wie Öffnen, Anrufen oder Nachschlagen. Ist das aus, zeigt die App nur an und kopiert.';
+
+  @override
+  String get scanFromPhoto => 'Scannen von Foto';
+
+  @override
+  String get scanFromPhotoHint =>
+      'Zeigt neben der Taschenlampe einen Foto-Knopf. Damit wählst du ein Bild aus deinen Fotos, und die App liest den Code darin. Die App bekommt nur das Bild, das du auswählst.';
+
+  @override
+  String get pickPhoto => 'Foto scannen';
+
+  @override
+  String get analyzingPhoto => 'Foto wird ausgewertet …';
+
+  @override
+  String get noCodeInPhoto => 'Im Foto wurde kein Code gefunden.';
+
+  @override
   String get torch => 'Taschenlampe';
 
   @override

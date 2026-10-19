@@ -1,1 +1,2 @@
 "NSCameraUsageDescription" = "QRコードやバーコードをスキャンするためにカメラを使用します。";
+"NSPhotoLibraryUsageDescription" = "「写真からスキャン」専用：あなたが選んだ画像の中からコードを探します。";

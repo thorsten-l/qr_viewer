@@ -6,6 +6,46 @@ Alle wichtigen Änderungen an QR Viewer. Die Versionen folgen
 [Semantic Versioning](https://semver.org/lang/de/), die Build-Nummer steht
 hinter dem `+`.
 
+## [2.3.0+15] – 2026-10-19
+
+### Neu
+
+- **Menü auf der Scanner-Seite:** Der Info-Knopf ist einem Menü-Knopf (☰)
+  ganz rechts in der Kopfzeile gewichen. Das Menü enthält „Verlauf“,
+  „Einstellungen“ und „Info“; der Verlauf-Knopf ist ebenfalls ins Menü
+  gewandert.
+- **Einstellungen** mit dem Schalter „Aktionen aktivieren“. Er blendet auf
+  der Ergebnisseite die Aktionsknöpfe ein (Öffnen, Anrufen, E-Mail, SMS,
+  Karten, Nachschlagen, Sendungsverfolgung, Kontakt oder Termin hinzufügen,
+  Einmalpasswort). **Standard: aus** – die App zeigt Inhalte dann nur an;
+  Kopieren, Teilen und „Code anzeigen“ bleiben immer verfügbar.
+- **Scannen von Foto** (Einstellung, **Standard: aus**): Links neben der
+  Taschenlampe erscheint ein Foto-Knopf. Damit wählst du ein Bild aus deinen
+  Fotos; die App liest den ersten Code darin (alle Formate, unabhängig von
+  der Scan-Art) und zeigt das Ergebnis wie bei einem Kamera-Scan. Während
+  der Auswertung zeigt ein Dialog das gewählte Foto mit Fortschrittsbalken.
+  Findet die App im Original keinen Code, prüft sie verkleinerte Fassungen
+  (1600, 1024, 2000, 800 px lange Seite). Schwierige Codes, etwa graviert
+  oder mit Logo, erkennt Vision bzw. ML Kit oft nur bei bestimmten Größen. Findet sie
+  keinen Code, meldet sie „Im Foto wurde kein Code gefunden.“ Die Auswahl
+  läuft über die Fotoauswahl des Systems (PHPicker bzw. Android Photo
+  Picker): Die App bekommt nur das gewählte Bild und braucht kein Leserecht
+  auf die Mediathek, es erscheint also keine Berechtigungsabfrage. Für Apple
+  steht der Pflichttext `NSPhotoLibraryUsageDescription` in der Info.plist.
+- Neue Abhängigkeit `image_picker` (BSD-3-Clause) für die Fotoauswahl.
+
+### Geändert
+
+- Datenschutzerklärung: Abschnitte zu „Scannen von Foto“ und zu den
+  standardmäßig ausgeschalteten Aktionen; gilt ab 2.3.0.
+- Die temporäre Kopie des gewählten Fotos löscht die App direkt nach der
+  Auswertung.
+- DSFA (DPIA) für 2.3.0 nachbewertet: neue Datenflüsse, Berechtigungen und
+  Schutzmaßnahmen; Risiko weiterhin gering.
+- Anleitungen (DE/EN) für 2.3.0: Menü, neues Kapitel „Einstellungen“, Code aus
+  einem Foto lesen, Aktionen ab Werk aus; neue Bilder für Menü,
+  Einstellungen und Foto-Scan.
+
 ## [2.2.0+14] – 2026-10-14
 
 ### Sicherheit

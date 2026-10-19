@@ -1,1 +1,2 @@
 "NSCameraUsageDescription" = "Aparat służy do skanowania kodów QR i kodów kreskowych.";
+"NSPhotoLibraryUsageDescription" = "Tylko dla „Skanuj ze zdjęcia”: sam wybierasz obraz, a aplikacja szuka w nim kodu.";

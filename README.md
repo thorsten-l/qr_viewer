@@ -29,6 +29,8 @@ content first. Links and other actions start only after a confirmation.
 - **Actions** per content type, always with a confirmation: write email,
   call, SMS, map, authenticator, look up online, track shipment. Contacts and
   events go to Contacts or Calendar as `.vcf`/`.ics` via the share sheet.
+  Actions are off by default and can be turned on under
+  ☰ → Settings → "Enable actions".
 - **Copy and share** with a single tap.
 - **Show code:** the QR code button at the bottom left shows the scanned code
   as an image, in its original format where possible (e.g. EAN-13, Data
@@ -43,6 +45,10 @@ content first. Links and other actions start only after a confirmation.
   product, validity, issue time, (masked) holder, date of birth, organization
   numbers, class, price and signature check. The raw data stays available as
   collapsible hex. Everything happens locally on the device.
+- **Menu** (☰) at the top right of the scanner page with History, Settings and Info.
+- **Scan from photo** (setting, off by default): a photo button next to the
+  flashlight reads the code from a picture of your choice; no read access to
+  the library, the app only gets the chosen picture.
 - **About dialog** with developer, version and build date, plus buttons for
   support (GitHub issues), licenses and the [user guides](docs/).
 - **Zoom levels** of the rear camera as in the camera app, derived from the
@@ -56,8 +62,8 @@ What changed in which version is listed in the [changelog](CHANGELOG.md).
 
 ## User guide
 
-A user guide for everyday users explains scanning, the result page, actions,
-the history and privacy in plain words. Its appendix shows every supported
+A user guide for everyday users explains scanning (also from a photo), the
+result page, actions, the history, the settings and privacy in plain words. Its appendix shows every supported
 kind of code on its own page, with a scannable example code and the matching
 result page of the app:
 
@@ -115,6 +121,8 @@ the build date.
 | `lib/binary_payload.dart` | Detection of binary content, hex display |
 | `lib/vdv/` | VDV eTicket: BER, ISO 9796-2, certificates, ticket data |
 | `assets/vdv_certs/` | Public VDV CA keys (CC0), see `tool/vdv/README.md` |
+| `lib/photo_scan.dart` | Code search in the chosen photo, at several sizes if needed |
+| `lib/settings.dart` | Settings ("Enable actions", "Scan from photo") and settings page |
 | `lib/app_info.dart` | About dialog with support, license and manuals buttons |
 | `lib/localization.dart`, `lib/l10n/` | Translations (generated) |
 | `test/` | Widget and unit tests, including all languages |
@@ -126,8 +134,8 @@ the build date.
 
 ## Version
 
-Current: **2.2.0** (build 14). Version and build number are set in
-`pubspec.yaml`, e.g. `version: 2.2.0+14`. Every upload to TestFlight or
+Current: **2.3.0** (build 15). Version and build number are set in
+`pubspec.yaml`, e.g. `version: 2.3.0+15`. Every upload to TestFlight or
 Google Play needs a higher build number after the `+`. Every new version gets
 an entry in [CHANGELOG.md](CHANGELOG.md) (English) and
 [CHANGELOG_de.md](CHANGELOG_de.md) (German).
@@ -143,7 +151,7 @@ Steps for a new version:
 3. Check: `flutter analyze`, `flutter test`,
    `python3 tool/license/add_headers.py --check`.
 4. Build and upload for iOS and Android as described below.
-5. Commit and tag, e.g. `git tag v2.2.0`.
+5. Commit and tag, e.g. `git tag v2.3.0`.
 
 ### iOS / TestFlight
 

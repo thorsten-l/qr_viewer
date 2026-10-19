@@ -5,6 +5,45 @@
 All notable changes to QR Viewer. Versions follow
 [Semantic Versioning](https://semver.org/), the build number follows the `+`.
 
+## [2.3.0+15] – 2026-10-19
+
+### Added
+
+- **Menu on the scanner page:** The info button has been replaced by a menu
+  button (☰) at the far right of the top bar. The menu contains "History",
+  "Settings" and "Info"; the history button has moved into the menu as
+  well.
+- **Settings** with the switch "Enable actions". It shows the action buttons
+  on the result page (Open, Call, Email, SMS, Maps, Look up, Track, Add
+  contact or event, one-time password). **Default: off** – the app then only
+  displays content; Copy, Share and "Show code" are always available.
+- **Scan from photo** (setting, **default: off**): a photo button appears
+  to the left of the flashlight. With it you pick a picture from your photos;
+  the app reads the first code in it (all formats, regardless of the scan
+  type) and shows the result just like a camera scan. While it is analyzed,
+  a dialog shows the chosen photo with a progress bar. If the app finds no
+  code in the original, it checks scaled-down versions (1600, 1024, 2000,
+  800 px long side). Vision and ML Kit often read difficult codes, e.g.
+  engraved or with a logo, only at certain sizes. If it finds no code, it
+  says "No code was found in the photo." Picking uses the system photo picker
+  (PHPicker or Android Photo Picker): the app only gets the chosen picture
+  and needs no read access to the library, so no permission prompt appears.
+  The `NSPhotoLibraryUsageDescription` text required by Apple is in
+  Info.plist.
+- New dependency `image_picker` (BSD-3-Clause) for picking photos.
+
+### Changed
+
+- Privacy policy: sections on "Scan from photo" and on actions being off by
+  default; applies from 2.3.0.
+- The app deletes the temporary copy of the chosen photo right after the
+  analysis.
+- DPIA reassessed for 2.3.0: new data flows, permissions and protective
+  measures; risk stays low.
+- Manuals (DE/EN) for 2.3.0: menu, new chapter "Settings", reading a code
+  from a photo, actions off by default; new pictures of the menu, the
+  settings and the photo scan.
+
 ## [2.2.0+14] – 2026-10-14
 
 ### Security
