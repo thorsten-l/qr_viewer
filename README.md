@@ -258,8 +258,10 @@ python3 tool/license/add_headers.py --check  # check only
 The Source Code Pro font is licensed under the SIL Open Font License 1.1
 (`assets/fonts/SourceCodePro-OFL.txt`).
 
-The public VDV keys in `assets/vdv_certs/` are licensed under CC0-1.0
-(source: KDE KItinerary, originally VDV PKI), see `tool/vdv/README.md`.
+The public VDV keys in `assets/vdv_certs/` come directly from the public
+LDAP directory of the VDV PKI, where they are published for verifying
+tickets (the same keys are marked CC0-1.0 in KDE KItinerary), see
+`tool/vdv/README.md`.
 The decoder in `lib/vdv/` is an independent implementation based on the
 documented format and contains no KItinerary code.
 

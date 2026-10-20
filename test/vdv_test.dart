@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -19,6 +20,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_viewer/binary_payload.dart';
 import 'package:qr_viewer/result_page.dart';
 import 'package:qr_viewer/vdv/ber.dart';
+import 'package:qr_viewer/vdv/vdv_certificate.dart';
 import 'package:qr_viewer/vdv/vdv_ticket.dart';
 
 import 'test_app.dart';
@@ -83,6 +85,34 @@ void main() {
       expect(decodeTravelerName('E1a*@*K0s'.codeUnits), ('E…a K…s', true));
       expect(decodeTravelerName(const []), (null, false));
     });
+  });
+
+  test('Mitgelieferte CA-Schlüssel: lesbar, keine Kopien', () {
+    final files = Directory('assets/vdv_certs')
+        .listSync()
+        .whereType<File>()
+        .where((f) => f.path.endsWith('.vdv-cert'))
+        .toList();
+    expect(files, isNotEmpty);
+    final names = {
+      for (final f in files) f.uri.pathSegments.last.split('.').first,
+    };
+    final moduli = <BigInt, String>{};
+    for (final f in files) {
+      final name = f.uri.pathSegments.last.split('.').first;
+      final cert = readBer(f.readAsBytesSync(), 0)!;
+      final key = keyFromCertificate(cert.value, null)!.key;
+      final chr = key.holderReference
+          .sublist(4)
+          .map((b) => b.toRadixString(16).padLeft(2, '0'))
+          .join()
+          .toUpperCase();
+      // Die CHR darf vom Namen abweichen, aber nicht auf eine andere Datei
+      // zeigen (dann wäre es deren Kopie).
+      if (chr != name) expect(names, isNot(contains(chr)), reason: name);
+      expect(moduli[key.modulus], isNull, reason: '$name doppelt');
+      moduli[key.modulus] = name;
+    }
   });
 
   group('Muster-Ticket', () {
