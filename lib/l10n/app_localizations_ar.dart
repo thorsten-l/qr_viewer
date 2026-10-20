@@ -727,6 +727,71 @@ class AppLocalizationsAr extends AppLocalizations {
       'بيانات إعداد جهاز منزل ذكي وفق معيار Matter. يستخدمها تطبيق المنزل الذكي (مثل Apple Home أو Google Home) لإضافة الجهاز، فامسح الرمز فيه أو أدخل رمز الاقتران اليدوي. يمكن لأي شخص لديه هذا الرمز إقران الجهاز ما دام في وضع الإعداد.';
 
   @override
+  String get typeTransparency => 'رمز Amazon Transparency';
+
+  @override
+  String get fieldSerialNumber => 'الرقم التسلسلي';
+
+  @override
+  String get infoKindTransparency =>
+      'رمز من أمازون لمكافحة التقليد (برنامج Transparency). تحصل كل عبوة على رقم تسلسلي عشوائي خاص بها. لا تعرف إلا أمازون المنتج الذي ينتمي إليه، ولا يحتوي الرمز على شيء آخر. يمكنك التحقق من أصالته في تطبيق Amazon Shopping أو Transparency، وعندها يُرسل الرمز إلى أمازون.';
+
+  @override
+  String get typeMedicationPlan => 'خطة الأدوية';
+
+  @override
+  String get medicationPlanNotSaved =>
+      'تحتوي خطط الأدوية على بيانات صحية ولا تُحفظ في السجل.';
+
+  @override
+  String get planPatient => 'المريض';
+
+  @override
+  String get planIssuedBy => 'طُبع بواسطة';
+
+  @override
+  String get planPrinted => 'تاريخ الطباعة';
+
+  @override
+  String planPage(String page, String pages) {
+    return 'الصفحة $page من $pages';
+  }
+
+  @override
+  String get planAllergies => 'الحساسية/عدم التحمل';
+
+  @override
+  String get planPregnant => 'حامل';
+
+  @override
+  String get planBreastfeeding => 'مرضع';
+
+  @override
+  String get planWeight => 'الوزن';
+
+  @override
+  String get planHeight => 'الطول';
+
+  @override
+  String get planCreatinine => 'الكرياتينين';
+
+  @override
+  String get planMoreInfo => 'معلومات إضافية';
+
+  @override
+  String get planDosage => 'الجرعة';
+
+  @override
+  String get planHint => 'ملاحظة';
+
+  @override
+  String get planReason => 'السبب';
+
+  @override
+  String get infoKindMedicationPlan =>
+      'الرمز الموجود على خطة الأدوية الاتحادية الألمانية (BMP) من الطبيب أو المستشفى أو الصيدلية. يحتوي على اسمك وتاريخ ميلادك وجميع الأدوية مع جرعاتها. هذه بيانات صحية: يعرضها QR Viewer على جهازك فقط ولا يحفظها أبدًا في السجل. لا يمكن تسمية الأدوية المذكورة برقم PZN فقط دون اتصال.';
+
+  @override
   String get infoManuals => 'الأدلة';
 
   @override

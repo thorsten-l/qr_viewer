@@ -35,7 +35,7 @@ UI = dict(
 
 TITLE = "QR Viewer"
 SUBTITLE = "Codes sicher scannen – einfach erklärt"
-VERSION_LINE = "Anleitung für Version 2.3.0 · Stand: Oktober 2026"
+VERSION_LINE = "Anleitung für Version 2.3.1 · Stand: Oktober 2026"
 
 # Hauptteil: (Überschrift, [Blöcke]). Ein Block ist ein Absatz (str),
 # eine Liste (list), ein Bild ("img", Datei, Breite in cm, Bildunterschrift)
@@ -127,8 +127,10 @@ CHAPTERS = [
         "aus deinen Fotos.",
         ("img", "photo_scan.png", 5.0,
          "Während der Auswertung zeigt QR Viewer das gewählte Foto."),
-        "Während QR Viewer das Foto auswertet, siehst du es in einem Fenster "
-        "mit Fortschrittsbalken. Findet die App einen Code, öffnet sich die "
+        "Sobald du ein Foto antippst, erscheint ein Fenster mit einem "
+        "Ladekreis – neue Fotos braucht dein Gerät oft ein paar Sekunden, bis "
+        "es sie bereitstellt. Danach siehst du das Foto mit "
+        "Fortschrittsbalken, während QR Viewer es auswertet. Findet die App einen Code, öffnet sich die "
         "Ergebnisseite wie nach einem Kamera-Scan. Sie sucht dabei nach "
         "allen Codearten, egal welche Scan-Art gewählt ist. Findet sie "
         "keinen Code, sagt sie dir das.",
@@ -165,7 +167,7 @@ CHAPTERS = [
         "Beispiel elektronische Fahrkarten. QR Viewer zeigt sie als "
         "Zahlenkolonnen (Hex-Ansicht) an. Fahrkarten nach dem VDV-Standard, "
         "etwa das Deutschlandticket, kann die App sogar entschlüsseln und "
-        "lesbar anzeigen (siehe Anhang A.30).",
+        "lesbar anzeigen (siehe Anhang A.32).",
     ]),
     ("5 Aktionen – immer mit Rückfrage", [
         "**Aktionen sind ab Werk ausgeschaltet.** Dann zeigt QR Viewer "
@@ -249,8 +251,8 @@ CHAPTERS = [
          "verschlüsselt gespeichert. Bedenke aber: Er kann "
          "vertrauliche Angaben enthalten, etwa WLAN-Passwörter. Lösche solche "
          "Einträge, wenn du sie nicht mehr brauchst. Geheime Schlüssel für "
-         "die Anmeldung in zwei Schritten (2FA) speichert QR Viewer "
-         "grundsätzlich nicht."),
+         "die Anmeldung in zwei Schritten (2FA) und Medikationspläne "
+         "speichert QR Viewer grundsätzlich nicht."),
     ]),
     ("8 Einstellungen", [
         "Die Einstellungen öffnest du auf dem Scan-Bildschirm über "
@@ -326,6 +328,10 @@ CHAPTERS = [
             "**Schlüssel für die Anmeldung in zwei Schritten (2FA)** werden "
             "nie im Verlauf gespeichert. Die Ergebnisseite weist dich darauf "
             "hin.",
+            "**Medikationspläne** (der Code auf dem bundeseinheitlichen "
+            "Medikationsplan vom Arzt oder der Apotheke) enthalten "
+            "Gesundheitsdaten. QR Viewer zeigt sie nur an und speichert sie "
+            "nie im Verlauf. Die Ergebnisseite weist dich darauf hin.",
             "**WLAN-Passwörter** stehen wie jeder andere Inhalt im Verlauf, "
             "bis du ihn löschst.",
             "**Einrichtungscodes von Smart-Home-Geräten** (Matter) zeigt die "
@@ -428,8 +434,8 @@ APPENDIX_INTRO = [
     "damit tun kannst. Das Bild rechts ist die Ergebnisseite der App.",
     "Alle Namen, Nummern und Adressen in den Beispielen sind erfunden – mit "
     "zwei Ausnahmen: Der Ort ist das echte Rathaus in Wolfenbüttel, und die "
-    "erste Fahrkarte (A.30) ist ein offizielles Muster-Ticket auf den Namen "
-    "Geraldine Mustermann. Die zweite Fahrkarte (A.31) ist ein selbst "
+    "erste Fahrkarte (A.32) ist ein offizielles Muster-Ticket auf den Namen "
+    "Geraldine Mustermann. Die zweite Fahrkarte (A.33) ist ein selbst "
     "gebautes Test-Ticket.",
     ("note", "Die Ergebnisseiten im Anhang sind mit eingeschalteten "
      "Aktionen aufgenommen (☰ → Einstellungen → „Aktionen aktivieren“). "
@@ -869,6 +875,52 @@ PAGES = {
         "sie natürlich nicht.)",
         care="Bei der Sendungsverfolgung erfährt die Deutsche Post die "
         "Sendungsnummer."),
+    "datamatrix_amazon": dict(
+        title="Data Matrix – Amazon-Transparency-Code",
+        mode="Data Matrix oder Alle Codes", devices=ALL,
+        what="Ein **Echtheitscode** von Amazon aus dem Programm "
+        "„Transparency“. Markenhersteller drucken ihn auf jede einzelne "
+        "Packung, um Fälschungen zu erschweren. Er beginnt mit „AZ:“; danach "
+        "folgt eine zufällige Seriennummer, die es nur einmal gibt.",
+        where="Auf Verpackungen von Markenprodukten, die über Amazon verkauft "
+        "werden, meist als kleiner Data-Matrix-Code neben einem „T“-Logo.",
+        example="Ein Code mit der erfundenen Seriennummer "
+        "QX7K2M9PL4T8VN3RB6WD1HC5JE.",
+        app="QR Viewer zeigt die Karte „Amazon-Transparency-Code“ mit der "
+        "Seriennummer. Mehr steht nicht im Code: Zu welchem Produkt die "
+        "Nummer gehört, weiß nur Amazon. Deshalb gibt es auch keinen "
+        "Aktionsknopf.",
+        do="Seriennummer kopieren. Ob der Code echt ist, prüfst du in der "
+        "Amazon-Shopping- oder der Transparency-App.",
+        care="Beim Prüfen in der Amazon-App geht der Code an Amazon. QR Viewer "
+        "selbst schickt nichts weg."),
+    "datamatrix_bmp": dict(
+        title="Data Matrix – Medikationsplan",
+        mode="Data Matrix oder Alle Codes", devices=ALL,
+        what="Der **bundeseinheitliche Medikationsplan** ist ein Blatt, das "
+        "dir Arztpraxis, Krankenhaus oder Apotheke ausdrucken. Oben rechts "
+        "trägt er einen großen Data-Matrix-Code. Darin steht alles, was auf "
+        "dem Blatt gedruckt ist: dein Name, dein Geburtsdatum, wer den Plan "
+        "erstellt hat und jedes Medikament mit Dosierung, Hinweis und Grund. "
+        "So können andere Praxen und Apotheken den Plan einlesen, statt ihn "
+        "abzutippen.",
+        where="Auf dem Medikationsplan, den du ab drei dauerhaft "
+        "eingenommenen Medikamenten bekommst.",
+        example="Ein erfundener Plan für Max Mustermann mit Ramipril, "
+        "Metformin und Ibuprofen bei Bedarf.",
+        app="QR Viewer zeigt den Plan übersichtlich: Patient, Ersteller, "
+        "Allergien und Gewicht, dann jeden Block mit seinen Medikamenten – "
+        "Wirkstoff und Stärke, Darreichungsform, Dosierung wie „1-0-1-0 "
+        "Stück“, Hinweis und Grund. Medikamente, die nur mit ihrer "
+        "Pharmazentralnummer (PZN) im Plan stehen, zeigt die App mit dieser "
+        "Nummer an; den Namen kann sie offline nicht nachschlagen.",
+        do="Den Plan lesen und einzelne Angaben markieren und kopieren. Das "
+        "Kopier-Symbol rechts neben jedem Medikament kopiert dessen PZN – "
+        "damit kannst du das Medikament selbst nachschlagen, wo du möchtest. "
+        "Einen Aktionsknopf gibt es nicht.",
+        care="Ein Medikationsplan enthält Gesundheitsdaten. QR Viewer "
+        "speichert ihn deshalb nie im Verlauf. Teile oder kopiere ihn nur, "
+        "wenn du das wirklich willst."),
     "pdf417": dict(
         title="PDF417", mode="PDF417 oder Alle Codes", devices=ALL,
         what="**PDF417** ist ein breiter, gestapelter Code aus vielen kleinen "
@@ -944,5 +996,7 @@ ORDER = [
     "qr_contact", "qr_event", "qr_wifi", "qr_payment", "qr_otp", "qr_json",
     "qr_matter", "microqr", "ean13", "ean13_isbn", "ean8", "upca", "upce", "itf14",
     "code128", "code39", "code93", "codabar", "itf", "databar",
-    "datamatrix_post", "pdf417", "aztec_vdv", "aztec_vdv_test",
+    "datamatrix_post", "datamatrix_amazon", "datamatrix_bmp", "pdf417",
+    "aztec_vdv",
+    "aztec_vdv_test",
 ]

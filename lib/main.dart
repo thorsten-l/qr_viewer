@@ -205,26 +205,40 @@ class _ScannerPageState extends State<ScannerPage> {
     _handling = true;
     final l = context.l10n;
     final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+    final photo = ValueNotifier<ImageProvider?>(null);
+    // Der Dialog liegt schon unter der Fotoauswahl. Die Auswahl braucht nach
+    // dem Antippen noch einige Sekunden, um das Foto zu liefern; so sieht man
+    // in dieser Zeit sofort den Ladedialog statt des Scanners.
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => PhotoAnalysisDialog(image: photo),
+    );
     try {
-      final file = await ImagePicker().pickImage(
-        source: ImageSource.gallery,
-        requestFullMetadata: false,
-      );
-      if (file == null || !mounted) return;
-      final navigator = Navigator.of(context);
-      showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (_) => PhotoAnalysisDialog(image: FileImage(File(file.path))),
-      );
-      final (found, _) = await (
-        scanPhoto(file.path, _analyze),
-        // Damit der Dialog bei schneller Auswertung nicht nur aufblitzt.
-        Future<void>.delayed(const Duration(milliseconds: 800)),
-      ).wait;
-      navigator.pop();
+      XFile? file;
+      (Barcode, (String, bool))? found;
+      try {
+        file = await ImagePicker().pickImage(
+          source: ImageSource.gallery,
+          requestFullMetadata: false,
+        );
+        if (file != null) {
+          photo.value = FileImage(File(file.path));
+          final result = await (
+            scanPhoto(file.path, _analyze),
+            // Damit der Dialog bei schneller Auswertung nicht nur aufblitzt.
+            Future<void>.delayed(const Duration(milliseconds: 800)),
+          ).wait;
+          found = result.$1;
+        }
+      } finally {
+        navigator.pop();
+      }
+      if (file == null) return;
       // Die Kopie der Fotoauswahl wird nicht mehr gebraucht.
       File(file.path).delete().ignore();
+      if (!mounted) return;
       if (found == null) {
         messenger
           ..hideCurrentSnackBar()
@@ -355,11 +369,12 @@ class _ScannerPageState extends State<ScannerPage> {
   );
 }
 
-/// Zeigt das gewählte Foto, solange es nach Codes durchsucht wird.
+/// Zeigt das gewählte Foto, solange es nach Codes durchsucht wird; bis die
+/// Fotoauswahl es liefert ([image] ist null), einen Ladekreis.
 class PhotoAnalysisDialog extends StatelessWidget {
   const PhotoAnalysisDialog({super.key, required this.image});
 
-  final ImageProvider image;
+  final ValueListenable<ImageProvider?> image;
 
   @override
   Widget build(BuildContext context) => PopScope(
@@ -368,12 +383,20 @@ class PhotoAnalysisDialog extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxHeight: 320),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image(image: image, fit: BoxFit.contain),
-            ),
+          ValueListenableBuilder(
+            valueListenable: image,
+            builder: (context, provider, _) => provider == null
+                ? const SizedBox(
+                    height: 160,
+                    child: Center(child: CircularProgressIndicator()),
+                  )
+                : ConstrainedBox(
+                    constraints: const BoxConstraints(maxHeight: 320),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image(image: provider, fit: BoxFit.contain),
+                    ),
+                  ),
           ),
           const SizedBox(height: 16),
           const LinearProgressIndicator(),

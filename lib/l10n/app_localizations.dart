@@ -1466,6 +1466,126 @@ abstract class AppLocalizations {
   /// **'The setup data of a smart home device using the Matter standard. Your smart home app (e.g. Apple Home, Google Home) uses it to add the device – scan the code there or type in the manual pairing code. Anyone with this code can pair the device while it is in setup mode.'**
   String get infoKindMatter;
 
+  /// Inhaltsart Amazon-Transparency-Code
+  ///
+  /// In en, this message translates to:
+  /// **'Amazon Transparency code'**
+  String get typeTransparency;
+
+  /// Feld Seriennummer
+  ///
+  /// In en, this message translates to:
+  /// **'Serial number'**
+  String get fieldSerialNumber;
+
+  /// Info-Dialog: Erklärung Amazon-Transparency-Code
+  ///
+  /// In en, this message translates to:
+  /// **'An anti-counterfeiting code from Amazon (Transparency program). Each individual package gets its own random serial number. Which product it belongs to is only known to Amazon – the code itself contains nothing else. You can check whether it is genuine in the Amazon Shopping or Transparency app; the code is then sent to Amazon.'**
+  String get infoKindTransparency;
+
+  /// Inhaltsart Medikationsplan (BMP)
+  ///
+  /// In en, this message translates to:
+  /// **'Medication plan'**
+  String get typeMedicationPlan;
+
+  /// Hinweis: Medikationspläne nicht im Verlauf
+  ///
+  /// In en, this message translates to:
+  /// **'Medication plans contain health data and are not saved in the history.'**
+  String get medicationPlanNotSaved;
+
+  /// Medikationsplan: Abschnitt Patient
+  ///
+  /// In en, this message translates to:
+  /// **'Patient'**
+  String get planPatient;
+
+  /// Medikationsplan: ausgedruckt von (Praxis, Apotheke)
+  ///
+  /// In en, this message translates to:
+  /// **'Printed by'**
+  String get planIssuedBy;
+
+  /// Medikationsplan: Ausdruckdatum
+  ///
+  /// In en, this message translates to:
+  /// **'Printed on'**
+  String get planPrinted;
+
+  /// Medikationsplan: Seitenangabe
+  ///
+  /// In en, this message translates to:
+  /// **'Page {page} of {pages}'**
+  String planPage(String page, String pages);
+
+  /// Medikationsplan: Allergien und Unverträglichkeiten
+  ///
+  /// In en, this message translates to:
+  /// **'Allergies/intolerances'**
+  String get planAllergies;
+
+  /// Medikationsplan: schwanger
+  ///
+  /// In en, this message translates to:
+  /// **'Pregnant'**
+  String get planPregnant;
+
+  /// Medikationsplan: stillend
+  ///
+  /// In en, this message translates to:
+  /// **'Breastfeeding'**
+  String get planBreastfeeding;
+
+  /// Medikationsplan: Gewicht
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get planWeight;
+
+  /// Medikationsplan: Körpergröße
+  ///
+  /// In en, this message translates to:
+  /// **'Height'**
+  String get planHeight;
+
+  /// Medikationsplan: Kreatininwert
+  ///
+  /// In en, this message translates to:
+  /// **'Creatinine'**
+  String get planCreatinine;
+
+  /// Medikationsplan: weitere Angaben (Parameterfreitext)
+  ///
+  /// In en, this message translates to:
+  /// **'Further information'**
+  String get planMoreInfo;
+
+  /// Medikationsplan: Dosierung
+  ///
+  /// In en, this message translates to:
+  /// **'Dosage'**
+  String get planDosage;
+
+  /// Medikationsplan: Hinweis zur Anwendung
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get planHint;
+
+  /// Medikationsplan: Behandlungsgrund
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get planReason;
+
+  /// Info-Dialog: Erklärung Medikationsplan
+  ///
+  /// In en, this message translates to:
+  /// **'The code on the German federal medication plan (BMP) from your doctor, hospital or pharmacy. It contains your name, date of birth and all medicines with dosage. These are health data: QR Viewer only shows them on your device and never saves them in the history. Medicines given only by their PZN cannot be named offline.'**
+  String get infoKindMedicationPlan;
+
   /// Info-Dialog: Knopf zu den Anleitungen
   ///
   /// In en, this message translates to:

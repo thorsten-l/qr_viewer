@@ -55,6 +55,9 @@ enum ContentKind {
   json,
   matter,
 
+  /// Echtheitscode aus Amazons Programm „Transparency“ (`AZ:` + Seriennummer).
+  transparency,
+
   /// Matrixcode der Deutschen Post; entsteht aus Binärdaten, nicht hier.
   postage,
 }
@@ -121,6 +124,7 @@ enum FieldLabel {
   issn,
   json,
   trackingNumber,
+  serialNumber,
   vendorId,
   productId,
   discriminator,
@@ -210,6 +214,10 @@ ParsedContent parseContent(String raw, {bool productCode = false}) {
       result = _meBookmark(s.substring(6));
     } else if (upper.startsWith('MT:')) {
       result = _matter(s);
+    } else if (_transparency.hasMatch(s)) {
+      result = ParsedContent(ContentKind.transparency, [
+        ContentField(FieldLabel.serialNumber, s.substring(3)),
+      ]);
     } else if (upper.startsWith('OTPAUTH://')) {
       result = _otpAuth(s.substring(10));
     } else if (upper.startsWith('BCD\n') || upper.startsWith('BCD\r')) {
@@ -998,6 +1006,17 @@ ParsedContent _product(String digits) {
 
 /// Verbindungsarten und Ablauf stehen als Namen in den Feldern und werden
 /// beim Anzeigen übersetzt.
+/// Bundeseinheitlicher Medikationsplan (BMP, KBV-Spezifikation, Anlage 3
+/// zu § 31a SGB V): XML mit dem Wurzelelement `<MP v="…">` im
+/// Data-Matrix-Code. Gesundheitsdaten – kommt nie in den Verlauf.
+bool isMedicationPlan(String text) => _medicationPlan.hasMatch(text);
+
+final _medicationPlan = RegExp(r'^\s*(<\?xml[^>]*\?>\s*)?<MP\s[^>]*\bv="\d+"');
+
+/// Amazon-Transparency-Code: `AZ:` und eine zufällige alphanumerische
+/// Seriennummer (meist 26 Zeichen); mehr steht nicht im Code.
+final _transparency = RegExp(r'^AZ:[A-Za-z0-9]{10,40}$');
+
 ParsedContent? _matter(String s) {
   final m = parseMatter(s);
   if (m == null) return null;

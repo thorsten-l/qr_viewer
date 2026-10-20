@@ -4,12 +4,12 @@
 
 | | |
 |---|---|
-| App | QR Viewer 2.3.0 (Build 15), iOS/iPadOS und Android |
-| Codestand | `main`, Audit auf Commit `b25767c` („release 2.1.2“); Maßnahmen zu F2 und F6 in 2.2.0; Einstellungen und „Scannen von Foto“ in 2.3.0 ergänzt |
+| App | QR Viewer 2.3.1 (Build 16), iOS/iPadOS und Android |
+| Codestand | `main`, Audit auf Commit `b25767c` („release 2.1.2“); Maßnahmen zu F2 und F6 in 2.2.0; Einstellungen und „Scannen von Foto“ in 2.3.0, Medikationsplan und Amazon-Transparency-Code in 2.3.1 ergänzt |
 | Verantwortlicher / Verfasser | Thorsten Ludewig, t.ludewig@gmail.com |
-| Datum | 19. Oktober 2026 (erstellt 14. Oktober 2026) |
+| Datum | 20. Oktober 2026 (erstellt 14. Oktober 2026) |
 | Grundlage | Art. 35 DSGVO, § 25 TDDDG |
-| Status | Bewertung abgeschlossen; F2 und F6 in 2.2.0 umgesetzt, 2.3.0 nachbewertet, übrige Maßnahmen offen (Abschnitt 8) |
+| Status | Bewertung abgeschlossen; F2 und F6 in 2.2.0 umgesetzt, 2.3.0 und 2.3.1 nachbewertet, übrige Maßnahmen offen (Abschnitt 8) |
 
 Dieses Dokument verbindet ein technisches Sicherheitsaudit der App mit einer
 Datenschutz-Folgenabschätzung (DSFA). Es ist keine Rechtsberatung.
@@ -50,6 +50,12 @@ kopierst oder teilst ihn. Mit „Scannen von Foto“ (ab Werk aus) liest die App
 Codes aus einem Bild, das du in der Fotoauswahl des Systems wählst. Sie
 bekommt nur dieses Bild, braucht keine Leseberechtigung für die Mediathek
 und speichert es nicht. Das Risiko bleibt gering.
+
+**Neu in 2.3.1:** Die App erkennt den bundeseinheitlichen Medikationsplan und
+zeigt ihn als Karte an. Er enthält Gesundheitsdaten (Art. 9 DSGVO) und wird
+nie im Verlauf gespeichert; ältere Einträge entfernt die App beim Start. Sie
+schlägt keine Medikamente online nach. Außerdem erkennt sie Echtheitscodes von
+Amazon („Transparency“), ohne Daten weiterzugeben.
 
 Ein hohes Restrisiko bleibt nicht. Eine vorherige Konsultation der
 Aufsichtsbehörde nach Art. 36 DSGVO ist nicht nötig.
@@ -103,6 +109,11 @@ vor schädlichen Codes („Quishing“).
 **Besondere Kategorien nach Art. 9 DSGVO** werden nicht gezielt
 verarbeitet. Ein Code kann solche Daten zufällig enthalten, etwa einen Text
 über die Gesundheit. Die App zeigt ihn dann wie jeden anderen Text an.
+Eine Ausnahme erkennt sie gezielt: den bundeseinheitlichen Medikationsplan
+(BMP, XML mit `<MP …>` als Data Matrix auf dem Papierplan, Spezifikation der
+KBV, Anlage 3 zu § 31a SGB V). Er enthält Name, Geburtsdatum, Arzt und
+Medikamente. Seit 2.3.1 zeigt die App ihn nur an und speichert ihn nie im
+Verlauf; ältere Verlaufseinträge mit einem Plan entfernt sie beim Start.
 
 ### 3.3 Speicherorte
 
@@ -110,7 +121,7 @@ verarbeitet. Ein Code kann solche Daten zufällig enthalten, etwa einen Text
 |---|---|---|---|
 | Verlauf (`scan_history_v2`) | SharedPreferences (Android-XML in der App-Sandbox) / NSUserDefaults (iOS) | Sandbox des Betriebssystems, Geräteverschlüsselung; **AES-256-CBC + HMAC-SHA256** seit 2.2.0 | Einzeln, „Verlauf löschen“, Deinstallation; max. 25 Einträge |
 | Verlaufsschlüssel (32 Byte, zufällig) | iOS-Schlüsselbund (`AfterFirstUnlockThisDeviceOnly`, nicht synchronisiert) / Android Keystore | Wo vorhanden hardwaregestützt; nie in Sicherungen | Deinstallation |
-| 2FA-Schlüssel | **werden nicht gespeichert** | – | – |
+| 2FA-Schlüssel, Medikationspläne | **werden nicht gespeichert** | – | – |
 | Scan-Art, Zoom, Einstellungen | SharedPreferences / NSUserDefaults | Sandbox | Deinstallation |
 | Kamerabild | Nur im Arbeitsspeicher | – | Sofort |
 | Gewähltes Foto | Kopie von `image_picker` im temporären App-Ordner; verkleinerte Fassungen in einem eigenen temporären Ordner | Sandbox | Die App löscht beides direkt nach der Auswertung |
@@ -179,7 +190,7 @@ Kalenderberechtigung.
 | Grundsatz | Bewertung |
 |---|---|
 | Zweckbindung | Daten dienen nur der Anzeige und Aktionen, die du selbst auslöst. |
-| Datenminimierung | Das Kamerabild und gewählte Fotos werden nicht gespeichert. Der Verlauf ist auf 25 Einträge begrenzt. 2FA-Schlüssel werden nicht gespeichert. Tracking-Parameter werden aus Links entfernt. Es gibt keine unnötigen Berechtigungen. **Aber:** WLAN-Passwörter und Matter-PINs landen im Verlauf. |
+| Datenminimierung | Das Kamerabild und gewählte Fotos werden nicht gespeichert. Der Verlauf ist auf 25 Einträge begrenzt. 2FA-Schlüssel und Medikationspläne werden nicht gespeichert. Tracking-Parameter werden aus Links entfernt. Es gibt keine unnötigen Berechtigungen. **Aber:** WLAN-Passwörter und Matter-PINs landen im Verlauf. |
 | Speicherbegrenzung | Höchstens 25 Einträge; einzeln oder alle löschbar. |
 | Transparenz | Datenschutzerklärung auf Deutsch/Englisch; Info-Knopf in jeder Datenkarte; der Bestätigungsdialog zeigt das vollständige Ziel. |
 | Integrität / Vertraulichkeit | Sandbox des Betriebssystems; kein Netzwerkcode in der App; kein WebView; die Parser prüfen Längen. Siehe F2–F5. |
@@ -213,7 +224,7 @@ Schweregrad: **Hoch / Mittel / Gering / Info**.
   Kopie nach der Auswertung.
 - Bekannte Tracking-Parameter (`utm_*`, `fbclid`, `gclid`, …) werden vor dem
   Öffnen eines Links entfernt.
-- 2FA-Schlüssel (`otpauth://`) werden nie im Verlauf gespeichert.
+- 2FA-Schlüssel (`otpauth://`) und Medikationspläne werden nie im Verlauf gespeichert.
 - Der Verlauf ist auf 25 Einträge begrenzt und löschbar.
 - Kein Konto, kein eigenes Backend, keine Analyse, keine Werbung, keine
   Absturzberichte im App-Code.

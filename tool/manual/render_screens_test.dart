@@ -353,8 +353,9 @@ void main() {
     showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (_) =>
-          PhotoAnalysisDialog(image: MemoryImage(photo.readAsBytesSync())),
+      builder: (_) => PhotoAnalysisDialog(
+        image: ValueNotifier(MemoryImage(photo.readAsBytesSync())),
+      ),
     );
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
@@ -392,10 +393,10 @@ void main() {
               info: PackageInfo(
                 appName: 'QR Viewer',
                 packageName: 'de.l9g.qr_viewer',
-                version: '2.3.0',
-                buildNumber: '15',
+                version: '2.3.1',
+                buildNumber: '16',
               ),
-              buildDate: DateTime(2026, 10, 19, 8, 0),
+              buildDate: DateTime(2026, 10, 19, 18, 0),
             ),
           ),
         ),

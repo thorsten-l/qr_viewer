@@ -2,8 +2,8 @@
 
 [Deutsch](#deutsch) · [English](#english)
 
-Stand / Last updated: 19. Oktober 2026 / October 19, 2026\
-Gilt ab / Applies from: QR Viewer 2.3.0
+Stand / Last updated: 20. Oktober 2026 / October 20, 2026\
+Gilt ab / Applies from: QR Viewer 2.3.1
 
 ---
 
@@ -44,8 +44,9 @@ jede Installation zufällig erzeugt und liegt nur im Schlüsselbund (iOS) bzw.
 im Android Keystore deines Geräts; er wird weder mit iCloud synchronisiert
 noch in Sicherungen übernommen.
 Du kannst einzelne Einträge oder den ganzen Verlauf jederzeit in der App
-löschen. Einmalpasswort-Schlüssel (2FA, `otpauth://`) werden grundsätzlich
-nicht im Verlauf gespeichert. Beim Löschen der App
+löschen. Einmalpasswort-Schlüssel (2FA, `otpauth://`) und Medikationspläne
+(bundeseinheitlicher Medikationsplan) werden grundsätzlich nicht im Verlauf
+gespeichert. Beim Löschen der App
 werden alle Daten entfernt. Unter Android nimmt die App nicht an der
 Google-Sicherung teil. Eine iCloud- oder Gerätesicherung unter iOS kann den
 verschlüsselten Verlauf enthalten; ohne den Schlüssel, der auf dem Gerät
@@ -56,12 +57,16 @@ bleibt, ist er nicht lesbar.
 Die App erkennt übliche Inhaltsformate wie Kontakte, Termine, WLAN-Zugänge,
 Überweisungsdaten (GiroCode) oder Einmalpasswort-Schlüssel (2FA) und zeigt sie
 aufbereitet an, ebenso Artikelnummern (EAN, ISBN), den Matrixcode der
-Deutschen Post und Einrichtungscodes von Smart-Home-Geräten (Matter). Das
-geschieht ausschließlich auf deinem Gerät. Beachte, dass solche Codes
-vertrauliche Angaben enthalten können, etwa WLAN-Passwörter oder den
-Einrichtungscode eines Matter-Geräts; sie stehen wie jeder Inhalt im Verlauf,
-bis du ihn löschst. 2FA-Schlüssel
-werden nicht gespeichert.
+Deutschen Post, Einrichtungscodes von Smart-Home-Geräten (Matter),
+Echtheitscodes von Amazon („Transparency“) und den bundeseinheitlichen
+Medikationsplan. Das geschieht ausschließlich auf deinem Gerät. Beachte, dass
+solche Codes vertrauliche Angaben enthalten können, etwa WLAN-Passwörter oder
+den Einrichtungscode eines Matter-Geräts; sie stehen wie jeder Inhalt im
+Verlauf, bis du ihn löschst. 2FA-Schlüssel und Medikationspläne (Name,
+Geburtsdatum, Medikamente – also Gesundheitsdaten) werden nicht gespeichert;
+ein Medikationsplan aus einer älteren App-Version wird beim Start aus dem
+Verlauf entfernt. Die App schlägt Medikamente nicht online nach; die PZN
+kannst du kopieren und selbst nachschlagen.
 
 ### Elektronische Tickets
 
@@ -164,7 +169,8 @@ The history is stored encrypted (AES-256). The key is created randomly for
 each installation and is kept only in your device's Keychain (iOS) or
 Android Keystore; it is neither synced to iCloud nor included in backups. You can clear the
 history or single entries in the app at any time. One-time password keys
-(2FA, `otpauth://`) are never stored in the history. Deleting the app removes
+(2FA, `otpauth://`) and medication plans (German federal medication plan,
+BMP) are never stored in the history. Deleting the app removes
 all of its data.
 On Android, the app does not take part in Google backups. An iCloud or
 device backup on iOS may contain the encrypted history; without the key,
@@ -175,12 +181,15 @@ which stays on the device, it cannot be read.
 The app recognizes common content formats such as contacts, events, Wi-Fi
 credentials, bank transfer data (GiroCode) or one-time password keys (2FA) and
 displays them in a readable form, as well as item numbers (EAN, ISBN), the
-Deutsche Post matrix code and setup codes of smart home devices (Matter).
-This happens solely on your device. Please note that such codes can contain
-confidential information, for example Wi-Fi passwords or the setup code of a
-Matter device; like any content, they remain in the history until you clear
-it.
-2FA keys are not stored.
+Deutsche Post matrix code, setup codes of smart home devices (Matter),
+Amazon anti-counterfeiting codes ("Transparency") and the German federal
+medication plan. This happens solely on your device. Please note that such
+codes can contain confidential information, for example Wi-Fi passwords or the
+setup code of a Matter device; like any content, they remain in the history
+until you clear it. 2FA keys and medication plans (name, date of birth,
+medicines – i.e. health data) are not stored; a medication plan from an older
+app version is removed from the history at startup. The app does not look up
+medicines online; you can copy the PZN and look it up yourself.
 
 ### Electronic tickets
 

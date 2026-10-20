@@ -730,6 +730,71 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Einrichtungsdaten eines Smart-Home-Geräts nach dem Matter-Standard. Deine Smart-Home-App (z. B. Apple Home, Google Home) nimmt das Gerät damit auf – scanne den Code dort oder tippe den manuellen Kopplungscode ein. Wer diesen Code hat, kann das Gerät koppeln, solange es im Einrichtungsmodus ist.';
 
   @override
+  String get typeTransparency => 'Amazon-Transparency-Code';
+
+  @override
+  String get fieldSerialNumber => 'Seriennummer';
+
+  @override
+  String get infoKindTransparency =>
+      'Ein Echtheitscode von Amazon (Programm „Transparency“). Jede einzelne Packung bekommt eine eigene, zufällige Seriennummer. Zu welchem Produkt sie gehört, weiß nur Amazon – der Code selbst enthält nichts weiter. Ob er echt ist, prüfst du in der Amazon-Shopping- oder Transparency-App; dabei geht der Code an Amazon.';
+
+  @override
+  String get typeMedicationPlan => 'Medikationsplan';
+
+  @override
+  String get medicationPlanNotSaved =>
+      'Medikationspläne enthalten Gesundheitsdaten und werden nicht im Verlauf gespeichert.';
+
+  @override
+  String get planPatient => 'Patient*in';
+
+  @override
+  String get planIssuedBy => 'Ausgedruckt von';
+
+  @override
+  String get planPrinted => 'Ausgedruckt am';
+
+  @override
+  String planPage(String page, String pages) {
+    return 'Seite $page von $pages';
+  }
+
+  @override
+  String get planAllergies => 'Allergien/Unverträglichkeiten';
+
+  @override
+  String get planPregnant => 'Schwanger';
+
+  @override
+  String get planBreastfeeding => 'Stillend';
+
+  @override
+  String get planWeight => 'Gewicht';
+
+  @override
+  String get planHeight => 'Größe';
+
+  @override
+  String get planCreatinine => 'Kreatinin';
+
+  @override
+  String get planMoreInfo => 'Weitere Angaben';
+
+  @override
+  String get planDosage => 'Dosierung';
+
+  @override
+  String get planHint => 'Hinweis';
+
+  @override
+  String get planReason => 'Grund';
+
+  @override
+  String get infoKindMedicationPlan =>
+      'Der Code auf dem bundeseinheitlichen Medikationsplan (BMP) von Arztpraxis, Krankenhaus oder Apotheke. Er enthält deinen Namen, dein Geburtsdatum und alle Medikamente mit Dosierung. Das sind Gesundheitsdaten: QR Viewer zeigt sie nur auf deinem Gerät an und speichert sie nie im Verlauf. Medikamente, die nur mit ihrer PZN angegeben sind, kann die App offline nicht benennen.';
+
+  @override
   String get infoManuals => 'Anleitungen';
 
   @override

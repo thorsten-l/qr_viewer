@@ -939,6 +939,94 @@
   "@infoKindMatter": {
     "description": "Info-Dialog: Erklärung Matter-Gerät"
   },
+  "typeTransparency": "Amazon Transparency code",
+  "@typeTransparency": {
+    "description": "Inhaltsart Amazon-Transparency-Code"
+  },
+  "fieldSerialNumber": "Serial number",
+  "@fieldSerialNumber": {
+    "description": "Feld Seriennummer"
+  },
+  "infoKindTransparency": "An anti-counterfeiting code from Amazon (Transparency program). Each individual package gets its own random serial number. Which product it belongs to is only known to Amazon – the code itself contains nothing else. You can check whether it is genuine in the Amazon Shopping or Transparency app; the code is then sent to Amazon.",
+  "@infoKindTransparency": {
+    "description": "Info-Dialog: Erklärung Amazon-Transparency-Code"
+  },
+  "typeMedicationPlan": "Medication plan",
+  "@typeMedicationPlan": {
+    "description": "Inhaltsart Medikationsplan (BMP)"
+  },
+  "medicationPlanNotSaved": "Medication plans contain health data and are not saved in the history.",
+  "@medicationPlanNotSaved": {
+    "description": "Hinweis: Medikationspläne nicht im Verlauf"
+  },
+  "planPatient": "Patient",
+  "@planPatient": {
+    "description": "Medikationsplan: Abschnitt Patient"
+  },
+  "planIssuedBy": "Printed by",
+  "@planIssuedBy": {
+    "description": "Medikationsplan: ausgedruckt von (Praxis, Apotheke)"
+  },
+  "planPrinted": "Printed on",
+  "@planPrinted": {
+    "description": "Medikationsplan: Ausdruckdatum"
+  },
+  "planPage": "Page {page} of {pages}",
+  "@planPage": {
+    "description": "Medikationsplan: Seitenangabe",
+    "placeholders": {
+      "page": {
+        "type": "String"
+      },
+      "pages": {
+        "type": "String"
+      }
+    }
+  },
+  "planAllergies": "Allergies/intolerances",
+  "@planAllergies": {
+    "description": "Medikationsplan: Allergien und Unverträglichkeiten"
+  },
+  "planPregnant": "Pregnant",
+  "@planPregnant": {
+    "description": "Medikationsplan: schwanger"
+  },
+  "planBreastfeeding": "Breastfeeding",
+  "@planBreastfeeding": {
+    "description": "Medikationsplan: stillend"
+  },
+  "planWeight": "Weight",
+  "@planWeight": {
+    "description": "Medikationsplan: Gewicht"
+  },
+  "planHeight": "Height",
+  "@planHeight": {
+    "description": "Medikationsplan: Körpergröße"
+  },
+  "planCreatinine": "Creatinine",
+  "@planCreatinine": {
+    "description": "Medikationsplan: Kreatininwert"
+  },
+  "planMoreInfo": "Further information",
+  "@planMoreInfo": {
+    "description": "Medikationsplan: weitere Angaben (Parameterfreitext)"
+  },
+  "planDosage": "Dosage",
+  "@planDosage": {
+    "description": "Medikationsplan: Dosierung"
+  },
+  "planHint": "Note",
+  "@planHint": {
+    "description": "Medikationsplan: Hinweis zur Anwendung"
+  },
+  "planReason": "Reason",
+  "@planReason": {
+    "description": "Medikationsplan: Behandlungsgrund"
+  },
+  "infoKindMedicationPlan": "The code on the German federal medication plan (BMP) from your doctor, hospital or pharmacy. It contains your name, date of birth and all medicines with dosage. These are health data: QR Viewer only shows them on your device and never saves them in the history. Medicines given only by their PZN cannot be named offline.",
+  "@infoKindMedicationPlan": {
+    "description": "Info-Dialog: Erklärung Medikationsplan"
+  },
   "infoManuals": "Manuals",
   "@infoManuals": {
     "description": "Info-Dialog: Knopf zu den Anleitungen"

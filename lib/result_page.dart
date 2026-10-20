@@ -29,6 +29,7 @@ import 'deutsche_post.dart';
 import 'gtin.dart';
 import 'localization.dart';
 import 'matter.dart';
+import 'medication_plan.dart';
 import 'qr_content.dart';
 import 'scan_mode.dart';
 import 'settings.dart';
@@ -83,6 +84,7 @@ String kindLabel(ContentKind kind, AppLocalizations l) => switch (kind) {
   ContentKind.book => l.typeIsbn,
   ContentKind.json => l.typeJson,
   ContentKind.matter => l.typeMatter,
+  ContentKind.transparency => l.typeTransparency,
   ContentKind.postage => l.typePostage,
   ContentKind.text => l.typeText,
 };
@@ -103,6 +105,7 @@ IconData kindIcon(ContentKind kind) => switch (kind) {
   ContentKind.book => Icons.menu_book_outlined,
   ContentKind.json => Icons.data_object,
   ContentKind.matter => Icons.home_outlined,
+  ContentKind.transparency => Icons.verified_outlined,
   ContentKind.postage => Icons.local_post_office_outlined,
   ContentKind.text => Icons.notes,
 };
@@ -173,6 +176,7 @@ String kindInfo(ContentKind kind, AppLocalizations l) => switch (kind) {
   ContentKind.book => l.infoKindBook,
   ContentKind.json => l.infoKindJson,
   ContentKind.matter => l.infoKindMatter,
+  ContentKind.transparency => l.infoKindTransparency,
   ContentKind.postage => l.infoKindPostage,
 };
 
@@ -319,6 +323,7 @@ String fieldLabel(FieldLabel label, AppLocalizations l) => switch (label) {
   FieldLabel.issn => l.fieldIssn,
   FieldLabel.json => l.typeJson,
   FieldLabel.trackingNumber => l.fieldTrackingNumber,
+  FieldLabel.serialNumber => l.fieldSerialNumber,
   FieldLabel.vendorId => l.fieldVendorId,
   FieldLabel.productId => l.fieldProductId,
   FieldLabel.discriminator => l.fieldDiscriminator,
@@ -480,7 +485,12 @@ class ResultPage extends StatelessWidget {
     final showCard =
         parsed.kind != ContentKind.text &&
         !(parsed.kind == ContentKind.url && parsed.fields.length == 1);
-    final title = parsed.kind != ContentKind.text
+    final text = bytes != null ? latin1.decode(bytes) : raw;
+    final medicationPlan = isMedicationPlan(text);
+    final plan = medicationPlan ? parseMedicationPlan(text) : null;
+    final title = medicationPlan
+        ? l.typeMedicationPlan
+        : parsed.kind != ContentKind.text
         ? kindLabel(parsed.kind, l)
         : bytes != null
         ? (isVdvTicket(bytes) ? l.vdvTicket : l.typeBinary)
@@ -493,7 +503,19 @@ class ResultPage extends StatelessWidget {
     final hexDump = bytes == null ? null : _HexDump(bytes: bytes);
 
     final Widget body;
-    if (bytes != null && isVdvTicket(bytes)) {
+    if (plan != null) {
+      body = Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _MedicationPlanCard(plan: plan),
+          ExpansionTile(
+            tilePadding: EdgeInsets.zero,
+            title: Text(bytes == null ? l.rawContent : l.rawData),
+            children: [hexDump ?? rawText],
+          ),
+        ],
+      );
+    } else if (bytes != null && isVdvTicket(bytes)) {
       body = Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -562,6 +584,13 @@ class ResultPage extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   l.otpNotSaved,
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+              ],
+              if (medicationPlan) ...[
+                const SizedBox(height: 4),
+                Text(
+                  l.medicationPlanNotSaved,
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
               ],
@@ -903,4 +932,220 @@ class _VdvTicketCardState extends State<_VdvTicketCard> {
       );
     },
   );
+}
+
+/// Lesbarer bundeseinheitlicher Medikationsplan (BMP). Überschriften,
+/// Darreichungsformen und Einheiten stehen im Wortlaut der KBV, wie auf dem
+/// Papierplan; Medikamente nur mit PZN lassen sich offline nicht benennen.
+class _MedicationPlanCard extends StatelessWidget {
+  const _MedicationPlanCard({required this.plan});
+
+  final MedicationPlan plan;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    final locale = Localizations.localeOf(context).toString();
+    final label = theme.textTheme.bodyMedium?.copyWith(
+      color: theme.colorScheme.onSurfaceVariant,
+    );
+    final value = theme.textTheme.bodyMedium;
+
+    Widget table(List<(String, String?)> rows) => Table(
+      columnWidths: const {0: IntrinsicColumnWidth()},
+      children: [
+        for (final (name, v) in rows)
+          if (v != null && v.isNotEmpty)
+            TableRow(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 16, bottom: 6),
+                  child: Text(name, style: label),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: SelectableText(v, style: value),
+                ),
+              ],
+            ),
+      ],
+    );
+
+    Widget heading(String text) => Padding(
+      padding: const EdgeInsets.only(top: 12, bottom: 6),
+      child: Text(
+        text,
+        style: theme.textTheme.titleSmall?.copyWith(
+          color: theme.colorScheme.primary,
+        ),
+      ),
+    );
+
+    String? date(DateTime? d) =>
+        d == null ? null : DateFormat.yMd(locale).format(d);
+    final p = plan.parameters;
+    final page = plan.root['a'];
+    final pages = plan.root['z'];
+    String? unit(String? v, String u) => v == null ? null : '$v $u';
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Icon(Icons.medication_outlined, color: theme.colorScheme.primary),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                l.typeMedicationPlan,
+                style: theme.textTheme.titleMedium,
+              ),
+            ),
+            DataInfoButton(
+              title: l.typeMedicationPlan,
+              about: l.infoKindMedicationPlan,
+            ),
+          ],
+        ),
+        if (page != null && pages != null)
+          Text(l.planPage(page, pages), style: label),
+        heading(l.planPatient),
+        table([
+          (l.fieldName, plan.patientName),
+          (l.birthDate, date(plan.birthDate) ?? plan.patient['b']),
+          (l.planAllergies, p['ai']),
+          (l.planPregnant, p['p'] == '1' ? '✓' : null),
+          (l.planBreastfeeding, p['b'] == '1' ? '✓' : null),
+          (l.planWeight, unit(p['w'], 'kg')),
+          (l.planHeight, unit(p['h'], 'cm')),
+          (l.planCreatinine, unit(p['c'], 'mg/dl')),
+          (l.planMoreInfo, p['x'] == null ? null : planText(p['x']!)),
+        ]),
+        heading(l.planIssuedBy),
+        table([
+          (l.fieldName, plan.author['n']),
+          (l.fieldAddress, plan.authorAddress),
+          (l.fieldPhone, plan.author['p']),
+          (l.fieldEmail, plan.author['e']),
+          (
+            l.planPrinted,
+            plan.printedAt == null
+                ? plan.author['t']
+                : formatDateTime(plan.printedAt!, locale),
+          ),
+        ]),
+        for (final s in plan.sections) ...[
+          if (s.title != null)
+            heading(s.title!)
+          else
+            const SizedBox(height: 12),
+          for (final e in s.entries)
+            switch (e) {
+              PlanMedication() => _MedicationTile(med: e),
+              PlanText() => Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: SelectableText(
+                  e.extra == null ? e.text : '${e.text}\n${e.extra}',
+                  style: value?.copyWith(fontStyle: FontStyle.italic),
+                ),
+              ),
+            },
+        ],
+      ],
+    );
+  }
+}
+
+/// Ein Medikationseintrag: Name, Form, Dosierung, Hinweis, Grund, PZN.
+class _MedicationTile extends StatelessWidget {
+  const _MedicationTile({required this.med});
+
+  final PlanMedication med;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    final locale = Localizations.localeOf(context).toString();
+    final muted = theme.textTheme.bodySmall?.copyWith(
+      color: theme.colorScheme.onSurfaceVariant,
+    );
+    final weekday = med.weekday == null
+        ? null
+        // Der 1. Januar 2024 war ein Montag.
+        : DateFormat.EEEE(locale).format(DateTime(2024, 1, med.weekday!));
+    final scheme = med.scheme;
+    final dosage = scheme == null
+        ? null
+        : [
+            if (weekday != null) '$weekday:',
+            scheme,
+            if (med.unit != null) med.unit,
+          ].join(' ');
+    final title = med.name ?? (med.pzn == null ? '–' : 'PZN ${med.pzn}');
+    final details = [
+      if (med.form != null) med.form!,
+      if (med.name != null && med.pzn != null) 'PZN ${med.pzn}',
+    ].join(' · ');
+
+    Widget line(String name, String? v) => v == null
+        ? const SizedBox.shrink()
+        : Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(text: '$name: ', style: muted),
+                TextSpan(text: planText(v)),
+              ],
+            ),
+          );
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        border: Border.all(color: theme.colorScheme.outlineVariant),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: SelectableText(
+                  title,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              // Nur die PZN: Nachschlagen überlässt die App dem Nutzer.
+              if (med.pzn != null)
+                IconButton(
+                  tooltip: l.copyField('PZN'),
+                  icon: const Icon(Icons.copy, size: 20),
+                  visualDensity: VisualDensity.compact,
+                  onPressed: () => copyWithFeedback(context, med.pzn!),
+                ),
+            ],
+          ),
+          if (details.isNotEmpty) Text(details, style: muted),
+          const SizedBox(height: 4),
+          line(l.planDosage, dosage),
+          line(l.planHint, med['i']),
+          line(l.planReason, med['r']),
+          if (med['x'] != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 2),
+              child: Text(
+                planText(med['x']!),
+                style: const TextStyle(fontStyle: FontStyle.italic),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
 }

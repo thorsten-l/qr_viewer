@@ -6,6 +6,54 @@ Alle wichtigen Änderungen an QR Viewer. Die Versionen folgen
 [Semantic Versioning](https://semver.org/lang/de/), die Build-Nummer steht
 hinter dem `+`.
 
+## [2.3.1+16] – 2026-10-20
+
+### Neu
+
+- **Amazon-Transparency-Code:** Codes, die mit `AZ:` und einer
+  alphanumerischen Seriennummer beginnen (meist als Data Matrix auf
+  Amazon-Verpackungen), erscheinen als Karte „Amazon-Transparency-Code“ mit
+  der Seriennummer. Der Info-Knopf erklärt: Es ist ein Echtheitscode, der Code
+  enthält nur die zufällige Seriennummer, und geprüft wird er in der
+  Amazon-Shopping- oder Transparency-App (dabei geht der Code an Amazon). Die
+  Karte bietet keine Aktion an.
+
+- **Medikationsplan:** Der Code auf dem bundeseinheitlichen Medikationsplan
+  (BMP, XML `<MP …>` als Data Matrix, Spezifikation der KBV) wird erkannt. Die
+  Ergebnisseite heißt „Medikationsplan“ und weist darauf hin, dass er
+  Gesundheitsdaten enthält und **nicht im Verlauf gespeichert** wird. Das gilt
+  auch, wenn der Scanner ihn als Binärdaten liefert.
+- **Karte „Medikationsplan“:** zeigt den Plan lesbar an: Patient*in
+  (Name, Geburtsdatum, Allergien, Gewicht, Größe, Kreatinin, Schwangerschaft,
+  Stillzeit), Ersteller mit Adresse und Ausdruckdatum, Seite x von y, dann
+  jeden Block mit Zwischenüberschrift und je Medikament Wirkstoff/Stärke bzw.
+  Handelsname, Darreichungsform, Dosierung (Viererschema oder Freitext, mit
+  Wochentag), Hinweis, Grund, Zusatzzeile und PZN; außerdem Freitextzeilen und
+  Rezepturen. Überschriften, Darreichungsformen und Dosiereinheiten kommen aus
+  den KBV-Schlüsseltabellen (S_BMP_ZWISCHENUEBERSCHRIFT, S_BMP_DOSIEREINHEIT,
+  S_BMP_DARREICHUNGSFORM) und stehen wie auf dem Papierplan auf Deutsch.
+  Medikamente, die nur als PZN im Plan stehen, kann die App offline nicht
+  benennen; das Kopier-Symbol rechts an jedem Medikament kopiert dessen PZN,
+  nachschlagen kann man sie dann selbst. Neue Datei
+  `lib/medication_plan.dart`.
+- Anleitung: neue Anhangseite „Data Matrix – Medikationsplan“ mit
+  erfundenem Beispielplan.
+
+### Sicherheit
+
+- Beim Start entfernt die App Verlaufseinträge, die nach den aktuellen Regeln
+  nicht gespeichert werden dürfen, z. B. einen Medikationsplan, der mit einer
+  älteren Version gescannt wurde.
+
+### Geändert
+
+- Datenschutzerklärung, DSFA und Anleitungen nennen Medikationspläne neben
+  2FA-Schlüsseln als Inhalte, die nie gespeichert werden.
+- **Scannen von Foto:** Der Dialog „Foto wird ausgewertet …“ erscheint jetzt
+  sofort nach dem Antippen eines Fotos, zuerst mit Ladekreis. Bisher öffnete
+  er sich erst, wenn die Fotoauswahl das Bild geliefert hatte; bei neuen
+  Fotos dauerte das einige Sekunden.
+
 ## [2.3.0+15] – 2026-10-19
 
 ### Neu

@@ -21,7 +21,9 @@ content first. Links and other actions start only after a confirmation.
   transfer (GiroCode),
   one-time password (`otpauth://`), JSON, product number (EAN/UPC/ITF-14 with
   check digit and GS1 country, ISBN, ISSN), Deutsche Post matrix code
-  (tracking number) and Matter device (`MT:`, with manual pairing code) are
+  (tracking number), Matter device (`MT:`, with manual pairing code) and
+  Amazon Transparency code (`AZ:`, serial number) and German federal
+  medication plan (BMP; never stored in the history) are
   shown as a card with labeled fields that can be
   copied individually; the raw content is shown below. An info button explains
   the data in plain words. Everything else is
@@ -121,6 +123,7 @@ the build date.
 | `lib/binary_payload.dart` | Detection of binary content, hex display |
 | `lib/vdv/` | VDV eTicket: BER, ISO 9796-2, certificates, ticket data |
 | `assets/vdv_certs/` | Public VDV CA keys (CC0), see `tool/vdv/README.md` |
+| `lib/medication_plan.dart` | German federal medication plan: XML reader, KBV key tables |
 | `lib/photo_scan.dart` | Code search in the chosen photo, at several sizes if needed |
 | `lib/settings.dart` | Settings ("Enable actions", "Scan from photo") and settings page |
 | `lib/app_info.dart` | About dialog with support, license and manuals buttons |
@@ -134,8 +137,8 @@ the build date.
 
 ## Version
 
-Current: **2.3.0** (build 15). Version and build number are set in
-`pubspec.yaml`, e.g. `version: 2.3.0+15`. Every upload to TestFlight or
+Current: **2.3.1** (build 16). Version and build number are set in
+`pubspec.yaml`, e.g. `version: 2.3.1+16`. Every upload to TestFlight or
 Google Play needs a higher build number after the `+`. Every new version gets
 an entry in [CHANGELOG.md](CHANGELOG.md) (English) and
 [CHANGELOG_de.md](CHANGELOG_de.md) (German).
@@ -151,7 +154,7 @@ Steps for a new version:
 3. Check: `flutter analyze`, `flutter test`,
    `python3 tool/license/add_headers.py --check`.
 4. Build and upload for iOS and Android as described below.
-5. Commit and tag, e.g. `git tag v2.3.0`.
+5. Commit and tag, e.g. `git tag v2.3.1`.
 
 ### iOS / TestFlight
 

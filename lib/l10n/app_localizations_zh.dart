@@ -715,6 +715,70 @@ class AppLocalizationsZh extends AppLocalizations {
       '符合 Matter 标准的智能家居设备的设置数据。智能家居应用（如 Apple 家庭、Google Home）用它来添加设备——请在该应用中扫描此码，或输入手动配对码。设备处于设置模式时，任何拿到此码的人都可以配对该设备。';
 
   @override
+  String get typeTransparency => 'Amazon Transparency 码';
+
+  @override
+  String get fieldSerialNumber => '序列号';
+
+  @override
+  String get infoKindTransparency =>
+      '亚马逊的防伪码（Transparency 计划）。每个包装都有自己的随机序列号。只有亚马逊知道它属于哪个商品——码本身不包含其他信息。你可以在 Amazon Shopping 或 Transparency 应用中验证真伪，届时该码会发送给亚马逊。';
+
+  @override
+  String get typeMedicationPlan => '用药计划';
+
+  @override
+  String get medicationPlanNotSaved => '用药计划包含健康数据，不会保存在历史记录中。';
+
+  @override
+  String get planPatient => '患者';
+
+  @override
+  String get planIssuedBy => '打印者';
+
+  @override
+  String get planPrinted => '打印日期';
+
+  @override
+  String planPage(String page, String pages) {
+    return '第 $page 页，共 $pages 页';
+  }
+
+  @override
+  String get planAllergies => '过敏/不耐受';
+
+  @override
+  String get planPregnant => '怀孕';
+
+  @override
+  String get planBreastfeeding => '哺乳期';
+
+  @override
+  String get planWeight => '体重';
+
+  @override
+  String get planHeight => '身高';
+
+  @override
+  String get planCreatinine => '肌酐';
+
+  @override
+  String get planMoreInfo => '其他信息';
+
+  @override
+  String get planDosage => '剂量';
+
+  @override
+  String get planHint => '说明';
+
+  @override
+  String get planReason => '用药原因';
+
+  @override
+  String get infoKindMedicationPlan =>
+      '医生、医院或药房出具的德国联邦用药计划（BMP）上的码。其中包含你的姓名、出生日期以及所有药品和剂量。这些是健康数据：QR Viewer 只在你的设备上显示，绝不保存到历史记录。仅以 PZN 标注的药品无法离线显示名称。';
+
+  @override
   String get infoManuals => '使用手册';
 
   @override

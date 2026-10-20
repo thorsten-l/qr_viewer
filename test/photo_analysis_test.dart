@@ -25,11 +25,26 @@ import 'test_app.dart';
 void main() {
   testWidgets('Dialog zeigt das Foto, Fortschritt und Hinweis', (tester) async {
     await tester.pumpWidget(
-      testApp(PhotoAnalysisDialog(image: FileImage(File('foto.png')))),
+      testApp(
+        PhotoAnalysisDialog(image: ValueNotifier(FileImage(File('foto.png')))),
+      ),
     );
     expect(find.byType(Image), findsOneWidget);
     expect(find.byType(LinearProgressIndicator), findsOneWidget);
     expect(find.text('Foto wird ausgewertet …'), findsOneWidget);
+  });
+
+  testWidgets('Dialog zeigt einen Ladekreis, bis das Foto da ist', (
+    tester,
+  ) async {
+    final photo = ValueNotifier<ImageProvider?>(null);
+    await tester.pumpWidget(testApp(PhotoAnalysisDialog(image: photo)));
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.byType(Image), findsNothing);
+    photo.value = FileImage(File('foto.png'));
+    await tester.pump();
+    expect(find.byType(CircularProgressIndicator), findsNothing);
+    expect(find.byType(Image), findsOneWidget);
   });
 
   group('scanPhoto', () {

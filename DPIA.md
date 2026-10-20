@@ -4,12 +4,12 @@
 
 | | |
 |---|---|
-| App | QR Viewer 2.3.0 (build 15), iOS/iPadOS and Android |
-| Code base | `main`, audit on commit `b25767c` ("release 2.1.2"); measures for F2 and F6 in 2.2.0; settings and "Scan from photo" added in 2.3.0 |
+| App | QR Viewer 2.3.1 (build 16), iOS/iPadOS and Android |
+| Code base | `main`, audit on commit `b25767c` ("release 2.1.2"); measures for F2 and F6 in 2.2.0; settings and "Scan from photo" added in 2.3.0, medication plan and Amazon Transparency code in 2.3.1 |
 | Controller / author | Thorsten Ludewig, t.ludewig@gmail.com |
-| Date | 19 October 2026 (created 14 October 2026) |
+| Date | 20 October 2026 (created 14 October 2026) |
 | Basis | Art. 35 GDPR, § 25 TDDDG (German Telecommunications Digital Services Data Protection Act) |
-| Status | Assessment complete; F2 and F6 implemented in 2.2.0, 2.3.0 reassessed, other measures open (section 8) |
+| Status | Assessment complete; F2 and F6 implemented in 2.2.0, 2.3.0 and 2.3.1 reassessed, other measures open (section 8) |
 
 This document combines a technical security audit of the app with a data
 protection impact assessment (DPIA). It is not legal advice.
@@ -48,6 +48,12 @@ Without them, no content leaves the app unless you copy or share it. With
 "Scan from photo" (off by default) the app reads codes from a picture you
 choose in the system photo picker. It only gets that picture, needs no read
 permission for the library and does not store it. The risk stays low.
+
+**New in 2.3.1:** The app recognizes the German federal medication plan and
+shows it as a card. It contains health data (Art. 9 GDPR) and is never stored
+in the history; older entries are removed at startup. The app does not look
+up medicines online. It also recognizes Amazon anti-counterfeiting codes
+("Transparency") without passing on any data.
 
 No high residual risk remains. Prior consultation with a supervisory
 authority under Art. 36 GDPR is not necessary.
@@ -100,7 +106,12 @@ automatically.
 
 **Special categories under Art. 9 GDPR** are not processed on purpose. A
 code can contain such data by chance, for example a text about health. The
-app shows it just like any other text.
+app shows it just like any other text. It recognizes one exception on
+purpose: the German federal medication plan (BMP, XML with `<MP …>` as a
+Data Matrix on the paper plan, KBV specification, annex 3 to § 31a SGB V).
+It contains name, date of birth, doctor and medicines. Since 2.3.1 the app
+only shows it and never stores it in the history; older history entries
+containing a plan are removed at startup.
 
 ### 3.3 Storage locations
 
@@ -108,7 +119,7 @@ app shows it just like any other text.
 |---|---|---|---|
 | History (`scan_history_v2`) | SharedPreferences (Android XML in the app sandbox) / NSUserDefaults (iOS) | OS sandbox, device encryption; **AES-256-CBC + HMAC-SHA256** since 2.2.0 | Single entry, "Clear history", uninstall; max. 25 entries |
 | History key (32 bytes, random) | iOS Keychain (`AfterFirstUnlockThisDeviceOnly`, not synced) / Android Keystore | Hardware-backed where available; never in backups | Uninstall |
-| 2FA keys | **not stored** | – | – |
+| 2FA keys, medication plans | **not stored** | – | – |
 | Scan mode, zoom, settings | SharedPreferences / NSUserDefaults | Sandbox | Uninstall |
 | Camera image | Memory only | – | Immediately |
 | Chosen photo | Copy from `image_picker` in the app's temporary folder; scaled-down versions in a separate temporary folder | Sandbox | The app deletes both right after the analysis |
@@ -174,7 +185,7 @@ microphone or Bluetooth. Contacts and appointments are passed on as `.vcf` or
 | Principle | Assessment |
 |---|---|
 | Purpose limitation | Data is used only to display it and for actions the user starts. |
-| Data minimisation | Camera images and chosen photos are not stored. History is limited to 25 entries. 2FA keys are not stored. Tracking parameters are removed from links. There are no unnecessary permissions. **But:** Wi-Fi passwords and Matter PINs end up in the history. |
+| Data minimisation | Camera images and chosen photos are not stored. History is limited to 25 entries. 2FA keys and medication plans are not stored. Tracking parameters are removed from links. There are no unnecessary permissions. **But:** Wi-Fi passwords and Matter PINs end up in the history. |
 | Storage limitation | Only 25 entries; entries can be deleted one by one or all at once. |
 | Transparency | Privacy policy in German/English; info button on every data card; a confirmation dialog shows the full target. |
 | Integrity / confidentiality | OS sandbox; no network code in the app; no WebView; parsers check lengths. See F2–F5. |
@@ -209,7 +220,7 @@ Severity: **High / Medium / Low / Info**.
   after the analysis.
 - Known tracking parameters (`utm_*`, `fbclid`, `gclid`, …) are removed
   before a link is opened.
-- 2FA keys (`otpauth://`) are never stored in the history.
+- 2FA keys (`otpauth://`) and medication plans are never stored in the history.
 - The history is limited to 25 entries and can be deleted.
 - No account, no own backend, no analytics, no advertising, no crash
   reporting in the app code.

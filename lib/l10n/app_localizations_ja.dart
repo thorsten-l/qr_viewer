@@ -723,6 +723,70 @@ class AppLocalizationsJa extends AppLocalizations {
       'Matter 規格に対応したスマートホーム機器のセットアップデータです。スマートホームアプリ（例：Apple ホーム、Google Home）はこれを使って機器を追加します。そのアプリでコードをスキャンするか、手動ペアリングコードを入力してください。機器がセットアップモードの間は、このコードを知っている人なら誰でもペアリングできます。';
 
   @override
+  String get typeTransparency => 'Amazon Transparency コード';
+
+  @override
+  String get fieldSerialNumber => 'シリアル番号';
+
+  @override
+  String get infoKindTransparency =>
+      'Amazon の偽造防止コード（Transparency プログラム）です。包装ごとに固有のランダムなシリアル番号が付けられています。どの商品のものかを知っているのは Amazon だけで、コード自体には他の情報は含まれていません。本物かどうかは Amazon ショッピングアプリまたは Transparency アプリで確認でき、その際コードは Amazon に送信されます。';
+
+  @override
+  String get typeMedicationPlan => '服薬計画';
+
+  @override
+  String get medicationPlanNotSaved => '服薬計画には健康データが含まれるため、履歴には保存されません。';
+
+  @override
+  String get planPatient => '患者';
+
+  @override
+  String get planIssuedBy => '発行元';
+
+  @override
+  String get planPrinted => '印刷日';
+
+  @override
+  String planPage(String page, String pages) {
+    return '$pages ページ中 $page ページ';
+  }
+
+  @override
+  String get planAllergies => 'アレルギー・不耐性';
+
+  @override
+  String get planPregnant => '妊娠中';
+
+  @override
+  String get planBreastfeeding => '授乳中';
+
+  @override
+  String get planWeight => '体重';
+
+  @override
+  String get planHeight => '身長';
+
+  @override
+  String get planCreatinine => 'クレアチニン';
+
+  @override
+  String get planMoreInfo => 'その他の情報';
+
+  @override
+  String get planDosage => '用量';
+
+  @override
+  String get planHint => '注意';
+
+  @override
+  String get planReason => '理由';
+
+  @override
+  String get infoKindMedicationPlan =>
+      '医師・病院・薬局が発行するドイツ連邦統一の服薬計画（BMP）のコードです。氏名、生年月日、すべての薬と用量が含まれます。これは健康データのため、QR Viewer は端末上で表示するだけで、履歴には決して保存しません。PZN だけで記載された薬は、オフラインでは名前を表示できません。';
+
+  @override
   String get infoManuals => 'マニュアル';
 
   @override

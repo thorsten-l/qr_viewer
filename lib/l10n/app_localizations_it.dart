@@ -730,6 +730,71 @@ class AppLocalizationsIt extends AppLocalizations {
       'I dati di configurazione di un dispositivo smart home con lo standard Matter. La tua app smart home (ad es. Apple Casa, Google Home) li usa per aggiungere il dispositivo: scansiona il codice lì o inserisci il codice di associazione manuale. Chiunque abbia questo codice può associare il dispositivo finché è in modalità di configurazione.';
 
   @override
+  String get typeTransparency => 'Codice Amazon Transparency';
+
+  @override
+  String get fieldSerialNumber => 'Numero di serie';
+
+  @override
+  String get infoKindTransparency =>
+      'Un codice anticontraffazione di Amazon (programma Transparency). Ogni singola confezione riceve un proprio numero di serie casuale. Solo Amazon sa a quale prodotto appartiene: il codice non contiene altro. Puoi verificarne l\'autenticità nell\'app Amazon Shopping o Transparency; in quel caso il codice viene inviato ad Amazon.';
+
+  @override
+  String get typeMedicationPlan => 'Piano terapeutico';
+
+  @override
+  String get medicationPlanNotSaved =>
+      'I piani terapeutici contengono dati sanitari e non vengono salvati nella cronologia.';
+
+  @override
+  String get planPatient => 'Paziente';
+
+  @override
+  String get planIssuedBy => 'Stampato da';
+
+  @override
+  String get planPrinted => 'Stampato il';
+
+  @override
+  String planPage(String page, String pages) {
+    return 'Pagina $page di $pages';
+  }
+
+  @override
+  String get planAllergies => 'Allergie/intolleranze';
+
+  @override
+  String get planPregnant => 'In gravidanza';
+
+  @override
+  String get planBreastfeeding => 'Allattamento';
+
+  @override
+  String get planWeight => 'Peso';
+
+  @override
+  String get planHeight => 'Altezza';
+
+  @override
+  String get planCreatinine => 'Creatinina';
+
+  @override
+  String get planMoreInfo => 'Altre informazioni';
+
+  @override
+  String get planDosage => 'Dosaggio';
+
+  @override
+  String get planHint => 'Nota';
+
+  @override
+  String get planReason => 'Motivo';
+
+  @override
+  String get infoKindMedicationPlan =>
+      'Il codice del piano terapeutico federale tedesco (BMP) del medico, dell\'ospedale o della farmacia. Contiene nome, data di nascita e tutti i farmaci con il dosaggio. Sono dati sanitari: QR Viewer li mostra solo sul tuo dispositivo e non li salva mai nella cronologia. I farmaci indicati solo con il PZN non possono essere nominati offline.';
+
+  @override
   String get infoManuals => 'Manuali';
 
   @override

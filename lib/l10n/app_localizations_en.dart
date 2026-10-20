@@ -729,6 +729,71 @@ class AppLocalizationsEn extends AppLocalizations {
       'The setup data of a smart home device using the Matter standard. Your smart home app (e.g. Apple Home, Google Home) uses it to add the device – scan the code there or type in the manual pairing code. Anyone with this code can pair the device while it is in setup mode.';
 
   @override
+  String get typeTransparency => 'Amazon Transparency code';
+
+  @override
+  String get fieldSerialNumber => 'Serial number';
+
+  @override
+  String get infoKindTransparency =>
+      'An anti-counterfeiting code from Amazon (Transparency program). Each individual package gets its own random serial number. Which product it belongs to is only known to Amazon – the code itself contains nothing else. You can check whether it is genuine in the Amazon Shopping or Transparency app; the code is then sent to Amazon.';
+
+  @override
+  String get typeMedicationPlan => 'Medication plan';
+
+  @override
+  String get medicationPlanNotSaved =>
+      'Medication plans contain health data and are not saved in the history.';
+
+  @override
+  String get planPatient => 'Patient';
+
+  @override
+  String get planIssuedBy => 'Printed by';
+
+  @override
+  String get planPrinted => 'Printed on';
+
+  @override
+  String planPage(String page, String pages) {
+    return 'Page $page of $pages';
+  }
+
+  @override
+  String get planAllergies => 'Allergies/intolerances';
+
+  @override
+  String get planPregnant => 'Pregnant';
+
+  @override
+  String get planBreastfeeding => 'Breastfeeding';
+
+  @override
+  String get planWeight => 'Weight';
+
+  @override
+  String get planHeight => 'Height';
+
+  @override
+  String get planCreatinine => 'Creatinine';
+
+  @override
+  String get planMoreInfo => 'Further information';
+
+  @override
+  String get planDosage => 'Dosage';
+
+  @override
+  String get planHint => 'Note';
+
+  @override
+  String get planReason => 'Reason';
+
+  @override
+  String get infoKindMedicationPlan =>
+      'The code on the German federal medication plan (BMP) from your doctor, hospital or pharmacy. It contains your name, date of birth and all medicines with dosage. These are health data: QR Viewer only shows them on your device and never saves them in the history. Medicines given only by their PZN cannot be named offline.';
+
+  @override
   String get infoManuals => 'Manuals';
 
   @override

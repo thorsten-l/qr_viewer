@@ -728,6 +728,71 @@ class AppLocalizationsHi extends AppLocalizations {
       'Matter मानक वाले स्मार्ट होम डिवाइस का सेटअप डेटा। आपका स्मार्ट होम ऐप (जैसे Apple Home, Google Home) इससे डिवाइस जोड़ता है – कोड वहीं स्कैन करें या मैनुअल पेयरिंग कोड टाइप करें। जब तक डिवाइस सेटअप मोड में है, यह कोड रखने वाला कोई भी उसे जोड़ सकता है।';
 
   @override
+  String get typeTransparency => 'Amazon Transparency कोड';
+
+  @override
+  String get fieldSerialNumber => 'सीरियल नंबर';
+
+  @override
+  String get infoKindTransparency =>
+      'Amazon का नकली-रोधी कोड (Transparency कार्यक्रम)। हर पैकेट को अपना यादृच्छिक सीरियल नंबर मिलता है। यह किस उत्पाद का है, यह केवल Amazon जानता है – कोड में और कुछ नहीं होता। असली है या नहीं, यह आप Amazon Shopping या Transparency ऐप में जाँच सकते हैं; तब कोड Amazon को भेजा जाता है।';
+
+  @override
+  String get typeMedicationPlan => 'दवा योजना';
+
+  @override
+  String get medicationPlanNotSaved =>
+      'दवा योजनाओं में स्वास्थ्य डेटा होता है, इसलिए वे इतिहास में सहेजी नहीं जातीं।';
+
+  @override
+  String get planPatient => 'मरीज़';
+
+  @override
+  String get planIssuedBy => 'द्वारा प्रिंट';
+
+  @override
+  String get planPrinted => 'प्रिंट की तारीख';
+
+  @override
+  String planPage(String page, String pages) {
+    return 'पृष्ठ $page / $pages';
+  }
+
+  @override
+  String get planAllergies => 'एलर्जी/असहिष्णुता';
+
+  @override
+  String get planPregnant => 'गर्भवती';
+
+  @override
+  String get planBreastfeeding => 'स्तनपान';
+
+  @override
+  String get planWeight => 'वज़न';
+
+  @override
+  String get planHeight => 'लंबाई';
+
+  @override
+  String get planCreatinine => 'क्रिएटिनिन';
+
+  @override
+  String get planMoreInfo => 'अन्य जानकारी';
+
+  @override
+  String get planDosage => 'खुराक';
+
+  @override
+  String get planHint => 'निर्देश';
+
+  @override
+  String get planReason => 'कारण';
+
+  @override
+  String get infoKindMedicationPlan =>
+      'डॉक्टर, अस्पताल या फ़ार्मेसी से मिली जर्मन संघीय दवा योजना (BMP) पर लगा कोड। इसमें आपका नाम, जन्मतिथि और सभी दवाएँ खुराक सहित होती हैं। यह स्वास्थ्य डेटा है: QR Viewer इसे केवल आपके डिवाइस पर दिखाता है और कभी इतिहास में सहेजता नहीं। केवल PZN से दी गई दवाओं के नाम ऑफ़लाइन नहीं दिखाए जा सकते।';
+
+  @override
   String get infoManuals => 'मैनुअल';
 
   @override

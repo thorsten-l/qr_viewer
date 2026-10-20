@@ -22,7 +22,9 @@ Rückfrage.
   Überweisung (GiroCode),
   Einmalpasswort (`otpauth://`), JSON, Artikelnummer (EAN/UPC/ITF-14 mit
   Prüfziffer und GS1-Land, ISBN, ISSN), Matrixcode der Deutschen Post
-  (Sendungsnummer) und Matter-Gerät (`MT:`, mit manuellem Kopplungscode)
+  (Sendungsnummer), Matter-Gerät (`MT:`, mit manuellem Kopplungscode) und
+  Amazon-Transparency-Code (`AZ:`, Seriennummer) und bundeseinheitlicher
+  Medikationsplan (BMP; wird nie im Verlauf gespeichert)
   erscheinen als Karte mit beschrifteten, einzeln
   kopierbaren Feldern; der Rohinhalt steht darunter. Ein Info-Knopf erklärt
   die Daten in einfachen Worten. Alles andere ist Text.
@@ -122,6 +124,7 @@ Installationszeitpunkt.
 | `lib/binary_payload.dart` | Erkennung von Binärinhalten, Hex-Darstellung |
 | `lib/vdv/` | VDV-eTicket: BER, ISO 9796-2, Zertifikate, Ticketdaten |
 | `assets/vdv_certs/` | Öffentliche VDV-CA-Schlüssel (CC0), siehe `tool/vdv/README.md` |
+| `lib/medication_plan.dart` | Bundeseinheitlicher Medikationsplan: XML lesen, KBV-Schlüsseltabellen |
 | `lib/photo_scan.dart` | Code-Suche im gewählten Foto, bei Bedarf in mehreren Größen |
 | `lib/settings.dart` | Einstellungen („Aktionen aktivieren“, „Scannen von Foto“) und Einstellungsseite |
 | `lib/app_info.dart` | Info-Dialog mit Support-, Lizenz- und Anleitungs-Knopf |
@@ -135,8 +138,8 @@ Installationszeitpunkt.
 
 ## Version
 
-Aktuell: **2.3.0** (Build 15). Version und Build-Nummer stehen in
-`pubspec.yaml`, z. B. `version: 2.3.0+15`. Für jeden Upload zu TestFlight oder
+Aktuell: **2.3.1** (Build 16). Version und Build-Nummer stehen in
+`pubspec.yaml`, z. B. `version: 2.3.1+16`. Für jeden Upload zu TestFlight oder
 Google Play muss die Build-Nummer hinter dem `+` steigen. Jede neue Version
 bekommt einen Eintrag in [CHANGELOG.md](CHANGELOG.md) (englisch) und
 [CHANGELOG_de.md](CHANGELOG_de.md) (deutsch).
@@ -152,7 +155,7 @@ Ablauf für eine neue Version:
 3. Prüfen: `flutter analyze`, `flutter test`,
    `python3 tool/license/add_headers.py --check`.
 4. iOS und Android wie unten bauen und hochladen.
-5. Committen und taggen, z. B. `git tag v2.3.0`.
+5. Committen und taggen, z. B. `git tag v2.3.1`.
 
 ### iOS / TestFlight
 

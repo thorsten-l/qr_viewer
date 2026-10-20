@@ -5,6 +5,52 @@
 All notable changes to QR Viewer. Versions follow
 [Semantic Versioning](https://semver.org/), the build number follows the `+`.
 
+## [2.3.1+16] – 2026-10-20
+
+### Added
+
+- **Amazon Transparency code:** Codes starting with `AZ:` followed by an
+  alphanumeric serial number (usually a Data Matrix on Amazon packaging)
+  appear as an "Amazon Transparency code" card with the serial number. The
+  info button explains that it is an anti-counterfeiting code, that the code
+  only contains the random serial number, and that it is verified in the
+  Amazon Shopping or Transparency app (which sends the code to Amazon). The
+  card offers no action.
+
+- **Medication plan:** The code on the German federal medication plan (BMP,
+  XML `<MP …>` as a Data Matrix, KBV specification) is recognized. The result
+  page is titled "Medication plan" and points out that it contains health
+  data and is **not saved in the history**. This also applies when the
+  scanner delivers it as binary data.
+- **"Medication plan" card:** shows the plan in readable form: patient
+  (name, date of birth, allergies, weight, height, creatinine, pregnancy,
+  breastfeeding), author with address and print date, page x of y, then each
+  block with its heading and, per medicine, active ingredient/strength or
+  brand name, dosage form, dosage (four-part scheme or free text, with
+  weekday), note, reason, additional line and PZN; plus free-text lines and
+  compounded preparations. Headings, dosage forms and units come from the KBV
+  key tables (S_BMP_ZWISCHENUEBERSCHRIFT, S_BMP_DOSIEREINHEIT,
+  S_BMP_DARREICHUNGSFORM) and are shown in German, as on the paper plan.
+  Medicines listed only by PZN cannot be named offline; the copy icon to the
+  right of each medicine copies its PZN so you can look it up yourself. New
+  file
+  `lib/medication_plan.dart`.
+- Manual: new appendix page "Data Matrix – medication plan" with a made-up
+  sample plan.
+
+### Security
+
+- At startup the app removes history entries that must not be stored under
+  the current rules, e.g. a medication plan scanned with an older version.
+
+### Changed
+
+- Privacy policy, DPIA and manuals list medication plans alongside 2FA keys
+  as content that is never stored.
+- **Scan from photo:** The "Analyzing photo …" dialog now appears right after
+  you tap a photo, first with a spinner. Before, it only opened once the photo
+  picker had delivered the picture, which took a few seconds for new photos.
+
 ## [2.3.0+15] – 2026-10-19
 
 ### Added

@@ -115,22 +115,34 @@ class ScanHistory extends ChangeNotifier {
     } on FormatException {
       // Beschädigte Daten: mit leerem Verlauf weitermachen.
     }
+    // Was nach den heutigen Regeln nicht gespeichert wird (z. B. ein
+    // Medikationsplan aus einer älteren Version), fliegt hinaus.
+    final kept = [
+      for (final e in entries)
+        if (shouldStore(e.raw, binary: e.binary)) e,
+    ];
     final history = ScanHistory._(
       prefs,
       cipher,
-      entries.take(maxEntries).toList(),
+      kept.take(maxEntries).toList(),
     );
     if (legacy != null) {
       if (stored == null) await history._save();
       await prefs.remove(_legacyKey);
+    } else if (kept.length != entries.length) {
+      await history._save();
     }
     return history;
   }
 
-  /// Einmalpasswort-Schlüssel (2FA) landen nicht im Verlauf, wie bei
-  /// BinaryEye: Wer den Code noch einmal braucht, scannt ihn erneut.
-  static bool shouldStore(String raw, {bool binary = false}) =>
-      binary || parseContent(raw).kind != ContentKind.otp;
+  /// Einmalpasswort-Schlüssel (2FA) und Medikationspläne landen nicht im
+  /// Verlauf, wie bei BinaryEye: Wer den Code noch einmal braucht, scannt
+  /// ihn erneut. Binärinhalte kommen als Hex-Text; ein Medikationsplan in
+  /// Latin-1 wird dafür zurückübersetzt.
+  static bool shouldStore(String raw, {bool binary = false}) {
+    if (binary) return !isMedicationPlan(latin1.decode(fromHex(raw)));
+    return parseContent(raw).kind != ContentKind.otp && !isMedicationPlan(raw);
+  }
 
   /// Fügt einen Inhalt oben ein. Ein bereits vorhandener gleicher Inhalt
   /// wird nach oben verschoben statt doppelt gespeichert. 2FA-Schlüssel

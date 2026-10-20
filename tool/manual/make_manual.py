@@ -123,8 +123,10 @@ def make_code(e):
         if not found or found[0].bytes != data:
             sys.exit(f"Bild {path.name} enthält nicht die Beispieldaten")
         return path
-    if e["zxing"] == "DataMatrix" and isinstance(data, bytes):
-        img = datamatrix_image(data)
+    if e["zxing"] == "DataMatrix":
+        # Quadratisch wie auf Briefmarken und Amazon-Packungen.
+        img = datamatrix_image(
+            data if isinstance(data, bytes) else data.encode("latin-1"))
     elif e["zxing"] == "Aztec":
         # zxing-cpp nimmt nur rund 26 % Fehlerkorrektur; Handy-Tickets
         # haben über 50 %, und so liest die Kamera den Code zuverlässig.

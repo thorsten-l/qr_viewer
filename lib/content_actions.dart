@@ -130,7 +130,8 @@ ActionTarget? contentAction(
         ContentKind.wifi ||
         ContentKind.payment ||
         ContentKind.json ||
-        ContentKind.matter:
+        ContentKind.matter ||
+        ContentKind.transparency:
       break;
   }
   return null;

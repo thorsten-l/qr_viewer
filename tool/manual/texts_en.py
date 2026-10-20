@@ -35,7 +35,7 @@ UI = dict(
 
 TITLE = "QR Viewer"
 SUBTITLE = "Scan codes safely – simply explained"
-VERSION_LINE = "Manual for version 2.3.0 · October 2026"
+VERSION_LINE = "Manual for version 2.3.1 · October 2026"
 
 CHAPTERS = [
     ("1 What is QR Viewer?", [
@@ -119,8 +119,9 @@ CHAPTERS = [
         "flashlight. Tap it and choose a picture from your photos.",
         ("img", "photo_scan.png", 5.0,
          "While analysing, QR Viewer shows the chosen photo."),
-        "While QR Viewer analyses the photo, you see it in a window with a "
-        "progress bar. If the app finds a code, the result page opens just "
+        "As soon as you tap a photo, a window with a spinner appears – your "
+        "device often needs a few seconds to provide new photos. Then you "
+        "see the photo with a progress bar while QR Viewer analyses it. If the app finds a code, the result page opens just "
         "like after a camera scan. It looks for all kinds of code, whatever "
         "scan type is selected. If it finds no code, it tells you so.",
         ("note", "Difficult codes – such as codes engraved on devices or "
@@ -155,7 +156,7 @@ CHAPTERS = [
         "tickets, for example. QR Viewer shows them as columns of numbers "
         "(hex view). Tickets following the German VDV standard, such as the "
         "Deutschlandticket, can even be decoded and shown in readable form "
-        "(see appendix A.30).",
+        "(see appendix A.32).",
     ]),
     ("5 Actions – always with a confirmation", [
         "**Actions are turned off by default.** QR Viewer then only shows "
@@ -238,7 +239,7 @@ CHAPTERS = [
          "encrypted. But keep in mind: it may "
          "contain confidential details such as Wi-Fi passwords. Delete such "
          "entries when you no longer need them. QR Viewer never stores secret "
-         "keys for two-step sign-in (2FA)."),
+         "keys for two-step sign-in (2FA) or medication plans."),
     ]),
     ("8 Settings", [
         "Open the settings on the scan screen with ☰ → Settings. Both "
@@ -309,6 +310,10 @@ CHAPTERS = [
         [
             "**Keys for two-step sign-in (2FA)** are never stored in the "
             "history. The result page points this out.",
+            "**Medication plans** (the code on the German federal medication "
+            "plan from your doctor or pharmacy) contain health data. QR Viewer "
+            "only shows them and never stores them in the history. The result "
+            "page points this out.",
             "**Wi-Fi passwords** stay in the history like any other content "
             "until you delete them.",
             "**Setup codes of smart home devices** (Matter) are only "
@@ -407,8 +412,8 @@ APPENDIX_INTRO = [
     "The example codes contain German sample data, because QR Viewer was "
     "developed in Germany. All names, numbers and addresses are made up – "
     "with two exceptions: the location is the real town hall in "
-    "Wolfenbüttel, and the first ticket (A.30) is an official sample ticket "
-    "in the name of Geraldine Mustermann. The second ticket (A.31) is a "
+    "Wolfenbüttel, and the first ticket (A.32) is an official sample ticket "
+    "in the name of Geraldine Mustermann. The second ticket (A.33) is a "
     "self-made test ticket.",
     ("note", "The result pages in the appendix were taken with actions "
      "turned on (☰ → Settings → “Enable actions”). When they are off, only "
@@ -836,6 +841,51 @@ PAGES = {
         do="“Track shipment…” opens Deutsche Post shipment tracking after a "
         "confirmation. (Of course it will not find the example number.)",
         care="When tracking, Deutsche Post learns the tracking number."),
+    "datamatrix_amazon": dict(
+        title="Data Matrix – Amazon Transparency code",
+        mode="Data Matrix or All codes", devices=ALL,
+        what="An **anti-counterfeiting code** from Amazon's “Transparency” "
+        "program. Brand owners print it on every single package to make "
+        "counterfeiting harder. It starts with “AZ:”, followed by a random "
+        "serial number that exists only once.",
+        where="On the packaging of brand products sold through Amazon, "
+        "usually as a small Data Matrix code next to a “T” logo.",
+        example="A code with the made-up serial number "
+        "QX7K2M9PL4T8VN3RB6WD1HC5JE.",
+        app="QR Viewer shows the “Amazon Transparency code” card with the "
+        "serial number. The code contains nothing else: only Amazon knows "
+        "which product the number belongs to. That is why there is no action "
+        "button.",
+        do="Copy the serial number. Check whether the code is genuine in the "
+        "Amazon Shopping or Transparency app.",
+        care="When you check it in the Amazon app, the code is sent to "
+        "Amazon. QR Viewer itself sends nothing."),
+    "datamatrix_bmp": dict(
+        title="Data Matrix – medication plan",
+        mode="Data Matrix or All codes", devices=ALL,
+        what="The German **federal medication plan** (BMP) is a sheet your "
+        "doctor, hospital or pharmacy prints for you. At the top right it "
+        "carries a large Data Matrix code. It contains everything printed on "
+        "the sheet: your name, your date of birth, who created the plan and "
+        "every medicine with dosage, note and reason. Other practices and "
+        "pharmacies can read the plan instead of typing it in.",
+        where="On the medication plan you get in Germany when you take three "
+        "or more medicines long term.",
+        example="A made-up plan for Max Mustermann with ramipril, metformin "
+        "and ibuprofen as needed.",
+        app="QR Viewer shows the plan clearly: patient, author, allergies "
+        "and weight, then each block with its medicines – active ingredient "
+        "and strength, dosage form, dosage such as “1-0-1-0 Stück”, note and "
+        "reason. Medicines listed only by their pharmacy number (PZN) are "
+        "shown with that number; the app cannot look up the name offline. "
+        "Headings, dosage forms and units appear in German, as on the paper "
+        "plan.",
+        do="Read the plan and select and copy single details. The copy icon "
+        "to the right of each medicine copies its PZN – so you can look the "
+        "medicine up yourself wherever you like. There is no action button.",
+        care="A medication plan contains health data. That is why QR Viewer "
+        "never stores it in the history. Only share or copy it if you really "
+        "want to."),
     "pdf417": dict(
         title="PDF417", mode="PDF417 or All codes", devices=ALL,
         what="**PDF417** is a wide, stacked code made of many small rows of "
@@ -910,5 +960,7 @@ ORDER = [
     "qr_contact", "qr_event", "qr_wifi", "qr_payment", "qr_otp", "qr_json",
     "qr_matter", "microqr", "ean13", "ean13_isbn", "ean8", "upca", "upce", "itf14",
     "code128", "code39", "code93", "codabar", "itf", "databar",
-    "datamatrix_post", "pdf417", "aztec_vdv", "aztec_vdv_test",
+    "datamatrix_post", "datamatrix_amazon", "datamatrix_bmp", "pdf417",
+    "aztec_vdv",
+    "aztec_vdv_test",
 ]

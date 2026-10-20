@@ -729,6 +729,71 @@ class AppLocalizationsUk extends AppLocalizations {
       'Дані для налаштування пристрою розумного дому за стандартом Matter. Застосунок розумного дому (наприклад, Apple Дім, Google Home) додає з їх допомогою пристрій — відскануйте код там або введіть код ручного сполучення. Будь-хто з цим кодом може під\'єднати пристрій, поки він у режимі налаштування.';
 
   @override
+  String get typeTransparency => 'Код Amazon Transparency';
+
+  @override
+  String get fieldSerialNumber => 'Серійний номер';
+
+  @override
+  String get infoKindTransparency =>
+      'Код захисту від підробок від Amazon (програма Transparency). Кожна упаковка отримує власний випадковий серійний номер. До якого товару він належить, знає лише Amazon — сам код більше нічого не містить. Перевірити справжність можна в застосунку Amazon Shopping або Transparency; тоді код надсилається до Amazon.';
+
+  @override
+  String get typeMedicationPlan => 'План прийому ліків';
+
+  @override
+  String get medicationPlanNotSaved =>
+      'Плани прийому ліків містять дані про здоров’я і не зберігаються в історії.';
+
+  @override
+  String get planPatient => 'Пацієнт';
+
+  @override
+  String get planIssuedBy => 'Надруковано';
+
+  @override
+  String get planPrinted => 'Дата друку';
+
+  @override
+  String planPage(String page, String pages) {
+    return 'Сторінка $page з $pages';
+  }
+
+  @override
+  String get planAllergies => 'Алергії/непереносимість';
+
+  @override
+  String get planPregnant => 'Вагітність';
+
+  @override
+  String get planBreastfeeding => 'Грудне вигодовування';
+
+  @override
+  String get planWeight => 'Вага';
+
+  @override
+  String get planHeight => 'Зріст';
+
+  @override
+  String get planCreatinine => 'Креатинін';
+
+  @override
+  String get planMoreInfo => 'Додатково';
+
+  @override
+  String get planDosage => 'Дозування';
+
+  @override
+  String get planHint => 'Примітка';
+
+  @override
+  String get planReason => 'Причина';
+
+  @override
+  String get infoKindMedicationPlan =>
+      'Код із німецького федерального плану прийому ліків (BMP) від лікаря, лікарні чи аптеки. Він містить ваше ім’я, дату народження та всі ліки з дозуванням. Це дані про здоров’я: QR Viewer показує їх лише на вашому пристрої й ніколи не зберігає в історії. Ліки, вказані лише номером PZN, неможливо назвати офлайн.';
+
+  @override
   String get infoManuals => 'Посібники';
 
   @override
